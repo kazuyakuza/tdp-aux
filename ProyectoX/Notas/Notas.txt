@@ -1,0 +1,41 @@
+A mejorar:
+SpriteManager.cambiarSprite
+SpriteManager.actualizar
+Escenario.javaDocClase
+Escenario.transparentarCursor
+Escenario.run
+Escenario.imprimirBloque
+Celda.sacarEstructura
+MarioChico.saltar
+
+Rediagramar las clases Actor y derivadas para acomodar los métodos: caer, morir, colisionar, efectoGravedad.
+
+Código como comentado:
+VentanaPrincipal.medidas
+VentanaPrincipal.initGUI
+Menu.initGUI
+Menu.listenerNuevoJuego
+PerdirDatosJugador.initGUI
+PerdirDatosJugador.listenerEmpezarJuego
+ControlCentral.constructor
+ControlCentral.run
+Escenario.run
+Nivel.inicializarNivel
+SpriteManager.contructor
+SpriteManager.actualizar
+Nivel.nivel1
+MarioChico.moverseAderecha
+Mario.caer
+Jugador.run
+ControlCentral.actores
+Escenario.imprimirBloque
+CargadorSprite.dirRecursos
+MarioChico.dirRecursos
+Piso.dirRecursos
+Irrompible.dirRecursos
+Nivel.dirRecursos
+
+System.out.println(((Actor) personaje).getCeldaActual().getPosFila() + "," +
+					           ((Actor) personaje).getCeldaActual().getPosColumna());
+			System.out.println(((Actor) personaje).getSpriteManager().posicion()[0] +","+ 
+					           ((Actor) personaje).getSpriteManager().posicion()[1]);

@@ -1,0 +1,99 @@
+Control Central: Representa al control general del juego. Se encarga de llevar a cabo la mayoría de las acciones del juego e interacciones entre las distintas piezas que 
+conforman al mismo (como por ejemplo las colisiones entre los actores o la comunicación entre los actores y el mapa). Crea y elimina del juego a los actores según se 
+requiera en las distintas situaciones. También se encarga de comunicarle al jugador los cambios en sus vidas, monedas y puntos.
+
+Jugador: Representa al jugador del juego, conoce las monedas que obtuvo el jugador, los puntos y las vidas que le quedan, encargándose de actualizar dichos valores cuando
+el juego se lo comunique. También contiene un personaje seleccionable del tipo Mario, el cuál es manejado por el jugador del juego.
+
+Control: Garantiza las acciones que puede realizar un jugador en el juego, incluyendo las flechas direccionales, los botones A y B.
+
+Personaje: Representa a los actores del juego que tienen un control, ya sea por un jugador o por una inteligencia artificial.
+
+PjSeleccionable: Representa a los personajes que un jugador puede elegir, garantizando las acciones comunes de movimiento, saltar, desplazamiento lateral y ser dañado por
+un enemigo.
+
+Mario: Simboliza al personaje Mario Bros que el jugador puede seleccionar, se encarga de implementar las acciones comunes de movimiento y de los estados generales de Mario
+como estar bajos los efectos de una estrella o invulnerable.
+
+Mario Chico: Es el estado inicial de Mario, con tamaño chico.
+
+Mario Grande: Es el estado siguiente al Mario Chico, bajo los efectos de un crecimiento con tamaño grande.
+
+Mario Blanco: Es el estado siguiente al Mario Grande, bajo los efectos del super poder que le permite lanzar bolas de fuego siendo grande.
+
+Enemigo: Representa a los personajes enemigos para el jugador, se encarga de implementar las colisiones con los otros actores del juego como por ejemplo con el personaje
+del jugador. Tambíen, brinda los movimientos comunes para estos tipos de personajes.
+
+Goomba: Representa al Goomba, uno de los enemigos del personaje Mario en el juego.
+
+IA_Goomba: Es la inteligencia artificial para un Goomba y se encarga de generarle los movimientos.
+
+Koopa Troopa: Representa al Koopa Troopa, un tipo de enemigo del juego.
+
+KT Normal: Es el estado normal de un Koopa Troopa, puede moverse y cuando es dañado por un personaje seleccionable pasa a estar en el estado en caparazón.
+
+KT Caparazon: Es el estado del Koopa Troopa despues de ser dañado mientras estaba normal. No puede moverse pero luego de cierto tiempo puede recuperarse y volver
+a su estado normal.
+
+IA KTNormal: Es la inteligencia artificial para un Koopa Troopa en estado normal y se encarga de generarle los movimientos que puede realizar.
+
+IA KTCaparazon: Es la inteligencia artificial para un Koopa Troopa cuando se encuentra en caparazón y se encarga de generarle los movimientos que puede realizar.
+
+Actor: Simboliza a las entidades del juego que ubican en el escenario ocupando una celda del mismo y pueden colisionar entre sí. 
+
+Tubo: Representa a un objeto del juego que por ahora solo puede obstaculizar ocupando una celda.
+
+Bola de Fuego: Simboliza a las bolas que el personaje Mario Blanco puede lanzar, provoca la destrucción de los enemigos al colisionar con los mismos.
+
+IA Bola Fuego: Es la inteligencia que maneja los movimientos de las bolas de fuego.
+
+Plataforma: Simboliza a todas las plataformas del juego, garantizando  una colisión con el personaje del jugador.
+
+Rompible: Representa a las plataformas que pueden ser destruidas por los personajes seleccionables.
+
+Irrompible: Son las plataformas que no se rompen ante cualquier colisión.
+
+Especial Monedas: Representa a las plataformas que contienen internamente monedas, las cuales son sacadas cuando la plataforma es colisionada por un personaje 
+seleccionable.
+
+Especial PowerUP: Representa a las plataformas que contienen un power up, el cual es retirado cuando la plataforma es colisionada por un personaje seleccionable.
+
+Moneda: Representa a las monedas del juego, al ser colisionadas por un personaje seleccionable es asignada al jugador birndándole puntos adicionalmente.
+
+Power Up: Simboliza a los power ups del juego que los personajes seleccionables pueden obtener.
+
+Super Hongo: Es el power up que le permite a Mario crecer. Si Mario toma un Super Hongo en estado grande no tiene efecto en él.
+
+Flor de Fuego: Es el power up que le permite a Mario lanzar bolas de fuego. Si Mario toma una flor de fuego en estado Mario Blanco no tiene efecto en él.
+
+Estrella: Es el power up que le permite a Mario ser invulnerable y destruir a cualquier enemigo al colisionar con ellos.
+
+Hongo Verde: Es el power up que le dá al jugador una vida extra.
+
+Bomba Nuclear: Es el power up que al recogido por Mario destruye automáticamente a todos sus enemigos.
+
+Nivel: Representa los niveles del juego, permite generar los mismos. Cada uno contiene un mapa propio y puede acceder al bloque actual donde se encuentra Mario.
+
+Mapa: Simboliza al mundo lógico de cada nivel del juego, están compuestos por muchos bloques que en conjunto conforman al escenario, se encarga de administrar dichos
+bloques para el nivel del juego.
+
+Bloque: Representan a una sección del mapa del nivel, contiene muchas celdas y se encarga de administrar las mismas para el nivel del juego.
+
+Celda: Simboliza a la ubicación que pueden ocupar los actores en el nivel del juego, pueden estar totalmente ocupadas por ciertos actores o permiten la coexistencias de 
+varios actores en una misma con la condición de que ninguno implique la ocupación total de la celda. Se encarga de administrar a los actores que se encuntran en esta ubicación.
+
+Escenario: Simboliza la parte gráfica del escenario del juego, se encarga de mostrar por pantalla las actualizaciones del juego.
+
+Bloque Grafico: Es la gráfica de un bloque.
+
+Ventana Principal: Representa a la ventana principal gráfica del juego, donde el jugador inicialmente crea su dato.
+
+Menu: Simboliza al menú del juego, permite incializar al mismo.
+
+Sprite Manager: Representa al sprite (gráfica) de cada actor del juego. Permite manejar gráficamente a los actores en pantalla.
+
+Cargador Sprite: Se encarga de cargar los sprites de los actores del juego.
+
+Sound Manager: Representa a los sonidos que emiten las entidades del juego. Permite la manipulación de los sonidos para los actores.
+
+Cargador Sound: Se encarga de cargar los sonidos del juego.

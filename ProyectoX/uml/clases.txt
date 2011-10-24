@@ -1,0 +1,65 @@
+Control Central: Representa al control general del juego. Se encarga de llevar a cabo ciertas acciones del juego e interacciones entre las distintas piezas que 
+conforman al mismo (como por ejemplo la gravedad con los actores). Crea y elimina del juego a los actores según se requiera en las distintas situaciones y concreta situaciones 
+especiales del juego como ganar el nivel, reiniciar o perder.
+
+Gravedad: Representa a la fuerza que se ejerce sobre los actores, que pueden caer si no se encuentran sobre una celda totalmente ocupada, y los hace caer si se encuentran en dicha situación.
+Si el actor cae hasta la última fila del bloque, el mismo muere. Esto lo controla la misma gravedad.
+
+Jugador: Representa al jugador del juego, conoce las monedas que obtuvo el jugador, los puntos y las vidas que le quedan, encargándose de actualizar dichos valores cuando
+el juego se lo comunique. También contiene un personaje seleccionable del tipo Mario, el cuál es manejado por el jugador del juego y a través de un Control le indica al personaja las acciones a
+realizar.
+
+Control: Garantiza las acciones que puede realizar un jugador en el juego, incluyendo las flechas direccionales, los botones A y B.
+
+Teclado: Representa al control por teclado, permite realizar las acciones que realiza un jugador, las flechas direccionales, los botones A y B.
+
+Personaje: Representa a los actores del juego que tienen un control, ya sea por un jugador o por una inteligencia artificial.
+
+PjSeleccionable: Representa a los personajes que un jugador puede elegir, garantizando las acciones comunes de movimiento, saltar, desplazamiento lateral, acciones A, B y ser dañado por
+un enemigo.
+
+Mario: Simboliza al personaje Mario Bros que el jugador puede seleccionar, se encarga de implementar las acciones comunes de movimiento, las acciones A, B, las colisiones 
+y de los estados generales de Mario como estar bajos los efectos de una estrella o invulnerable. También define que hacer ante las acciones de movimientos, A y B.
+
+Mario Chico: Es el estado inicial de Mario, con tamaño chico. Implementa lo que debe hacer ante las acciones de movimientos, A y B.
+
+Actor: Simboliza a las entidades del juego que ubican en el escenario ocupando una celda del mismo y pueden colisionar entre sí. Tiene un estado que determina si es afectable por la 
+gravedad y definen la accion caer que lo provoca esta última, como también puede hacer morir.
+
+Plataforma: Simboliza a todas las plataformas del juego, garantizando  una colisión con el personaje del jugador.
+
+Rompible: Representa a las plataformas que pueden ser destruidas por los personajes seleccionables.
+
+Irrompible: Son las plataformas que no se rompen ante cualquier colisión.
+
+Llegada: Representa a un punto de llegada que al ser alcanzado por un PjSeleccionable (colisionado) hace ganar el nivel a su jugador.
+
+Estructura: Simboliza a estructuras físicas del juego.
+
+Piso: Representa al Piso en el Juego, evita a los actores caer por el efecto de la gravedad.
+
+Nivel: Representa a los niveles del juego, permite generar a los mismos. Cada uno contiene un mapa propio y puede acceder al bloque actual donde se encuentra Mario.
+
+Mapa: Simboliza al mundo lógico de cada nivel del juego, están compuestos por muchos bloques que en conjunto conforman al escenario, se encarga de administrar dichos
+bloques para el nivel del juego.
+
+Bloque: Representan a una sección del mapa del nivel, contiene muchas celdas y se encarga de administrar a las mismas para el nivel del juego.
+
+Celda: Simboliza a la ubicación que pueden ocupar los actores en el nivel del juego, pueden estar totalmente ocupadas por ciertos actores o permiten la coexistencias de 
+varios actores en una misma con la condición de que ninguno implique la ocupación total de la celda. Se encarga de administrar a los actores que se encuntran en esta ubicación. 
+Además conocen al bloque al que pertenecen y, a través del mismo, acceden a sus celdas vecinas.
+
+Escenario: Simboliza a la parte gráfica del escenario del juego, se encarga de mostrar por pantalla las actualizaciones del juego.
+
+Bloque Grafico: Es la gráfica de un bloque, se encarga de actualizar al mismo.
+
+Ventana Principal: Representa a la ventana principal gráfica del juego, donde el jugador inicialmente crea su dato.
+
+Menu: Simboliza al menú del juego, permite incializar al mismo.
+
+Sprite Manager: Representa al sprite (gráfica) de cada actor del juego. Permite manejar gráficamente a los actores en pantalla.
+
+Cargador Sprite: Se encarga de actualizar gráficamente a los actores del juego. Extiende a Cargador Recursos.
+
+Cargador Recursos: Facilita cargar un recurso, como sprite, para la parte gráfica.
+
