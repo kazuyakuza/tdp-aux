@@ -1,0 +1,8 @@
+Una decisión importante tomada para el proyecto es considerar al mapa de cada nivel en una secuencia de bloques continuos y manejar a la estructura teniendo en cuenta 
+un bloque actual, su anterior y su siguiente. Además, se optó por implementar a cada bloque con un arreglo bidimensional de Celdas.
+
+Las celdas fue otra decisión tomada para representar donde se ubican las entidades del juego en la lógica del mapa del nivel. Se determinó que las celdas pueden contener 
+más de un actor en la misma, por lo que se decidió utilizar la estructura de una lista para manejar los actores que se ubican en una celda.
+
+Otra decisión tomada fue que el Control Central del juego es el encargado de comunicarle al jugador que debe modificar sus valores (de puntuación, monedas y vidas), y qué 
+cantidad debe hacerlo, generados por las colisiones de Mario con los distintos tipos de actores del juego.
