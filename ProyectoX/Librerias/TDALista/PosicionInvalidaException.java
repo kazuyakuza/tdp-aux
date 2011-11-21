@@ -4,7 +4,6 @@ package ProyectoX.Librerias.TDALista;
  * Posicion Invalida Exception: Excepción en tiempo de ejecución provocada al intentar asignar una posición inválida.
  * 
  * @author Javier E. Barrocal (LU: 87158)
- * @author Emiliano Brustle (LU: 88964)
  * @version 1.1
  */
 @SuppressWarnings("serial")

@@ -1,6 +1,16 @@
 package ProyectoX.Logica;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import ProyectoX.Excepciones.ControlCentralException;
 import ProyectoX.Grafico.BloqueGrafico;
@@ -10,6 +20,10 @@ import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.Position;
 import ProyectoX.Librerias.TDALista.PositionList;
+import ProyectoX.Librerias.Threads.AliveThread;
+import ProyectoX.Librerias.Threads.ControlThreads;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.Bloque;
@@ -27,11 +41,11 @@ import ProyectoX.Logica.Personajes.MarioChico;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class ControlCentral implements Runnable
+public class ControlCentral implements Runnable, ControlThreads
 {
 	
 	//Variables de Clase
-	public static final int velocidad = 40;
+	public static final double velocidad = 8.5;
 	
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
@@ -43,7 +57,9 @@ public class ControlCentral implements Runnable
 	private Gravedad gravedad;
 	
 	//Threads
-	private Thread Tactual, Tescenario, Tjugador, Tgravedad;
+	private Thread Tactual;
+	private AliveThread Tescenario, Tjugador, Tgravedad;
+	private Updater updater;
 	
 	/*CONSTRUCTOR*/
 	
@@ -81,9 +97,10 @@ public class ControlCentral implements Runnable
 			ventanaPrincipal.repaint();
 			
 			//Crear y Asignar Threads
-			Tescenario = new Thread(escenario);
-			Tjugador = new Thread (jugador);
-			Tgravedad = new Thread (gravedad);
+			Tescenario = new AliveThread (this, escenario);
+			Tjugador = new AliveThread (this, jugador);
+			Tgravedad = new AliveThread (this, gravedad);
+			updater = new Updater (this);
 		}
 		catch (Exception exception)
 		{
@@ -151,55 +168,191 @@ public class ControlCentral implements Runnable
 			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
 			escenario.setBloqueGraficoActual(bloqueGrafico);
 			
+			//Agregando UpNeeders al Updater
+			for (Actor a: actores)
+				for (UpNeeder un: a.getUpNeeders())
+					updater.addUpNeeder(un);
+			
 			//Start Thread's
-			Tescenario.start();
 			Tjugador.start();
 			Tgravedad.start();
-			
-			//Control Thread's
-			//controlThreads();
+			updater.changeSleepTime((int) (getSleepTime()*0.5));
+			updater.start();
+			Tescenario.start();
+			Tescenario.changeSleepTime((int) (getSleepTime()*0.5));
 			
 			ventanaPrincipal.repaint();
+			
+			//test
+			//test ();
 		}
 		catch (Exception exception)
 		{
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
 	}
-	
-	/**
-	 * 
-	 */
-	/*public void controlThreads ()
+	int x = 0; int y = 0;
+	double spx = 0; double spy = 0;
+	int pg = -1;
+	public void test ()
 	{
-		long startTime = 0;
+		int i = 0;
 		while (true)
 		{
-			startTime = System.currentTimeMillis();
-			try {
-				Tjugador.sleep(1000/velocidad);
-				Tgravedad.sleep(1000/velocidad);
-			    Tescenario.sleep(1000/velocidad);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			/*if (!Tescenario.isAlive())
+			{
+				System.out.println("MUERTO Tescenario");
+				System.exit(0);
 			}
+			if (!Tjugador.isAlive())
+			{
+				System.out.println("MUERTO Tjugador");
+				System.exit(0);
+			}
+			if (!Tgravedad.isAlive())
+			{
+				System.out.println("MUERTO Tgravedad");
+				System.exit(0);
+			}*/
+			/*try {
+			Thread.sleep(getSleepTime());
+			} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			}*/
+			/*{
+				if ((x != ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
+					    || (y != ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
+					    {
+						System.out.println("En i " + i +":");
+						System.out.println(((Actor) jugador.personaje()).getCeldaActual().getPosFila() + "," +
+						           ((Actor) jugador.personaje()).getCeldaActual().getPosColumna());
+						System.out.println(((Actor) jugador.personaje()).getSpriteManager().posicion()[0] +","+ 
+						           ((Actor) jugador.personaje()).getSpriteManager().posicion()[1]);
+						 x = ((Actor) jugador.personaje()).getCeldaActual().getPosFila();
+					     y = ((Actor) jugador.personaje()).getCeldaActual().getPosColumna();
+					    }
+			}*/
+			{
+				//if (i<10)
+					//testMarioBot();
+			}
+			/*{
+				if ((spx != ((Actor) jugador.personaje()).spriteManager.posicion()[0])
+					    || (spy != ((Actor) jugador.personaje()).spriteManager.posicion()[1]))
+					    {
+				        System.out.println("En i " + i + " Cambio:");
+						System.out.println(((Actor) jugador.personaje()).getCeldaActual().getPosFila() + "," +
+						           ((Actor) jugador.personaje()).getCeldaActual().getPosColumna());
+						System.out.println(((Actor) jugador.personaje()).getSpriteManager().posicion()[0] +","+ 
+						           ((Actor) jugador.personaje()).getSpriteManager().posicion()[1]);
+						 spx = ((Actor) jugador.personaje()).spriteManager.posicion()[0];
+					     spy = ((Actor) jugador.personaje()).spriteManager.posicion()[1];
+					    }
+			}*/
+			{
+				spx = ((Actor) jugador.personaje()).spriteManager.posicion()[0];
+			    spy = ((Actor) jugador.personaje()).spriteManager.posicion()[1];
+				if (
+						((spx - ((Actor) jugador.personaje()).spriteManager.posicion()[0]) > 0.5)
+					 || ((spx - ((Actor) jugador.personaje()).spriteManager.posicion()[0]) < - 0.5)
+					 ||	((spy - ((Actor) jugador.personaje()).spriteManager.posicion()[1]) > 0.5)
+				     || ((spy - ((Actor) jugador.personaje()).spriteManager.posicion()[1]) < - 0.5)
+					)
+					    {
+				          System.out.println("ERROR");
+				          ventanaPrincipal.salir();
+					    }
+			}
+			    /*if ( pg != ((Actor) jugador.personaje).PG)
+			    {
+			    	System.out.println(((Actor) jugador.personaje).PG);
+			    	pg = ((Actor) jugador.personaje).PG;
+			    	//System.out.println(pg);
+			    }*/
+			/*{
+				if ((5 == ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
+					    && (3 == ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
+					((Actor) jugador.personaje()).moverseAcelda(
+					((Actor) jugador.personaje()).getCeldaActual().getBloque().getCelda(0, 3));
+			}*/
+			/*{
+			if ((1 == ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
+				    && (3 == ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
+				System.out.println("CHAN");
+			}*/
+			i++;
 		}
-	}*/
-	
-	/**
-	 * Inidica el tiempo de espera de actualización del Thread ingresado.
-	 * 
-	 * @param t Thread a pausar.
-	 */
-	/*public void esperar (Thread t)
+	}
+	//boolean izq = false;
+	int h1 = 0;// int h2 = 0; int h3 = 0;
+	//Random random = new Random ();
+	public void testMarioBot ()
 	{
-		long startTime = System.currentTimeMillis();
-		do
+		if (h1 < 4)
 		{
-			Thread.yield();
+			jugador.personaje().arriba();
+			jugador.personaje().derecha();
+			h1++;
 		}
-		while (System.currentTimeMillis()-startTime < (1000/velocidad));
-	}*/
+		else
+			if (h1 < 8)
+			{
+				jugador.personaje().derecha();
+				h1++;
+			}
+			/*else
+				if (h1 < 9)
+				{
+					capture = true;
+					h1++;
+				}*/
+		/*h1 = random.nextInt();
+		h2 = random.nextInt();
+		if ((h2 % 2) == 0)
+			h2++;
+		h1 *= h2;
+		if ((h1 % 9) == 0)
+			h3 = random.nextInt (7);
+		if (h3 == 0)
+		{
+		if ((h1 % 2) == 0)
+		{
+			if (((h1 % 4) == 0) || ((h1 % 6) == 0) || ((h1 % 8) == 0))
+				jugador.personaje().izquierda();
+			else
+				jugador.personaje().derecha();
+		
+			if ((h1 % 11) == 0)
+				jugador.personaje().arriba();
+		}
+		}
+		else
+		{
+			jugador.personaje().arriba();
+			h3--;
+		}*/
+		/*h++;
+		if (izq)
+			jugador.personaje().izquierda();
+		else
+			jugador.personaje().derecha();
+		if (h == 1)
+		{
+			h = 0;
+			izq = !izq;
+		}*/
+	}
+	
+	public int getSleepTime ()
+	{
+		return (int) (1000/velocidad);
+	}
+	
+	public void error (Exception e)
+	{
+		ventanaPrincipal.mensajeError("Error", e.getMessage(), true);
+	}
 	
 	/**
 	 * Acción ESC (escape) del Juego.

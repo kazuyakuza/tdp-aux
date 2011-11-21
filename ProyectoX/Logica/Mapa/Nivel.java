@@ -7,8 +7,6 @@ import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.NoPersonajes.Piso;
-import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
-import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 
 /**
  * Representa un Nivel del Juego.
@@ -105,13 +103,13 @@ public class Nivel
 		int aux = 0;
 		while (aux <= 9)
 		{
-			if (aux != 6)
-			{
+			/*if (aux != 6)
+			{*/
 				Piso piso = new Piso(cargadorSprite);
 				bloqueActual.ABC[6][aux].agregarEstructura(piso);
 				piso.setCeldaActual(bloqueActual.ABC[6][aux]);
 				listaActores.addFirst(piso);
-			}
+			//}
 			aux++;
 		}
 		
@@ -121,34 +119,37 @@ public class Nivel
 		listaActores.addFirst(actor);
 		
 		//Agregación Actores no Personjes.
-		Irrompible plataforma = new Irrompible (cargadorSprite);
+		/*Irrompible plataforma = new Irrompible (cargadorSprite);
 		bloqueActual.ABC[3][3].setOcupada(true);
 		bloqueActual.ABC[3][3].agregarEstructura(plataforma);//Plataforma irrompible
 		plataforma.setCeldaActual(bloqueActual.ABC[3][3]);
-		listaActores.addFirst(plataforma);
+		listaActores.addFirst(plataforma);*/
 		
 		//Vacio en el Piso.
-		bloqueActual.ABC[6][6].setOcupada(false);
+		//bloqueActual.ABC[6][6].setOcupada(false);
 		
 		//Piso al costado del Vacio.
-		bloqueActual.ABC[7][5].setOcupada(true);
+		/*bloqueActual.ABC[7][5].setOcupada(true);
 		Piso piso = new Piso(cargadorSprite);
 		bloqueActual.ABC[7][5].agregarEstructura(piso);
 		piso.setCeldaActual(bloqueActual.ABC[7][5]);
-		listaActores.addFirst(piso);
+		listaActores.addFirst(piso);*/
 		
 		//Piso al costado del Vacio.
-		bloqueActual.ABC[7][7].setOcupada(true);
+		/*bloqueActual.ABC[7][7].setOcupada(true);
 		Piso piso2 = new Piso(cargadorSprite);
 		bloqueActual.ABC[7][7].agregarEstructura(piso2);
 		piso2.setCeldaActual(bloqueActual.ABC[7][7]);
-		listaActores.addFirst(piso2);
+		listaActores.addFirst(piso2);*/
 		
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(0, true);
 		
+		//Agregación Final Mapa
+		bloqueActual.setColumnaOcupada(9, true);
+		
 		//Agregación Llegada
-		aux = 0;
+		/*aux = 0;
 		while (aux <= 5)
 		{
 			Actor llegada = new Llegada(cc, cargadorSprite);
@@ -156,7 +157,7 @@ public class Nivel
 			llegada.setCeldaActual(bloqueActual.ABC[aux][9]);
 			listaActores.addFirst(llegada);
 			aux++;
-		}
+		}*/
 		
 		return listaActores;
 	}

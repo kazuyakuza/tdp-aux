@@ -1,4 +1,5 @@
 A mejorar:
++ matar UpNeeders!
 SpriteManager.cambiarSprite
 SpriteManager.actualizar
 Escenario.javaDocClase
@@ -8,34 +9,34 @@ Escenario.imprimirBloque
 Celda.sacarEstructura
 MarioChico.saltar
 
+A comentar:
+Liberías.Threads
+SpriteManager.actualizar (agregar doc)
+SpriteManager.upNeeder (atributo y constructor)
+SpriteManager.getUpNeeder
+Actor.getUpNeeders
+Actor.upNeeder
+Actor.constructor (el upneeder)
+
 Rediagramar las clases Actor y derivadas para acomodar los métodos: caer, morir, colisionar, efectoGravedad.
 
-Código como comentado:
-VentanaPrincipal.medidas
-VentanaPrincipal.initGUI
-Menu.initGUI
-Menu.listenerNuevoJuego
-PerdirDatosJugador.initGUI
-PerdirDatosJugador.listenerEmpezarJuego
-ControlCentral.constructor
-ControlCentral.run
-Escenario.run
-Nivel.inicializarNivel
-SpriteManager.contructor
-SpriteManager.actualizar
-Nivel.nivel1
+Posible Código como comentado:
+MarioChico.saltar
+MarioChico.moverseAizquierda
 MarioChico.moverseAderecha
-Mario.caer
-Jugador.run
 ControlCentral.actores
 Escenario.imprimirBloque
-CargadorSprite.dirRecursos
-MarioChico.dirRecursos
-Piso.dirRecursos
-Irrompible.dirRecursos
-Nivel.dirRecursos
 
-System.out.println(((Actor) personaje).getCeldaActual().getPosFila() + "," +
-					           ((Actor) personaje).getCeldaActual().getPosColumna());
-			System.out.println(((Actor) personaje).getSpriteManager().posicion()[0] +","+ 
-					           ((Actor) personaje).getSpriteManager().posicion()[1]);
+Imprimir posición lógica y gráfica de un Actor:
+int x = 0; int y = 0;
+
+if ((x != ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosFila())
+				    || (y != ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosColumna()))
+				    {
+					System.out.println(((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosFila() + "," +
+					           ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosColumna());
+					System.out.println(((Actor) controlCentral.getJugador().personaje()).getSpriteManager().posicion()[0] +","+ 
+					           ((Actor) controlCentral.getJugador().personaje()).getSpriteManager().posicion()[1]);
+					 x = ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosFila();
+				     y = ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosColumna();
+				    }

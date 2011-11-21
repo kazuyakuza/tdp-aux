@@ -1,5 +1,6 @@
 package ProyectoX.Logica;
 
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 
@@ -11,7 +12,7 @@ import ProyectoX.Logica.Personajes.PjSeleccionable;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Jugador implements Runnable
+public class Jugador implements Worker
 {
 	
 	//Variables de Clase
@@ -166,20 +167,11 @@ public class Jugador implements Runnable
 	/**
 	 * Realiza las acciones del Jugador en el Juego.
 	 */
-	public void run ()
+	public void work ()
 	{
-		while (!(muerto))
+		if (!(muerto))
 		{
 			actuar();
-
-			try
-			{
-				Thread.sleep(200);
-			}
-			catch (InterruptedException e)
-			{
-				controlCentral.mensajeError("Error", e.getMessage(), true);
-			}
 		}
 	}
 	
@@ -191,20 +183,30 @@ public class Jugador implements Runnable
 	{
 		if (control.arriba())
 			personaje.arriba();
-		if (control.abajo())
-			personaje.abajo();
+		else
+			if (control.abajo())
+				personaje.abajo();
+		
 		if (control.izquierda())
+		{
 			personaje.izquierda();
-		if (control.derecha())
-			personaje.derecha();
+		}
+		else
+			if (control.derecha())
+			{
+				personaje.derecha();
+			}
+		
 		if (control.A())
 			personaje.A();
 		if (control.B())
 			personaje.B();
+		
 		if (control.ESC())
 			control.ESC();
-		if (control.aceptar())
-			control.aceptar();
+		else
+			if (control.aceptar())
+				control.aceptar();
 	}
 
 }

@@ -118,10 +118,10 @@ public class Menu extends JPanel
             	catch (Exception e)
             	{
             		ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
-        		}
+         		}
             	
             }
-           };
+        };
 	}
 	
 	/**

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 
@@ -33,7 +34,8 @@ public class MarioChico extends Mario
 	private static int caminando = 2;
 	private static int saltando = 5;
 	
-	private static int potenciaSalto = 4;
+	private static int maxPotenciaSalto = 4;
+	private int potenciaSalto = 0;
 	
 	/*CONSTRUCTORES*/
 	
@@ -57,16 +59,20 @@ public class MarioChico extends Mario
 	 */
 	public void saltar () throws AccionActorException
 	{
+		//System.out.println("SALTAR");
 		Celda celdaSuperior = celdaActual;
 		try 
 		{
-			if (PG == 0)
+			if (celdaActual == null)
+				throw new NullPointerException ("La celdaActual del Actor es null.");
+			//System.out.println(PG);
+			if ((PG == 0) && (potenciaSalto < maxPotenciaSalto))
 			{
-				PG = potenciaSalto;
 				spriteManager.cambiarSprite(saltando);
+				/*PG = maxPotenciaSalto;
 				int i=0;
 				boolean terminar = false;
-				while ((!celdaActual.getBloque().esLimite(celdaActual)) && !terminar && i<potenciaSalto)
+				while ((!celdaActual.getBloque().esLimite(celdaActual)) && !terminar && i<maxPotenciaSalto)
 				{
 					celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
 					if (!celdaSuperior.isOcupada())
@@ -76,15 +82,32 @@ public class MarioChico extends Mario
 					}
 					else
 						terminar = true;				 
+				}*/
+				//spriteManager.cambiarSprite(quieto);
+				if (!celdaActual.getBloque().esLimite(celdaActual))
+				{
+					PG++;
+					potenciaSalto++;
+					celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
+					if (!celdaSuperior.isOcupada())
+						moverseAcelda(celdaSuperior);
 				}
-				spriteManager.cambiarSprite(quieto);
 			}
+			else
+				if (PG != -1)
+					potenciaSalto = 0;
 		}
-		catch (Exception e)
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
 		{
 			throw new AccionActorException ("Imposible realizar la acción saltar a/desde Celda de posición (" + celdaSuperior.getPosFila() + "," + celdaSuperior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
-					                        e.getMessage());
+					                        e2.getMessage());
 		}
 	}
 		
@@ -98,20 +121,37 @@ public class MarioChico extends Mario
 		Celda celdaAnterior = celdaActual;
 		try 
 		{
+			if (celdaActual == null)
+				throw new NullPointerException ("La celdaActual del Actor es null.");
+			
 			if (!celdaActual.getBloque().esLimite(celdaActual))
 			{
 				spriteManager.cambiarSprite(-caminando);
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
-				spriteManager.cambiarSprite(-quieto);
+				//spriteManager.cambiarSprite(-quieto);
+				upNeeder.addWorker(5,
+						new Worker ()
+						{
+							public void work() throws Exception
+							{
+								spriteManager.cambiarSprite(-quieto);
+							}
+						});
 			}
 		}
-		catch (Exception e)
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
 		{
 			throw new AccionActorException ("Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
-					                        e.getMessage());
+					                        e2.getMessage());
 		}
 	}
 		
@@ -122,23 +162,41 @@ public class MarioChico extends Mario
 	 */
 	public void moverseAderecha () throws AccionActorException
 	{
+		//System.out.println("DERECHA");
 		Celda celdaSiguiente = celdaActual;
 		try 
 		{
+			if (celdaActual == null)
+				throw new NullPointerException ("La celdaActual del Actor es null.");
+			
 			if (!celdaActual.getBloque().esLimite(celdaActual))
 			{
 				spriteManager.cambiarSprite(caminando);
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);
-				spriteManager.cambiarSprite(quieto);
+				//spriteManager.cambiarSprite(quieto);
+				upNeeder.addWorker(5,
+						new Worker ()
+						{
+							public void work() throws Exception
+							{
+								spriteManager.cambiarSprite(quieto);
+							}
+						});
 			}
 		}
-		catch (Exception e)
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
 		{
 			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
-					                        e.getMessage());
+					                        e2.getMessage());
 		}
 	}
 	
@@ -209,6 +267,20 @@ public class MarioChico extends Mario
 	{
 		spriteManager.cambiarSprite(muerto);
 		super.morir();
+	}
+	
+	public void caer ()
+	{
+		//System.out.println("CAER");
+		super.caer();
+		upNeeder.addWorker(5,
+				new Worker ()
+				{
+					public void work() throws Exception
+					{
+						spriteManager.cambiarSprite(quieto);
+					}
+				});
 	}
 	
 }

@@ -1,10 +1,20 @@
-package ProyectoX.Logica;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Logica;
 
-import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Grafico.Sprite.SpriteManager;
-import ProyectoX.Logica.Mapa.Celda;
+import Proyecto2.src.Excepciones.AccionActorException;
+import Proyecto2.src.Excepciones.ColisionException;
+import Proyecto2.src.Grafico.Sprite.CargadorSprite;
+import Proyecto2.src.Grafico.Sprite.SpriteManager;
+import Proyecto2.src.Logica.Mapa.Celda;
 
 /**
  * Representa a todos los objetos virtuales que pueden desarrolar una "actuación" dentro del juego.

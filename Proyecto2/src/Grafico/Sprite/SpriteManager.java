@@ -1,4 +1,14 @@
-package ProyectoX.Grafico.Sprite;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Grafico.Sprite;
 
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
@@ -7,9 +17,9 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-import ProyectoX.Excepciones.CargaRecursoException;
-import ProyectoX.Excepciones.PosicionIncorrectaException;
-import ProyectoX.Excepciones.SpriteException;
+import Proyecto2.src.Excepciones.CargaRecursoException;
+import Proyecto2.src.Excepciones.PosicionIncorrectaException;
+import Proyecto2.src.Excepciones.SpriteException;
 
 /**
  * Controla los Sprites cargados.
