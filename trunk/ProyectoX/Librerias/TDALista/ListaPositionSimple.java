@@ -16,7 +16,6 @@ import java.util.Iterator;
  *  + Lista con 1 elemento Genérico.
  * 
  * @author Javier E. Barrocal (LU: 87158)
- * @author Emiliano Brustle (LU: 88964)
  * @version 1.5
  * @param <E>
  */

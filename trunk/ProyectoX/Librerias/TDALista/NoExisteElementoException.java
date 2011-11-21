@@ -4,7 +4,6 @@ package ProyectoX.Librerias.TDALista;
  * No Existe Elemento Exception: Excepción en tiempo de ejecución provocada al intentar pedir elemento siguiente de una posición null.
  * 
  * @author Javier E. Barrocal (LU: 87158)
- * @author Emiliano Brustle (LU: 88964)
  * @version 1.1
  */
 @SuppressWarnings("serial")

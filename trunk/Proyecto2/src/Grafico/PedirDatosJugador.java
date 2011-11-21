@@ -1,4 +1,14 @@
-package ProyectoX.Grafico;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Grafico;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import ProyectoX.Excepciones.StringEmptyException;
+import Proyecto2.src.Excepciones.StringEmptyException;
 
 /**
  * Representa el Panel donde se piden los Datos del Jugador para el juego.

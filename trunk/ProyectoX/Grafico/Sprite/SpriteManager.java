@@ -10,6 +10,8 @@ import java.awt.image.ImageObserver;
 import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Worker;
 
 /**
  * Controla los Sprites cargados.
@@ -23,6 +25,7 @@ public class SpriteManager implements ImageObserver
 {
 	
 	//Variables de Instancia
+	private UpNeeder upNeeder;
 	private BufferedImage spriteActual;
 	private BufferedImage[] sprites; //Guarda las imagenes posibles para este sprite, donde:
 	                                 //[0] es la imagen intermedia. "mirando hacia fuera de la pantalla"
@@ -48,6 +51,7 @@ public class SpriteManager implements ImageObserver
 	 */
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
+		upNeeder = new UpNeeder();
 		sprites = new BufferedImage[nombresSprites.length];
 		for (int i=0; i<nombresSprites.length; i++)
 			try
@@ -134,11 +138,12 @@ public class SpriteManager implements ImageObserver
 	 * @param Y Nueva posición Y.
 	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
-	public void actualizar (int X, int Y) throws PosicionIncorrectaException
+	public void actualizar (final int X, final int Y) throws PosicionIncorrectaException
 	{
 		if ((X < 0) || (Y < 0))
 			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
 					                             + "No existe posición (" + X + "," + Y +").");
+		
 		if ((posX == -1) && (posY == -1))
 		{//Posición Inicial.
 			posX = X;
@@ -146,35 +151,80 @@ public class SpriteManager implements ImageObserver
 		}
 		else
 		{
-			if (((posX % (int) posX) != 0.0) || ((posY % (int) posY) != 0.0))
-			{//Si alguna de los posiciones tiene decimal. Que significa que está en medio de un movimiento,
+			/*if (((posX % (int) posX) != 0.0) || ((posY % (int) posY) != 0.0))
+			{//Si alguna de los posiciones tiene decimal, significa que está en medio de un movimiento, y se debe completar el movimiento.
 				posX = X;
 				posY = Y;
 			}
 			else
 			{
-				if (posX != X)
-					if (posX < X)
+				if ((int) posX != X)
+					if ((int) posX < X)
 						posX += 0.5;
 					else
 						posX -= 0.5;
-				if (posY != Y)
-					if (posY < Y)
+				if ((int) posY != Y)
+					if ((int) posY < Y)
 						posY += 0.5;
 					else
 						posY -= 0.5;
-				try
-				{
-					Thread.sleep(200);
-				}
-				catch (InterruptedException e)
-				{
-					throw new SpriteException(e.getMessage());
-				}
 				
-				actualizar(X,Y);
+				upNeeder.addWorker(
+						new Worker ()
+						{
+							public void work() throws Exception
+							{
+								act();
+							}
+						});
+			}*/
+			if ((posX % (int) posX) == 0.0)
+			{
+				if ((int) posX != X)
+					if ((int) posX < X)
+					{
+						posX += 0.5;
+						difX += 0.5;
+					}
+					else
+					{
+						posX -= 0.5;
+						difX -= 0.5;
+					}
 			}
+			if ((posY % (int) posY) == 0.0)
+			{
+				if ((int) posY != Y)
+					if ((int) posY < Y)
+					{
+						posY += 0.5;
+						difY += 0.5;
+					}
+					else
+					{
+						posY -= 0.5;
+						difY -= 0.5;
+					}
+			}
+			upNeeder.addWorker(0,
+					new Worker ()
+					{
+						public void work() throws Exception
+						{
+							act();
+						}
+					});
 		}
+	}
+	private double difX = 0; private double difY = 0;
+	public void act () throws PosicionIncorrectaException
+	{
+		posX += difX;
+		posY += difY;
+		difX = 0;
+		difY = 0;
+		while  ((!upNeeder.isEmpty()) && (upNeeder.prioridadNextWorker() == 0))
+			upNeeder.getNextWorker();
 	}
 	
 	/**
@@ -186,6 +236,14 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/*CONSULTAS*/
+	
+	/**
+	 * 
+	 */
+	public UpNeeder getUpNeeder ()
+	{
+		return upNeeder;
+	}
 	
 	/**
 	 * Devuelve el Sprite (imagen actual).
@@ -207,7 +265,9 @@ public class SpriteManager implements ImageObserver
 	public double[] posicion () throws PosicionIncorrectaException
 	{
 		if ((posX == -1) && (posY == -1))
-			throw new PosicionIncorrectaException ("No se ha asignado posición.");
+			throw new PosicionIncorrectaException ("No se ha asignado posición." + "\n" +
+					                               "Detalles del Error:" + "\n" +
+					                               "Error al llamar SpriteManager.posicion(), donde posX y posY del SpriteManager son iguales a -1.");
 		return new double[] {posX, posY};
 	}
 	

@@ -4,6 +4,9 @@ import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Grafico.Sprite.SpriteManager;
+import ProyectoX.Librerias.TDALista.ListaPositionSimple;
+import ProyectoX.Librerias.TDALista.PositionList;
+import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
 
 /**
@@ -22,6 +25,8 @@ public abstract class Actor
 	  //Grafica y Sonido
 	protected SpriteManager spriteManager;
 	//private SoundManager soundManager;
+	  //Actualizar
+	protected UpNeeder upNeeder;
 	  //Logica
 	protected Celda celdaActual; 
 	protected int PG;//Potencia de la Gravedad.
@@ -41,6 +46,7 @@ public abstract class Actor
 	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
+		upNeeder = new UpNeeder ();
 		celdaActual = null;
 		PG = 0;
 	}
@@ -98,8 +104,11 @@ public abstract class Actor
 	 */
 	public void efectoGravedad (int efecto)
 	{
-		if (!(PG < 0))
-			PG -= efecto;
+		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+			PG = 0;
+		else
+			if (!(PG < 0))
+				PG -= efecto;
 	}
 	
 	/*COMANDOS ABSTRACTOS*/
@@ -170,6 +179,17 @@ public abstract class Actor
 	public int getPG ()
 	{
 		return PG;
+	}
+	
+	/**
+	 * 
+	 */
+	public PositionList<UpNeeder> getUpNeeders ()
+	{
+		PositionList<UpNeeder> r = new ListaPositionSimple<UpNeeder> ();
+		r.addFirst(upNeeder);
+		r.addFirst(spriteManager.getUpNeeder());
+		return r;
 	}
 
 }

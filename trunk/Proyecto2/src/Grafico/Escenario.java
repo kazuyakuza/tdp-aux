@@ -1,4 +1,14 @@
-package ProyectoX.Grafico;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Grafico;
 
 import java.awt.Canvas;
 import java.awt.Cursor;
@@ -11,11 +21,11 @@ import java.awt.Transparency;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-import ProyectoX.Excepciones.CargaRecursoException;
-import ProyectoX.Excepciones.EscenarioIncompletoException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Grafico.Sprite.SpriteManager;
-import ProyectoX.Logica.Controles.Control;
+import Proyecto2.src.Excepciones.CargaRecursoException;
+import Proyecto2.src.Excepciones.EscenarioIncompletoException;
+import Proyecto2.src.Grafico.Sprite.CargadorSprite;
+import Proyecto2.src.Grafico.Sprite.SpriteManager;
+import Proyecto2.src.Logica.Controles.Control;
 
 /**
  * Representación gráfica del lugar donde acontecen todas las situaciones del juego.

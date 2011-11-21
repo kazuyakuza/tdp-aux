@@ -1,7 +1,17 @@
-package ProyectoX.Logica;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Logica;
 
-import ProyectoX.Logica.Controles.Control;
-import ProyectoX.Logica.Personajes.PjSeleccionable;
+import Proyecto2.src.Logica.Controles.Control;
+import Proyecto2.src.Logica.Personajes.PjSeleccionable;
 
 /**
  * Representa a la Persona Jugador que juega el Juego.

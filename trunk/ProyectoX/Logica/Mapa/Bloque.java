@@ -223,7 +223,7 @@ public class Bloque
 	private void verificarCelda (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
 		if (celda == null)
-			throw new NullPointerException ("La celda es nula.");
+			throw new NullPointerException ("La celda es null.");
 		try
 		{
 			verificarPosicion(celda.posFila, celda.posColumna);

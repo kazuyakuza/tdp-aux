@@ -15,6 +15,7 @@ import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.EscenarioIncompletoException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Grafico.Sprite.SpriteManager;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Controles.Control;
 
 /**
@@ -26,7 +27,7 @@ import ProyectoX.Logica.Controles.Control;
  * @author Pablo Isaias Chacar LU:67704
  */
 @SuppressWarnings("serial")
-public class Escenario extends Canvas implements Runnable
+public class Escenario extends Canvas implements Worker
 {
 	
 	//Variables de Clase
@@ -235,24 +236,24 @@ public class Escenario extends Canvas implements Runnable
 	 * 
 	 * @exception EscenarioIncompletoException Si el Escenario no ha sido totalmente inicializado.
 	 */
-	public void run () throws EscenarioIncompletoException
+	public void work () throws EscenarioIncompletoException
 	{
 		if ((fondo == null) || (actual == null))
 			throw new EscenarioIncompletoException ("El Escenario no ha sido totalmente inicializado." + "\n" +
 					                                "(fondo == null) -> " + (fondo == null) + "\n" +
 					                                "(actual == null) -> " + (actual == null));
-		while (actualizar)
+		//while (actualizar)
 		{
 			imprimirBloque(actual);
 			
-			try
+			/*try
 			{
 				Thread.sleep(200);
 			}
 			catch (InterruptedException e)
 			{
 				ventanaPrincipal.mensajeError("ERROR", e.getMessage(), true);
-			}
+			}*/
 		}
 	}
 	

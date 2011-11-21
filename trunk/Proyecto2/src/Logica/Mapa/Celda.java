@@ -1,14 +1,24 @@
-package ProyectoX.Logica.Mapa;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Logica.Mapa;
 
 import java.util.Iterator;
 
-import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Excepciones.PosicionIncorrectaException;
-import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Librerias.TDALista.Position;
-import ProyectoX.Librerias.TDALista.PositionList;
-import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.NoPersonajes.Estructura;
+import Proyecto2.src.Excepciones.AccionActorException;
+import Proyecto2.src.Excepciones.PosicionIncorrectaException;
+import Proyecto2.src.Librerias.TDALista.ListaPositionSimple;
+import Proyecto2.src.Librerias.TDALista.Position;
+import Proyecto2.src.Librerias.TDALista.PositionList;
+import Proyecto2.src.Logica.Actor;
+import Proyecto2.src.Logica.NoPersonajes.Estructura;
 
 /**
  * Representa un espacio en el mapa del Juego.

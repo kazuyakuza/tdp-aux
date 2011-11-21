@@ -1,11 +1,21 @@
-package ProyectoX.Grafico;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Grafico;
 
-import ProyectoX.Excepciones.PosicionIncorrectaException;
-import ProyectoX.Excepciones.SpriteException;
-import ProyectoX.Grafico.Sprite.SpriteManager;
-import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Librerias.TDALista.Position;
-import ProyectoX.Librerias.TDALista.PositionList;
+import Proyecto2.src.Excepciones.PosicionIncorrectaException;
+import Proyecto2.src.Excepciones.SpriteException;
+import Proyecto2.src.Grafico.Sprite.SpriteManager;
+import Proyecto2.src.Librerias.TDALista.ListaPositionSimple;
+import Proyecto2.src.Librerias.TDALista.Position;
+import Proyecto2.src.Librerias.TDALista.PositionList;
 
 /**
  * Representación un bloque gráfico de sprites.

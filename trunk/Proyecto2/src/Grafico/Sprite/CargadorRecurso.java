@@ -1,8 +1,18 @@
-package ProyectoX.Grafico.Sprite;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Grafico.Sprite;
 
 import java.net.URL;
 
-import ProyectoX.Excepciones.CargaRecursoException;
+import Proyecto2.src.Excepciones.CargaRecursoException;
 
 /**
  * Clase utilizada para cargar Recursos.
@@ -16,7 +26,7 @@ public abstract class CargadorRecurso
 {
 	
 	//Variables de Clase
-	private String dirRecursos = "ProyectoX/Recursos/";
+	private String dirRecursos = "Proyecto2.src/Recursos/";
 	
 	/*COMANDOS*/
 	

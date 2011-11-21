@@ -43,7 +43,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/**
 	 * Especifica la acción "arriba".
 	 */
-	public void arriba ()
+	public synchronized void arriba ()
 	{
 		saltar();
 	}
@@ -51,7 +51,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/**
 	 * Especifica la acción "abajo".
 	 */
-	public void abajo ()
+	public synchronized void abajo ()
 	{
 		agacharse();
 	}
@@ -59,7 +59,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public void izquierda ()
+	public synchronized void izquierda ()
 	{
 		moverseAizquierda();
 	}
@@ -67,7 +67,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public void derecha ()
+	public synchronized void derecha ()
 	{
 		moverseAderecha();
 	}
@@ -97,18 +97,27 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	{
 		Celda celdaInferior = celdaActual;
 		try 
-		{			 
-			 celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
-			 if (!celdaInferior.isOcupada())
-				 moverseAcelda(celdaInferior);
-			 else
-				 PG = 0;
+		{
+			if (celdaActual == null)
+				throw new NullPointerException ("La celdaActual del Actor es null.");
+			
+			celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+			if (!celdaInferior.isOcupada())
+				moverseAcelda(celdaInferior);
+			else
+				PG = 0;
 		}
-		catch (Exception e)
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
 		{
 			throw new AccionActorException ("Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
-					                        e.getMessage());
+					                        e2.getMessage());
 		}
 	}
 	

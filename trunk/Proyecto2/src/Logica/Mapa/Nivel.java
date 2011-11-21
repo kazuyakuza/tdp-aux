@@ -1,14 +1,24 @@
-package ProyectoX.Logica.Mapa;
+/*******************************************************************************
+ * Copyright (c) 2001, 2007 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
+package Proyecto2.src.Logica.Mapa;
 
-import ProyectoX.Excepciones.InicioNivelException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Librerias.TDALista.PositionList;
-import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.ControlCentral;
-import ProyectoX.Logica.NoPersonajes.Piso;
-import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
-import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
+import Proyecto2.src.Excepciones.InicioNivelException;
+import Proyecto2.src.Grafico.Sprite.CargadorSprite;
+import Proyecto2.src.Librerias.TDALista.ListaPositionSimple;
+import Proyecto2.src.Librerias.TDALista.PositionList;
+import Proyecto2.src.Logica.Actor;
+import Proyecto2.src.Logica.ControlCentral;
+import Proyecto2.src.Logica.NoPersonajes.Piso;
+import Proyecto2.src.Logica.NoPersonajes.Especiales.Llegada;
+import Proyecto2.src.Logica.NoPersonajes.Plataformas.Irrompible;
 
 /**
  * Representa un Nivel del Juego.
