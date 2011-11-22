@@ -1,16 +1,6 @@
 package ProyectoX.Logica;
 
-import java.awt.AWTException;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
 
 import ProyectoX.Excepciones.ControlCentralException;
 import ProyectoX.Grafico.BloqueGrafico;
@@ -21,7 +11,7 @@ import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.Position;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.Threads.AliveThread;
-import ProyectoX.Librerias.Threads.ControlThreads;
+import ProyectoX.Librerias.Threads.ControlThread;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Logica.Controles.Control;
@@ -41,7 +31,7 @@ import ProyectoX.Logica.Personajes.MarioChico;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class ControlCentral implements Runnable, ControlThreads
+public class ControlCentral implements Runnable, ControlThread
 {
 	
 	//Variables de Clase
@@ -59,7 +49,7 @@ public class ControlCentral implements Runnable, ControlThreads
 	//Threads
 	private Thread Tactual;
 	private AliveThread Tescenario, Tjugador, Tgravedad;
-	private Updater updater;
+	private Updater Tupdater;
 	
 	/*CONSTRUCTOR*/
 	
@@ -69,11 +59,22 @@ public class ControlCentral implements Runnable, ControlThreads
 	 * @param ventana Ventana Principal donde se va a ejecutar el Juego.
 	 * @param nJ Nombre Jugador.
 	 * @param e Escenario donde llevar a cabo la parte gráfica el juego.
+	 * @throws NullPointerException Si ventana o nJ o e son null.
 	 */
-	public ControlCentral (VentanaPrincipal ventana, String nJ, Escenario e)
+	public ControlCentral (VentanaPrincipal ventana, String nJ, Escenario e) throws NullPointerException
 	{
 		try
 		{
+			if (ventana == null)
+				throw new NullPointerException ("ControlCentral." + "\n" +
+						                        "Imposible crear ControlCentral. Ventana es null.");
+			if (nJ == null)
+				throw new NullPointerException ("ControlCentral." + "\n" +
+						                        "Imposible crear ControlCentral. Nombre del Jugador es null.");
+			if (e == null)
+				throw new NullPointerException ("ControlCentral." + "\n" +
+						                        "Imposible crear ControlCentral. Escenario es null.");
+			
 			Tactual = null;
 			ventanaPrincipal = ventana;
 			escenario = e;
@@ -97,10 +98,10 @@ public class ControlCentral implements Runnable, ControlThreads
 			ventanaPrincipal.repaint();
 			
 			//Crear y Asignar Threads
-			Tescenario = new AliveThread (this, escenario);
-			Tjugador = new AliveThread (this, jugador);
-			Tgravedad = new AliveThread (this, gravedad);
-			updater = new Updater (this);
+			Tescenario = new AliveThread (this, 0.5, escenario);
+			Tjugador = new AliveThread (this, 1, jugador);
+			Tgravedad = new AliveThread (this, 1, gravedad);
+			Tupdater = new Updater (this, 0.5);
 		}
 		catch (Exception exception)
 		{
@@ -114,11 +115,14 @@ public class ControlCentral implements Runnable, ControlThreads
 	 * Agrega el Thread que ejecutará el run de esta clase.
 	 * 
 	 * @param t Thread para esta clase.
+	 * @throws NullPointerException Si t es null.
 	 */
-	public void agregarThread (Thread t)
+	public void agregarThread (Thread t) throws NullPointerException
 	{
-		if (Tactual == null)
-			Tactual = t;
+		if (t == null)
+			throw new NullPointerException ("ControlCentral.agregarThread()" + "\n" +
+                                            "El thread que se quiere agregar es null.");
+		Tactual = t;
 	}
 	
 	/*CONSULTAS*/
@@ -171,184 +175,37 @@ public class ControlCentral implements Runnable, ControlThreads
 			//Agregando UpNeeders al Updater
 			for (Actor a: actores)
 				for (UpNeeder un: a.getUpNeeders())
-					updater.addUpNeeder(un);
+					Tupdater.addUpNeeder(un);
 			
 			//Start Thread's
 			Tjugador.start();
 			Tgravedad.start();
-			updater.changeSleepTime((int) (getSleepTime()*0.5));
-			updater.start();
+			Tupdater.start();
 			Tescenario.start();
-			Tescenario.changeSleepTime((int) (getSleepTime()*0.5));
 			
 			ventanaPrincipal.repaint();
-			
-			//test
-			//test ();
 		}
 		catch (Exception exception)
 		{
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
 	}
-	int x = 0; int y = 0;
-	double spx = 0; double spy = 0;
-	int pg = -1;
-	public void test ()
-	{
-		int i = 0;
-		while (true)
-		{
-			/*if (!Tescenario.isAlive())
-			{
-				System.out.println("MUERTO Tescenario");
-				System.exit(0);
-			}
-			if (!Tjugador.isAlive())
-			{
-				System.out.println("MUERTO Tjugador");
-				System.exit(0);
-			}
-			if (!Tgravedad.isAlive())
-			{
-				System.out.println("MUERTO Tgravedad");
-				System.exit(0);
-			}*/
-			/*try {
-			Thread.sleep(getSleepTime());
-			} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			}*/
-			/*{
-				if ((x != ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
-					    || (y != ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
-					    {
-						System.out.println("En i " + i +":");
-						System.out.println(((Actor) jugador.personaje()).getCeldaActual().getPosFila() + "," +
-						           ((Actor) jugador.personaje()).getCeldaActual().getPosColumna());
-						System.out.println(((Actor) jugador.personaje()).getSpriteManager().posicion()[0] +","+ 
-						           ((Actor) jugador.personaje()).getSpriteManager().posicion()[1]);
-						 x = ((Actor) jugador.personaje()).getCeldaActual().getPosFila();
-					     y = ((Actor) jugador.personaje()).getCeldaActual().getPosColumna();
-					    }
-			}*/
-			{
-				//if (i<10)
-					//testMarioBot();
-			}
-			/*{
-				if ((spx != ((Actor) jugador.personaje()).spriteManager.posicion()[0])
-					    || (spy != ((Actor) jugador.personaje()).spriteManager.posicion()[1]))
-					    {
-				        System.out.println("En i " + i + " Cambio:");
-						System.out.println(((Actor) jugador.personaje()).getCeldaActual().getPosFila() + "," +
-						           ((Actor) jugador.personaje()).getCeldaActual().getPosColumna());
-						System.out.println(((Actor) jugador.personaje()).getSpriteManager().posicion()[0] +","+ 
-						           ((Actor) jugador.personaje()).getSpriteManager().posicion()[1]);
-						 spx = ((Actor) jugador.personaje()).spriteManager.posicion()[0];
-					     spy = ((Actor) jugador.personaje()).spriteManager.posicion()[1];
-					    }
-			}*/
-			{
-				spx = ((Actor) jugador.personaje()).spriteManager.posicion()[0];
-			    spy = ((Actor) jugador.personaje()).spriteManager.posicion()[1];
-				if (
-						((spx - ((Actor) jugador.personaje()).spriteManager.posicion()[0]) > 0.5)
-					 || ((spx - ((Actor) jugador.personaje()).spriteManager.posicion()[0]) < - 0.5)
-					 ||	((spy - ((Actor) jugador.personaje()).spriteManager.posicion()[1]) > 0.5)
-				     || ((spy - ((Actor) jugador.personaje()).spriteManager.posicion()[1]) < - 0.5)
-					)
-					    {
-				          System.out.println("ERROR");
-				          ventanaPrincipal.salir();
-					    }
-			}
-			    /*if ( pg != ((Actor) jugador.personaje).PG)
-			    {
-			    	System.out.println(((Actor) jugador.personaje).PG);
-			    	pg = ((Actor) jugador.personaje).PG;
-			    	//System.out.println(pg);
-			    }*/
-			/*{
-				if ((5 == ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
-					    && (3 == ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
-					((Actor) jugador.personaje()).moverseAcelda(
-					((Actor) jugador.personaje()).getCeldaActual().getBloque().getCelda(0, 3));
-			}*/
-			/*{
-			if ((1 == ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
-				    && (3 == ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
-				System.out.println("CHAN");
-			}*/
-			i++;
-		}
-	}
-	//boolean izq = false;
-	int h1 = 0;// int h2 = 0; int h3 = 0;
-	//Random random = new Random ();
-	public void testMarioBot ()
-	{
-		if (h1 < 4)
-		{
-			jugador.personaje().arriba();
-			jugador.personaje().derecha();
-			h1++;
-		}
-		else
-			if (h1 < 8)
-			{
-				jugador.personaje().derecha();
-				h1++;
-			}
-			/*else
-				if (h1 < 9)
-				{
-					capture = true;
-					h1++;
-				}*/
-		/*h1 = random.nextInt();
-		h2 = random.nextInt();
-		if ((h2 % 2) == 0)
-			h2++;
-		h1 *= h2;
-		if ((h1 % 9) == 0)
-			h3 = random.nextInt (7);
-		if (h3 == 0)
-		{
-		if ((h1 % 2) == 0)
-		{
-			if (((h1 % 4) == 0) || ((h1 % 6) == 0) || ((h1 % 8) == 0))
-				jugador.personaje().izquierda();
-			else
-				jugador.personaje().derecha();
-		
-			if ((h1 % 11) == 0)
-				jugador.personaje().arriba();
-		}
-		}
-		else
-		{
-			jugador.personaje().arriba();
-			h3--;
-		}*/
-		/*h++;
-		if (izq)
-			jugador.personaje().izquierda();
-		else
-			jugador.personaje().derecha();
-		if (h == 1)
-		{
-			h = 0;
-			izq = !izq;
-		}*/
-	}
 	
+	/**
+	 * Devuelve el tiempo indicado de espera entre cada ejecución para un AliveThread.
+	 * 
+	 * @return tiempo de espera.
+	 */
 	public int getSleepTime ()
 	{
 		return (int) (1000/velocidad);
 	}
 	
+	/**
+	 * Recibe una Excepción e de un AliveThread.
+	 * 
+	 * @param e Excepción producida por un AliveThread.
+	 */
 	public void error (Exception e)
 	{
 		ventanaPrincipal.mensajeError("Error", e.getMessage(), true);

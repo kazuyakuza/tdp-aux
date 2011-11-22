@@ -1,6 +1,8 @@
 package ProyectoX.Logica.Personajes;
 
 /**
+ * Representa al tipo de Personaje Mario Blanco (cuando Mario toma la Flor de Fuego) del juego.
+ * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
@@ -11,6 +13,9 @@ public class MarioBlanco// extends Mario
 
 	/*CONSTRUCTORES*/
 	
+	/**
+	 * 
+	 */
 	public MarioBlanco ()
 	{
 	}

@@ -52,7 +52,7 @@ public class Nivel
 	 * @param cc ControlCentral del Juego para los Actores que lo requieran.
 	 * @param cargadorSprite Clase encargada de cargar las imagenes de los Actores.
 	 * @return Lista de Actores del Nivel creado.
-	 * @exception InicioNivelException Si se produce un error al Iniciar el Nivel.
+	 * @throws InicioNivelException Si se produce un error al Iniciar el Nivel.
 	 */
 	public PositionList<Actor> inicializarNivel (Actor actorJugador, ControlCentral cc, CargadorSprite cargadorSprite) throws InicioNivelException
 	{
@@ -74,7 +74,8 @@ public class Nivel
 		}
 		catch (Exception e)
 		{
-			throw new InicioNivelException ("Error al Inicializar el Nivel " + id + "." + "\n" +
+			throw new InicioNivelException ("Nivel.inicializarNivel()" + "\n" +
+                                            "Error al Inicializar el Nivel " + id + "." + "\n" +
 					                        "Detalles del Error: " + "\n" +
 					                        e.getMessage());
 		}

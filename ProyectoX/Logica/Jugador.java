@@ -34,9 +34,19 @@ public class Jugador implements Worker
 	 * 
 	 * @param nom Nombre del Jugador.
 	 * @param pj Personaje del Jugador.
+	 * @throws NullPointerException Si nom o pj o cc es null.
 	 */
-	public Jugador (String nom, PjSeleccionable pj, Control c, ControlCentral cc)
+	public Jugador (String nom, PjSeleccionable pj, Control c, ControlCentral cc) throws NullPointerException
 	{
+		if (nom == null)
+			throw new NullPointerException ("Jugador." + "\n" +
+					                        "Imposible crear Jugador. El Nombre del Jugador Ingresado es null.");
+		if (pj == null)
+			throw new NullPointerException ("Jugador." + "\n" +
+					                        "Imposible crear Jugador. El PjSeleccionable Ingresado es null.");
+		if (cc == null)
+			throw new NullPointerException ("Jugador." + "\n" +
+					                        "Imposible crear Jugador. El Control Central Ingresado es null.");
 		controlCentral = cc;
 		nombre = nom;
 		personaje = pj;

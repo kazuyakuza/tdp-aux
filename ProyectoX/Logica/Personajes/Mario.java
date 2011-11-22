@@ -91,7 +91,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/**
 	 * Realiza la Acción Caer, producida por el efecto de la Gravedad.
 	 * 
-	 * @exception AccionActorException Si se produce un error al caer.
+	 * @throws AccionActorException Si se produce un error al caer.
 	 */
 	public void caer () throws AccionActorException
 	{
@@ -109,13 +109,15 @@ public abstract class Mario extends Actor implements PjSeleccionable
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+			throw new AccionActorException ("Mario.caer()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Mario.caer()" + "\n" +
+                                            "Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -123,10 +125,17 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	
 	/**
 	 * Realiza la acción de morir (ser destruido) de Mario.
+	 * 
+	 * @throws NullPointerException Si jugador es null.
 	 */
-	public void morir ()
+	public void morir () throws NullPointerException
 	{
 		super.morir();
+		
+		if (jugador == null)
+			throw new NullPointerException ("Mario.morir()" + "\n" +
+                                            "Imposible quitar vida al Jugador. Jugador es null.");
+		
 		jugador.quitarVida();
 	}
 	
@@ -136,9 +145,14 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 * Setea al Jugador que controla a Mario con j.
 	 * 
 	 * @param j Jugador de Mario.
+	 * @throws NullPointerException Si j es null.
 	 */
-	public void setJugador (Jugador j)
+	public void setJugador (Jugador j) throws NullPointerException
 	{
+		if (j == null)
+			throw new NullPointerException ("Mario.setJugador()" + "\n" +
+                                            "Imposible asignar un Jugador null.");
+		
 		jugador = j;
 	}
 			
@@ -167,42 +181,42 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	/**
 	 * Mario realiza la acción de saltar.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al saltar.
+	 * @throws AccionActorException Si se produce algún error al saltar.
 	 */
 	public abstract void saltar () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción de moverse hacia la izquierda.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al moverse a izquierda.
+	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
 	public abstract void moverseAizquierda () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción de moverse hace la derecha.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al moverse a derecha.
+	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
 	public abstract void moverseAderecha () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción de agacharse.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al agacharse.
+	 * @throws AccionActorException Si se produce algún error al agacharse.
 	 */
 	public abstract void agacharse () throws AccionActorException;
 	
 	/**
 	 * Mario realiza la acción A.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al realizar la acción A.
+	 * @throws AccionActorException Si se produce algún error al realizar la acción A.
 	 */
 	public abstract void accionA () throws AccionActorException;
 		
 	/**
 	 * Mario realiza la acción B.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al realizar la acción B.
+	 * @throws AccionActorException Si se produce algún error al realizar la acción B.
 	 */
 	public abstract void accionB () throws AccionActorException;
 	
@@ -210,7 +224,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 * Realiza el efecto de crecer sobre Mario producido por un Super Hongo.
 	 * Dicho efecto evoluciona a Mario.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al crecer.
+	 * @throws AccionActorException Si se produce algún error al crecer.
 	 */
 	public abstract void crecer () throws AccionActorException;
 	
@@ -256,7 +270,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 * 
 	 * Los efectos de la colisión la provocan los otros Actores.
 	 * 
-	 * @exception ColisionException Si se produce algún error en la colisión.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionar (Actor a) throws ColisionException
 	{
@@ -267,7 +281,7 @@ public abstract class Mario extends Actor implements PjSeleccionable
 	 * Realiza la acción de colisionar con otro Personaje Seleccionable.
 	 * Mario no provoca nada al colisionar con otro Personaje.
 	 * 
-	 * @exception ColisionException Si se produce algún error en la colisión.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (Actor actorJugador) throws ColisionException
 	{

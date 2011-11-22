@@ -34,10 +34,16 @@ public class Llegada extends Actor
 	 * 
 	 * @param cc ControlCentral del Juego.
 	 * @param cargadorSprite Clase para cargar los sprites.
+	 * @throws NullPointerException Si cc es null.
 	 */
-	public Llegada (ControlCentral cc, CargadorSprite cargadorSprite)
+	public Llegada (ControlCentral cc, CargadorSprite cargadorSprite) throws NullPointerException
 	{
 		super (nombresSprites, cargadorSprite);
+		
+		if (cc == null)
+			throw new NullPointerException ("Llegada." + "\n" +
+					                        "Imposible crear Llegada con ControlCentral null.");
+		
 		controlCentral = cc;
 	}
 	
@@ -48,7 +54,7 @@ public class Llegada extends Actor
 	 * No tiene ningún efecto con este Actor.
 	 * 
 	 * @param a Actor con el que se va a colisionar.
-	 * @exception ColisionException Si se produce algún error en la colisión. 
+	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
 	public void colisionar (Actor a) throws ColisionException
 	{
@@ -59,7 +65,7 @@ public class Llegada extends Actor
 	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
 	 * 
 	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @exception ColisionException Si se produce algún error en la colisión.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (Actor actorJugador) throws ColisionException
 	{
@@ -90,7 +96,7 @@ public class Llegada extends Actor
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
 	 * No tiene ningún efecto en este Actor.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al caer.
+	 * @throws AccionActorException Si se produce algún error al caer.
 	 */
 	public void caer () throws AccionActorException
 	{
