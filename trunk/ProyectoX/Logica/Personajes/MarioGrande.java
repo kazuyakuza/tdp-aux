@@ -1,6 +1,8 @@
 package ProyectoX.Logica.Personajes;
 
 /**
+ * Representa al tipo de Personaje Mario Grande (cuando Mario toma el Super Hongo) del juego.
+ * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
@@ -11,6 +13,9 @@ public class MarioGrande// extends Mario
 	
 	/*CONSTRUCTORES*/
 	
+	/**
+	 * 
+	 */
 	public MarioGrande ()
 	{
 	}

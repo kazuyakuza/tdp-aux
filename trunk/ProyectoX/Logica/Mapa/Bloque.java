@@ -33,13 +33,14 @@ public class Bloque
 	 * 
 	 * @param cantFilas Cantidad de filas del nuevo Bloque.
 	 * @param cantColumnas Cantidad de columnas del nuevo Bloque.
-	 * @exception BoundaryViolationException Si se ingrensa valores incorrectos del tamaño del Bloque.
-	 * @exception PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
+	 * @throws BoundaryViolationException Si se ingrensa valores incorrectos del tamaño del Bloque.
+	 * @throws PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
 	 */
 	public Bloque (int cantFilas, int cantColumnas) throws BoundaryViolationException, PosicionIncorrectaException
 	{
-		if ((cantFilas < 0) || (cantFilas < 0))
-			throw new BoundaryViolationException ("Imposible armar un Bloque de " + cantFilas + " filas X " + cantColumnas + " calumnas.");
+		if ((cantFilas < 0) || (cantColumnas < 0))
+			throw new BoundaryViolationException ("Bloque." + "\n" +
+					                              "Imposible armar un Bloque de " + cantFilas + " filas X " + cantColumnas + " calumnas.");
 		ABC = new Celda[cantFilas][cantColumnas];
 		nivelPiso = cantFilas-2;
 		crearCeldas();
@@ -50,7 +51,7 @@ public class Bloque
 	/**
 	 * Crea y asigna todas las Celdas al ABC.
 	 * 
-	 * @exception PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
+	 * @throws PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
 	 */
 	private void crearCeldas () throws PosicionIncorrectaException
 	{
@@ -62,7 +63,8 @@ public class Bloque
 				}
 				catch (Exception e)
 				{
-					throw new PosicionIncorrectaException ("Error al crear/asignar la Celda de posición (" + i + "," + j + ")." + "\n" +
+					throw new PosicionIncorrectaException ("Bloque.crearCeldas()" + "\n" +
+                                                           "Error al crear/asignar la Celda de posición (" + i + "," + j + ")." + "\n" +
 							                               "Detalles del error:" + "\n" +
 							                               e.getMessage());
 				}
@@ -75,18 +77,20 @@ public class Bloque
 	 * Si nivelPiso = -1, entonces el Bloque no tiene piso.
 	 * 
 	 * @param nivel Nuevo nivel del piso.
-	 * @exception BoundaryViolationException Si el nivel ingresado no existe en este Bloque.
+	 * @throws BoundaryViolationException Si el nivel ingresado no existe en este Bloque.
 	 */
 	public void setNivelPiso (int nivel) throws BoundaryViolationException
 	{
 		if ((nivel < -1) || (nivel >= getFilas()))
-			throw new BoundaryViolationException ("Imposible setear el piso del Bloque en " + nivel + ".");
+			throw new BoundaryViolationException ("Bloque.setNivelPiso()" + "\n" +
+                                                  "Imposible setear el piso del Bloque en " + nivel + ".");
+		
 		if (nivelPiso != nivel)
 		{
-			setFilaOcupada(nivelPiso, false);//Actualiza las Celdas poniendolas como no piso.
+			setFilaOcupada(nivelPiso, false);//Actualiza las Celdas poniéndolas como no piso.
 			nivelPiso = nivel;
-			if (nivel != -1)
-				setFilaOcupada(nivelPiso, true);//Atualiza las Celdas poniendolas como piso.
+			if (nivelPiso != -1)
+				setFilaOcupada(nivelPiso, true);//Atualiza las Celdas poniéndolas como piso.
 		}
 	}
 	
@@ -95,12 +99,14 @@ public class Bloque
 	 * 
 	 * @param fila Fila de las Celdas a cambiar.
 	 * @param ocupada Valor de totalmenteOcupada de las Celdas a cambiar.
-	 * @exception BoundaryViolationException Si se ingresa una Fila que no existe en el Bloque. 
+	 * @throws BoundaryViolationException Si se ingresa una Fila que no existe en el Bloque. 
 	 */
 	public void setFilaOcupada (int fila, boolean ocupada) throws BoundaryViolationException
 	{
 		if ((fila < 0) || (fila >= getFilas()))
-			throw new BoundaryViolationException ("No exite fila en el Bloque igual a " + fila + ".");
+			throw new BoundaryViolationException ("Bloque.setFilaOcupada()" + "\n" +
+                                                  "No exite fila en el Bloque igual a " + fila + ".");
+		
 		for (int j=0; j < getColumnas(); j++)
 			ABC[fila][j].totalmenteOcupada = ocupada;
 	}
@@ -110,12 +116,13 @@ public class Bloque
 	 * 
 	 * @param columna Columna de las Celdas a cambiar.
 	 * @param ocupada Valor de totalmenteOcupada de las Celdas a cambiar.
-	 * @exception BoundaryViolationException Si se ingresa una Columna que no existe en el Bloque.
+	 * @throws BoundaryViolationException Si se ingresa una Columna que no existe en el Bloque.
 	 */
 	public void setColumnaOcupada (int columna, boolean ocupada) throws BoundaryViolationException
 	{
 		if ((columna < 0) || (columna >= getColumnas()))
-			throw new BoundaryViolationException ("No exite columna en el Bloque igual a " + columna + ".");
+			throw new BoundaryViolationException ("Bloque.setColumnaOcupada()" + "\n" +
+                                                  "No exite columna en el Bloque igual a " + columna + ".");
 		for (int i=0; i < getFilas(); i++)
 			ABC[i][columna].totalmenteOcupada = ocupada;
 	}
@@ -161,7 +168,7 @@ public class Bloque
 	 * @param columna Columna de la posición que se quiere verificar.
 	 * @return True:  (x,y) pertence al piso del Bloque.
 	 *         False: caso contrario.
-	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public boolean esPiso (int fila, int columna) throws PosicionIncorrectaException
 	{
@@ -175,7 +182,7 @@ public class Bloque
 	 * @param posicion Arreglo de dos componentes donde posicion[0] = Fila de la posición que se quiere verificar y posicion[1] = Columna de la posición que se quiere verificar.
 	 * @return True:  la posición está por debajo del piso del Bloque.
 	 *         False: caso contrario.
-	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public boolean debajoDelPiso (int[] posicion) throws PosicionIncorrectaException
 	{
@@ -190,6 +197,8 @@ public class Bloque
 	 * @param celda Celda a verificar.
 	 * @return True:  la Celda está en el límite.
 	 *         False: caso contrario.
+	 * @throws NullPointerException Si la celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public boolean esLimite (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
@@ -205,32 +214,35 @@ public class Bloque
 	 * 
 	 * @param fila Fila de la posición a verificar.
 	 * @param columna Columna de la posición a verificar.
-	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	private void verificarPosicion (int fila, int columna) throws PosicionIncorrectaException
 	{
 		if ((fila < 0) || (fila >= getFilas()) || (columna < 0) || (columna >= getColumnas()))
-			throw new PosicionIncorrectaException ("No existe la posición (" + fila + "," + columna + ") en el Bloque.");
+			throw new PosicionIncorrectaException ("Bloque.verificarPosicion()" + "\n" +
+                                                   "No existe la posición (" + fila + "," + columna + ") en el Bloque.");
 	}
 	
 	/**
 	 * Verifica si la Celda es correcta.
 	 * 
 	 * @param celda Celda a verificar.
-	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
-	 * @exception PosicionIncorrectaException Si se ingresa una Celda de una posición imposible o incorrecta para este Bloque.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se ingresa una Celda de una posición imposible o incorrecta para este Bloque.
 	 */
 	private void verificarCelda (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
 		if (celda == null)
-			throw new NullPointerException ("La celda es null.");
+			throw new NullPointerException ("Bloque.verificarCelda()" + "\n" +
+                                            "La celda es null.");
 		try
 		{
 			verificarPosicion(celda.posFila, celda.posColumna);
 		}
 		catch (PosicionIncorrectaException e)
 		{
-			throw new PosicionIncorrectaException ("La posición de la Celda ingresada (" + celda.posFila + "," + celda.posColumna +") no corresponde con el Bloque actual.");
+			throw new PosicionIncorrectaException ("Bloque.verificarCelda()" + "\n" +
+                                                   "La posición de la Celda ingresada (" + celda.posFila + "," + celda.posColumna +") no corresponde con el Bloque actual.");
 		}
 	}
 	
@@ -239,14 +251,15 @@ public class Bloque
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está a su izquierda.
 	 * @return Celda a la izquierda en el ABC de la Celda pasada por parámetro.
-	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
-	 * @exception PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
 	 */
 	public Celda getAnterior (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
 		verificarCelda (celda);
 		if (celda.posColumna == 0)
-		    throw new PosicionIncorrectaException ("La primera celda de una fila no tiene anterior.");
+		    throw new PosicionIncorrectaException ("Bloque.getAnterior()" + "\n" +
+                                                   "La primera celda de una fila no tiene anterior.");
 		return ABC[celda.posFila][celda.posColumna - 1];	
 	}
 	
@@ -255,14 +268,15 @@ public class Bloque
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está a su derecha.
 	 * @return Celda a la derecha en el ABC de la Celda pasada por parámetro.
-	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
-	 * @exception PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
 	 */
 	public Celda getSiguiente (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
 		verificarCelda (celda);
 		if (celda.posColumna == getColumnas()-1)
-		    throw new PosicionIncorrectaException ("La última celda de una fila no tiene siguiente.");
+		    throw new PosicionIncorrectaException ("Bloque.getSiguiente()" + "\n" +
+                                                   "La última celda de una fila no tiene siguiente.");
     	return ABC[celda.posFila][celda.posColumna + 1];			
 	}
 	
@@ -271,14 +285,15 @@ public class Bloque
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está por encima.
 	 * @return Celda por encima en el ABC de la Celda pasada por parámetro.
-	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
-	 * @exception PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
 	 */
 	public Celda getSuperior (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
 		verificarCelda (celda);
 		if (celda.posFila == 0)
-			throw new BoundaryViolationException ("La primera celda de una columna no tiene superior.");
+			throw new BoundaryViolationException ("Bloque.getSuperior()" + "\n" +
+                                                  "La primera celda de una columna no tiene superior.");
 		return ABC[celda.posFila - 1][celda.posColumna];	
 	}
 	
@@ -287,14 +302,15 @@ public class Bloque
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está por debajo.
 	 * @return Celda por debajo en el ABC de la Celda pasada por parámetro.
-	 * @exception NullPointerException Si la Celda pasada por parámetro es null.
-	 * @exception PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
 	 */
 	public Celda getInferior (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
 		verificarCelda (celda);
 		if (celda.posFila == getFilas()-1)
-			throw new PosicionIncorrectaException ("La ultima celda de una columna no tiene inferior.");
+			throw new PosicionIncorrectaException ("Bloque.getInferior()" + "\n" +
+                                                   "La ultima celda de una columna no tiene inferior.");
 		return ABC[celda.posFila + 1][celda.posColumna];	
 	}
 	
@@ -303,7 +319,7 @@ public class Bloque
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está a su izquierda.
 	 * @return Celda a la izquierda en el ABC de la Celda pasada por parámetro.
-	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public Celda getCelda (int fila, int columna) throws PosicionIncorrectaException
 	{

@@ -85,7 +85,7 @@ public class Teclado implements Control
 	}
 
 	/**
-	 * Méteodo necesario para implementar la interface Control.
+	 * Métedo necesario para implementar la interface Control.
 	 */
 	public void keyTyped (KeyEvent e) {}
 

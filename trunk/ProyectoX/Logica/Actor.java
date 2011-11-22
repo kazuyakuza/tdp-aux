@@ -42,9 +42,17 @@ public abstract class Actor
 	 * 
 	 * @param nombresSprites Nombres de los archivos de las imagenes del Sprite para este Actor.
 	 * @param cargadorSprite Clase para cargar los sprites.
+	 * @throws NullPointerException Si nombresSprites es null, o cargadorSprite es null.
 	 */
 	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
+		if ((nombresSprites == null) || (nombresSprites.length == 0))
+			throw new NullPointerException ("Actor." + "\n" +
+					                        "Imposible crear Actor. nombresSprites es null.");
+		if (cargadorSprite == null)
+			throw new NullPointerException ("Actor." + "\n" +
+                                            "Imposible crear Actor. cargadorSprite es null.");
+		
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
 		upNeeder = new UpNeeder ();
 		celdaActual = null;
@@ -57,9 +65,14 @@ public abstract class Actor
 	 * Cambia el SpriteManager actual por el nuevo sp.
 	 * 
 	 * @param sp Nuevo SpriteManager.
+	 * @throws NullPointerException Si sp es null.
 	 */
-	public void setSpriteManager (SpriteManager sp)
+	public void setSpriteManager (SpriteManager sp) throws NullPointerException
 	{
+		if (sp == null)
+			throw new NullPointerException ("Actor.setSpriteManager()" + "\n" +
+                                            "El SpriteManager sp es null.");
+		
 		spriteManager = sp;
 	}
 	
@@ -67,9 +80,14 @@ public abstract class Actor
 	 * Cambia la Celda Actual por la Celda C.
 	 * 
 	 * @param c Nueva Celda Actual.
+	 * @throws NullPointerException Si c es null.
 	 */
-	public void setCeldaActual (Celda c)
+	public void setCeldaActual (Celda c) throws NullPointerException
 	{
+		if (c == null)
+			throw new NullPointerException ("Actor.setCeldaActual()" + "\n" +
+                                            "Imposible asignar la Celda c. c es null");
+		
 		celdaActual = c;
 		spriteManager.actualizar(celdaActual.getPosicion());
 	}
@@ -80,9 +98,14 @@ public abstract class Actor
 	 * Actualiza el SpriteManager.
 	 * 
 	 * @param c Celda a la que se mueve el Actor.
+	 * @throws NullPointerException Si c es null.
 	 */
-	public void moverseAcelda (Celda c)
+	public void moverseAcelda (Celda c) throws NullPointerException
 	{
+		if (c == null)
+			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
+                                            "Imposible moverse a la Celda c. c es null");
+		
 		producirColisiones(c);
 		celdaActual.sacarActor(this);
 		celdaActual = c;
@@ -117,7 +140,7 @@ public abstract class Actor
 	 * Realiza la acción de colisionar con otro Actor a.
 	 * 
 	 * @param a Actor con el que se va a colisionar.
-	 * @exception ColisionException Si se produce algún error en la colisión.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public abstract void colisionar (Actor a) throws ColisionException;
 	
@@ -125,14 +148,14 @@ public abstract class Actor
 	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
 	 * 
 	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @exception ColisionException Si se produce algún error en la colisión.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public abstract void colisionarPj (Actor actorJugador) throws ColisionException;
 	
 	/**
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al caer.
+	 * @throws AccionActorException Si se produce algún error al caer.
 	 */
 	public abstract void caer () throws AccionActorException;
 	
@@ -146,6 +169,7 @@ public abstract class Actor
 		
 		spriteManager = null;
 		celdaActual = null;
+		upNeeder = null;
 		PG = 0;*/
 	}
 	
@@ -182,7 +206,9 @@ public abstract class Actor
 	}
 	
 	/**
+	 * Devuelve el UpNeeder del Actor junto con el UpNeeder del SpriteManager.
 	 * 
+	 * @return UpNeeder del Actor junto con el UpNeeder del SpriteManager.
 	 */
 	public PositionList<UpNeeder> getUpNeeders ()
 	{

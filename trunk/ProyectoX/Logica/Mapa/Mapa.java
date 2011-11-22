@@ -27,8 +27,16 @@ public class Mapa
 	 */
 	public Mapa (Bloque[] bs)
 	{
+		if (bs == null)
+			throw new NullPointerException ("Mapa." + "\n" +
+                                            "Imposible crear un Mapa con Bloques null.");
+		
 		bloques = bs;
 		cant = bloques.length;
+		
+		if (cant == 0)
+			throw new NullPointerException ("Mapa." + "\n" +
+                                            "Imposible crear un Mapa con 0 Bloques.");
 	}
 	
 	/*COMANDOS*/
@@ -38,9 +46,14 @@ public class Mapa
 	 * 
 	 * @param bloque Nuevo Bloque para la posición i.
 	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @throws NullPointerException Si bloque es null.
 	 */
-	public void setBloque (int i, Bloque bloque) throws BoundaryViolationException
+	public void setBloque (int i, Bloque bloque) throws BoundaryViolationException, NullPointerException
 	{
+		if (bloque == null)
+			throw new NullPointerException ("Mapa.setBloque()" + "\n" +
+            								"Imposible setear un Bloque null.");
+		
 		verificarPosicion(i);
 		bloques[i] = bloque;
 	}
@@ -49,12 +62,13 @@ public class Mapa
 	 * Verifica si la posicion i es correcta y pertenece al Mapa.
 	 * 
 	 * @param i Posición a verificar.
-	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
 	 */
 	private void verificarPosicion (int i) throws BoundaryViolationException
 	{
 		if ((i < 0) || (i >= cantBloques()))
-			throw new BoundaryViolationException ("No existe Bloque " + i + " en el Mapa.");
+			throw new BoundaryViolationException ("Mapa.verificarPosicion()" + "\n" +
+					                              "No existe Bloque " + i + " en el Mapa.");
 	}
 	
 	/*CONSULTAS*/
@@ -74,7 +88,7 @@ public class Mapa
 	 * 
 	 * @param i Posición del Bloque a devolver.
 	 * @return Bloque en la posición i.
-	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
 	 */
 	public Bloque getBloque (int i) throws BoundaryViolationException
 	{
@@ -87,13 +101,14 @@ public class Mapa
 	 * 
 	 * @param i Posición del Bloque siguiente al Bloque a devolver.
 	 * @return Bloque en la posición i-1.
-	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
 	 */
 	public Bloque getBloqueAnterior (int i) throws BoundaryViolationException
 	{
 		verificarPosicion(i);
 		if (i == 0)
-			throw new BoundaryViolationException ("No existe Bloque anterior al primero.");
+			throw new BoundaryViolationException ("Mapa.getBloqueAnterior()" + "\n" +
+                                                  "No existe Bloque anterior al primero.");
 		return bloques[i-1];
 	}
 	
@@ -102,13 +117,14 @@ public class Mapa
 	 * 
 	 * @param i Posición del Bloque anterior al Bloque a devolver.
 	 * @return Bloque en la posición i+1.
-	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
 	 */
 	public Bloque getBloqueSiguiente (int i) throws BoundaryViolationException
 	{
 		verificarPosicion(i);
 		if (i == cantBloques()-1)
-			throw new BoundaryViolationException ("No existe Bloque siguiente al último.");
+			throw new BoundaryViolationException ("Mapa.getBloqueSiguiente()" + "\n" +
+                                                  "No existe Bloque siguiente al último.");
 		return bloques[i+1];
 	}
 	

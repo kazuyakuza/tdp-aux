@@ -38,7 +38,7 @@ public class Irrompible extends Actor implements Plataforma
 	 * No tiene ningún efecto con este Actor.
 	 * 
 	 * @param a Actor con el que se va a colisionar.
-	 * @exception ColisionException Si se produce algún error en la colisión. 
+	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
 	public void colisionar (Actor a) throws ColisionException
 	{
@@ -49,7 +49,7 @@ public class Irrompible extends Actor implements Plataforma
 	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
 	 * 
 	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @exception ColisionException Si se produce algún error en la colisión.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (Actor actorJugador) throws ColisionException
 	{
@@ -80,7 +80,7 @@ public class Irrompible extends Actor implements Plataforma
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
 	 * No tiene ningún efecto en este Actor.
 	 * 
-	 * @exception AccionActorException Si se produce algún error al caer.
+	 * @throws AccionActorException Si se produce algún error al caer.
 	 */
 	public void caer () throws AccionActorException
 	{

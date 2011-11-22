@@ -16,7 +16,6 @@ public class Gravedad implements Worker
 	
 	//Atributos de Instancia
 	protected ControlCentral controlCentral;
-	protected boolean afectar;
 	
 	/*CONTRUCTOR*/
 	
@@ -24,22 +23,18 @@ public class Gravedad implements Worker
 	 * Crea la Gravedad con el ControlCentral del Juego.
 	 * 
 	 * @param cc ControlCentral del Juego.
+	 * @throws NullPointerException Si cc es null.
 	 */
-	public Gravedad (ControlCentral cc)
+	public Gravedad (ControlCentral cc) throws NullPointerException
 	{
+		if (cc == null)
+			throw new NullPointerException ("Gravedad." + "\n" +
+					                        "Imposible crear Gravedad. El Control Central Ingresado es null.");
+		
 		controlCentral = cc;
-		afectar = true;
 	}
 	
 	/*COMANDOS*/
-	
-	/**
-	 * 
-	 */
-	public void setAfectar (boolean v)
-	{
-		afectar = v;
-	}
 	
 	/*Métodos en Ejecución*/
 	
@@ -50,21 +45,9 @@ public class Gravedad implements Worker
 	 */
 	public void work()
 	{	
-		//while (afectar)
-		{
-			Iterator<Actor> actores = controlCentral.getActores();
-			while (actores.hasNext())
-				afectar(actores.next());
-			
-			/*try
-			{
-				Thread.sleep(200);
-			}
-			catch (InterruptedException e)
-			{
-				controlCentral.mensajeError("Error", e.getMessage(), true);
-			}*/
-		}
+		Iterator<Actor> actores = controlCentral.getActores();
+		while (actores.hasNext())
+			afectar(actores.next());
 	}
 	
 	/**
