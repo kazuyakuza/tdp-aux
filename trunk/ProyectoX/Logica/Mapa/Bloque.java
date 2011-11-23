@@ -20,7 +20,9 @@ public class Bloque
 	
 	//Variables de Instancia
 	protected Celda[][] ABC; //Arreglo Bidimensional de Celdas
-	protected int nivelPiso; //Representa el nivel del Piso en el Mapa.
+	protected Mapa mapa; //Mapa al que pertenece el Bloque.
+	protected int fila, columna; //Posición (fila,columna) del Bloque en el Mapa.
+	protected int nivelPiso; //Representa el nivel del Piso en el Bloque.
 	                         //Si el Bloque tiene piso, entonces 0 <= nivelPiso < this.getFilas()
 	                         //Si nivelPiso = -1, entonces el Bloque no tiene piso.
 	
@@ -31,16 +33,30 @@ public class Bloque
 	 * Inicia con posición del nivel del Piso con cantFilas-2.
 	 * Crea una Celda para cada posición del ABC.
 	 * 
+	 * @param m Mapa al que pertenece el Bloque a crear.
+	 * @param f Fila de la Posición del Bloque a crear en el Mapa.
+	 * @param c Columna de la Posición del Bloque a crear en el Mapa.
 	 * @param cantFilas Cantidad de filas del nuevo Bloque.
 	 * @param cantColumnas Cantidad de columnas del nuevo Bloque.
+	 * @throws NullPointerException Si el Mapa m es null.
 	 * @throws BoundaryViolationException Si se ingrensa valores incorrectos del tamaño del Bloque.
-	 * @throws PosicionIncorrectaException Si hay un error al ingresar una Celda a una determinada posición.
+	 * @throws PosicionIncorrectaException Si la posición (f,c) pasada por parámetro es incorrecta. Si hay un error al ingresar una Celda a una determinada posición.
 	 */
-	public Bloque (int cantFilas, int cantColumnas) throws BoundaryViolationException, PosicionIncorrectaException
+	public Bloque (Mapa m, int f, int c, int cantFilas, int cantColumnas) throws NullPointerException, BoundaryViolationException, PosicionIncorrectaException
 	{
+		if (m == null)
+			throw new NullPointerException ("Bloque." + "\n" +
+                                            "Imposible crear Bloque. El Mapa pasado por parámetro es null.");
+		if ((f < 0) || (c < 0))
+			throw new PosicionIncorrectaException ("Bloque." + "\n" +
+					                              "Imposible crear un Bloque en la posición (" + f + "," + c + ") del Mapa.");
 		if ((cantFilas < 0) || (cantColumnas < 0))
 			throw new BoundaryViolationException ("Bloque." + "\n" +
 					                              "Imposible armar un Bloque de " + cantFilas + " filas X " + cantColumnas + " calumnas.");
+		
+		mapa = m;
+		fila = f;
+		columna = c;
 		ABC = new Celda[cantFilas][cantColumnas];
 		nivelPiso = cantFilas-2;
 		crearCeldas();
@@ -130,6 +146,26 @@ public class Bloque
 	/*CONSULTAS*/
 	
 	/**
+	 * Devuelve el Mapa al que pertenece el Bloque.
+	 * 
+	 * @return Mapa al que pertenece el Bloque.
+	 */
+	public Mapa getMapa ()
+	{
+		return mapa;
+	}
+	
+	/**
+	 * Devuelve la Posición del Bloque en el Mapa.
+	 * 
+	 * @return Arreglo de dos componentes con la Posición del Bloque en el Mapa. Donde arreglo[0] es la fila de la posición, y arreglo[1] es la columna de la posición.
+	 */
+	public int[] getPosEnMapa ()
+	{
+		return new int[] {fila, columna};
+	}
+	
+	/**
 	 * Devuelve la cantidad de Filas del ABC.
 	 * Pero para utilizar los métodos de esta clase, la fila máxima es getFilas()-1.
 	 * 
@@ -159,6 +195,19 @@ public class Bloque
 	public int getNivelPiso ()
 	{
 		return nivelPiso;
+	}
+	
+	/**
+	 * Verifica si existe una Celda en la posición (f, c).
+	 * 
+	 * @param f Fila de la posición.
+	 * @param c Columna de la posición.
+	 * @return True:  existe una Celda en la posición (f,c).
+	 *         False: demas casos.
+	 */
+	public boolean existeCelda (int f, int c)
+	{
+		return ((f >= 0) && (f < getFilas()) && (c >= 0) && (c < getColumnas()));
 	}
 	
 	/**
@@ -247,6 +296,102 @@ public class Bloque
 	}
 	
 	/**
+	 * Verifica si hay una Celda a izquierda de la Celda pasada por parámetro.
+	 * 
+	 * Hay una Celda a izquierda si:
+	 * - hay una Celda a izquierda en el ABC
+	 * - o hay una Celda a izquierda en el Bloque a izquierda del Bloque Actual.
+	 * 
+	 * @param celda Celda a la que verificarle si existe una Celda que esté a su izquierda.
+	 * @return True:  existe una Celda a izquierda de la Celda pasada por parámetro.
+	 *         False: demas casos.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean hayAnterior (Celda celda) throws NullPointerException, PosicionIncorrectaException
+	{
+		if (esLimite(celda))
+			if (mapa.hayBloqueAnterior(getPosEnMapa()))
+			{
+				Bloque bAnt = mapa.getBloqueAnterior(getPosEnMapa());
+				return bAnt.existeCelda(celda.posFila, bAnt.getColumnas() - 1);
+			}
+		return existeCelda(celda.posFila, celda.posColumna - 1);	
+	}
+	
+	/**
+	 * Verifica si hay una Celda a derecha de la Celda pasada por parámetro.
+	 * 
+	 * Hay una Celda a derecha si:
+	 * - hay una Celda a derecha en el ABC
+	 * - o hay una Celda a derecha en el Bloque a derecha del Bloque Actual.
+	 * 
+	 * @param celda Celda a la que verificarle si existe una Celda que está a su derecha.
+	 * @return True:  existe una Celda a derecha de la Celda pasada por parámetro.
+	 *         False: demas casos.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean haySiguiente (Celda celda) throws NullPointerException, PosicionIncorrectaException
+	{
+		if (esLimite(celda))
+			if (mapa.hayBloqueSiguiente(getPosEnMapa()))
+			{
+				Bloque bSig = mapa.getBloqueSiguiente(getPosEnMapa());
+				return bSig.existeCelda(celda.posFila, 0);
+			}
+		return existeCelda(celda.posFila, celda.posColumna + 1);			
+	}
+	
+	/**
+	 * Verifica si hay una Celda por encima de la Celda pasada por parámetro.
+	 * 
+	 * Hay una Celda por encima si:
+	 * - hay una Celda por encima en el ABC
+	 * - o hay una Celda por encima en el Bloque por encima del Bloque Actual.
+	 * 
+	 * @param celda Celda a la que verificarle si existe una Celda que está por encima.
+	 * @return True:  existe una Celda por encima de la Celda pasada por parámetro.
+	 *         False: demas casos.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean haySuperior (Celda celda) throws NullPointerException, PosicionIncorrectaException
+	{
+		if (esLimite(celda))
+			if (mapa.hayBloqueSuperior(getPosEnMapa()))
+			{
+				Bloque bSup = mapa.getBloqueSuperior(getPosEnMapa());
+				return bSup.existeCelda(bSup.getFilas() - 1, celda.posColumna);
+			}
+		return existeCelda(celda.posFila - 1, celda.posColumna);	
+	}
+	
+	/**
+	 * Verifica si hay una Celda por debajo de la Celda pasada por parámetro.
+	 * 
+	 * Hay una Celda por debajo si:
+	 * - hay una Celda por debajo en el ABC
+	 * - o hay una Celda por debajo en el Bloque por debajo del Bloque Actual.
+	 * 
+	 * @param celda Celda a la que verificarle si existe una Celda que está por debajo.
+	 * @return True:  existe una Celda por debajo de la Celda pasada por parámetro.
+	 *         False: demas casos.
+	 * @throws NullPointerException Si la Celda pasada por parámetro es null.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean hayInferior (Celda celda) throws NullPointerException, PosicionIncorrectaException
+	{
+		if (esLimite(celda))
+			if (mapa.hayBloqueInferior(getPosEnMapa()))
+			{
+				Bloque bInf = mapa.getBloqueInferior(getPosEnMapa());
+				return bInf.existeCelda(0, celda.posColumna);
+			}
+		return existeCelda(celda.posFila + 1, celda.posColumna);	
+	}
+	
+	/**
 	 * Devuelve la Celda a izquierda en el ABC de la Celda pasada por parámetro.
 	 * 
 	 * @param celda Celda a la que buscarle la Celda que está a su izquierda.
@@ -256,10 +401,16 @@ public class Bloque
 	 */
 	public Celda getAnterior (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
-		verificarCelda (celda);
-		if (celda.posColumna == 0)
-		    throw new PosicionIncorrectaException ("Bloque.getAnterior()" + "\n" +
-                                                   "La primera celda de una fila no tiene anterior.");
+		if (esLimite(celda))
+			if (mapa.hayBloqueAnterior(getPosEnMapa()))
+			{
+				Bloque bAnt = mapa.getBloqueAnterior(getPosEnMapa());
+				return bAnt.getCelda(celda.posFila, bAnt.getColumnas() - 1);
+			}
+			else
+				throw new PosicionIncorrectaException ("Bloque.getAnterior()" + "\n" +
+						                               "La primera celda de una fila no tiene anterior." + "\n" +
+						                               "Y no existe un Bloque anterior al actual.");
 		return ABC[celda.posFila][celda.posColumna - 1];	
 	}
 	
@@ -273,11 +424,17 @@ public class Bloque
 	 */
 	public Celda getSiguiente (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
-		verificarCelda (celda);
-		if (celda.posColumna == getColumnas()-1)
-		    throw new PosicionIncorrectaException ("Bloque.getSiguiente()" + "\n" +
-                                                   "La última celda de una fila no tiene siguiente.");
-    	return ABC[celda.posFila][celda.posColumna + 1];			
+		if (esLimite(celda))
+			if (mapa.hayBloqueSiguiente(getPosEnMapa()))
+			{
+				Bloque bSig = mapa.getBloqueSiguiente(getPosEnMapa());
+				return bSig.getCelda(celda.posFila, 0);
+			}
+			else
+				throw new PosicionIncorrectaException ("Bloque.getSiguiente()" + "\n" +
+                                                       "La última celda de una fila no tiene siguiente." + "\n" +
+                                                       "Y no existe un Bloque siguiente al actual.");
+		return ABC[celda.posFila][celda.posColumna + 1];			
 	}
 	
 	/**
@@ -290,10 +447,16 @@ public class Bloque
 	 */
 	public Celda getSuperior (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
-		verificarCelda (celda);
-		if (celda.posFila == 0)
-			throw new BoundaryViolationException ("Bloque.getSuperior()" + "\n" +
-                                                  "La primera celda de una columna no tiene superior.");
+		if (esLimite(celda))
+			if (mapa.hayBloqueSuperior(getPosEnMapa()))
+			{
+				Bloque bSup = mapa.getBloqueSuperior(getPosEnMapa());
+				return bSup.getCelda(bSup.getFilas() - 1, celda.posColumna);
+			}
+			else
+				throw new BoundaryViolationException ("Bloque.getSuperior()" + "\n" +
+                                                      "La primera celda de una columna no tiene superior." + "\n" +
+                                                      "Y no existe un Bloque superior al actual.");
 		return ABC[celda.posFila - 1][celda.posColumna];	
 	}
 	
@@ -307,10 +470,16 @@ public class Bloque
 	 */
 	public Celda getInferior (Celda celda) throws NullPointerException, PosicionIncorrectaException
 	{
-		verificarCelda (celda);
-		if (celda.posFila == getFilas()-1)
-			throw new PosicionIncorrectaException ("Bloque.getInferior()" + "\n" +
-                                                   "La ultima celda de una columna no tiene inferior.");
+		if (esLimite(celda))
+			if (mapa.hayBloqueInferior(getPosEnMapa()))
+			{
+				Bloque bInf = mapa.getBloqueInferior(getPosEnMapa());
+				return bInf.getCelda(0, celda.posColumna);
+			}
+			else
+				throw new PosicionIncorrectaException ("Bloque.getInferior()" + "\n" +
+                                                       "La ultima celda de una columna no tiene inferior." + "\n" +
+                                                       "Y no existe un Bloque inferior al actual.");
 		return ABC[celda.posFila + 1][celda.posColumna];	
 	}
 	

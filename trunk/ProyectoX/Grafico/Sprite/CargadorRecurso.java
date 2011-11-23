@@ -25,7 +25,7 @@ public abstract class CargadorRecurso
 	 * 
 	 * @param nom Nombre del recurso a devolver.
 	 * @return Recurso de nombre nom.
-	 * @exception CargaRecursoException Si se produce un error al cargar el recurso solicitado.
+	 * @throws CargaRecursoException Si se produce un error al cargar el recurso solicitado.
 	 */
 	public Object obtenerRecurso (String nom) throws CargaRecursoException
 	{
@@ -38,7 +38,7 @@ public abstract class CargadorRecurso
 	 * 
 	 * @param dir Dirección del recurso a cargar.
 	 * @return Recurso que está en la dirección dir.
-	 * @exception CargaRecursoException Si se produce un error al cargar el recurso solicitado. O si la dirección ingresada es incorrecta y genera una URL null.
+	 * @throws CargaRecursoException Si se produce un error al cargar el recurso solicitado. O si la dirección ingresada es incorrecta y genera una URL null.
 	 */
 	private Object cargarRecurso (String dir) throws CargaRecursoException
 	{
@@ -46,7 +46,8 @@ public abstract class CargadorRecurso
 		url = getClass().getClassLoader().getResource(dir);
 		
 		if (url == null)
-			throw new CargaRecursoException ("Error al Cargar el Recurso de Dirección: " + dir + "\n" +
+			throw new CargaRecursoException ("CargadorRecurso.cargarRecurso()" + "\n" +
+					                         "Error al Cargar el Recurso de Dirección: " + dir + "\n" +
                                              "Detalles del error:" + "\n" +
                                              "La dirección ingresada genera una una URL null.");
 		
@@ -58,7 +59,7 @@ public abstract class CargadorRecurso
 	 * 
 	 * @param url Dirección del recurso a cargar.
 	 * @return Recurso de dirección url.
-	 * @exception CargaRecursoException Si hay un error al leer la URL.
+	 * @throws CargaRecursoException Si hay un error al leer la URL.
 	 */
 	public abstract Object cargarRecurso (URL url) throws CargaRecursoException;
 

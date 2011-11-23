@@ -54,7 +54,7 @@ public abstract class Actor
                                             "Imposible crear Actor. cargadorSprite es null.");
 		
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
-		upNeeder = new UpNeeder ();
+		upNeeder = new UpNeeder (5);
 		celdaActual = null;
 		PG = 0;
 	}

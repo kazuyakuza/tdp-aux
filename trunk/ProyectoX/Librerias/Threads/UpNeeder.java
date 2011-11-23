@@ -1,7 +1,8 @@
 package ProyectoX.Librerias.Threads;
 
-import ProyectoX.Librerias.TDAColaConPrioridad.PriorityQueue;
+import ProyectoX.Excepciones.BoundaryViolationException;
 import ProyectoX.Librerias.TDAColaConPrioridad.ColaConPrioridadConHeap;
+import ProyectoX.Librerias.TDAColaConPrioridad.PriorityQueue;
 
 /**
  * Contiene Worker que deben ser ejecutados.
@@ -16,17 +17,21 @@ public class UpNeeder
 	
 	//Atributos de Instancia
 	private PriorityQueue<Integer,Worker> workers;//Cola Con Prioridad de Workers.
+	private boolean[] prioridades; //Guarda las Prioridades de los Workers agregados a la Cola Con Prioridad.
 	private boolean needUpdate;
 	
 	/*CONSTRUCTOR*/
 	
 	/**
 	 * Crea un UpNeeder con una Cola Con Prioridad vacía de workers.
+	 * 
+	 * @param maxPrioridad Máximo número posible en los Workers a insertar en la Cola Con Prioridad. (prioridad min = 0 max = maxPrioridad)
 	 */
-	public UpNeeder ()
+	public UpNeeder (int maxPrioridad)
 	{
 		needUpdate = true;
 		workers = new ColaConPrioridadConHeap<Integer,Worker> ();
+		prioridades = new boolean[maxPrioridad + 1];
 	}
 	
 	/*COMANDOS*/
@@ -43,8 +48,34 @@ public class UpNeeder
 		if (w == null)
 			throw new NullPointerException ("UpNeeder.addWorker()" + "\n" +
 					                        "Imposible agregar un Worker null.");
+		if (prioridad >= prioridades.length)
+			throw new BoundaryViolationException ("UpNeeder.addWorker()" + "\n" +
+                                                  "La imprioridad " + prioridad + " del Worker a ingresar supera la máxima prioridad posible definida al crear el UpNeeder. (max=" + prioridades.length + ")");
 		
+		prioridades[prioridad] = true;
 		workers.insert(prioridad, w);
+	}
+	
+	/**
+	 * Devuelve el próximo Worker.
+	 * 
+	 * @return Próximo Worker.
+	 * @throws EmptyUpNeederException Si se solicita un Worker cuando la Cola Workers está vacía.
+	 */
+	public Worker getNextWorker () throws EmptyUpNeederException
+	{
+		if (workers.isEmpty())
+			throw new EmptyUpNeederException ("UpNeeder.getNextWorker()" + "\n" +
+					                          "No hay mas Workers en el UpNeeder solicitado.");
+		
+		int prioridadNextWorker = prioridadNextWorker();
+		Worker r = workers.removeMin().getValue();
+		if (isEmpty())
+			prioridades[prioridadNextWorker] = false;
+		else
+			if (prioridadNextWorker != prioridadNextWorker())
+				prioridades[prioridadNextWorker] = false;
+		return r;
 	}
 	
 	/**
@@ -63,24 +94,10 @@ public class UpNeeder
 		while (! workers.isEmpty())
 			workers.removeMin();
 		workers = null;
+		prioridades = null;
 	}
 	
 	/*CONSULTAS*/
-	
-	/**
-	 * Devuelve el próximo Worker.
-	 * 
-	 * @return Próximo Worker.
-	 * @throws EmptyUpNeederException Si se solicita un Worker cuando la Cola Workers está vacía.
-	 */
-	public Worker getNextWorker () throws EmptyUpNeederException
-	{
-		if (workers.isEmpty())
-			throw new EmptyUpNeederException ("UpNeeder.getNextWorker()" + "\n" +
-					                          "No hay mas Workers en el UpNeeder solicitado.");
-		
-		return workers.removeMin().getValue();
-	}
 	
 	/**
 	 * Devuelve la prioridad del próximo Worker.
@@ -95,6 +112,18 @@ public class UpNeeder
 					                          "No hay mas Workers en el UpNeeder solicitado.");
 		
 		return workers.min().getKey();
+	}
+	
+	/**
+	 * Verifica si hay almenos un Worker con el valor de prioridad pasada por parámetro, y devuelve el resultado.
+	 * 
+	 * @param prioridad Valor de prioridad a verificar.
+	 * @return True:  existe almenos un Worker con el valor de prioridad pasada por parámetro.
+	 *         False: caso contrario.
+	 */
+	public boolean hayWorkerPrioridad (int prioridad)
+	{
+		return prioridades[prioridad];
 	}
 	
 	/**

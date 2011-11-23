@@ -101,11 +101,14 @@ public abstract class Mario extends Actor implements PjSeleccionable
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
-			if (!celdaInferior.isOcupada())
-				moverseAcelda(celdaInferior);
-			else
-				PG = 0;
+			if (celdaActual.getBloque().hayInferior(celdaActual))
+			{
+				celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+				if (!celdaInferior.isOcupada())
+					moverseAcelda(celdaInferior);
+				else
+					PG = 0;
+			}
 		}
 		catch (NullPointerException e1)
 		{

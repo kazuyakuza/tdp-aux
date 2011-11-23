@@ -57,7 +57,6 @@ public class Gravedad implements Worker
 	 */
 	private void afectar (Actor a)
 	{
-		System.out.println (a.getPG());
 		if (a.getPG() == -1)
 		{
 			a.caer();

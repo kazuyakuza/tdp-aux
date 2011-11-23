@@ -39,6 +39,7 @@ public class MarioChico extends Mario
 	private int PS = 0;//Potencia de Salto Actual.
 	
 	//Prioridades para el UpNeeder
+	//0 = spriteManager.cambiarSprite(saltando)
 	//5 = spriteManager.cambiarSprite(-quieto)
 	
 	/*CONSTRUCTORES*/
@@ -72,7 +73,7 @@ public class MarioChico extends Mario
 			if ((PG == 0) && (PS < maxPS))
 			{
 				spriteManager.cambiarSprite(saltando);
-				if (!celdaActual.getBloque().esLimite(celdaActual))
+				if (celdaActual.getBloque().haySuperior(celdaActual))
 				{
 					PG++;
 					PS++;
@@ -114,21 +115,22 @@ public class MarioChico extends Mario
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (!celdaActual.getBloque().esLimite(celdaActual))
+			if (celdaActual.getBloque().hayAnterior(celdaActual))
 			{
 				spriteManager.cambiarSprite(-caminando);
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
 				
-				upNeeder.addWorker(5,
-						new Worker ()
-						{
-							public void work() throws Exception
+				if (! upNeeder.hayWorkerPrioridad(5))
+					upNeeder.addWorker(5,
+							new Worker ()
 							{
-								spriteManager.cambiarSprite(-quieto);
-							}
-						});
+								public void work() throws Exception
+								{
+									spriteManager.cambiarSprite(-quieto);
+								}
+							});
 			}
 		}
 		catch (NullPointerException e1)
@@ -160,21 +162,22 @@ public class MarioChico extends Mario
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (!celdaActual.getBloque().esLimite(celdaActual))
+			if (celdaActual.getBloque().haySiguiente(celdaActual))
 			{
 				spriteManager.cambiarSprite(caminando);
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);
 				
-				upNeeder.addWorker(5,
-						new Worker ()
-						{
-							public void work() throws Exception
+				if (! upNeeder.hayWorkerPrioridad(5))
+					upNeeder.addWorker(5,
+							new Worker ()
 							{
-								spriteManager.cambiarSprite(quieto);
-							}
-						});
+								public void work() throws Exception
+								{
+									spriteManager.cambiarSprite(quieto);
+								}
+							});
 			}
 		}
 		catch (NullPointerException e1)
@@ -275,15 +278,30 @@ public class MarioChico extends Mario
 	public void caer () throws AccionActorException
 	{
 		super.caer();
-		
-		upNeeder.addWorker(5,
-				new Worker ()
-				{
-					public void work() throws Exception
-					{
-						spriteManager.cambiarSprite(quieto);
-					}
-				});
+		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+		{
+			if (! upNeeder.hayWorkerPrioridad(5))
+				upNeeder.addWorker(5,
+						new Worker ()
+			        	{
+							public void work() throws Exception
+							{
+								spriteManager.cambiarSprite(quieto);
+							}
+			        	});
+		}
+		else
+		{
+			if (! upNeeder.hayWorkerPrioridad(0))
+				upNeeder.addWorker(0,
+						new Worker ()
+			        	{
+							public void work() throws Exception
+							{
+								spriteManager.cambiarSprite(saltando);
+							}
+			        	});
+		}
 	}
 	
 }

@@ -1,6 +1,6 @@
 package ProyectoX.Logica.Mapa;
 
-import ProyectoX.Excepciones.BoundaryViolationException;
+import ProyectoX.Excepciones.PosicionIncorrectaException;
 
 /**
  * Representa la parte Jugable del Juego.
@@ -15,8 +15,7 @@ public class Mapa
 {
 	
 	//Variables de Instancia
-	protected Bloque[] bloques;
-	protected int cant;
+	protected Bloque[][] ABB; //Arreglo Bidimensional de Bloques
 	
 	/*CONSTRUCTOR*/
 	
@@ -24,108 +23,247 @@ public class Mapa
 	 * Crea un Mapa con los Bloques ingresados.
 	 * 
 	 * @param bs Bloques para el nuevo Mapa.
+	 * @throws NullPointerException Si bs es null.
 	 */
-	public Mapa (Bloque[] bs)
+	public Mapa (int cantFilas, int cantColumnas) throws NullPointerException
 	{
-		if (bs == null)
+		if ((cantFilas <= 0) || (cantColumnas == 0))
 			throw new NullPointerException ("Mapa." + "\n" +
-                                            "Imposible crear un Mapa con Bloques null.");
+                                            "Imposible crear un Mapa con cantFilas " + cantFilas + "y cantColumnas " + cantColumnas + ".");
 		
-		bloques = bs;
-		cant = bloques.length;
-		
-		if (cant == 0)
-			throw new NullPointerException ("Mapa." + "\n" +
-                                            "Imposible crear un Mapa con 0 Bloques.");
+		ABB = new Bloque[cantFilas][cantColumnas];
 	}
 	
 	/*COMANDOS*/
 	
 	/**
-	 * Cambia el Bloque i por el nuevo Bloque pasado por parámetro.
+	 * Cambia el Bloque de posición (f,c) por el nuevo Bloque pasado por parámetro.
 	 * 
-	 * @param bloque Nuevo Bloque para la posición i.
-	 * @exception BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @param f Fila del Bloque a cambiar.
+	 * @param c Columna del Bloque a cambiar.
+	 * @param bloque Nuevo Bloque para la posición (f,c).
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
 	 * @throws NullPointerException Si bloque es null.
 	 */
-	public void setBloque (int i, Bloque bloque) throws BoundaryViolationException, NullPointerException
+	public void setBloque (int f, int c, Bloque bloque) throws PosicionIncorrectaException, NullPointerException
 	{
+		verificarPosicion(f, c);
 		if (bloque == null)
 			throw new NullPointerException ("Mapa.setBloque()" + "\n" +
             								"Imposible setear un Bloque null.");
 		
-		verificarPosicion(i);
-		bloques[i] = bloque;
+		ABB[f][c] = bloque;
 	}
 	
 	/**
-	 * Verifica si la posicion i es correcta y pertenece al Mapa.
+	 * Verifica si la posicion (f,c) es correcta y pertenece al Mapa.
 	 * 
-	 * @param i Posición a verificar.
-	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @param f Fila de la Posición a verificar. (0 <= f < catFilas())
+	 * @param c Columna de la Posición a verificar. (0 <= c < catColumnas())
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
 	 */
-	private void verificarPosicion (int i) throws BoundaryViolationException
+	private void verificarPosicion (int f, int c) throws PosicionIncorrectaException
 	{
-		if ((i < 0) || (i >= cantBloques()))
-			throw new BoundaryViolationException ("Mapa.verificarPosicion()" + "\n" +
-					                              "No existe Bloque " + i + " en el Mapa.");
+		if ((f < 0) || (f >= cantFilas()))
+			throw new PosicionIncorrectaException ("Mapa.verificarPosicion()" + "\n" +
+					                              "No existe posición (" + f + "," + c + ") en el Mapa.");
+		if ((c < 0) || (c >= cantColumnas()))
+			throw new PosicionIncorrectaException ("Mapa.verificarPosicion()" + "\n" +
+					                              "No existe posición (" + f + "," + c + ") en el Mapa.");
 	}
 	
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve la cantidad de Bloques del Mapa.
+	 * Devuelve la cantidad de Filas del ABB.
 	 * 
-	 * @return Cantidad de Bloques del Mapa.
+	 * @return Cantidad de Filas del ABB.
 	 */
-	public int cantBloques ()
+	public int cantFilas ()
 	{
-		return cant;
+		return ABB.length;
 	}
 	
 	/**
-	 * Devuelve el Bloque i del Mapa.
+	 * Devuelve la cantidad de Columnas del ABB.
 	 * 
-	 * @param i Posición del Bloque a devolver.
-	 * @return Bloque en la posición i.
-	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @return Cantidad de Columnas del ABB.
 	 */
-	public Bloque getBloque (int i) throws BoundaryViolationException
+	public int cantColumnas ()
 	{
-		verificarPosicion(i);
-		return bloques[i];
+		return ABB[0].length;
 	}
 	
 	/**
-	 * Devuelve el Bloque anterior al Bloque i del Mapa.
+	 * Verifica si existe un Bloque en la posición (f,c), y devuelve el resultado.
 	 * 
-	 * @param i Posición del Bloque siguiente al Bloque a devolver.
-	 * @return Bloque en la posición i-1.
-	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @param f Fila de la Posición a verificar. (0 <= f < catFilas())
+	 * @param c Columna de la Posición a verificar. (0 <= c < catColumnas())
+	 * @return True:  hay un Bloque en la posición (f,c).
+	 *         False: caso contrario.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
 	 */
-	public Bloque getBloqueAnterior (int i) throws BoundaryViolationException
+	public boolean hayBloque (int f, int c) throws PosicionIncorrectaException
 	{
-		verificarPosicion(i);
-		if (i == 0)
-			throw new BoundaryViolationException ("Mapa.getBloqueAnterior()" + "\n" +
-                                                  "No existe Bloque anterior al primero.");
-		return bloques[i-1];
+		verificarPosicion(f, c);
+		
+		return (ABB[f][c] != null);
 	}
 	
 	/**
-	 * Devuelve el Bloque siguiente al Bloque i del Mapa.
+	 * Verifica si existe un Bloque en la posición pasada por parámetro, y devuelve el resultado.
 	 * 
-	 * @param i Posición del Bloque anterior al Bloque a devolver.
-	 * @return Bloque en la posición i+1.
-	 * @throws BoundaryViolationException Si la posición ingresada no pertenece al Mapa.
+	 * @param posición Arreglo de dos componentes donde: posición[0] es la fila de la posición a verificar.
+	 *                                                   posición[1] es la columna de la posición a verificar.
+	 * @return True:  hay un Bloque en la posición pasada por parámetro.
+	 *         False: caso contrario.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
 	 */
-	public Bloque getBloqueSiguiente (int i) throws BoundaryViolationException
+	public boolean hayBloque (int[] posicion) throws PosicionIncorrectaException
 	{
-		verificarPosicion(i);
-		if (i == cantBloques()-1)
-			throw new BoundaryViolationException ("Mapa.getBloqueSiguiente()" + "\n" +
-                                                  "No existe Bloque siguiente al último.");
-		return bloques[i+1];
+		return hayBloque (posicion[0], posicion[1]);
+	}
+	
+	/**
+	 * Verifica si existe un Bloque a izquierda de la posición pasada por parámetro, y devuelve el resultado.
+	 * 
+	 * @param posición Arreglo de dos componentes donde: posición[0] es la fila de la posición a verificar.
+	 *                                                   posición[1] es la columna de la posición a verificar.
+	 * @return True:  hay un Bloque a izquierda de la posición pasada por parámetro.
+	 *         False: caso contrario.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public boolean hayBloqueAnterior (int[] posicion) throws PosicionIncorrectaException
+	{
+		return hayBloque (posicion[0], posicion[1] - 1);
+	}
+	
+	/**
+	 * Verifica si existe un Bloque siguiente a la posición pasada por parámetro, y devuelve el resultado.
+	 * 
+	 * @param posición Arreglo de dos componentes donde: posición[0] es la fila de la posición a verificar.
+	 *                                                   posición[1] es la columna de la posición a verificar.
+	 * @return True:  hay un Bloque siguiente a la posición pasada por parámetro.
+	 *         False: caso contrario.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public boolean hayBloqueSiguiente (int[] posicion) throws PosicionIncorrectaException
+	{
+		return hayBloque (posicion[0], posicion[1] + 1);
+	}
+	
+	/**
+	 * Verifica si existe un Bloque superior a la posición pasada por parámetro, y devuelve el resultado.
+	 * 
+	 * @param posición Arreglo de dos componentes donde: posición[0] es la fila de la posición a verificar.
+	 *                                                   posición[1] es la columna de la posición a verificar.
+	 * @return True:  hay un Bloque superior a la posición pasada por parámetro.
+	 *         False: caso contrario.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public boolean hayBloqueSuperior (int[] posicion) throws PosicionIncorrectaException
+	{
+		return hayBloque (posicion[0] - 1, posicion[1]);
+	}
+	
+	/**
+	 * Verifica si existe un Bloque inferior a la posición pasada por parámetro, y devuelve el resultado.
+	 * 
+	 * @param posición Arreglo de dos componentes donde: posición[0] es la fila de la posición a verificar.
+	 *                                                   posición[1] es la columna de la posición a verificar.
+	 * @return True:  hay un Bloque inferior a la posición pasada por parámetro.
+	 *         False: caso contrario.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public boolean hayBloqueInferior (int[] posicion) throws PosicionIncorrectaException
+	{
+		return hayBloque (posicion[0] + 1, posicion[1]);
+	}
+	
+	/**
+	 * Devuelve el Bloque de posición (f,c) del Mapa.
+	 * 
+	 * @param f Fila del Bloque a devolver. (0 <= f < catFilas())
+	 * @param c Columna del Bloque a devolver. (0 <= c < catColumnas())
+	 * @return Bloque en la posición (f,c).
+	 * @throws NullPointerException Si no existe un Bloque en la posición (f,c) solicitada.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloque (int f, int c) throws NullPointerException, PosicionIncorrectaException
+	{
+		verificarPosicion(f, c);
+		
+		if (ABB[f][c] == null)
+			throw new NullPointerException ("Mapa.getBloque()" + "\n" +
+					                        "No existe un Bloque en la posición (" + f + "," + c + ") solicitada.");
+		
+		return ABB[f][c];
+	}
+	
+	/**
+	 * Devuelve el Bloque de posición (f,c) del Mapa.
+	 * 
+	 * @param posicion Arreglo de dos componente donde: posicion[0] es la Fila del Bloque a devolver.
+	 *   												posicion[1] es la Columna del Bloque a devolver.
+	 * @return Bloque en la posición pasada por parámetro.
+	 * @throws NullPointerException Si no existe un Bloque en la posición (f,c) solicitada.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloque (int[] posicion) throws NullPointerException, PosicionIncorrectaException
+	{
+		return getBloque (posicion[0], posicion[1]);
+	}
+	
+	/**
+	 * Devuelve el Bloque a izquierda de la posición pasada por parámetro.
+	 * 
+	 * @param posicion Arreglo de dos componentes donde posicion[0] es la Fila del Bloque siguiente al Bloque a devolver.
+	 *                                                  posicion[1] es la Columna del Bloque siguiente al Bloque a devolver.
+	 * @return Bloque a izquierda de la posición pasada por parámetro.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloqueAnterior (int[] posicion) throws PosicionIncorrectaException
+	{
+		return getBloque (posicion[0], posicion[1] - 1);
+	}
+	
+	/**
+	 * Devuelve el Bloque a derecha de la posición pasada por parámetro.
+	 * 
+	 * @param posicion Arreglo de dos componentes donde posicion[0] es la Fila del Bloque anterior al Bloque a devolver.
+	 *                                                  posicion[1] es la Columna del Bloque anterior al Bloque a devolver.
+	 * @return Bloque a derecha de la posición pasada por parámetro.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloqueSiguiente (int[] posicion) throws PosicionIncorrectaException
+	{
+		return getBloque (posicion[0], posicion[1] + 1);
+	}
+	
+	/**
+	 * Devuelve el Bloque por encima de la posición pasada por parámetro.
+	 * 
+	 * @param posicion Arreglo de dos componentes donde posicion[0] es la Fila del Bloque inferior al Bloque a devolver.
+	 *                                                  posicion[1] es la Columna del Bloque inferior al Bloque a devolver.
+	 * @return Bloque por encima de la posición pasada por parámetro.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloqueSuperior (int[] posicion) throws PosicionIncorrectaException
+	{
+		return getBloque (posicion[0] - 1, posicion[1]);
+	}
+	
+	/**
+	 * Devuelve el Bloque por debajo de la posición pasada por parámetro.
+	 * 
+	 * @param posicion Arreglo de dos componentes donde posicion[0] es la Fila del Bloque superior al Bloque a devolver.
+	 *                                                  posicion[1] es la Columna del Bloque superior al Bloque a devolver.
+	 * @return Bloque por debajo de la posición pasada por parámetro.
+	 * @throws PosicionIncorrectaException Si la posición ingresada no pertenece al Mapa.
+	 */
+	public Bloque getBloqueInferior (int[] posicion) throws PosicionIncorrectaException
+	{
+		return getBloque (posicion[0] + 1, posicion[1]);
 	}
 	
 }
