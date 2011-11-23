@@ -17,8 +17,8 @@ public class MarioChico extends Caracteristica
 	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioChico, la ubicación en los índices es:
-	                                                {dirRecursos + "Mario-Dead.gif", //0: Mario muerto
-		                                             dirRecursos + "Mario.gif",      //1: Mario quieto
+	                                                {dirRecursos + "Mario.gif",      //0: Mario quieto
+													 dirRecursos + "Mario-Dead.gif", //1: Mario muerto		                                             
 		                                             dirRecursos + "Mario-Walk1.gif",//2: Mario caminando1
 		                                             dirRecursos + "Mario-Walk2.gif",//3: Mario caminando2
 		                                             dirRecursos + "Mario-Walk3.gif",//4: Mario caminando3
@@ -49,8 +49,6 @@ public class MarioChico extends Caracteristica
 	public MarioChico (Mario pj)
 	{
 		super(pj);		
-		/*super(nombresSprites, cargadorSprite);
-		spriteManager.cambiarSprite(quieto);*/
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/	

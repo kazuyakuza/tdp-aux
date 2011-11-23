@@ -31,8 +31,8 @@ public abstract class Caracteristica
 	 */
 	protected Caracteristica ()
 	{
-		muerto = 0;
-		quieto = 1;
+		quieto = 0;
+		muerto = 1;	
 		caminando = 2;
 		saltando = 5;
 	}
@@ -44,8 +44,8 @@ public abstract class Caracteristica
 	 */	
 	protected Caracteristica(Mario pj)
 	{
-		muerto = 0;
-		quieto = 1;
+		quieto = 0;
+		muerto = 1;	
 		caminando = 2;
 		saltando = 5;
 		mario = pj;
