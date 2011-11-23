@@ -7,6 +7,7 @@ import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Punteable;
+import ProyectoX.Logica.Movible;
 import ProyectoX.Logica.Jugador;
 import ProyectoX.Logica.Mapa.Celda;
 
@@ -18,7 +19,7 @@ import ProyectoX.Logica.Mapa.Celda;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Mario extends Actor implements PjSeleccionable
+public class Mario extends Actor implements PjSeleccionable, Movible
 {	
 
 	//Atributos de Clase
@@ -262,15 +263,13 @@ public class Mario extends Actor implements PjSeleccionable
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+			throw new AccionActorException ("Imposible realizar la acción moverAizquierda." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
-                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -308,15 +307,13 @@ public class Mario extends Actor implements PjSeleccionable
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+			throw new AccionActorException ("Imposible realizar la acción moverAderecha." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
-                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}

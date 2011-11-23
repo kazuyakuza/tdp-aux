@@ -9,6 +9,8 @@ import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.NoPersonajes.Piso;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 
+import ProyectoX.Logica.NoPersonajes.PowerUps.*;
+
 /**
  * Representa un Nivel del Juego.
  * 
@@ -123,6 +125,22 @@ public class Nivel
 		bloqueActual.ABC[12][1].agregarActor(actor);
 		actor.setCeldaActual(bloqueActual.ABC[12][1]);
 		listaActores.addFirst(actor);
+		
+		//Agregacion de un power up.
+		PowerUp powerUp = new SuperHongo(cargadorSprite);
+		bloqueActual.ABC[5][5].agregarActor(powerUp);
+		powerUp.setCeldaActual(bloqueActual.ABC[5][5]);
+		listaActores.addLast(powerUp);
+		
+		PowerUp flor = new FlorFuego(cargadorSprite);
+		bloqueActual.ABC[5][8].agregarActor(flor);
+		flor.setCeldaActual(bloqueActual.ABC[5][8]);
+		listaActores.addLast(flor);
+		
+		PowerUp bomba = new Estrella(cargadorSprite);
+		bloqueActual.ABC[5][6].agregarActor(bomba);
+		bomba.setCeldaActual(bloqueActual.ABC[5][6]);
+		listaActores.addLast(bomba);
 		
 		//Agregación Actores no Personjes.
 		aux = 6;

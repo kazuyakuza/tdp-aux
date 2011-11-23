@@ -29,8 +29,9 @@ public class Destructor extends DecoracionCaracteristica
 	 * @param t es el entero que representa el tiempo de duración de la decoración en milisegundos.
 	 */
 	public Destructor (Caracteristica comp, int t)
-	{
+	{		
 		super (comp);
+		System.out.println("Bajo efecto de Estrella.");
 		timer = new Timer (t, new ActionListener ()
 		{			
 			boolean terminar = false;
@@ -41,7 +42,8 @@ public class Destructor extends DecoracionCaracteristica
 				else
 					{mario.setCaracteristica(componente);
 					 mario = null;
-					 timer.stop();					 
+					 timer.stop();		
+					 System.out.println("Se termino efecto de Estrella.");
 					}					
 			}
 		});

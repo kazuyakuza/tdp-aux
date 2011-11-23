@@ -23,11 +23,9 @@ public class MarioChico extends Caracteristica
 		                                             dirRecursos + "Mario-Walk2.gif",//3: Mario caminando2
 		                                             dirRecursos + "Mario-Walk3.gif",//4: Mario caminando3
 		                                             dirRecursos + "Mario-Jump.gif"};//5: Mario saltando
-	//Numeros de los Sprites.
-	private static int muerto = 0;
-	private static int quieto = 1;
-	private static int caminando = 2;
-	private static int saltando = 5;
+		
+	//private static int maxPS = 4;//Máxima Potencia de Salto.
+	//private int PS = 0;//Potencia de Salto Actual.
 	
 	//Prioridades para el UpNeeder
 	//0 = spriteManager.cambiarSprite(saltando)

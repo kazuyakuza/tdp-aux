@@ -22,7 +22,7 @@ public class MarioGrande extends Caracteristica
 		                                             dirRecursos + "SuperMario-Walk2.gif",//3: Mario caminando2
 		                                             dirRecursos + "SuperMario-Walk3.gif",//4: Mario caminando3
 		                                             dirRecursos + "SuperMario-Jump.gif", //5: Mario saltando
-													 dirRecursos + "SuperMario.Duck.gif"};//6: Mario agachado
+													 dirRecursos + "SuperMario-Duck.gif"};//6: Mario agachado
 	
 	protected int agachado;
 	/*CONSTRUCTORES*/

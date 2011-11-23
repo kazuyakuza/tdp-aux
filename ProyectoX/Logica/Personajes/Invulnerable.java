@@ -35,7 +35,7 @@ public class Invulnerable extends DecoracionCaracteristica
 		{			
 			boolean terminar = false;
 			public void actionPerformed (ActionEvent e)
-			{
+			{				
 				if (!terminar)
 					terminar = true;
 				else
