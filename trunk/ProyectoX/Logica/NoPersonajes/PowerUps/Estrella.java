@@ -7,6 +7,7 @@ import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.Invulnerable;
 import ProyectoX.Logica.Personajes.Destructor;
 import ProyectoX.Logica.Movible;
+import ProyectoX.Logica.Personajes.Caracteristica;
 
 /**
  * Representa a los power ups Estrella del juego. El efecto sobre Mario es hacerlo Invulnerable y Destructor.
@@ -50,9 +51,13 @@ public class Estrella extends PowerUp implements Movible
             								"Imposible aplicar efecto, mario es null");
 		//mario.setCaracteristica(new Invulnerable (mario.getCaracteristica (), 15000));		
 		try
-		{	mario.setCaracteristica(new Destructor (mario.getCaracteristica (), 15000));}
+		{	Caracteristica c = mario.getCaracteristica();
+			System.out.println("" + c);
+			System.out.println("" + c.getMario());
+			mario.setCaracteristica(new Destructor (c, 5000));}
 		catch (Exception e)
-		{System.out.println("Fallo efecto: " + e.getMessage());}
+		{	e.printStackTrace();
+			System.out.println("Fallo efecto: " + e.getMessage());}
 		
 		
 	}

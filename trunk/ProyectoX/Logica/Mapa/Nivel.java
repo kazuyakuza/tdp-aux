@@ -128,8 +128,8 @@ public class Nivel
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
-		bloqueActual.ABC[5][5].agregarActor(powerUp);
-		powerUp.setCeldaActual(bloqueActual.ABC[5][5]);
+		bloqueActual.ABC[5][7].agregarActor(powerUp);
+		powerUp.setCeldaActual(bloqueActual.ABC[5][7]);
 		listaActores.addLast(powerUp);
 		
 		PowerUp flor = new FlorFuego(cargadorSprite);
@@ -138,8 +138,8 @@ public class Nivel
 		listaActores.addLast(flor);
 		
 		PowerUp bomba = new Estrella(cargadorSprite);
-		bloqueActual.ABC[5][6].agregarActor(bomba);
-		bomba.setCeldaActual(bloqueActual.ABC[5][6]);
+		bloqueActual.ABC[10][6].agregarActor(bomba);
+		bomba.setCeldaActual(bloqueActual.ABC[10][6]);
 		listaActores.addLast(bomba);
 		
 		//Agregación Actores no Personjes.
