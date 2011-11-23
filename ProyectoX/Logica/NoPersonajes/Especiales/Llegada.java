@@ -56,7 +56,7 @@ public class Llegada extends Actor
 	 * @param a Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
-	public void colisionar (Actor a) throws ColisionException
+	public void colisionar (Actor a) throws ColisionException, NullPointerException
 	{
 		/*No hace nada, no tiene efecto sobre Actores que no sean Personajes.*/
 	}
@@ -67,7 +67,7 @@ public class Llegada extends Actor
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException
+	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
 	{
 		controlCentral.ganarNivel();
 	}
@@ -108,7 +108,7 @@ public class Llegada extends Actor
 	 * 
 	 * No tiene ningún efecto en este Actor.
 	 */
-	public void morir()
+	public void morir(Actor a) throws NullPointerException
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
