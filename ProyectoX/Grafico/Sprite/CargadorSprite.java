@@ -34,7 +34,7 @@ public class CargadorSprite extends CargadorRecurso
 	 * @param nombre Nombre del archivo del Sprite.
 	 * @param io ImageObserver para el Sprite a cargar.
 	 * @return Sprite cargado.
-	 * @exception CargaRecursoException Si se produce un error al cargar el Sprite solicitado.
+	 * @throws CargaRecursoException Si se produce un error al cargar el Sprite solicitado.
 	 */
 	public BufferedImage obtenerSprite (String nombre, ImageObserver io) throws CargaRecursoException
 	{
@@ -50,7 +50,7 @@ public class CargadorSprite extends CargadorRecurso
 	 * 
 	 * @param nom Nombre del recurso a devolver.
 	 * @return Recurso de nombre nom.
-	 * @exception CargaRecursoException Si se produce un error al cargar el recurso solicitado.
+	 * @throws CargaRecursoException Si se produce un error al cargar el recurso solicitado.
 	 */
 	public Object obtenerRecurso (String nom) throws CargaRecursoException
 	{
@@ -63,7 +63,7 @@ public class CargadorSprite extends CargadorRecurso
 	 * 
 	 * @param url Dirección del recurso a cargar.
 	 * @return Recurso de dirección url.
-	 * @exception CargaRecursoException Si hay un error al leer la URL.
+	 * @throws CargaRecursoException Si hay un error al leer la URL.
 	 */
 	public Object cargarRecurso (URL url) throws CargaRecursoException
 	{
@@ -73,7 +73,8 @@ public class CargadorSprite extends CargadorRecurso
 		}
 		catch (Exception e)
 		{
-			throw new CargaRecursoException ("Error al Cargar el Recurso Imagen: " + url.getFile() + "\n" +
+			throw new CargaRecursoException ("CargadorSprite.cargadorRecurso()" + "\n" +
+					                         "Error al Cargar el Recurso Imagen: " + url.getFile() + "\n" +
 					                         "Detalles del error:" + "\n" +
 					                         e.getMessage());
 		}

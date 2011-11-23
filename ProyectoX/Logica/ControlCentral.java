@@ -35,7 +35,7 @@ public class ControlCentral implements Runnable, ControlThread
 {
 	
 	//Variables de Clase
-	public static final double velocidad = 8.5;
+	public static final double velocidad = 4.5;
 	
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
@@ -98,7 +98,7 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.repaint();
 			
 			//Crear y Asignar Threads
-			Tescenario = new AliveThread (this, 0.5, escenario);
+			Tescenario = new AliveThread (this, 0.25, escenario);
 			Tjugador = new AliveThread (this, 1, jugador);
 			Tgravedad = new AliveThread (this, 1, gravedad);
 			Tupdater = new Updater (this, 0.5);
@@ -239,7 +239,7 @@ public class ControlCentral implements Runnable, ControlThread
 			p = actores.next(p);
 		actores.remove(p);
 		
-		gravedad.setAfectar(false);
+		//gravedad.setAfectar(false);
 		
 		try
 		{
@@ -283,7 +283,7 @@ public class ControlCentral implements Runnable, ControlThread
 		
 		actores.remove(p);
 		
-		gravedad.setAfectar(false);
+		//gravedad.setAfectar(false);
 		
 		try
 		{

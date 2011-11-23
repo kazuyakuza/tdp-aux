@@ -37,6 +37,7 @@ public class SpriteManager implements ImageObserver
 	                          //False: caso contrario.
 	private double posX, posY; //Posición Actual del Sprite en el Escenario.
 	                           //Si posX=-1 y posY=-1, entonces no se ha asignado una posición aún.
+	private double difX, difY; //Diferencia entre la posición actual y la posición a la que debe moverse.
 	
 	/*CONSTRUCTOR*/
 	
@@ -47,11 +48,11 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @param nombreSprites Nombres de los archivos de las imagenes para este sprite.
 	 * @param cargadorSprite Cargador de Sprite para cargar la imagen.
-	 * @exception CargaRecursoException Error al cargar el Sprite.
+	 * @throws CargaRecursoException Error al cargar el Sprite.
 	 */
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
-		upNeeder = new UpNeeder();
+		upNeeder = new UpNeeder(0);
 		sprites = new BufferedImage[nombresSprites.length];
 		for (int i=0; i<nombresSprites.length; i++)
 			try
@@ -60,11 +61,14 @@ public class SpriteManager implements ImageObserver
 			}
 			catch (CargaRecursoException exception)
 			{
-				throw new CargaRecursoException (exception.getMessage() + "\n" +
-						                         "Error al cargar el sprite de nombre " + nombresSprites[i] + ".");
+				throw new CargaRecursoException ("SpriteManager." + "\n" +
+						                         "Error al cargar el sprite de nombre " + nombresSprites[i] + "." + "\n" +
+						                         "Detalles del Eror:" + "\n" +
+						                         exception.getMessage());
 			}
 		spriteActual = sprites[0];
 		posX = posY = -1;
+		difX = difY = 0;
 		invertido = false;
 		eliminar = false;
 	}
@@ -78,13 +82,14 @@ public class SpriteManager implements ImageObserver
 	 * Cambio > 0 "mirando hacia la derecha"
 	 * 
 	 * @param cambio Numero del sprite a cambiar.
-	 * @exception SpriteException Si se ingresa un valor erróneo de cambio de sprite.
+	 * @throws SpriteException Si se ingresa un valor erróneo de cambio de sprite.
 	 */
 	public void cambiarSprite (int cambio) throws SpriteException
 	{
 		if (Math.abs(cambio) >= sprites.length)
-			throw new SpriteException("Numero de Sprite a cargar incorrecto." + "\n"
-					                + "Ingresado: " + cambio + " | Máximo: -" + sprites.length + "|" + sprites.length + "+");
+			throw new SpriteException("SpriteManager.cambiarSprite()" + "\n" +
+					                  "Numero de Sprite a cargar incorrecto." + "\n" +
+					                  "Ingresado: " + cambio + " | Máximo: -" + sprites.length + "|" + sprites.length + "+");
 		
 		if (invertido)
 		{
@@ -106,7 +111,7 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @param image Imagen a invertir.
 	 * @return Imagen invertida/reflejada.
-	 * @exception SpriteException Si se produce un error al invertir la imagen.
+	 * @throws SpriteException Si se produce un error al invertir la imagen.
 	 */
 	private BufferedImage invertir (BufferedImage image) throws SpriteException
 	{
@@ -124,7 +129,7 @@ public class SpriteManager implements ImageObserver
 	 * Actualiza la posición del sprite a la posición pasada por parámetro.
 	 * 
 	 * @param posicion Arreglo de dos componenete con posicion[0] = Nueva posición X, y posicion[1] = Nueva posición Y.
-	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public void actualizar (int[] posicion) throws PosicionIncorrectaException
 	{
@@ -136,7 +141,7 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @param X Nueva posición X.
 	 * @param Y Nueva posición Y.
-	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public void actualizar (final int X, final int Y) throws PosicionIncorrectaException
 	{
@@ -151,33 +156,6 @@ public class SpriteManager implements ImageObserver
 		}
 		else
 		{
-			/*if (((posX % (int) posX) != 0.0) || ((posY % (int) posY) != 0.0))
-			{//Si alguna de los posiciones tiene decimal, significa que está en medio de un movimiento, y se debe completar el movimiento.
-				posX = X;
-				posY = Y;
-			}
-			else
-			{
-				if ((int) posX != X)
-					if ((int) posX < X)
-						posX += 0.5;
-					else
-						posX -= 0.5;
-				if ((int) posY != Y)
-					if ((int) posY < Y)
-						posY += 0.5;
-					else
-						posY -= 0.5;
-				
-				upNeeder.addWorker(
-						new Worker ()
-						{
-							public void work() throws Exception
-							{
-								act();
-							}
-						});
-			}*/
 			if ((posX % (int) posX) == 0.0)
 			{
 				if ((int) posX != X)
@@ -206,25 +184,30 @@ public class SpriteManager implements ImageObserver
 						difY -= 0.5;
 					}
 			}
-			upNeeder.addWorker(0,
-					new Worker ()
-					{
-						public void work() throws Exception
+			
+			if (! upNeeder.hayWorkerPrioridad(0))
+				upNeeder.addWorker(0,
+						new Worker ()
 						{
-							act();
-						}
-					});
+							public void work() throws Exception
+							{
+								actualizacion();
+							}
+						});
 		}
 	}
-	private double difX = 0; private double difY = 0;
-	public void act () throws PosicionIncorrectaException
+	
+	/**
+	 * Actualiza la posición del sprite.
+	 * 
+	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 */
+	private void actualizacion () throws PosicionIncorrectaException
 	{
 		posX += difX;
 		posY += difY;
 		difX = 0;
 		difY = 0;
-		while  ((!upNeeder.isEmpty()) && (upNeeder.prioridadNextWorker() == 0))
-			upNeeder.getNextWorker();
 	}
 	
 	/**
@@ -238,7 +221,9 @@ public class SpriteManager implements ImageObserver
 	/*CONSULTAS*/
 	
 	/**
+	 * Devuelve el UpNeeder del SpriteManager.
 	 * 
+	 * @return UpNeeder del SpriteManager.
 	 */
 	public UpNeeder getUpNeeder ()
 	{
@@ -260,7 +245,7 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @return (x,y):   Posición actual del Sprite.
 	 *         (-1,-1): Cuando el Sprite no tiene una posición asignada.
-	 * @exception PosicionIncorrectaException Si no se ha asignado una posición.
+	 * @throws PosicionIncorrectaException Si no se ha asignado una posición.
 	 */
 	public double[] posicion () throws PosicionIncorrectaException
 	{

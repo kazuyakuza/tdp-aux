@@ -94,11 +94,15 @@ public class Nivel
 	{
 		fondo = "Fondo1.png";
 		
+		mapa = new Mapa (1, 1);
+		
 		//Creación de la lista de Actores que estarán en el Nivel.
 		PositionList<Actor> listaActores = new ListaPositionSimple<Actor> ();
 		
 		//Creación Bloque 1 del Nivel. Que es el Bloque de inicio del Nivel.
-		bloqueActual = new Bloque(8, 10);//Nivel de Piso default.
+		bloqueActual = new Bloque(mapa, 0, 0, 8, 10);//Nivel de Piso default.
+		
+		mapa.setBloque(0, 0, bloqueActual);
 		
 		//Agregación Piso
 		int aux = 0;
