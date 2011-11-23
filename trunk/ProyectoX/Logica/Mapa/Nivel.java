@@ -95,7 +95,7 @@ public class Nivel
 	 */
 	private PositionList<Actor> nivel1 (Actor actor, ControlCentral cc, CargadorSprite cargadorSprite)
 	{
-		fondo = "Fondo1.png";
+		fondo = "Fondo2.png";
 		
 		mapa = new Mapa (1, 1);
 		

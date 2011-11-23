@@ -31,8 +31,8 @@ public abstract class Caracteristica
 	 */
 	protected Caracteristica ()
 	{
-		quieto = 0;
-		muerto = 1;	
+		muerto = 0;
+		quieto = 1;
 		caminando = 2;
 		saltando = 5;
 	}
@@ -44,12 +44,12 @@ public abstract class Caracteristica
 	 */	
 	protected Caracteristica(Mario pj)
 	{
-		quieto = 0;
-		muerto = 1;	
+		muerto = 0;
+		quieto = 1;
 		caminando = 2;
 		saltando = 5;
 		mario = pj;
-		mario.getSpriteManager().setSprites(this.getNombresSprites());
+		mario.getSpriteManager().cargarSprites(this.getNombresSprites());
 	}
 	
 	/*METODOS ABSTRACTOS*/

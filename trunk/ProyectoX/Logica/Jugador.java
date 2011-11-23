@@ -106,7 +106,7 @@ public class Jugador implements Worker
 	 */
 	public void asignarPuntos (int pts)
 	{
-		puntos += pts;		
+		puntos += pts;
 	}
 	
 	/*CONSULTAS*/

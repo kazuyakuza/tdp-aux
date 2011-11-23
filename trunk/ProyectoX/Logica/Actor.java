@@ -163,36 +163,44 @@ public abstract class Actor
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir(Actor a)
+	public void morir (Actor a)
 	{
 		spriteManager.setEliminar();
 		celdaActual.sacarActor(this);
 		
 		spriteManager = null;
 		celdaActual = null;
+		
+		upNeeder.notUpdate();
+		upNeeder.limpiar();
 		upNeeder = null;
+		
 		PG = 0;
 	}
 	
 	/**
 	 * Realiza un checkeo sobre actorJugador para verificar que no sea nulo y que sea un objeto Mario.
+	 * 
 	 * @param actorJugador Actor que se quiere comprobar si es un Mario.
 	 * @return el objeto Mario.
 	 * @throws ColisionException si actorJugador no es objeto Mario.
 	 * @throws NullPointerException si actorJugador es null.
 	 */
-	protected Mario checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
+	protected Mario/*PjSeleccionable*/ checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
 	{
 		if (actorJugador == null)
-			throw new NullPointerException ("Imposible colisionar con Actor nulo.");
+			throw new NullPointerException ("Actor.checkActorJugador()" + "\n" +
+					                        "Imposible colisionar con Actor nulo.");
 		try
 		{
+			//PjSeleccionable pjSeleccionable = (PjSeleccionable) actorJugador;
 			Mario mario = (Mario) actorJugador;
-			return mario;
+			return mario;//pjSeleccionable;
 		}
 		catch (ClassCastException e) 
 		{
-			throw new ColisionException ("Imposible realizar colisión, el actor no es un Mario.");
+			throw new ColisionException ("Actor.checkActorJugador()" + "\n" +
+                                         "Imposible realizar colisión, el actor no es un Mario.");
 		}		
 	}
 	

@@ -1,5 +1,7 @@
 package ProyectoX.Logica.Personajes;
 
+import ProyectoX.Logica.Jugador;
+
 /**
  * Contiene las acciones de un Personaje Seleccionable.
  * Personaje Seleccionable es todo aquel Personaje del Juego que puede ser seleccionado y controlado por el Jugador del Juego.
@@ -43,5 +45,14 @@ public interface PjSeleccionable extends Personaje
 	 * Realiza la acción "B".
 	 */
 	public void B ();
+	
+	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve el Jugador que controla a Mario.
+	 * 
+	 * @return Jugador que controla a Mario.
+	 */
+	public Jugador getJugador ();
 		
 }

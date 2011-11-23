@@ -5,11 +5,10 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Punteable;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a todos los power ups del juego. Son Actores NoPersonajes que afectan al personaje del Jugador, Mario.

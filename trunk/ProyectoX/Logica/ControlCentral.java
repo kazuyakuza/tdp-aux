@@ -20,6 +20,7 @@ import ProyectoX.Logica.Mapa.Bloque;
 import ProyectoX.Logica.Mapa.Nivel;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
+import ProyectoX.Logica.Personajes.MarioGrande;
 
 /**
  * Representa al Control Central del Juego.
@@ -82,6 +83,7 @@ public class ControlCentral implements Runnable, ControlThread
 			cargadorSprite = new CargadorSprite ();
 		
 			Mario PJ = new Mario (new MarioChico(), cargadorSprite);
+			PJ.crecerHongo();
 			Control c = new Teclado();
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
