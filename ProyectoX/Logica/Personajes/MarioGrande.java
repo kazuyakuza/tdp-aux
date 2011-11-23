@@ -94,7 +94,8 @@ public class MarioGrande extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.setCaracteristica(new MarioChico(mario));
-		//agregar la decoracion Invulnerable.
+		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 5000));
+		((Invulnerable)mario.getCaracteristica()).empezar();		
 		mario = null;
 	}
 	/**

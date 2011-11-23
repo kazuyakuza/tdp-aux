@@ -30,26 +30,26 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public Destructor (Caracteristica comp, int t)
 	{		
-		super (comp);
-		System.out.println("Bajo efecto de Estrella. " + "Mario con efecto " + mario.getCaracteristica());
+		super (comp);				
 		timer = new Timer (t, new ActionListener ()
 		{				
 			public void actionPerformed (ActionEvent e)
 			{					
 				mario.setCaracteristica(componente);				
-				System.out.println("Se termino efecto de Estrella. " + "Mario con efecto " + mario.getCaracteristica());
 				mario = null;
-				terminar();						
+				timer.stop();										
 			}
-		});
-		timer.start();		
+		});			
 	}
 	
-	protected void terminar ()
-	{
-		timer.stop();
+	/**
+	 * Empieza el tiempo de duración del efecto de Destructor.
+	 */
+	public void empezar ()
+	{			
+		timer.start();
 	}
-	
+		
 	/**
 	 * Realiza el efecto de crecer sobre Mario producido por un Super Hongo.
 	 * Dicho efecto evoluciona a Mario.
@@ -58,8 +58,7 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public void crecerHongo () throws AccionActorException
 	{
-		componente.crecerHongo();
-		//componente = componente.getMario().getCaracteristica();
+		componente.crecerHongo();		
 		componente = mario.getCaracteristica();
 	}
 	
@@ -71,8 +70,7 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public void crecerFlor () throws AccionActorException
 	{
-		componente.crecerFlor();
-		//componente = componente.getMario().getCaracteristica();
+		componente.crecerFlor();		
 		componente = mario.getCaracteristica();
 	}
 	
