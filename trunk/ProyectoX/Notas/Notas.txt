@@ -1,0 +1,42 @@
+A mejorar:
++ matar UpNeeders!
+SpriteManager.cambiarSprite
+SpriteManager.actualizar
+Escenario.javaDocClase
+Escenario.transparentarCursor
+Escenario.run
+Escenario.imprimirBloque
+Celda.sacarEstructura
+MarioChico.saltar
+
+A comentar:
+Liberías.Threads
+SpriteManager.actualizar (agregar doc)
+SpriteManager.upNeeder (atributo y constructor)
+SpriteManager.getUpNeeder
+Actor.getUpNeeders
+Actor.upNeeder
+Actor.constructor (el upneeder)
+
+Rediagramar las clases Actor y derivadas para acomodar los métodos: caer, morir, colisionar, efectoGravedad.
+
+Posible Código como comentado:
+MarioChico.saltar
+MarioChico.moverseAizquierda
+MarioChico.moverseAderecha
+ControlCentral.actores
+Escenario.imprimirBloque
+
+Imprimir posición lógica y gráfica de un Actor:
+int x = 0; int y = 0;
+
+if ((x != ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosFila())
+				    || (y != ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosColumna()))
+				    {
+					System.out.println(((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosFila() + "," +
+					           ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosColumna());
+					System.out.println(((Actor) controlCentral.getJugador().personaje()).getSpriteManager().posicion()[0] +","+ 
+					           ((Actor) controlCentral.getJugador().personaje()).getSpriteManager().posicion()[1]);
+					 x = ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosFila();
+				     y = ((Actor) controlCentral.getJugador().personaje()).getCeldaActual().getPosColumna();
+				    }
