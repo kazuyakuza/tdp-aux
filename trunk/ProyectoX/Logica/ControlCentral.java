@@ -35,7 +35,7 @@ public class ControlCentral implements Runnable, ControlThread
 {
 	
 	//Variables de Clase
-	public static final double velocidad = 4.5;
+	public static final double velocidad = 8.5;
 	
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
@@ -81,7 +81,7 @@ public class ControlCentral implements Runnable, ControlThread
 			
 			cargadorSprite = new CargadorSprite ();
 		
-			Mario PJ = new Mario (new MarioChico(), cargadorSprite);
+			Mario PJ = new MarioChico (cargadorSprite);
 			Control c = new Teclado();
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
@@ -250,7 +250,6 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
 		
-		escenario.setActualizar(false);
 		ventanaPrincipal.mensajeError("Fin del Juego", "Ganaste", true);
 	}
 	
@@ -294,7 +293,6 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
 		
-		escenario.setActualizar(false);
 		ventanaPrincipal.mensajeError("Perdiste", "Perdiste", true);
 	}
 	

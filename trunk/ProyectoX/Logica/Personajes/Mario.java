@@ -20,13 +20,12 @@ import ProyectoX.Logica.Mapa.Celda;
  */
 public class Mario extends Actor implements PjSeleccionable
 {	
+
 	//Atributos de Clase
+	private static int maxPS = 4;//Máxima Potencia de Salto.
+	private int PS = 0;//Potencia de Salto Actual.
 	
-	private static int maxPotenciaSalto = 4;
-	private int potenciaSalto = 0;
-		
-	//VARIABLES DE INSTANCIA
-	
+	//Atributos de Instancia
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
 	
@@ -40,7 +39,7 @@ public class Mario extends Actor implements PjSeleccionable
 	 */
 	public Mario (Caracteristica c, CargadorSprite cargadorSprite)
 	{
-		super (c.getNombresSprites(), cargadorSprite);	
+		super (c.getNombresSprites(), cargadorSprite);
 		miCaracteristica = c;
 		c.setMario(this);			
 	}
@@ -109,13 +108,13 @@ public class Mario extends Actor implements PjSeleccionable
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
 			if (celdaActual.getBloque().hayInferior(celdaActual))
-            {
-                    celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
-                    if (!celdaInferior.isOcupada())
-                            moverseAcelda(celdaInferior);
-                    else
-                            PG = 0;
-            }
+			{
+				celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+				if (!celdaInferior.isOcupada())
+					moverseAcelda(celdaInferior);
+				else
+					PG = 0;
+			}
 		}
 		catch (NullPointerException e1)
 		{
@@ -131,6 +130,7 @@ public class Mario extends Actor implements PjSeleccionable
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		
 		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
         {
                 if (! upNeeder.hayWorkerPrioridad(5))
@@ -155,7 +155,6 @@ public class Mario extends Actor implements PjSeleccionable
                                                 }
                                 });
         }
-
 	}
 	
 	/**
@@ -171,6 +170,7 @@ public class Mario extends Actor implements PjSeleccionable
 		if (jugador == null)
 			throw new NullPointerException ("Mario.morir()" + "\n" +
                                             "Imposible quitar vida al Jugador. Jugador es null.");
+		spriteManager.cambiarSprite(miCaracteristica.spriteMuerto());
 		super.morir(a);
 		try
 		{
@@ -178,7 +178,8 @@ public class Mario extends Actor implements PjSeleccionable
 			jugador.quitarVida();
 		}
 		catch (ClassCastException e)
-		{	throw new AccionActorException("Mario.morir()" + "\n" +
+		{	
+			throw new AccionActorException("Mario.morir()" + "\n" +
 										   "Imposible obtener los puntos del actor causante de la muerte.");
 		}
 	}
@@ -197,13 +198,13 @@ public class Mario extends Actor implements PjSeleccionable
 		{
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");			
-			if ((PG == 0) && (potenciaSalto < maxPotenciaSalto))
+			if ((PG == 0) && (PS < maxPS))
 			{
 				spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());				
 				if (celdaActual.getBloque().haySuperior(celdaActual))
 				{
 					PG++;
-					potenciaSalto++;
+					PS++;
 					celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
 					if (!celdaSuperior.isOcupada())
 						moverseAcelda(celdaSuperior);
@@ -211,17 +212,19 @@ public class Mario extends Actor implements PjSeleccionable
 			}
 			else
 				if (PG != -1)
-					potenciaSalto = 0;
+					PS = 0;
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+			throw new AccionActorException ("Mario.saltar()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción saltar a/desde Celda de posición (" + celdaSuperior.getPosFila() + "," + celdaSuperior.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Mario.saltar()" + "\n" +
+                                            "Imposible realizar la acción saltar a/desde Celda de posición (" + celdaSuperior.getPosFila() + "," + celdaSuperior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -245,7 +248,8 @@ public class Mario extends Actor implements PjSeleccionable
 				spriteManager.cambiarSprite(-miCaracteristica.spriteCaminando());
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
-					moverseAcelda(celdaAnterior);				
+					moverseAcelda(celdaAnterior);
+				
 				if (! upNeeder.hayWorkerPrioridad(5))
                     upNeeder.addWorker(5, new Worker ()
                     {
@@ -258,13 +262,15 @@ public class Mario extends Actor implements PjSeleccionable
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -288,7 +294,8 @@ public class Mario extends Actor implements PjSeleccionable
 				spriteManager.cambiarSprite(miCaracteristica.spriteCaminando());
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
-					moverseAcelda(celdaSiguiente);				
+					moverseAcelda(celdaSiguiente);
+				
 				if (! upNeeder.hayWorkerPrioridad(5))
                     upNeeder.addWorker(5, new Worker ()
                     {
@@ -301,13 +308,15 @@ public class Mario extends Actor implements PjSeleccionable
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción caer." + "\n" +
+			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -349,6 +358,36 @@ public class Mario extends Actor implements PjSeleccionable
 	{
 		miCaracteristica.crecerFlor();
 	}
+				
+	/*COMANDOS ABSTRACTOS*/
+		
+	/**
+	 * Mario realiza la acción de saltar.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al saltar.
+	 */
+	//public abstract void saltar () throws AccionActorException;
+		
+	/**
+	 * Mario realiza la acción de moverse hacia la izquierda.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
+	 */
+	//public abstract void moverseAizquierda () throws AccionActorException;
+		
+	/**
+	 * Mario realiza la acción de moverse hace la derecha.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
+	 */
+	//public abstract void moverseAderecha () throws AccionActorException;
+		
+	/**
+	 * Mario realiza la acción de agacharse.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al agacharse.
+	 */
+	//public abstract void agacharse () throws AccionActorException;
 	
 	/**
 	 * Realiza la acción de ser colisionado por un enemigo.
@@ -380,7 +419,7 @@ public class Mario extends Actor implements PjSeleccionable
 	public Jugador getJugador ()
 	{
 		return jugador;
-	}	
+	}
 	
 	/**
 	 * Retorna la Caracteristica asociada a Mario.

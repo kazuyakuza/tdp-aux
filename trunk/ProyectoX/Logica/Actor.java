@@ -8,7 +8,6 @@ import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
-import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a todos los objetos virtuales que pueden desarrolar una "actuación" dentro del juego.
@@ -26,8 +25,8 @@ public abstract class Actor
 	  //Grafica y Sonido
 	protected SpriteManager spriteManager;
 	//private SoundManager soundManager;
-	  //Actualizar
-	protected UpNeeder upNeeder;
+	  //Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	  //Logica
 	protected Celda celdaActual; 
 	protected int PG;//Potencia de la Gravedad.
@@ -45,7 +44,7 @@ public abstract class Actor
 	 * @param cargadorSprite Clase para cargar los sprites.
 	 * @throws NullPointerException Si nombresSprites es null, o cargadorSprite es null.
 	 */
-	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite) throws NullPointerException
+	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
 	{
 		if ((nombresSprites == null) || (nombresSprites.length == 0))
 			throw new NullPointerException ("Actor." + "\n" +
@@ -143,7 +142,7 @@ public abstract class Actor
 	 * @param a Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public abstract void colisionar (Actor a) throws ColisionException, NullPointerException;
+	public abstract void colisionar (Actor a) throws ColisionException;
 	
 	/**
 	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
@@ -151,7 +150,7 @@ public abstract class Actor
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public abstract void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException;
+	public abstract void colisionarPj (Actor actorJugador) throws ColisionException;
 	
 	/**
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
@@ -162,39 +161,16 @@ public abstract class Actor
 	
 	/**
 	 * Realiza la acción de morir del Actor.
-	 * @throws NullPointerException si a es null.
 	 */
-	public void morir(Actor a) throws NullPointerException
+	public void morir()
 	{
-		spriteManager.setEliminar();
+		/*spriteManager.setEliminar();
 		celdaActual.sacarActor(this);
 		
 		spriteManager = null;
 		celdaActual = null;
 		upNeeder = null;
-		PG = 0;
-	}
-	
-	/**
-	 * Realiza un checkeo sobre actorJugador para verificar que no sea nulo y que sea un objeto Mario.
-	 * @param actorJugador Actor que se quiere comprobar si es un Mario.
-	 * @return el objeto Mario.
-	 * @throws ColisionException si actorJugador no es objeto Mario.
-	 * @throws NullPointerException si actorJugador es null.
-	 */
-	protected Mario checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
-	{
-		if (actorJugador == null)
-			throw new NullPointerException ("Imposible colisionar con Actor nulo.");
-		try
-		{
-			Mario mario = (Mario) actorJugador;
-			return mario;
-		}
-		catch (ClassCastException e) 
-		{
-			throw new ColisionException ("Imposible realizar colisión, el actor no es un Mario.");
-		}		
+		PG = 0;*/
 	}
 	
 	/*CONSULTAS*/

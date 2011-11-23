@@ -121,6 +121,32 @@ public class Celda
 	}
 	
 	/**
+	 * Saca la Estructura pasado por parámetro.
+	 * 
+	 * @param actor Estructura a sacar de la Celda.
+	 * @return Estructura sacada de la Celda.
+	 * @throws NullPointerException Si se actor es igual a null.
+	 * @throws AccionActorException Si se intenta sacar un Actor que no pertenece a la Celda.
+	 */
+	public Actor sacarEstructura (Estructura estructura) throws NullPointerException, AccionActorException
+	{
+		if (estructura == null)
+			throw new NullPointerException ("Celda.sacarEstructura()" + "\n" +
+                                            "El Actor que está intentando sacar de la Celda es null.");
+		if (!totalmenteOcupada)
+			throw new AccionActorException("Celda.sacarEstructura()" + "\n" +
+                                           "Imposible sacar una Estructura de una Celda que no está totalmente ocupada.");
+		
+		Position<Actor> p = actores.first();
+		while ((p != actores.last()) && (p.element() != estructura))
+			p = actores.next(p);
+		if (p.element() != estructura)
+			throw new AccionActorException ("Celda.sacarEstructura()" + "\n" +
+                                            "La Estructura que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma.");
+		return actores.remove(p);
+	}
+	
+	/**
 	 * Setea si la Celda esta totalmenteOcupada o no.
 	 * 
 	 * @param ocupada True: la celda esta totalmente ocupada.
