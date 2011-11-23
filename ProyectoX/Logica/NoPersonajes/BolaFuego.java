@@ -5,11 +5,10 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Movible;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a las Bolas de Fuego, lanzadas por Mario Blanco (Mario con efecto de Flor de Fuego), en el Juego.

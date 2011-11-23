@@ -2,12 +2,11 @@ package ProyectoX.Logica.NoPersonajes.PowerUps;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Logica.Mapa.Celda;
-import ProyectoX.Logica.Personajes.Mario;
-import ProyectoX.Logica.Personajes.Invulnerable;
-import ProyectoX.Logica.Personajes.Destructor;
 import ProyectoX.Logica.Movible;
+import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Caracteristica;
+import ProyectoX.Logica.Personajes.Destructor;
+import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a los power ups Estrella del juego. El efecto sobre Mario es hacerlo Invulnerable y Destructor.

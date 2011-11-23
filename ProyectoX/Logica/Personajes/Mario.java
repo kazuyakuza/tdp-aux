@@ -30,6 +30,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
 	
+	//Prioridades para el UpNeeder
+	//0 = spriteManager.cambiarSprite(saltando)
+	//5 = spriteManager.cambiarSprite(-quieto)
+	
 	/*CONSTRUCTOR*/
 	
 	/**
@@ -42,7 +46,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	{
 		super (c.getNombresSprites(), cargadorSprite);
 		miCaracteristica = c;
-		c.setMario(this);			
+		c.setMario(this);
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -136,13 +141,13 @@ public class Mario extends Actor implements PjSeleccionable, Movible
         {
                 if (! upNeeder.hayWorkerPrioridad(5))
                         upNeeder.addWorker(5,
-                                        new Worker ()
+                                 new Worker ()
                                 {
-                                                public void work() throws Exception
-                                                {
-                                                        spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
-                                                }
-                                });
+                                 	public void work() throws Exception
+                                 	{
+                                 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+                                 	}
+                                 });
         }
         else
         {
@@ -263,13 +268,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAizquierda." + "\n" +
+			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -307,13 +314,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAderecha." + "\n" +
+			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
@@ -355,8 +364,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	{
 		miCaracteristica.crecerFlor();
 	}
-				
-	/**
+					/**
 	 * Realiza la acción de ser colisionado por un enemigo.
 	 * @param a es el Actor (enemigo) que colisiona con Mario.
 	 * @throws AccionActorException Si se produce algún error al ser dañado.

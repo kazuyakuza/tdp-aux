@@ -20,7 +20,7 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 		super();
 		componente = comp;
 		mario = comp.getMario();
-		mario.getSpriteManager().setSprites(this.getNombresSprites());
+		mario.getSpriteManager().cargarSprites(this.getNombresSprites());
 	}
 	
 	/**

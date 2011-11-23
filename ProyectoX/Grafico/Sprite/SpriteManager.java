@@ -233,26 +233,6 @@ public class SpriteManager implements ImageObserver
 		eliminar = true;
 	}
 	
-	/**
-	 * Setea los nombres de sprites del SpriteManager.
-	 * @param nombresSprites los nuevos nombres para los sprites del manejador.
-	 */
-	public void setSprites (String[] nombresSprites)
-	{
-		sprites = new BufferedImage[nombresSprites.length];
-		CargadorSprite cargadorSprite = new CargadorSprite();
-		for (int i=0; i<nombresSprites.length; i++)
-			try
-			{
-				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
-			}
-			catch (CargaRecursoException exception)
-			{
-				throw new CargaRecursoException (exception.getMessage() + "\n" +
-						                         "Error al cargar el sprite de nombre " + nombresSprites[i] + ".");
-			}
-	}
-	
 	/*CONSULTAS*/
 	
 	/**
