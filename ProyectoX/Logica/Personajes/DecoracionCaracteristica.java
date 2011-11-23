@@ -16,9 +16,11 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 	 * @param comp es la Caracteristica a la cual se decora.
 	 */
 	protected DecoracionCaracteristica (Caracteristica comp)
-	{
-		super(comp.getMario());
+	{		
+		super();
 		componente = comp;
+		mario = comp.getMario();
+		mario.getSpriteManager().setSprites(this.getNombresSprites());
 	}
 	
 	/**
@@ -96,7 +98,7 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 	 * @retun un arreglo de Strings que contiene los nombres de sprites.
 	 */
 	public String[] getNombresSprites()
-	{
+	{		
 		return componente.getNombresSprites();
 	}
 }

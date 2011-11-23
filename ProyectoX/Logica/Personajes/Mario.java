@@ -356,36 +356,6 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		miCaracteristica.crecerFlor();
 	}
 				
-	/*COMANDOS ABSTRACTOS*/
-		
-	/**
-	 * Mario realiza la acción de saltar.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al saltar.
-	 */
-	//public abstract void saltar () throws AccionActorException;
-		
-	/**
-	 * Mario realiza la acción de moverse hacia la izquierda.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
-	 */
-	//public abstract void moverseAizquierda () throws AccionActorException;
-		
-	/**
-	 * Mario realiza la acción de moverse hace la derecha.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
-	 */
-	//public abstract void moverseAderecha () throws AccionActorException;
-		
-	/**
-	 * Mario realiza la acción de agacharse.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al agacharse.
-	 */
-	//public abstract void agacharse () throws AccionActorException;
-	
 	/**
 	 * Realiza la acción de ser colisionado por un enemigo.
 	 * @param a es el Actor (enemigo) que colisiona con Mario.

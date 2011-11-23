@@ -31,23 +31,23 @@ public class Destructor extends DecoracionCaracteristica
 	public Destructor (Caracteristica comp, int t)
 	{		
 		super (comp);
-		System.out.println("Bajo efecto de Estrella.");
+		System.out.println("Bajo efecto de Estrella. " + "Mario con efecto " + mario.getCaracteristica());
 		timer = new Timer (t, new ActionListener ()
-		{			
-			boolean terminar = false;
+		{				
 			public void actionPerformed (ActionEvent e)
-			{
-				if (!terminar)
-					terminar = true;
-				else
-					{mario.setCaracteristica(componente);
-					 mario = null;
-					 timer.stop();		
-					 System.out.println("Se termino efecto de Estrella.");
-					}					
+			{					
+				mario.setCaracteristica(componente);				
+				System.out.println("Se termino efecto de Estrella. " + "Mario con efecto " + mario.getCaracteristica());
+				mario = null;
+				terminar();						
 			}
 		});
-		timer.start();
+		timer.start();		
+	}
+	
+	protected void terminar ()
+	{
+		timer.stop();
 	}
 	
 	/**
