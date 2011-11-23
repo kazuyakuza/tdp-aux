@@ -20,7 +20,7 @@ import ProyectoX.Logica.Mapa.Celda;
  * @author Pablo Isaias Chacar LU:67704
  */
 public abstract class PowerUp extends Actor implements Punteable
-{
+{	
 	
 	/*CONSTRUCTOR*/
 	

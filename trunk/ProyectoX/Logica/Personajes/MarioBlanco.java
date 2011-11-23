@@ -22,7 +22,7 @@ public class MarioBlanco extends Caracteristica
 		                                             dirRecursos + "FieryMario-Walk2.gif",//3: Mario caminando2
 		                                             dirRecursos + "FieryMario-Walk3.gif",//4: Mario caminando3
 		                                             dirRecursos + "FieryMario-Jump.gif", //5: Mario saltando
-													 dirRecursos + "FieryMario.Duck.gif",//6: Mario agachado
+													 dirRecursos + "FieryMario-Duck.gif",//6: Mario agachado
 													 dirRecursos + "FieryMario-Fireball.gif"}; //7: Mario
 	
 	protected int agachado;

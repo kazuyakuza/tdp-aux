@@ -8,6 +8,7 @@ import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a todos los objetos virtuales que pueden desarrolar una "actuación" dentro del juego.
@@ -162,15 +163,37 @@ public abstract class Actor
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir()
+	public void morir(Actor a)
 	{
-		/*spriteManager.setEliminar();
+		spriteManager.setEliminar();
 		celdaActual.sacarActor(this);
 		
 		spriteManager = null;
 		celdaActual = null;
 		upNeeder = null;
-		PG = 0;*/
+		PG = 0;
+	}
+	
+	/**
+	 * Realiza un checkeo sobre actorJugador para verificar que no sea nulo y que sea un objeto Mario.
+	 * @param actorJugador Actor que se quiere comprobar si es un Mario.
+	 * @return el objeto Mario.
+	 * @throws ColisionException si actorJugador no es objeto Mario.
+	 * @throws NullPointerException si actorJugador es null.
+	 */
+	protected Mario checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
+	{
+		if (actorJugador == null)
+			throw new NullPointerException ("Imposible colisionar con Actor nulo.");
+		try
+		{
+			Mario mario = (Mario) actorJugador;
+			return mario;
+		}
+		catch (ClassCastException e) 
+		{
+			throw new ColisionException ("Imposible realizar colisión, el actor no es un Mario.");
+		}		
 	}
 	
 	/*CONSULTAS*/
