@@ -97,7 +97,7 @@ public class BolaFuego extends Actor
 	 */
 	public void morir(Actor a) throws NullPointerException
 	{
-		/*No hace nada, nunca ocurre.*/
+		super.morir(a);
 	}
 
 }
