@@ -7,6 +7,7 @@ import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.NoPersonajes.Piso;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 
 /**
  * Representa un Nivel del Juego.
@@ -100,35 +101,40 @@ public class Nivel
 		PositionList<Actor> listaActores = new ListaPositionSimple<Actor> ();
 		
 		//Creación Bloque 1 del Nivel. Que es el Bloque de inicio del Nivel.
-		bloqueActual = new Bloque(mapa, 0, 0, 8, 10);//Nivel de Piso default.
+		bloqueActual = new Bloque(mapa, 0, 0, 15/*8*/, 20/*10*/);//Nivel de Piso default.
 		
 		mapa.setBloque(0, 0, bloqueActual);
 		
 		//Agregación Piso
 		int aux = 0;
-		while (aux <= 9)
+		while (aux < 20)
 		{
 			/*if (aux != 6)
 			{*/
 				Piso piso = new Piso(cargadorSprite);
-				bloqueActual.ABC[6][aux].agregarEstructura(piso);
-				piso.setCeldaActual(bloqueActual.ABC[6][aux]);
+				bloqueActual.ABC[13][aux].agregarEstructura(piso);
+				piso.setCeldaActual(bloqueActual.ABC[13][aux]);
 				listaActores.addFirst(piso);
 			//}
 			aux++;
 		}
 		
 		//Agregación Actor del Jugador.
-		bloqueActual.ABC[5][1].agregarActor(actor);
-		actor.setCeldaActual(bloqueActual.ABC[5][1]);
+		bloqueActual.ABC[12][1].agregarActor(actor);
+		actor.setCeldaActual(bloqueActual.ABC[12][1]);
 		listaActores.addFirst(actor);
 		
 		//Agregación Actores no Personjes.
-		/*Irrompible plataforma = new Irrompible (cargadorSprite);
-		bloqueActual.ABC[3][3].setOcupada(true);
-		bloqueActual.ABC[3][3].agregarEstructura(plataforma);//Plataforma irrompible
-		plataforma.setCeldaActual(bloqueActual.ABC[3][3]);
-		listaActores.addFirst(plataforma);*/
+		aux = 6;
+		while (aux < 12)
+		{
+			Irrompible plataforma = new Irrompible (cargadorSprite);
+			bloqueActual.ABC[9][aux].setOcupada(true);
+			bloqueActual.ABC[9][aux].agregarEstructura(plataforma);//Plataforma irrompible
+			plataforma.setCeldaActual(bloqueActual.ABC[9][aux]);
+			listaActores.addFirst(plataforma);
+			aux++;
+		}
 		
 		//Vacio en el Piso.
 		//bloqueActual.ABC[6][6].setOcupada(false);
@@ -151,7 +157,7 @@ public class Nivel
 		bloqueActual.setColumnaOcupada(0, true);
 		
 		//Agregación Final Mapa
-		bloqueActual.setColumnaOcupada(9, true);
+		bloqueActual.setColumnaOcupada(19, true);
 		
 		//Agregación Llegada
 		/*aux = 0;
