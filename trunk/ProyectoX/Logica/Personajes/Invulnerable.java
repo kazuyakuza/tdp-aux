@@ -32,19 +32,22 @@ public class Invulnerable extends DecoracionCaracteristica
 	{
 		super (comp);
 		timer = new Timer (t, new ActionListener ()
-		{			
-			boolean terminar = false;
+		{						
 			public void actionPerformed (ActionEvent e)
 			{				
-				if (!terminar)
-					terminar = true;
-				else
-					{mario.setCaracteristica(componente);
-					 mario = null;
-					 timer.stop();					 
-					}					
+				mario.setCaracteristica(componente);
+				mario = null;
+				timer.stop();					 
+								
 			}
-		});
+		});		
+	}
+	
+	/**
+	 * Empieza el tiempo de duración del efecto de Invulnerable.
+	 */
+	public void empezar ()
+	{		
 		timer.start();
 	}
 	
@@ -56,8 +59,7 @@ public class Invulnerable extends DecoracionCaracteristica
 	 */
 	public void crecerHongo () throws AccionActorException
 	{
-		componente.crecerHongo();
-		//componente = componente.getMario().getCaracteristica();
+		componente.crecerHongo();		
 		componente = mario.getCaracteristica();
 	}
 	
@@ -69,8 +71,7 @@ public class Invulnerable extends DecoracionCaracteristica
 	 */
 	public void crecerFlor () throws AccionActorException
 	{
-		componente.crecerFlor();
-		//componente = componente.getMario().getCaracteristica();
+		componente.crecerFlor();		
 		componente = mario.getCaracteristica();
 	}
 	
