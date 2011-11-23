@@ -12,6 +12,7 @@ import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Worker;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
 
 /**
  * Controla los Sprites cargados.
@@ -53,24 +54,24 @@ public class SpriteManager implements ImageObserver
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
 		upNeeder = new UpNeeder(0);
-		sprites = new BufferedImage[nombresSprites.length];
-		for (int i=0; i<nombresSprites.length; i++)
-			try
-			{
-				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
-			}
-			catch (CargaRecursoException exception)
-			{
-				throw new CargaRecursoException ("SpriteManager." + "\n" +
-						                         "Error al cargar el sprite de nombre " + nombresSprites[i] + "." + "\n" +
-						                         "Detalles del Eror:" + "\n" +
-						                         exception.getMessage());
-			}
-		spriteActual = sprites[0];
-		posX = posY = -1;
-		difX = difY = 0;
-		invertido = false;
-		eliminar = false;
+        sprites = new BufferedImage[nombresSprites.length];
+        for (int i=0; i<nombresSprites.length; i++)
+                try
+                {
+                        sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
+                }
+                catch (CargaRecursoException exception)
+                {
+                        throw new CargaRecursoException ("SpriteManager." + "\n" +
+                                                                 "Error al cargar el sprite de nombre " + nombresSprites[i] + "." + "\n" +
+                                                                 "Detalles del Eror:" + "\n" +
+                                                                 exception.getMessage());
+                }
+        spriteActual = sprites[0];
+        posX = posY = -1;
+        difX = difY = 0;
+        invertido = false;
+        eliminar = false;
 	}
 	
 	/*COMANDOS*/
@@ -87,9 +88,10 @@ public class SpriteManager implements ImageObserver
 	public void cambiarSprite (int cambio) throws SpriteException
 	{
 		if (Math.abs(cambio) >= sprites.length)
-			throw new SpriteException("SpriteManager.cambiarSprite()" + "\n" +
-					                  "Numero de Sprite a cargar incorrecto." + "\n" +
-					                  "Ingresado: " + cambio + " | Máximo: -" + sprites.length + "|" + sprites.length + "+");
+            throw new SpriteException("SpriteManager.cambiarSprite()" + "\n" +
+                                              "Numero de Sprite a cargar incorrecto." + "\n" +
+                                              "Ingresado: " + cambio + " | Máximo: -" + sprites.length + "|" + sprites.length + "+");
+
 		
 		if (invertido)
 		{
@@ -129,7 +131,7 @@ public class SpriteManager implements ImageObserver
 	 * Actualiza la posición del sprite a la posición pasada por parámetro.
 	 * 
 	 * @param posicion Arreglo de dos componenete con posicion[0] = Nueva posición X, y posicion[1] = Nueva posición Y.
-	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @exception PosicionIncorrectaException Si se ingresa una posición incorrecta.
 	 */
 	public void actualizar (int[] posicion) throws PosicionIncorrectaException
 	{
@@ -155,7 +157,7 @@ public class SpriteManager implements ImageObserver
 			posY = Y;
 		}
 		else
-		{
+		{			
 			if ((posX % (int) posX) == 0.0)
 			{
 				if ((int) posX != X)
@@ -184,31 +186,32 @@ public class SpriteManager implements ImageObserver
 						difY -= 0.5;
 					}
 			}
-			
 			if (! upNeeder.hayWorkerPrioridad(0))
-				upNeeder.addWorker(0,
-						new Worker ()
-						{
-							public void work() throws Exception
-							{
-								actualizacion();
-							}
-						});
+                upNeeder.addWorker(0,
+                                new Worker ()
+                                {
+                                        public void work() throws Exception
+                                        {
+                                                actualizacion();
+                                        }
+                                });
+
 		}
 	}
 	
 	/**
-	 * Actualiza la posición del sprite.
-	 * 
-	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
-	 */
-	private void actualizacion () throws PosicionIncorrectaException
-	{
-		posX += difX;
-		posY += difY;
-		difX = 0;
-		difY = 0;
-	}
+     * Actualiza la posición del sprite.
+     * 
+     * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
+     */
+    private void actualizacion () throws PosicionIncorrectaException
+    {
+            posX += difX;
+            posY += difY;
+            difX = 0;
+            difY = 0;
+    }
+
 	
 	/**
 	 * Indica a este SpriteManager como "debe ser eliminado".
@@ -218,13 +221,33 @@ public class SpriteManager implements ImageObserver
 		eliminar = true;
 	}
 	
+	/**
+	 * Setea los nombres de sprites del SpriteManager.
+	 * @param nombresSprites los nuevos nombres para los sprites del manejador.
+	 */
+	public void setSprites (String[] nombresSprites)
+	{
+		sprites = new BufferedImage[nombresSprites.length];
+		CargadorSprite cargadorSprite = new CargadorSprite();
+		for (int i=0; i<nombresSprites.length; i++)
+			try
+			{
+				sprites[i] = cargadorSprite.obtenerSprite(nombresSprites[i], this);
+			}
+			catch (CargaRecursoException exception)
+			{
+				throw new CargaRecursoException (exception.getMessage() + "\n" +
+						                         "Error al cargar el sprite de nombre " + nombresSprites[i] + ".");
+			}
+	}
+	
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve el UpNeeder del SpriteManager.
-	 * 
-	 * @return UpNeeder del SpriteManager.
-	 */
+     * Devuelve el UpNeeder del SpriteManager.
+     * 
+     * @return UpNeeder del SpriteManager.
+     */
 	public UpNeeder getUpNeeder ()
 	{
 		return upNeeder;
