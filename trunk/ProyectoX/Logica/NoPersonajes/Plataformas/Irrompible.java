@@ -40,7 +40,7 @@ public class Irrompible extends Actor implements Plataforma
 	 * @param a Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
-	public void colisionar (Actor a) throws ColisionException
+	public void colisionar (Actor a) throws ColisionException, NullPointerException
 	{
 		/*No hace nada, no tiene efecto sobre otros Actores.*/
 	}
@@ -51,7 +51,7 @@ public class Irrompible extends Actor implements Plataforma
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException
+	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
 	{
 		/*No hace nada, no tiene efecto sobre otros Actores.*/
 	}
@@ -92,7 +92,7 @@ public class Irrompible extends Actor implements Plataforma
 	 * 
 	 * No tiene ningún efecto en este Actor.
 	 */
-	public void morir()
+	public void morir(Actor a) throws NullPointerException
 	{
 		/*No hace nada, nunca ocurre.*/
 	}
