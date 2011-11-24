@@ -8,8 +8,6 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-import javax.imageio.ImageIO;
-
 import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;

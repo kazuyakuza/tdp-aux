@@ -138,7 +138,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 							{
 								public void work() throws Exception
 								{
-									spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+									if (izq)
+										spriteManager.cambiarSprite(-miCaracteristica.spriteQuieto());
+									else
+										spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 								}
 							});
 			}
@@ -150,7 +153,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	        				{
 	        					public void work() throws Exception
 	        					{
-	        						spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
+	        						if (izq)
+	        							spriteManager.cambiarSprite(-miCaracteristica.spriteSaltando());
+									else
+										spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
 	                            }
 	        				});
 	        }
@@ -217,7 +223,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 				throw new NullPointerException ("La celdaActual del Actor es null.");			
 			if ((PG == 0) && (PS < maxPS))
 			{
-				spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());				
+				if (izq)
+					spriteManager.cambiarSprite(-miCaracteristica.spriteSaltando());
+				else
+					spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
 				if (celdaActual.getBloque().haySuperior(celdaActual))
 				{
 					PG++;
