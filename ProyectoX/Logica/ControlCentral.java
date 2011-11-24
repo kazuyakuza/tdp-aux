@@ -82,7 +82,7 @@ public class ControlCentral implements Runnable, ControlThread
 			
 			cargadorSprite = new CargadorSprite ();
 		
-			Mario PJ = new Mario (new MarioChico(), cargadorSprite);			
+			Mario PJ = new Mario (new MarioChico(), cargadorSprite);
 			Control c = new Teclado();
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
@@ -174,7 +174,10 @@ public class ControlCentral implements Runnable, ControlThread
 			//Agregando Piso
 			bloqueGrafico.setNivelPiso(bloqueActual.getNivelPiso());
 			for (Actor a: actores)
+			{
 				bloqueGrafico.agregarSprite(a.spriteManager);
+				a.spriteManager.setBloqueGrafico(this, bloqueGrafico);
+			}
 			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
 			escenario.setBloqueGraficoActual(bloqueGrafico);
 			
@@ -190,10 +193,30 @@ public class ControlCentral implements Runnable, ControlThread
 			Tescenario.start();
 			
 			ventanaPrincipal.repaint();
+			
+			//test();
 		}
 		catch (Exception exception)
 		{
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
+		}
+	}
+	
+	public void test ()
+	{
+		((Mario) jugador.personaje).crecerHongo();
+		((Actor) jugador.personaje).spriteManager.cambiarSprite(1);
+		
+		while (true)
+		{
+			try {
+				Thread.sleep((int) (getSleepTime() * 0.5));
+				} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+				
+			((Actor) jugador.personaje).spriteManager.flashear();
 		}
 	}
 	

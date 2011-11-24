@@ -148,6 +148,7 @@ public class Nivel
 		bloqueActual.ABC[6][10].agregarActor(bola);
 		bola.setCeldaActual(bloqueActual.ABC[6][10]);
 		listaActores.addLast(bola);
+		
 		//Agregación Actores no Personjes.
 		aux = 6;
 		while (aux < 12)

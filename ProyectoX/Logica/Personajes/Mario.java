@@ -139,27 +139,27 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		
 		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
         {
-                if (! upNeeder.hayWorkerPrioridad(5))
-                        upNeeder.addWorker(5,
-                                 new Worker ()
-                                {
-                                 	public void work() throws Exception
-                                 	{
-                                 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
-                                 	}
-                                 });
-        }
+			if (! upNeeder.hayWorkerPrioridad(5))
+				upNeeder.addWorker(5,
+						new Worker ()
+						{
+							public void work() throws Exception
+							{
+								spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+							}
+						});
+		}
         else
         {
-                if (! upNeeder.hayWorkerPrioridad(0))
-                        upNeeder.addWorker(0,
-                                        new Worker ()
-                                {
-                                                public void work() throws Exception
-                                                {
-                                                        spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
-                                                }
-                                });
+        	if (! upNeeder.hayWorkerPrioridad(0))
+        		upNeeder.addWorker(0,
+        				new Worker ()
+        				{
+        					public void work() throws Exception
+        					{
+        						spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
+                            }
+        				});
         }
 	}
 	
@@ -176,8 +176,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		if (jugador == null)
 			throw new NullPointerException ("Mario.morir()" + "\n" +
                                             "Imposible quitar vida al Jugador. Jugador es null.");
+		
 		spriteManager.cambiarSprite(miCaracteristica.spriteMuerto());
 		super.morir(a);
+		
 		try
 		{
 			jugador.asignarPuntos(((Punteable)a).getPuntos(this));
@@ -352,6 +354,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	public void crecerHongo () throws AccionActorException
 	{
 		miCaracteristica.crecerHongo();
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
 	
 	/**
@@ -363,8 +366,9 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	public void crecerFlor () throws AccionActorException
 	{
 		miCaracteristica.crecerFlor();
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
-					/**
+	/**
 	 * Realiza la acción de ser colisionado por un enemigo.
 	 * @param a es el Actor (enemigo) que colisiona con Mario.
 	 * @throws AccionActorException Si se produce algún error al ser dañado.
@@ -372,6 +376,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	public void serDañado (Actor a) throws AccionActorException
 	{
 		miCaracteristica.serDañado(a);
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
 	
 	/**
@@ -382,6 +387,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	public void setCaracteristica (Caracteristica c)
 	{
 		miCaracteristica = c;
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
 	
 	/*CONSULTAS*/
@@ -475,5 +481,5 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		while (actores.hasNext())
 			actores.next().colisionarPj(this);	
 	}
-	
+
 }
