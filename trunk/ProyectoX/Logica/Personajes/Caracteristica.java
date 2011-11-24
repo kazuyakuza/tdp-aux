@@ -142,7 +142,7 @@ public abstract class Caracteristica
 	
 	public int cantSpritesCaminando()
 	{
-		return 0;//3;
+		return 3;
 	}
 	
 	public int spriteSaltando()
