@@ -172,6 +172,11 @@ public class Jugador implements Worker
 		return personaje;
 	}
 	
+	public ControlCentral getControlCentral()
+	{
+		return controlCentral;
+	}
+	
 	/*Métodos en Ejecución*/
 	
 	/**

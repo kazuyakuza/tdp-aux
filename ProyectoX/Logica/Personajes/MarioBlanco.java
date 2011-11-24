@@ -110,7 +110,8 @@ public class MarioBlanco extends Caracteristica
 	{
 		BolaFuego bola = new BolaFuego (mario, new CargadorSprite ());
 		mario.getCeldaActual().agregarActor(bola);
-		bola.setCeldaActual(mario.getCeldaActual());		
+		bola.setCeldaActual(mario.getCeldaActual());
+		mario.getJugador().getControlCentral().agregarActor(bola);
 	}
 	
 	/**

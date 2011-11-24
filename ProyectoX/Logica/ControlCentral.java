@@ -151,6 +151,11 @@ public class ControlCentral implements Runnable, ControlThread
 		//return actores.iterator();
 	}
 	
+	public void agregarActor (Actor a)
+	{
+		actores.addLast(a);
+	}
+	
 	/*Métodos en Ejecución*/
 	
 	/**

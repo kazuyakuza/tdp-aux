@@ -10,6 +10,8 @@ import ProyectoX.Logica.NoPersonajes.Piso;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 
 import ProyectoX.Logica.NoPersonajes.PowerUps.*;
+import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.NoPersonajes.BolaFuego;
 
 /**
  * Representa un Nivel del Juego.
@@ -141,9 +143,11 @@ public class Nivel
 		bloqueActual.ABC[10][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[10][6]);
 		listaActores.addLast(bomba);
-		
-		
-		
+				
+		BolaFuego bola = new BolaFuego((Mario)actor,cargadorSprite);
+		bloqueActual.ABC[6][10].agregarActor(bola);
+		bola.setCeldaActual(bloqueActual.ABC[6][10]);
+		listaActores.addLast(bola);
 		//Agregación Actores no Personjes.
 		aux = 6;
 		while (aux < 12)
