@@ -6,7 +6,7 @@ import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
-import ProyectoX.Logica.Punteable;
+import ProyectoX.Logica.Responsabilidades.Punteable;
 
 /**
  * Representa al vacío lugar donde todo actor que llegua se muere.
@@ -88,27 +88,6 @@ public class Vacio extends Actor implements Punteable
 	protected void producirColisiones(Celda c)
 	{
 		/*No hace nada, nunca ocurre.*/	
-	}
-	
-	/**
-	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
-	 * 
-	 * @param efecto Efecto de la Gravedad sobre este Actor.
-	 */
-	public void efectoGravedad (int efecto)
-	{
-		PG = 0;
-	}
-	
-	/**
-	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
-	 * No tiene ningún efecto en este Actor.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al caer.
-	 */
-	public void caer () throws AccionActorException
-	{
-		/*No hace nada, nunca ocurre.*/
 	}
 	
 	/**

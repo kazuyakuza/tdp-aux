@@ -18,9 +18,14 @@ import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.Bloque;
 import ProyectoX.Logica.Mapa.Nivel;
+import ProyectoX.Logica.NoPersonajes.Estructura;
+import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
+import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
+import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
 import ProyectoX.Logica.Personajes.MarioGrande;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Representa al Control Central del Juego.
@@ -44,8 +49,8 @@ public class ControlCentral implements Runnable, ControlThread
 	private CargadorSprite cargadorSprite;
 	private Jugador jugador;
 	private Nivel nivel;
-	private PositionList<Actor> actores;
 	private Gravedad gravedad;
+	private PositionList<afectableXgravedad> caibles;
 	
 	//Threads
 	private Thread Tactual;
@@ -87,7 +92,8 @@ public class ControlCentral implements Runnable, ControlThread
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
 			
-			actores = null;
+			caibles = new ListaPositionSimple<afectableXgravedad> ();
+			caibles.addFirst(PJ);
 			
 			nivel = new Nivel(1);
 			
@@ -126,6 +132,25 @@ public class ControlCentral implements Runnable, ControlThread
 		Tactual = t;
 	}
 	
+	public void agregarActor (Actor a)
+	{
+		nivel.getActores(this).addLast(a);
+		for (UpNeeder un: a.getUpNeeders())
+			Tupdater.addUpNeeder(un);
+	}
+	
+	public void agregarPowerUp (PowerUp pu)
+	{
+		nivel.getPowerUps(this).addLast(pu);
+		agregarAfectableXgravedad(pu);
+	}
+	
+	public void agregarAfectableXgravedad (afectableXgravedad aXg)
+	{
+		caibles.addFirst(aXg);
+		agregarActor((Actor) aXg);
+	}
+	
 	/*CONSULTAS*/
 	
 	/**
@@ -145,17 +170,12 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public Iterator<Actor> getActores ()
 	{
-		PositionList<Actor> a = new ListaPositionSimple<Actor> ();
-		a.addFirst((Actor) jugador.personaje());
-		return a.iterator();
-		//return actores.iterator();
+		return nivel.getActores(this).iterator();
 	}
 	
-	public void agregarActor (Actor a)
+	public Iterator<afectableXgravedad> getCaibles ()
 	{
-		actores.addLast(a);
-		for (UpNeeder un: a.getUpNeeders())
-			Tupdater.addUpNeeder(un);
+		return caibles.iterator();
 	}
 	
 	/*Métodos en Ejecución*/
@@ -168,14 +188,14 @@ public class ControlCentral implements Runnable, ControlThread
 		try
 		{
 			//Inicialización Lógica.
-			actores = nivel.inicializarNivel((Actor) jugador.personaje, this, cargadorSprite);
+			nivel.inicializarNivel((Actor) jugador.personaje, this, cargadorSprite);
 			
 			//Inicialización Gráfica.
 			Bloque bloqueActual = nivel.getBloqueActual();
 			BloqueGrafico bloqueGrafico = new BloqueGrafico (bloqueActual.getFilas(), bloqueActual.getColumnas());
 			//Agregando Piso
 			bloqueGrafico.setNivelPiso(bloqueActual.getNivelPiso());
-			for (Actor a: actores)
+			for (Actor a: nivel.getActores(this))
 			{
 				bloqueGrafico.agregarSprite(a.spriteManager);
 				a.spriteManager.setBloqueGrafico(this, bloqueGrafico);
@@ -184,7 +204,7 @@ public class ControlCentral implements Runnable, ControlThread
 			escenario.setBloqueGraficoActual(bloqueGrafico);
 			
 			//Agregando UpNeeders al Updater
-			for (Actor a: actores)
+			for (Actor a: nivel.getActores(this))
 				for (UpNeeder un: a.getUpNeeders())
 					Tupdater.addUpNeeder(un);
 			
@@ -265,12 +285,10 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void ganarNivel ()
 	{
-		Position<Actor> p = actores.first();
+		Position<Actor> p = nivel.getActores(this).first();
 		while (p.element() != jugador.personaje())
-			p = actores.next(p);
-		actores.remove(p);
-		
-		//gravedad.setAfectar(false);
+			p = nivel.getActores(this).next(p);
+		nivel.getActores(this).remove(p);
 		
 		try
 		{
@@ -297,9 +315,9 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void perderNivel ()
 	{
-		Position<Actor> p = actores.first();
-		while ((p != actores.last()) &&(p.element() != jugador.personaje()))
-			p = actores.next(p);
+		Position<Actor> p = nivel.getActores(this).first();
+		while ((p != nivel.getActores(this).last()) &&(p.element() != jugador.personaje()))
+			p = nivel.getActores(this).next(p);
 		
 		if (p.element() != jugador.personaje())
 			try
@@ -311,9 +329,7 @@ public class ControlCentral implements Runnable, ControlThread
 				ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 			}
 		
-		actores.remove(p);
-		
-		//gravedad.setAfectar(false);
+		nivel.getActores(this).remove(p);
 		
 		try
 		{

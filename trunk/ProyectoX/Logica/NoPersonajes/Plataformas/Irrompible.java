@@ -78,27 +78,6 @@ public class Irrompible extends Actor implements Plataforma
 	}
 	
 	/**
-	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
-	 * 
-	 * @param efecto Efecto de la Gravedad sobre este Actor.
-	 */
-	public void efectoGravedad (int efecto)
-	{
-		PG = 0;
-	}
-	
-	/**
-	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
-	 * No tiene ningún efecto en este Actor.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al caer.
-	 */
-	public void caer () throws AccionActorException
-	{
-		/*No hace nada, nunca ocurre.*/
-	}
-	
-	/**
 	 * Realiza la acción de morir del Actor.
 	 * 
 	 * No tiene ningún efecto en este Actor.

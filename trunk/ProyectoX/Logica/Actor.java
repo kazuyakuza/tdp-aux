@@ -29,11 +29,7 @@ public abstract class Actor
 	  //Actualizador
 	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	  //Logica
-	protected Celda celdaActual; 
-	protected int PG;//Potencia de la Gravedad.
-					 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
-					 //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
-                     //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
+	protected Celda celdaActual;
 	
 	/*CONSTRUCTOR*/
 	
@@ -57,7 +53,6 @@ public abstract class Actor
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
 		upNeeder = new UpNeeder (5);
 		celdaActual = null;
-		PG = 0;
 	}
 	
 	/*COMANDOS*/
@@ -121,20 +116,6 @@ public abstract class Actor
 	 */
 	protected abstract void producirColisiones (Celda c);
 	
-	/**
-	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
-	 * 
-	 * @param efecto Efecto de la Gravedad sobre este Actor.
-	 */
-	public void efectoGravedad (int efecto)
-	{
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
-			PG = 0;
-		else
-			if (!(PG < 0))
-				PG -= efecto;
-	}
-	
 	/*COMANDOS ABSTRACTOS*/
 	
 	/**
@@ -162,13 +143,6 @@ public abstract class Actor
 	public abstract void colisionarBola (Actor bola) throws ColisionException;
 	
 	/**
-	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al caer.
-	 */
-	public abstract void caer () throws AccionActorException;
-	
-	/**
 	 * Realiza la acción de morir del Actor.
 	 */
 	public void morir (Actor a)
@@ -181,8 +155,6 @@ public abstract class Actor
 		
 		upNeeder.notUpdate();
 		upNeeder = null;
-
-		PG = 0;
 	}
 	
 	/**
@@ -230,16 +202,6 @@ public abstract class Actor
 	public Celda getCeldaActual ()
 	{
 		return celdaActual;
-	}
-	
-    /**
-	 * Devuelve la Potencia de la Gravedad sobre este Actor.
-	 * 
-	 * @return Potencia de la Gravedad sobre este Actor.
-	 */
-	public int getPG ()
-	{
-		return PG;
 	}
 	
 	/**

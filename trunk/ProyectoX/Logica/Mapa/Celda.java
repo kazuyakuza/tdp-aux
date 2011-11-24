@@ -103,7 +103,7 @@ public class Celda
 	 * 
 	 * @param actor Actor a sacar de la Celda.
 	 * @return Actor sacado de la Celda.
-	 * @throws NullPointerException Si se actor es igual a null.
+	 * @throws NullPointerException Si actor es igual a null.
 	 * @throws AccionActorException Si se intenta sacar un Actor que no pertenece a la Celda.
 	 */
 	public Actor sacarActor (Actor actor) throws NullPointerException, AccionActorException
@@ -125,7 +125,7 @@ public class Celda
 	 * 
 	 * @param actor Estructura a sacar de la Celda.
 	 * @return Estructura sacada de la Celda.
-	 * @throws NullPointerException Si se actor es igual a null.
+	 * @throws NullPointerException Si actor es igual a null.
 	 * @throws AccionActorException Si se intenta sacar un Actor que no pertenece a la Celda.
 	 */
 	public Actor sacarEstructura (Estructura estructura) throws NullPointerException, AccionActorException

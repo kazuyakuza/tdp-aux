@@ -3,6 +3,7 @@ package ProyectoX.Logica;
 import java.util.Iterator;
 
 import ProyectoX.Librerias.Threads.Worker;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Representa a la gravedad en el Juego, provoca la caída de los Actores que no se encuentran sobre una Celda sólida (totalmente ocupada).
@@ -45,7 +46,7 @@ public class Gravedad implements Worker
 	 */
 	public void work()
 	{	
-		Iterator<Actor> actores = controlCentral.getActores();
+		Iterator<afectableXgravedad> actores = controlCentral.getCaibles();
 		while (actores.hasNext())
 			afectar(actores.next());
 	}
@@ -55,7 +56,7 @@ public class Gravedad implements Worker
 	 * 
 	 * @param a Actor al cual la Gravedad afecta.
 	 */
-	private void afectar (Actor a)
+	private void afectar (afectableXgravedad a)
 	{
 		if (a.getPG() == -1)
 		{

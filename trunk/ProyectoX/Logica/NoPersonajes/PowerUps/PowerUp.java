@@ -6,9 +6,10 @@ import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.Punteable;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Responsabilidades.Punteable;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Representa a todos los power ups del juego. Son Actores NoPersonajes que afectan al personaje del Jugador, Mario.
@@ -18,8 +19,14 @@ import ProyectoX.Logica.Personajes.Mario;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public abstract class PowerUp extends Actor implements Punteable
-{	
+public abstract class PowerUp extends Actor implements Punteable, afectableXgravedad
+{
+	
+	//Atributos de Instancia
+	protected int PG;//Potencia de la Gravedad.
+	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
+                 	 //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
+                     //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 	
 	/*CONSTRUCTOR*/
 	
@@ -29,15 +36,42 @@ public abstract class PowerUp extends Actor implements Punteable
 	protected PowerUp (String[] nombresSprites, CargadorSprite cargadorSprite) throws NullPointerException
 	{
 		super(nombresSprites, cargadorSprite);
+		PG = 0;
 	}
 	
 	/*COMANDOS*/
+	
+	/**
+	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
+	 * 
+	 * @param efecto Efecto de la Gravedad sobre este Actor.
+	 */
+	public void efectoGravedad (int efecto)
+	{
+		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+			PG = 0;
+		else
+			if (!(PG < 0))
+				PG -= efecto;
+	}
 	
 	/**
 	 * Realiza el efecto del Power Up.
 	 * @throws NullPointerException si mario es null.
 	 */
 	public abstract void efecto (Mario mario) throws NullPointerException;
+	
+	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve la Potencia de la Gravedad sobre este Actor.
+	 * 
+	 * @return Potencia de la Gravedad sobre este Actor.
+	 */
+	public int getPG ()
+	{
+		return PG;
+	}
 	
     /*METODOS IMPLEMENTADOS*/
 	
