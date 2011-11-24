@@ -30,9 +30,9 @@ public abstract class Caracteristica
 	 *  Queda sin vincular con un Mario.
 	 */
 	protected Caracteristica ()
-	{
-		quieto = 0;
-		muerto = 1;		
+	{		
+		muerto = 0;
+		quieto = 1;
 		caminando = 2;
 		saltando = 5;
 	}
@@ -44,8 +44,8 @@ public abstract class Caracteristica
 	 */	
 	protected Caracteristica(Mario pj)
 	{
-		quieto = 0;
-		muerto = 1;
+		muerto = 0;
+		quieto = 1;
 		caminando = 2;
 		saltando = 5;
 		mario = pj;
