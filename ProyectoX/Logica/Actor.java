@@ -170,11 +170,10 @@ public abstract class Actor
 		
 		spriteManager = null;
 		celdaActual = null;
-		/*
+		
 		upNeeder.notUpdate();
-		upNeeder.limpiar();
 		upNeeder = null;
-		*/
+
 		PG = 0;
 	}
 	
