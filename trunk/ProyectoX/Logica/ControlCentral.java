@@ -154,6 +154,8 @@ public class ControlCentral implements Runnable, ControlThread
 	public void agregarActor (Actor a)
 	{
 		actores.addLast(a);
+		for (UpNeeder un: a.getUpNeeders())
+			Tupdater.addUpNeeder(un);
 	}
 	
 	/*Métodos en Ejecución*/
@@ -205,9 +207,9 @@ public class ControlCentral implements Runnable, ControlThread
 	public void test ()
 	{
 		((Mario) jugador.personaje).crecerHongo();
-		((Actor) jugador.personaje).spriteManager.cambiarSprite(1);
+		((Mario) jugador.personaje).crecerFlor();
 		
-		while (true)
+		/*while (true)
 		{
 			try {
 				Thread.sleep((int) (getSleepTime() * 0.5));
@@ -217,7 +219,7 @@ public class ControlCentral implements Runnable, ControlThread
 				}
 				
 			((Actor) jugador.personaje).spriteManager.flashear();
-		}
+		}*/
 	}
 	
 	/**
