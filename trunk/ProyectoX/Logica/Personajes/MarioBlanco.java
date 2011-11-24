@@ -51,7 +51,10 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void agacharse () throws AccionActorException
 	{
-		mario.getSpriteManager().cambiarSprite(agachado);
+		if (mario.izq)
+			mario.getSpriteManager().cambiarSprite(-agachado);
+		else
+			mario.getSpriteManager().cambiarSprite(agachado);
 		//Quitar la última celda de la lista de celdas actuales.
 	}
 	
