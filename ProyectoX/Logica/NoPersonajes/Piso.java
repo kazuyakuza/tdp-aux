@@ -57,6 +57,17 @@ public class Piso extends Actor implements Estructura
 	}
 	
 	/**
+	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * 
+	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @throws ColisionException Si se produce algún error en la colisión.
+	 */
+	public void colisionarBola (Actor bola) throws ColisionException
+	{
+		//No hace nada, no tiene efecto sobre este actor.
+	}
+	
+	/**
 	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
 	 * @param c Celda con los Actores a colisionar con el Actor actual. 

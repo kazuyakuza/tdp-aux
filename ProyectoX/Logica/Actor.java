@@ -154,6 +154,14 @@ public abstract class Actor
 	public abstract void colisionarPj (Actor actorJugador) throws ColisionException;
 	
 	/**
+	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * 
+	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @throws ColisionException Si se produce algún error en la colisión.
+	 */
+	public abstract void colisionarBola (Actor bola) throws ColisionException;
+	
+	/**
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al caer.
