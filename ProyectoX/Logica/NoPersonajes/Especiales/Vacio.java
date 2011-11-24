@@ -7,6 +7,7 @@ import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Punteable;
+
 /**
  * Representa al vacío lugar donde todo actor que llegua se muere.
  * Cuando un Actor colisiona (se ubica en la misma celda) con un Vacio, dicho Actor se muere.
