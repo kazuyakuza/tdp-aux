@@ -254,7 +254,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 			if (celdaActual.getBloque().hayAnterior(celdaActual))
 			{
 				spriteManager.cambiarSprite(-miCaracteristica.spriteCaminando());
-				spriteManager.setGif(miCaracteristica.cantSpritesCaminando());
+				//spriteManager.setGif(miCaracteristica.cantSpritesCaminando());
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
@@ -301,7 +301,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 			if (celdaActual.getBloque().haySiguiente(celdaActual))
 			{
 				spriteManager.cambiarSprite(miCaracteristica.spriteCaminando());
-				spriteManager.setGif(miCaracteristica.cantSpritesCaminando());
+				//spriteManager.setGif(miCaracteristica.cantSpritesCaminando());
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);
