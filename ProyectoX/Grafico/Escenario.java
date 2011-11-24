@@ -263,7 +263,7 @@ public class Escenario extends Canvas implements Worker
 				bloqueGrafico.eliminarSprite(sp);
 			else
 				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))
-					                            , ((int) (sp.posicion()[0] * medidaPixelCelda)) + difPiso, this);
+						                        , ((int) (sp.posicion()[0] * medidaPixelCelda)) + difPiso, this);
 		}
 		bufferStrategy.show();
 	}
