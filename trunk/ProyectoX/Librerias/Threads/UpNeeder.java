@@ -50,7 +50,7 @@ public class UpNeeder
 					                        "Imposible agregar un Worker null.");
 		if (prioridad >= prioridades.length)
 			throw new BoundaryViolationException ("UpNeeder.addWorker()" + "\n" +
-                                                  "La imprioridad " + prioridad + " del Worker a ingresar supera la máxima prioridad posible definida al crear el UpNeeder. (max=" + prioridades.length + ")");
+                                                  "La prioridad " + prioridad + " del Worker a ingresar supera la máxima prioridad posible definida al crear el UpNeeder. (max=" + prioridades.length + ")");
 		
 		prioridades[prioridad] = true;
 		workers.insert(prioridad, w);

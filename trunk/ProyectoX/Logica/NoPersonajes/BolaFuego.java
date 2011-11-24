@@ -22,7 +22,14 @@ public class BolaFuego extends Actor implements Movible
 {
 	//Variables de Clase
 	private static final String dirRecursos = "Objetos/";
-	private static final String [] nombresSprites = {dirRecursos + "FireBall.gif", dirRecursos + "FireBallHit.gif"};
+	private static final String [] nombresSprites = {dirRecursos + "FireBall-1.png",
+		                                             dirRecursos + "FireBall-2.png",
+		                                             dirRecursos + "FireBall-3.png",
+		                                             dirRecursos + "FireBall-4.png",
+													 dirRecursos + "FireBallHit-1.png",
+													 dirRecursos + "FireBallHit-2.png",
+													 dirRecursos + "FireBallHit-3.png",
+													 dirRecursos + "FireBallHit-4.png",};
 	
 	//Variables de Instancia
 	protected Mario mario;
@@ -39,6 +46,8 @@ public class BolaFuego extends Actor implements Movible
 		super(nombresSprites, cargadorSprite);
 		mario = pj;
 		//miIA = new IA();
+		
+		spriteManager.rotarGif(4);
 	}
 	
 /*COMANDOS IMPLEMENTADOS*/
