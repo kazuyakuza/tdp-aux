@@ -18,8 +18,8 @@ public class MarioBlanco extends Caracteristica
 	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioChico, la ubicación en los índices es:
-	                                                {dirRecursos + "Mario-Dead.gif", 	  //0: Mario muerto	
-													 dirRecursos + "FieryMario.gif",      //1: Mario quieto													 	                                             
+	                                                {dirRecursos + "Mario-Dead.gif", 	  //0: Mario muerto
+													 dirRecursos + "FieryMario.gif",      //1: Mario quieto		                                             
 		                                             dirRecursos + "FieryMario-Walk1.gif",//2: Mario caminando1
 		                                             dirRecursos + "FieryMario-Walk2.gif",//3: Mario caminando2
 		                                             dirRecursos + "FieryMario-Walk3.gif",//4: Mario caminando3
@@ -27,8 +27,8 @@ public class MarioBlanco extends Caracteristica
 													 dirRecursos + "FieryMario-Duck.gif",//6: Mario agachado
 													 dirRecursos + "FieryMario-Fireball.gif"}; //7: Mario
 	
-	protected int agachado;
-	protected int lanzando;
+	protected static int agachado = 6;
+	protected static int lanzando = 7;
 
 	/*CONSTRUCTORES*/
 	
@@ -39,9 +39,7 @@ public class MarioBlanco extends Caracteristica
 	 */	
 	public MarioBlanco (Mario pj)
 	{
-		super(pj);		
-		agachado = 6;
-		lanzando = 7;
+		super(pj);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -108,11 +106,11 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void disparar ()
 	{
-		BolaFuego bola = new BolaFuego (mario, new CargadorSprite ());
+		BolaFuego bola = new BolaFuego (mario, mario.getSpriteManager().getCargadorSprite());
 		mario.getCeldaActual().agregarActor(bola);
 		bola.setCeldaActual(mario.getCeldaActual());
+		mario.getSpriteManager().printNextMe(bola.getSpriteManager());
 		mario.getJugador().getControlCentral().agregarActor(bola);
-		
 	}
 	
 	/**

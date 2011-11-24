@@ -1,5 +1,6 @@
 package ProyectoX.Grafico.Sprite;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.Image;
@@ -10,8 +11,10 @@ import java.awt.image.ImageObserver;
 import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
+import ProyectoX.Grafico.BloqueGrafico;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Worker;
+import ProyectoX.Logica.ControlCentral;
 
 /**
  * Controla los Sprites cargados.
@@ -25,6 +28,7 @@ public class SpriteManager implements ImageObserver
 {
 	
 	//Variables de Instancia
+	private BloqueGrafico bloqueGrafico; //BloqueGrafico al que pertenece el SpriteManager actual.
 	private UpNeeder upNeeder; //UpNeeder del SpriteManager para completar operaciones.
 	private CargadorSprite cargadorSprite;
 	private BufferedImage spriteActual;
@@ -54,6 +58,7 @@ public class SpriteManager implements ImageObserver
 	 */
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
+		bloqueGrafico = null;
 		upNeeder = new UpNeeder(0);
 		this.cargadorSprite = cargadorSprite;
 		cargarSprites(nombresSprites);
@@ -120,6 +125,28 @@ public class SpriteManager implements ImageObserver
 			spriteActual = invertir(spriteActual);
 			invertido = true;
 		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void flashear ()
+	{
+		Color color = null;
+		int r,g,b;
+		for(int i = 0; i < spriteActual.getWidth(); i++)
+			for(int j=0; j < spriteActual.getHeight();j++)
+				if (spriteActual.getRGB(i, j) != 0)
+				{
+					//se obtiene el color del pixel
+					color = new Color(spriteActual.getRGB(i, j));
+					//se extraen los valores RGB
+					r = color.getRed();
+					g = color.getGreen();
+					b = color.getBlue();
+					//se coloca en la nueva imagen con los valores invertidos
+					spriteActual.setRGB(i, j, new Color(255 - r, 255 - g, 255 - b).getRGB());
+				}
 	}
 	
 	/**
@@ -228,6 +255,17 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/**
+	 * Setea el BloqueGrafico del SpriteManager.
+	 * 
+	 * @param cc ControlCentral que le está agregando el BloqueGrafico.
+	 * @param bG Nuevo BloqueGráfico para el SpriteManager.
+	 */
+	public void setBloqueGrafico (ControlCentral cc, BloqueGrafico bG)
+	{
+		bloqueGrafico = bG;
+	}
+	
+	/**
 	 * Indica a este SpriteManager como "debe ser eliminado".
 	 */
 	public void setEliminar ()
@@ -236,6 +274,16 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve el CargadorSprite usado por este SpriteManager.
+	 * 
+	 * @return CargadorSprite usado por este SpriteManager.
+	 */
+	public CargadorSprite getCargadorSprite ()
+	{
+		return cargadorSprite;
+	}
 	
 	/**
 	 * Devuelve el UpNeeder del SpriteManager.
@@ -303,6 +351,16 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/*Métodos en Ejecución*/
+	
+	/**
+	 * Agrega al SpriteManager sp al BloqueGrafico al que pertenece el SpriteManager actual.
+	 * 
+	 * @param sp SpriteManager a agregar al BloqueGráfico.
+	 */
+	public void printNextMe (SpriteManager sp)
+	{
+		bloqueGrafico.agregarSprite(sp);
+	}
 	
 	/**
 	 * Método de ImageObserver para Actualización del Sprite (imagen actual).

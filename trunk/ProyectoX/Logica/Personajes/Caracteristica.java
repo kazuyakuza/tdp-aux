@@ -15,11 +15,11 @@ import ProyectoX.Logica.Actor;
 public abstract class Caracteristica 
 {
 	//Atributos de instancia
-	//Número de los sprites.
-	protected int muerto;
-	protected int quieto;
-	protected int caminando;
-	protected int saltando;
+	//Numeros de los Sprites.
+	protected static int muerto = 0;
+	protected static int quieto = 1;
+	protected static int caminando = 2;
+	protected static int saltando = 5;
 	
 	protected Mario mario;
 	
@@ -30,11 +30,8 @@ public abstract class Caracteristica
 	 *  Queda sin vincular con un Mario.
 	 */
 	protected Caracteristica ()
-	{		
-		muerto = 0;
-		quieto = 1;
-		caminando = 2;
-		saltando = 5;
+	{
+		
 	}
 	
 	/**
@@ -44,10 +41,6 @@ public abstract class Caracteristica
 	 */	
 	protected Caracteristica(Mario pj)
 	{
-		muerto = 0;
-		quieto = 1;
-		caminando = 2;
-		saltando = 5;
 		mario = pj;
 		mario.getSpriteManager().cargarSprites(this.getNombresSprites());
 	}

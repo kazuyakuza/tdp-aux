@@ -17,7 +17,7 @@ public class MarioGrande extends Caracteristica
 	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioChico, la ubicación en los índices es:
 	                                                {dirRecursos + "Mario-Dead.gif", 	  //0: Mario muerto
-													 dirRecursos + "SuperMario.gif",      //1: Mario quieto													 		                                             
+													 dirRecursos + "SuperMario.gif",      //1: Mario quieto		                                             
 		                                             dirRecursos + "SuperMario-Walk1.gif",//2: Mario caminando1
 		                                             dirRecursos + "SuperMario-Walk2.gif",//3: Mario caminando2
 		                                             dirRecursos + "SuperMario-Walk3.gif",//4: Mario caminando3
