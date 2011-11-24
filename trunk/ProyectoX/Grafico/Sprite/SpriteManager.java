@@ -8,6 +8,8 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
+import javax.imageio.ImageIO;
+
 import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
@@ -18,6 +20,11 @@ import ProyectoX.Logica.ControlCentral;
 
 /**
  * Controla los Sprites cargados.
+ * 
+ * Para simular un gif, cargar cada frame como una imagen distinta.
+ * Llamar a setGif() con cantidad de frames del Gif.
+ * Cada vez que se pide el spriteActual, se devolverá un frame distinto.
+ * Siempre partiendo desde el spriteActual cargado con cambiarSprite().
  * 
  * Proyecto X
  * 
@@ -41,9 +48,14 @@ public class SpriteManager implements ImageObserver
 	private boolean eliminar; //True:  el sprite debe ser eliminado.
 	                          //False: caso contrario.
 	private boolean isAgif; //Inidica si el Sprite cargado es un gif con movimiento.
+	private int frameGifActual, framesGif; //FrameActual y Cantidad máxima de Frames del gif.
 	private double posX, posY; //Posición Actual del Sprite en el Escenario.
 	                           //Si posX=-1 y posY=-1, entonces no se ha asignado una posición aún.
 	private double difX, difY; //Diferencia entre la posición actual y la posición a la que debe moverse.
+	
+	//Prioridades UpNeeder
+	//0 -> Terminar Actualización de posición.
+	//1 -> Rotación de Gif.
 	
 	/*CONSTRUCTOR*/
 	
@@ -64,9 +76,7 @@ public class SpriteManager implements ImageObserver
 		cargarSprites(nombresSprites);
 		posX = posY = -1;
 		difX = difY = 0;
-		invertido = false;
 		eliminar = false;
-		isAgif = false;
 	}
 	
 	/*COMANDOS*/
@@ -94,6 +104,11 @@ public class SpriteManager implements ImageObserver
 						                         exception.getMessage());
 			}
 		spriteActual = sprites[0];
+
+		invertido = false;
+		frameGifActual = 0;
+		framesGif = 0;
+		setNotGif();
 	}
 	
 	/**
@@ -107,8 +122,23 @@ public class SpriteManager implements ImageObserver
 	 */
 	public void cambiarSprite (int cambio) throws SpriteException
 	{
+		setNotGif();
+		cambioSprite(cambio);
+	}
+	
+	/**
+	 * Cambia el sprite actual por el indicado en cambio.
+	 * Cambio < 0 "mirando hacia la izquierda"
+	 * Cambio = 0 "mirando hacia fuera de la pantalla"
+	 * Cambio > 0 "mirando hacia la derecha"
+	 * 
+	 * @param cambio Numero del sprite a cambiar.
+	 * @throws SpriteException Si se ingresa un valor erróneo de cambio de sprite.
+	 */
+	private void cambioSprite (int cambio) throws SpriteException
+	{
 		if (Math.abs(cambio) >= sprites.length)
-			throw new SpriteException("SpriteManager.cambiarSprite()" + "\n" +
+			throw new SpriteException("SpriteManager.cambioSprite()" + "\n" +
 					                  "Numero de Sprite a cargar incorrecto." + "\n" +
 					                  "Ingresado: " + cambio + " | Máximo: -" + sprites.length + "|" + sprites.length + "+");
 		
@@ -125,6 +155,8 @@ public class SpriteManager implements ImageObserver
 			spriteActual = invertir(spriteActual);
 			invertido = true;
 		}
+		
+		frameGifActual = cambio;
 	}
 	
 	/**
@@ -273,6 +305,69 @@ public class SpriteManager implements ImageObserver
 		eliminar = true;
 	}
 	
+	/**
+	 * Antes de llamar a este método es necesario llamar a setGif().
+	 * 
+	 * Inidica que se debe tomar al spriteActual como un gif,
+	 * donde su primer frame es el spriteActual, y sus siguientes
+	 * frames son los ubicados en el arreglo sprites en las posiciones
+	 * frameGifActual a (frameGifActual + fGif).
+	 * 
+	 * Se realizan rotaciones infinitas del gif, que es ir desde el primer hasta el último frame cada vez.
+	 * 
+	 * Es necesario llamar a setNotGif() para detener las rotaciones.
+	 * 
+	 * @param fGif Cantidad de frames del gif.
+	 */
+	public void rotarGif (final int fGif)
+	{
+		if (isAgif)
+		{
+			if (frameGifActual > 0)
+				frameGifActual -= fGif;
+			else
+				if (frameGifActual < 0)
+					frameGifActual += fGif;
+			framesGif = fGif;
+			
+			upNeeder.addWorker(1,
+					new Worker ()
+					{
+						public void work() throws Exception
+						{   
+							rotarGif(fGif);
+						}
+					});
+		}
+	}
+	
+	/**
+	 * Inidica que se debe tomar al spriteActual como un gif,
+	 * donde su primer frame es el spriteActual, y sus siguientes
+	 * frames son los ubicados en el arreglo sprites en las posiciones
+	 * frameGifActual a (frameGifActual + fGif).
+	 * 
+	 * Se realiza una única rotación del gif, que es ir desde el primer hasta el último frame 1 sola vez.
+	 * Para hacer rotaciones usar el método rotarGif().
+	 * 
+	 * Para este método no en necesario llamar a setNotGif().
+	 * 
+	 * @param fGif Cantidad de frames del gif.
+	 */
+	public void setGif (int fGif)
+	{
+		framesGif = fGif;
+		isAgif = true;
+	}
+	
+	/**
+	 * Indica que el spriteActual no es un gif.
+	 */
+	public void setNotGif ()
+	{
+		isAgif = false;
+	}
+	
 	/*CONSULTAS*/
 	
 	/**
@@ -302,6 +397,23 @@ public class SpriteManager implements ImageObserver
 	 */
 	public BufferedImage getSpriteActual ()
 	{
+		if (isAgif)
+		{
+			if (framesGif > 0)
+			{
+				if (frameGifActual >= 0)
+					frameGifActual++;
+				else
+					frameGifActual--;
+				framesGif--;
+				cambioSprite(frameGifActual);
+			}
+			else
+			{
+				isAgif = false;
+				framesGif = 0;
+			}
+		}
 		return spriteActual;
 	}
 	
@@ -362,14 +474,14 @@ public class SpriteManager implements ImageObserver
 		bloqueGrafico.agregarSprite(sp);
 	}
 	
+	/*Metodos sin Uso*/
+	
 	/**
 	 * Método de ImageObserver para Actualización del Sprite (imagen actual).
 	 */
 	public boolean imageUpdate (Image img, int infoflags,int x, int y, int w, int h)
 	{
-		System.out.println((infoflags & (ALLBITS|ABORT)) == 0);
 		return isAgif;
-		//return (infoflags & (ALLBITS|ABORT)) == 0;
     }
 
 }

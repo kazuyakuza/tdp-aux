@@ -140,6 +140,11 @@ public abstract class Caracteristica
 		return caminando;
 	}
 	
+	public int cantSpritesCaminando()
+	{
+		return 3;
+	}
+	
 	public int spriteSaltando()
 	{
 		return saltando;
