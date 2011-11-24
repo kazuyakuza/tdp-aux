@@ -96,11 +96,11 @@ public abstract class PowerUp extends Actor implements Punteable
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
-	{
+	{		
 		Mario mario = checkActorJugador (actorJugador);
 		mario.getJugador().asignarPuntos(this.getPuntos(mario));
 		this.efecto (mario);
-		this.morir(mario);
+		this.morir(mario);		
 	}
 	
 	/**

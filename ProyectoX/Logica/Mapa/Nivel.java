@@ -142,6 +142,8 @@ public class Nivel
 		bomba.setCeldaActual(bloqueActual.ABC[10][6]);
 		listaActores.addLast(bomba);
 		
+		
+		
 		//Agregación Actores no Personjes.
 		aux = 6;
 		while (aux < 12)
