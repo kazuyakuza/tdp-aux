@@ -52,7 +52,10 @@ public class BolaFuego extends Actor implements Movible
 	 */
 	public void colisionar (Actor a) throws ColisionException, NullPointerException
 	{
-		/*No hace nada, no tiene efecto sobre otros Actores.*/
+		if (a == null)
+			throw new NullPointerException ("BolaFuego.colisionar()" + "\n" +
+											"Imposible realizar la colisión, actor nulo.");
+		a.colisionarBola(this);
 	}
 	
 	/**
@@ -65,6 +68,17 @@ public class BolaFuego extends Actor implements Movible
 	{
 		System.out.println("Bola presente, tocada por el jugador.");
 		/*No hace nada, no tiene efecto sobre otros Actores.*/
+	}
+	
+	/**
+	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * 
+	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @throws ColisionException Si se produce algún error en la colisión.
+	 */
+	public void colisionarBola (Actor bola) throws ColisionException
+	{
+		//No hace nada, no tiene efecto sobre estos actores.
 	}
 	
 	/**
