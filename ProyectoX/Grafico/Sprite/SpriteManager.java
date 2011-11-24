@@ -36,6 +36,7 @@ public class SpriteManager implements ImageObserver
 	                           //False: caso contrario.
 	private boolean eliminar; //True:  el sprite debe ser eliminado.
 	                          //False: caso contrario.
+	private boolean isAgif; //Inidica si el Sprite cargado es un gif con movimiento.
 	private double posX, posY; //Posición Actual del Sprite en el Escenario.
 	                           //Si posX=-1 y posY=-1, entonces no se ha asignado una posición aún.
 	private double difX, difY; //Diferencia entre la posición actual y la posición a la que debe moverse.
@@ -60,6 +61,7 @@ public class SpriteManager implements ImageObserver
 		difX = difY = 0;
 		invertido = false;
 		eliminar = false;
+		isAgif = false;
 	}
 	
 	/*COMANDOS*/
@@ -274,9 +276,17 @@ public class SpriteManager implements ImageObserver
 		
 		//Si el Srite es mayor a 32x32, entonces se lo ubica 32 pixeles mas arriba.
 		if (spriteActual.getHeight() > 32)
-			X -= 1;
+		{
+			X -= ((spriteActual.getHeight()/32.0) - 1);
+			if ((X % (int) X) <= 0.25)
+				X = (int) X;
+		}
 		if (spriteActual.getWidth() > 32)
-			Y -= 1;
+		{
+			Y -= ((spriteActual.getWidth()/32.0) - 1);
+			if ((Y % (int) Y) <= 0.25)
+				Y = (int) Y;
+		}
 		
 		return new double[] {X, Y};
 	}
@@ -299,7 +309,9 @@ public class SpriteManager implements ImageObserver
 	 */
 	public boolean imageUpdate (Image img, int infoflags,int x, int y, int w, int h)
 	{
-		return (infoflags & (ALLBITS|ABORT)) == 0;
+		System.out.println((infoflags & (ALLBITS|ABORT)) == 0);
+		return isAgif;
+		//return (infoflags & (ALLBITS|ABORT)) == 0;
     }
 
 }
