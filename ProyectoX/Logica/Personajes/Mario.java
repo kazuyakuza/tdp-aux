@@ -29,9 +29,11 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	//Atributos de Instancia
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
+	protected boolean izq = false;//Inidica si MarioBlanco está mirando hacia la izquierda.
 	
 	//Prioridades para el UpNeeder
 	//0 = spriteManager.cambiarSprite(saltando)
+	//4 = luego de disparar spriteManager.cambiarSprite(-quieto)
 	//5 = spriteManager.cambiarSprite(-quieto)
 	
 	/*CONSTRUCTOR*/
@@ -87,7 +89,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	/**
 	 * Especifica la acción "A".
 	 */
-	public void A ()
+	public synchronized void A ()
 	{
 		miCaracteristica.accionA();
 	}
@@ -95,7 +97,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	/**
 	 * Especifica la acción "B".
 	 */
-	public void B ()
+	public synchronized void B ()
 	{
 		miCaracteristica.accionB();
 	}
@@ -253,14 +255,14 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 			
 			if (celdaActual.getBloque().hayAnterior(celdaActual))
 			{
+				izq = true;
 				spriteManager.cambiarSprite(-miCaracteristica.spriteCaminando());
-				//spriteManager.setGif(miCaracteristica.cantSpritesCaminando());
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
 				
 				if (! upNeeder.hayWorkerPrioridad(5))
-                    upNeeder.addWorker(5, new Worker ()
+					upNeeder.addWorker(5, new Worker ()
                     {
                     	public void work() throws Exception
                     	{
@@ -300,8 +302,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 			
 			if (celdaActual.getBloque().haySiguiente(celdaActual))
 			{
+				izq = false;
 				spriteManager.cambiarSprite(miCaracteristica.spriteCaminando());
-				//spriteManager.setGif(miCaracteristica.cantSpritesCaminando());
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);

@@ -1,7 +1,8 @@
 package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
@@ -30,7 +31,7 @@ public class MarioBlanco extends Caracteristica
 	
 	protected static int agachado = 6;
 	protected static int lanzando = 7;
-
+	
 	/*CONSTRUCTORES*/
 	
 	/**
@@ -59,7 +60,32 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void accionA () throws AccionActorException
 	{
-		mario.getSpriteManager().cambiarSprite(lanzando);
+		if (mario.izq)
+		{
+			mario.getSpriteManager().cambiarSprite(-lanzando);
+			
+			if (! mario.getUpNeeder().hayWorkerPrioridad(4))
+				mario.getUpNeeder().addWorker(4, new Worker ()
+				{
+					public void work() throws Exception
+					{
+						mario.getSpriteManager().cambiarSprite(-mario.miCaracteristica.spriteQuieto());
+					}
+				});
+		}
+		else
+		{
+			mario.getSpriteManager().cambiarSprite(lanzando);
+			
+			if (! mario.getUpNeeder().hayWorkerPrioridad(4))
+				mario.getUpNeeder().addWorker(4, new Worker ()
+				{
+					public void work() throws Exception
+					{
+						mario.getSpriteManager().cambiarSprite(mario.miCaracteristica.spriteQuieto());
+					}
+				});
+		}
 		disparar();
 	}
 		
@@ -112,6 +138,10 @@ public class MarioBlanco extends Caracteristica
 		bola.setCeldaActual(mario.getCeldaActual());
 		mario.getSpriteManager().printNextMe(bola.getSpriteManager());
 		mario.getJugador().getControlCentral().agregarActor(bola);
+		if (mario.izq)
+			bola.moverseAizquierda();
+		else
+			bola.moverseAderecha();
 	}
 	
 	/**

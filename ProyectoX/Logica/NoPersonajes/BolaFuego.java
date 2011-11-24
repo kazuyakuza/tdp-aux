@@ -5,6 +5,7 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Movible;
 import ProyectoX.Logica.Mapa.Celda;
@@ -22,35 +23,44 @@ public class BolaFuego extends Actor implements Movible
 {
 	//Variables de Clase
 	private static final String dirRecursos = "Objetos/";
-	private static final String [] nombresSprites = {dirRecursos + "FireBall-1.png",
+	private static final String [] nombresSprites = {dirRecursos + "FireBall-1.png", // 0 = en movimiento
 		                                             dirRecursos + "FireBall-2.png",
 		                                             dirRecursos + "FireBall-3.png",
 		                                             dirRecursos + "FireBall-4.png",
-													 dirRecursos + "FireBallHit-1.png",
+													 dirRecursos + "FireBallHit-1.png", // 4 = explotando
 													 dirRecursos + "FireBallHit-2.png",
 													 dirRecursos + "FireBallHit-3.png",
 													 dirRecursos + "FireBallHit-4.png",};
 	
+	private static int enMovimiento = 0;
+	private static int cantFramesMovimiento = 4;
+	private static int explotando = 4;
+	private static int cantFramesExplotando = 4;
+	
 	//Variables de Instancia
 	protected Mario mario;
 	//protected IA miIA;
+	
+	//Prioridades en UpNeeder
+	//0 = morir (explotar)
+	//1 = moverseAizquierda, moverseAderecha.
 
 	/**
 	 * Crea una Plataforma Irrompible.
 	 * 
 	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-
 	public BolaFuego(Mario pj, CargadorSprite cargadorSprite) 
 	{
 		super(nombresSprites, cargadorSprite);
 		mario = pj;
 		//miIA = new IA();
 		
-		spriteManager.rotarGif(4);
+		spriteManager.cambiarSprite(enMovimiento);
+		spriteManager.rotarGif(cantFramesMovimiento);
 	}
 	
-/*COMANDOS IMPLEMENTADOS*/
+	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
 	 * Realiza la acción de colisionar con otro Actor a.
@@ -134,40 +144,6 @@ public class BolaFuego extends Actor implements Movible
 	}
 	
 	/**
-	 * Realiza la acción de moverse hacia la derecha.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
-	 */
-	public void moverseAderecha () throws AccionActorException
-	{
-		Celda celdaSiguiente = celdaActual;
-		try 
-		{
-			if (celdaActual == null)
-				throw new NullPointerException ("La celdaActual del Actor es null.");
-			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
-			{				
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
-				if (!celdaSiguiente.isOcupada())
-					moverseAcelda(celdaSiguiente);					
-			}
-		}
-		catch (NullPointerException e1)
-		{
-			throw new AccionActorException ("Imposible realizar la acción moverAderecha." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e1.getMessage());
-		}
-		catch (Exception e2)
-		{
-			throw new AccionActorException ("Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e2.getMessage());
-		}
-	}
-	
-	/**
 	 * Realiza la acción de moverse hacia la izquierda.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
@@ -184,21 +160,120 @@ public class BolaFuego extends Actor implements Movible
 			{				
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
-					moverseAcelda(celdaAnterior);								
+				{
+					moverseAcelda(celdaAnterior);
+					
+					if (! upNeeder.hayWorkerPrioridad(1))
+						upNeeder.addWorker(1, new Worker ()
+						{
+							public void work() throws Exception
+							{
+								moverseAizquierda ();
+							}
+						});
+				}
+				else
+				{
+					if (celdaAnterior.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la Celda anterior.
+						explotar(celdaAnterior.getActores().next());
+					else
+						morir(this);
+				}
 			}
+			else
+				morir(this);
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAizquierda." + "\n" +
+			throw new AccionActorException ("BolaFuego.moverseAizquierda()" + "\n" +
+					                        "Imposible realizar la acción moverAizquierda." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+			throw new AccionActorException ("BolaFuego.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+	}
+	
+	/**
+	 * Realiza la acción de moverse hacia la derecha.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
+	 */
+	public void moverseAderecha () throws AccionActorException
+	{
+		Celda celdaSiguiente = celdaActual;
+		try 
+		{
+			if (celdaActual == null)
+				throw new NullPointerException ("La celdaActual del Actor es null.");
+			
+			if (celdaActual.getBloque().haySiguiente(celdaActual))
+			{	
+				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				if (!celdaSiguiente.isOcupada())
+				{
+					moverseAcelda(celdaSiguiente);
+				
+					if (! upNeeder.hayWorkerPrioridad(1))
+						upNeeder.addWorker(1, new Worker ()
+						{
+							public void work() throws Exception
+							{
+								moverseAderecha ();
+							}
+						});
+				}
+				else
+				{
+					if (celdaSiguiente.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la siguiente Celda.
+						explotar(celdaSiguiente.getActores().next());
+					else
+						morir(this);
+				}
+			}
+			else
+				morir(this);
+		}
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("BolaFuego.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("BolaFuego.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
+		}
+	}
+	
+	/*COMANDOS*/
+	
+	/**
+	 * La Bola de Fuego explota.
+	 * 
+	 * @param a Actor contra el que chocó y explotó.
+	 */
+	public void explotar (final Actor a)
+	{
+		spriteManager.cambiarSprite(explotando);
+		spriteManager.setGif(cantFramesExplotando);
+		
+		upNeeder.addWorker(0, new Worker ()
+		{
+			public void work() throws Exception
+			{
+				morir(a);
+			}
+		});
 	}
 	
 	/*CONSULTAS*/

@@ -243,6 +243,16 @@ public abstract class Actor
 	}
 	
 	/**
+	 * Devuelve el UpNeeder del Actor.
+	 * 
+	 * @return UpNeeder del Actor.
+	 */
+	public UpNeeder getUpNeeder ()
+	{
+		return upNeeder;
+	}
+	
+	/**
 	 * Devuelve el UpNeeder del Actor junto con el UpNeeder del SpriteManager.
 	 * 
 	 * @return UpNeeder del Actor junto con el UpNeeder del SpriteManager.
