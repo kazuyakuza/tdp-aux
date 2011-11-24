@@ -6,10 +6,11 @@ import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.Punteable;
-import ProyectoX.Logica.Movible;
 import ProyectoX.Logica.Jugador;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.Responsabilidades.Movible;
+import ProyectoX.Logica.Responsabilidades.Punteable;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Representa al tipo de Personaje Mario, personaje seleccionable del juego.
@@ -19,7 +20,7 @@ import ProyectoX.Logica.Mapa.Celda;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Mario extends Actor implements PjSeleccionable, Movible
+public class Mario extends Actor implements PjSeleccionable, Movible, afectableXgravedad
 {	
 
 	//Atributos de Clase
@@ -30,6 +31,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
 	protected boolean izq = false;//Inidica si MarioBlanco está mirando hacia la izquierda.
+	protected int PG;//Potencia de la Gravedad.
+	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
+                     //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
+                     //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 	
 	//Prioridades para el UpNeeder
 	//0 = spriteManager.cambiarSprite(saltando)
@@ -50,6 +55,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		miCaracteristica = c;
 		c.setMario(this);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+		PG = 0;
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -123,6 +129,32 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 				else
 					PG = 0;
 			}
+			
+			if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+	        {
+				if (! upNeeder.hayWorkerPrioridad(5))
+					upNeeder.addWorker(5,
+							new Worker ()
+							{
+								public void work() throws Exception
+								{
+									spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+								}
+							});
+			}
+	        else
+	        {
+	        	if (! upNeeder.hayWorkerPrioridad(0))
+	        		upNeeder.addWorker(0,
+	        				new Worker ()
+	        				{
+	        					public void work() throws Exception
+	        					{
+	        						spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
+	                            }
+	        				});
+	        }
+		
 		}
 		catch (NullPointerException e1)
 		{
@@ -138,31 +170,6 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
-        {
-			if (! upNeeder.hayWorkerPrioridad(5))
-				upNeeder.addWorker(5,
-						new Worker ()
-						{
-							public void work() throws Exception
-							{
-								spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
-							}
-						});
-		}
-        else
-        {
-        	if (! upNeeder.hayWorkerPrioridad(0))
-        		upNeeder.addWorker(0,
-        				new Worker ()
-        				{
-        					public void work() throws Exception
-        					{
-        						spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
-                            }
-        				});
-        }
 	}
 	
 	/**
@@ -394,7 +401,31 @@ public class Mario extends Actor implements PjSeleccionable, Movible
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
 	
+	/**
+	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
+	 * 
+	 * @param efecto Efecto de la Gravedad sobre este Actor.
+	 */
+	public void efectoGravedad (int efecto)
+	{
+		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+			PG = 0;
+		else
+			if (!(PG < 0))
+				PG -= efecto;
+	}
+	
 	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve la Potencia de la Gravedad sobre este Actor.
+	 * 
+	 * @return Potencia de la Gravedad sobre este Actor.
+	 */
+	public int getPG ()
+	{
+		return PG;
+	}
 	
 	/**
 	 * Devuelve el Jugador que controla a Mario.

@@ -1,4 +1,4 @@
-package ProyectoX.Logica;
+package ProyectoX.Logica.Responsabilidades;
 
 import ProyectoX.Logica.Personajes.Mario;
 

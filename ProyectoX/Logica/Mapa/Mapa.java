@@ -16,21 +16,28 @@ public class Mapa
 	
 	//Variables de Instancia
 	protected Bloque[][] ABB; //Arreglo Bidimensional de Bloques
+	protected Nivel nivel; //Nivel al que pertenece el Mapa.
 	
 	/*CONSTRUCTOR*/
 	
 	/**
 	 * Crea un Mapa con los Bloques ingresados.
 	 * 
-	 * @param bs Bloques para el nuevo Mapa.
+	 * @param n Nivel al que pertenece el Mapa.
+	 * @param cantFilas Cantidad de Filas de Bloques del Mapa.
+	 * @param cantColumnas Cantidad de Columnas de Bloques del Mapa.
 	 * @throws NullPointerException Si bs es null.
 	 */
-	public Mapa (int cantFilas, int cantColumnas) throws NullPointerException
+	public Mapa (Nivel n, int cantFilas, int cantColumnas) throws NullPointerException
 	{
+		if (n == null)
+			throw new NullPointerException ("Mapa." + "\n" +
+                                            "Imposible crear un Mapa con Nivel null.");
 		if ((cantFilas <= 0) || (cantColumnas == 0))
 			throw new NullPointerException ("Mapa." + "\n" +
                                             "Imposible crear un Mapa con cantFilas " + cantFilas + "y cantColumnas " + cantColumnas + ".");
 		
+		nivel = n;
 		ABB = new Bloque[cantFilas][cantColumnas];
 	}
 	
@@ -73,6 +80,16 @@ public class Mapa
 	}
 	
 	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve el Nivel al que pertenece el Mapa.
+	 * 
+	 * @return Nivel al que pertenece el Mapa.
+	 */
+	public Nivel getNivel ()
+	{
+		return nivel;
+	}
 	
 	/**
 	 * Devuelve la cantidad de Filas del ABB.

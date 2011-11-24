@@ -4,7 +4,7 @@ import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
-import ProyectoX.Logica.Movible;
+import ProyectoX.Logica.Responsabilidades.Movible;
 
 /**
  * Representa a los power ups Hongo Verde del juego. El efecto sobre Mario es nulo, pero aumenta en 1 la vida de su Jugador.

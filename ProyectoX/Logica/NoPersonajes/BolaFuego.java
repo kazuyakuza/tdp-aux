@@ -7,9 +7,9 @@ import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.Movible;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Responsabilidades.Movible;
 
 /**
  * Representa a las Bolas de Fuego, lanzadas por Mario Blanco (Mario con efecto de Flor de Fuego), en el Juego.
@@ -19,7 +19,7 @@ import ProyectoX.Logica.Personajes.Mario;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class BolaFuego extends Actor implements Movible
+public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 {
 	//Variables de Clase
 	private static final String dirRecursos = "Objetos/";
@@ -117,10 +117,10 @@ public class BolaFuego extends Actor implements Movible
 	 * 
 	 * @param efecto Efecto de la Gravedad sobre este Actor.
 	 */
-	public void efectoGravedad (int efecto)
+	/*public void efectoGravedad (int efecto)
 	{
 		PG = 0;
-	}
+	}*/
 	
 	/**
 	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
@@ -128,10 +128,10 @@ public class BolaFuego extends Actor implements Movible
 	 * 
 	 * @throws AccionActorException Si se produce algún error al caer.
 	 */
-	public void caer () throws AccionActorException
-	{
+	/*public void caer () throws AccionActorException
+	{*/
 		/*No hace nada, nunca ocurre.*/
-	}
+	//}
 	
 	/**
 	 * Realiza la acción de morir del Actor.
@@ -140,6 +140,7 @@ public class BolaFuego extends Actor implements Movible
 	 */
 	public void morir(Actor a) throws NullPointerException
 	{
+		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
 		super.morir(a);
 	}
 	

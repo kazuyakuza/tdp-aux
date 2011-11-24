@@ -31,7 +31,7 @@ public class BombaNuclear extends PowerUp
 		super (nombresSprites, cargadorSprite);
 	}
 	
-/*METODOS IMPLEMENTADOS*/
+	/*METODOS IMPLEMENTADOS*/
 	
 	/**
 	 * Realiza el efecto del Power Up.
