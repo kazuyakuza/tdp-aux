@@ -160,7 +160,11 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/**
+	 * A cada pixel del SpriteActual lo pinta con su color contrario.
 	 * 
+	 * Para hacer un flasheo continuo se debe llamar reiteradas veces a este método.
+	 * 
+	 * Al terminar el flashe se debe volver a cargar los sprite con el método cargarSprites().
 	 */
 	public void flashear ()
 	{

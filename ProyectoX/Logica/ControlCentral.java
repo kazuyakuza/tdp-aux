@@ -226,20 +226,22 @@ public class ControlCentral implements Runnable, ControlThread
 	
 	public void test ()
 	{
-		((Mario) jugador.personaje).crecerHongo();
-		((Mario) jugador.personaje).crecerFlor();
+		//((Mario) jugador.personaje).crecerHongo();
+		//((Mario) jugador.personaje).crecerFlor();
 		
-		/*while (true)
+		//while (true)
+		for (int i=0; i<10; i++)
 		{
 			try {
-				Thread.sleep((int) (getSleepTime() * 0.5));
+				Thread.sleep((int) (getSleepTime()));
 				} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				}
 				
 			((Actor) jugador.personaje).spriteManager.flashear();
-		}*/
+		}
+		((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());
 	}
 	
 	/**
