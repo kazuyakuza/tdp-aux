@@ -268,7 +268,17 @@ public class SpriteManager implements ImageObserver
 			throw new PosicionIncorrectaException ("No se ha asignado posición." + "\n" +
 					                               "Detalles del Error:" + "\n" +
 					                               "Error al llamar SpriteManager.posicion(), donde posX y posY del SpriteManager son iguales a -1.");
-		return new double[] {posX, posY};
+		
+		double X = posX;
+		double Y = posY;
+		
+		//Si el Srite es mayor a 32x32, entonces se lo ubica 32 pixeles mas arriba.
+		if (spriteActual.getHeight() > 32)
+			X -= 1;
+		if (spriteActual.getWidth() > 32)
+			Y -= 1;
+		
+		return new double[] {X, Y};
 	}
 	
 	/**
