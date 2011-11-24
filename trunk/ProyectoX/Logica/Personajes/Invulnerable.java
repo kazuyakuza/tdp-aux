@@ -37,8 +37,7 @@ public class Invulnerable extends DecoracionCaracteristica
 			{				
 				mario.setCaracteristica(componente);
 				mario = null;
-				timer.stop();					 
-								
+				timer.stop();								
 			}
 		});		
 	}

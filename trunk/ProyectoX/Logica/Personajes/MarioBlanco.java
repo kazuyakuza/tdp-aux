@@ -1,7 +1,9 @@
 package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.BolaFuego;
 
 /**
  * Representa a Mario en estado MarioBlanco. (cuando Mario toma la Flor de Fuego) del juego.
@@ -106,7 +108,9 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void disparar ()
 	{
-		//Crear bola de fuego.
+		BolaFuego bola = new BolaFuego (mario, new CargadorSprite ());
+		mario.getCeldaActual().agregarActor(bola);
+		bola.setCeldaActual(mario.getCeldaActual());		
 	}
 	
 	/**

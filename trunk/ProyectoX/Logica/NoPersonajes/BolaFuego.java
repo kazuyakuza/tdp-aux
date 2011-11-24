@@ -21,7 +21,7 @@ import ProyectoX.Logica.Personajes.Mario;
 public class BolaFuego extends Actor implements Movible
 {
 	//Variables de Clase
-	private static final String dirRecursos = "Estructuras/";
+	private static final String dirRecursos = "Objetos/";
 	private static final String [] nombresSprites = {dirRecursos + "FireBall.gif", dirRecursos + "FireBallHit.gif"};
 	
 	//Variables de Instancia

@@ -82,8 +82,7 @@ public class ControlCentral implements Runnable, ControlThread
 			
 			cargadorSprite = new CargadorSprite ();
 		
-			Mario PJ = new Mario (new MarioChico(), cargadorSprite);
-			PJ.crecerHongo();
+			Mario PJ = new Mario (new MarioChico(), cargadorSprite);			
 			Control c = new Teclado();
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);

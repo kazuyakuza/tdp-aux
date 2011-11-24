@@ -170,11 +170,11 @@ public abstract class Actor
 		
 		spriteManager = null;
 		celdaActual = null;
-		
+		/*
 		upNeeder.notUpdate();
 		upNeeder.limpiar();
 		upNeeder = null;
-		
+		*/
 		PG = 0;
 	}
 	
@@ -186,16 +186,15 @@ public abstract class Actor
 	 * @throws ColisionException si actorJugador no es objeto Mario.
 	 * @throws NullPointerException si actorJugador es null.
 	 */
-	protected Mario/*PjSeleccionable*/ checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
+	protected Mario checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
 	{
 		if (actorJugador == null)
 			throw new NullPointerException ("Actor.checkActorJugador()" + "\n" +
 					                        "Imposible colisionar con Actor nulo.");
 		try
-		{
-			//PjSeleccionable pjSeleccionable = (PjSeleccionable) actorJugador;
+		{	
 			Mario mario = (Mario) actorJugador;
-			return mario;//pjSeleccionable;
+			return mario;
 		}
 		catch (ClassCastException e) 
 		{
