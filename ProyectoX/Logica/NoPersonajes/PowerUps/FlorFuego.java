@@ -15,7 +15,10 @@ public class FlorFuego extends PowerUp
 {	
 	//Atributos de Clase
 	private static final String dirRecursos = "Objetos/";
-	private static final String [] nombresSprites = {dirRecursos + "FireFlower.gif"};
+	private static final String [] nombresSprites = {dirRecursos + "FireFlower-1.png",
+		                                             dirRecursos + "FireFlower-2.png",
+		                                             dirRecursos + "FireFlower-3.png",
+		                                             dirRecursos + "FireFlower-4.png",};
 	
 	//Atributos de Instancia
 	//protected IAPowerUp miIA;
@@ -28,7 +31,8 @@ public class FlorFuego extends PowerUp
 	 */
 	public FlorFuego(CargadorSprite cargadorSprite) 
 	{
-		super (nombresSprites, cargadorSprite);		
+		super (nombresSprites, cargadorSprite);
+		getSpriteManager().rotarGif(4);
 	}
 	
 	/*METODOS IMPLEMENTADOS*/

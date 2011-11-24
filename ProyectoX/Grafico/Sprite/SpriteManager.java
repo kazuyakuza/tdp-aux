@@ -71,7 +71,7 @@ public class SpriteManager implements ImageObserver
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
 		bloqueGrafico = null;
-		upNeeder = new UpNeeder(0);
+		upNeeder = new UpNeeder(1);
 		this.cargadorSprite = cargadorSprite;
 		cargarSprites(nombresSprites);
 		posX = posY = -1;
@@ -140,7 +140,7 @@ public class SpriteManager implements ImageObserver
 		if (Math.abs(cambio) >= sprites.length)
 			throw new SpriteException("SpriteManager.cambioSprite()" + "\n" +
 					                  "Numero de Sprite a cargar incorrecto." + "\n" +
-					                  "Ingresado: " + cambio + " | Máximo: -" + sprites.length + "|" + sprites.length + "+");
+					                  "Ingresado: " + cambio + " | Máximo: -" + (sprites.length - 1) + "|" + (sprites.length - 1) + "+");
 		
 		if (invertido)
 		{
@@ -306,8 +306,6 @@ public class SpriteManager implements ImageObserver
 	}
 	
 	/**
-	 * Antes de llamar a este método es necesario llamar a setGif().
-	 * 
 	 * Inidica que se debe tomar al spriteActual como un gif,
 	 * donde su primer frame es el spriteActual, y sus siguientes
 	 * frames son los ubicados en el arreglo sprites en las posiciones
@@ -319,23 +317,34 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @param fGif Cantidad de frames del gif.
 	 */
-	public void rotarGif (final int fGif)
+	public void rotarGif (int fGif)
+	{
+		isAgif = true;
+		rotarGifSoporte(fGif);
+	}
+	
+	/**
+	 * Método soporta para rotarGif.
+	 */
+	private void rotarGifSoporte (final int fGif)
 	{
 		if (isAgif)
 		{
-			if (frameGifActual > 0)
-				frameGifActual -= fGif;
-			else
-				if (frameGifActual < 0)
-					frameGifActual += fGif;
-			framesGif = fGif;
-			
+			if (framesGif == 0)
+			{
+				if (frameGifActual > 0)
+					frameGifActual -= (fGif - 1);
+				else
+					if (frameGifActual < 0)
+						frameGifActual += (fGif - 1);
+				framesGif = (fGif - 1);
+			}
 			upNeeder.addWorker(1,
 					new Worker ()
 					{
 						public void work() throws Exception
-						{   
-							rotarGif(fGif);
+						{
+							rotarGifSoporte(fGif);
 						}
 					});
 		}
@@ -345,7 +354,7 @@ public class SpriteManager implements ImageObserver
 	 * Inidica que se debe tomar al spriteActual como un gif,
 	 * donde su primer frame es el spriteActual, y sus siguientes
 	 * frames son los ubicados en el arreglo sprites en las posiciones
-	 * frameGifActual a (frameGifActual + fGif).
+	 * frameGifActual a (frameGifActual + (fGif - 1)).
 	 * 
 	 * Se realiza una única rotación del gif, que es ir desde el primer hasta el último frame 1 sola vez.
 	 * Para hacer rotaciones usar el método rotarGif().
@@ -356,7 +365,7 @@ public class SpriteManager implements ImageObserver
 	 */
 	public void setGif (int fGif)
 	{
-		framesGif = fGif;
+		framesGif = (fGif - 1);
 		isAgif = true;
 	}
 	
@@ -397,6 +406,7 @@ public class SpriteManager implements ImageObserver
 	 */
 	public BufferedImage getSpriteActual ()
 	{
+		BufferedImage r = spriteActual;
 		if (isAgif)
 		{
 			if (framesGif > 0)
@@ -408,13 +418,8 @@ public class SpriteManager implements ImageObserver
 				framesGif--;
 				cambioSprite(frameGifActual);
 			}
-			else
-			{
-				isAgif = false;
-				framesGif = 0;
-			}
 		}
-		return spriteActual;
+		return r;
 	}
 	
 	/**
