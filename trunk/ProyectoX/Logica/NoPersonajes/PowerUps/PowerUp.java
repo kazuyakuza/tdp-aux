@@ -75,6 +75,16 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 		return PG;
 	}
 	
+	/**
+	 * Realiza la acción de morir del Actor.
+	 */
+	public void morir ()
+	{
+		celdaActual.getBloque().getMapa().getNivel().eliminarPowerUp(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
+		super.morir();
+	}
+	
     /*METODOS IMPLEMENTADOS*/
 	
 	/**

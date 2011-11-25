@@ -47,26 +47,34 @@ public class Gravedad implements Worker
 	public void work()
 	{	
 		Iterator<afectableXgravedad> actores = controlCentral.getCaibles();
+		int i = 0;
 		while (actores.hasNext())
+		try
+		{
 			afectar(actores.next());
+			i++;
+		}
+		catch (NullPointerException e)
+		{
+			if (i == 0)
+				throw e;
+		}
 	}
 	
 	/**
 	 * Realiza el efecto que la Gravedad ejerce sobre el Actor.
 	 * 
 	 * @param a Actor al cual la Gravedad afecta.
+	 * @throws NullPointerException Si a es null.
 	 */
-	private void afectar (afectableXgravedad a)
+	private void afectar (afectableXgravedad a) throws NullPointerException
 	{
+		if (a == null)
+			throw new NullPointerException ("Gravedad.afectar()" + "\n" +
+					                        "Imposible afectar al Actor a, a es null.");
+		
 		if (a.getPG() == -1)
-		{
 			a.caer();
-			/*
-			if (a.getCeldaActual().getBloque().debajoDelPiso(a.getCeldaActual().getPosicion()))
-				//Si el Actor se encuentra en la última fila del bloque, entonces debe morir por caer al precipicio.
-				a.morir();
-				*/
-		}
 		else
 			a.efectoGravedad(1);
 	}

@@ -136,7 +136,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	 */
 	public void morir()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
 		super.morir();
 	}
 	

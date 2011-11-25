@@ -53,7 +53,6 @@ public class ControlCentral implements Runnable, ControlThread
 	private Jugador jugador;
 	private Nivel nivel;
 	private Gravedad gravedad;
-	private PositionList<afectableXgravedad> caibles;
 	
 	//Threads
 	private Thread Tactual;
@@ -94,9 +93,6 @@ public class ControlCentral implements Runnable, ControlThread
 			Control c = new Teclado();
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
-			
-			caibles = new ListaPositionSimple<afectableXgravedad> ();
-			caibles.addFirst(PJ);
 			
 			nivel = new Nivel(1);
 			
@@ -142,16 +138,16 @@ public class ControlCentral implements Runnable, ControlThread
 			Tupdater.addUpNeeder(un);
 	}
 	
+	public void agregarAfectableXgravedad (afectableXgravedad aXg)
+	{
+		nivel.getCaibles(this).addFirst(aXg);
+		agregarActor((Actor) aXg);
+	}
+	
 	public void agregarPowerUp (PowerUp pu)
 	{
 		nivel.getPowerUps(this).addLast(pu);
 		agregarAfectableXgravedad(pu);
-	}
-	
-	public void agregarAfectableXgravedad (afectableXgravedad aXg)
-	{
-		caibles.addFirst(aXg);
-		agregarActor((Actor) aXg);
 	}
 	
 	/*CONSULTAS*/
@@ -176,9 +172,14 @@ public class ControlCentral implements Runnable, ControlThread
 		return nivel.getActores(this).iterator();
 	}
 	
+	/**
+	 * Devuelve un iterador de los Actores Caibles actuales en Juego.
+	 * 
+	 * @return Iterador de los Actores Caibles actuales en Juego.
+	 */
 	public Iterator<afectableXgravedad> getCaibles ()
 	{
-		return caibles.iterator();
+		return nivel.getCaibles(this).iterator();
 	}
 	
 	/**
@@ -230,10 +231,6 @@ public class ControlCentral implements Runnable, ControlThread
 			for (Actor a: nivel.getActores(this))
 				for (UpNeeder un: a.getUpNeeders())
 					Tupdater.addUpNeeder(un);
-			
-			//Agregando Actores Caibles
-			for (Enemigo e: nivel.getEnemigos(this))
-				agregarAfectableXgravedad((afectableXgravedad) e);
 			
 			//Start Thread's
 			Tjugador.start();

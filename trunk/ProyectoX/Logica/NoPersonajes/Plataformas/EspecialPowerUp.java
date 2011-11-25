@@ -75,10 +75,10 @@ public class EspecialPowerUp extends Irrompible
 					
 					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
 					powerUp.setCeldaActual(celdaSuperior);
-					celdaSuperior.agregarActor(powerUp);					
-					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());					
+					celdaSuperior.agregarActor(powerUp);
+					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
 					powerUp = null;
-					spriteManager.cambiarSprite(vacio);					
+					spriteManager.cambiarSprite(vacio);
 				}			
 			}
 		}

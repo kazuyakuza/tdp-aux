@@ -110,14 +110,8 @@ public class Rompible extends Actor implements Plataforma
 	 */
 	public void morir()
 	{
-		spriteManager.setEliminar();
-		celdaActual.sacarActor(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarEstructura(this);
 		celdaActual.setOcupada(false);
-		
-		spriteManager = null;		
-		celdaActual = null;
-		
-		upNeeder.notUpdate();
-		upNeeder = null;
+		super.morir();
 	}
 }
