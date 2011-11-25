@@ -19,7 +19,7 @@ public class MarioBlanco extends Caracteristica
 {
 	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
-	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioChico, la ubicación en los índices es:
+	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioBlanco, la ubicación en los índices es:
 	                                                {dirRecursos + "Mario-Dead.gif", 	  //0: Mario muerto
 													 dirRecursos + "FieryMario.gif",      //1: Mario quieto		                                             
 		                                             dirRecursos + "FieryMario-Walk1.gif",//2: Mario caminando1

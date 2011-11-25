@@ -8,6 +8,7 @@ import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Jugador;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
@@ -509,7 +510,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarBola (Actor bola) throws ColisionException
+	public void colisionarBola (BolaFuego bola) throws ColisionException
 	{
 		//No hace nada, no tiene efecto.
 	}

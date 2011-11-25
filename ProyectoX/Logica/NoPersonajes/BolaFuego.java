@@ -95,7 +95,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarBola (Actor bola) throws ColisionException
+	public void colisionarBola (BolaFuego bola) throws ColisionException
 	{
 		//No hace nada, no tiene efecto sobre estos actores.
 	}
@@ -109,7 +109,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	{
 		Iterator <Actor> actores = c.getActores();
 		while (actores.hasNext())
-			actores.next().colisionar(this);
+			actores.next().colisionarBola(this);
 	}
 	
 	/**

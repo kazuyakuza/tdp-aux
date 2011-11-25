@@ -16,6 +16,7 @@ import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 
 import ProyectoX.Logica.NoPersonajes.PowerUps.*;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 
 /**
@@ -141,6 +142,17 @@ public class Nivel
 		bloqueActual.ABC[12][1].agregarActor(actor);
 		actor.setCeldaActual(bloqueActual.ABC[12][1]);
 		actores.addFirst(actor);
+		
+		//Agregación Actores Enemigos.
+		aux = 0;
+		while (aux < 9)
+		{
+			Goomba goomba = new Goomba (cargadorSprite);
+			bloqueActual.ABC[12][10 + aux].agregarActor(goomba);
+			goomba.setCeldaActual(bloqueActual.ABC[12][10 + aux]);
+			actores.addFirst(goomba);
+			aux++;
+		}
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);

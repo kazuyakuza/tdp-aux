@@ -8,6 +8,7 @@ import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
 
 /**
@@ -140,7 +141,7 @@ public abstract class Actor
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public abstract void colisionarBola (Actor bola) throws ColisionException;
+	public abstract void colisionarBola (BolaFuego bola) throws ColisionException;
 	
 	/**
 	 * Realiza la acción de morir del Actor.
