@@ -3,6 +3,7 @@ package ProyectoX.Logica.Personajes;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
+
 /**
  * Representa a las Características que Mario puede tener en el juego. 
  * En base a ésta, Mario tiene determinado comportamiento ante los demás Actores.

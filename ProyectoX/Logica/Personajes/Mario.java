@@ -1,6 +1,7 @@
 package ProyectoX.Logica.Personajes;
 
 import java.util.Iterator;
+
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
@@ -11,7 +12,6 @@ import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.Responsabilidades.Movible;
-import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**

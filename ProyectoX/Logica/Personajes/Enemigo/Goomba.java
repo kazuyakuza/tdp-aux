@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Excepciones.IAexception;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
@@ -12,6 +13,7 @@ import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
+import ProyectoX.Logica.Personajes.Enemigo.IA.IA_Goomba;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -32,7 +34,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	                                                {dirRecursos + "Goomba-1.png", //0: Goomba quieto
 													 dirRecursos + "Goomba-2.png"};//1: Goomba movimiento
 	//Atributos de Instancia
-	protected IA miIA;
+	protected IA_Goomba miIA;
 	protected int PG;//Potencia de la Gravedad.
 	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
@@ -58,6 +60,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	public Goomba (CargadorSprite cargadorSprite)
 	{
 		super (nombresSprites, cargadorSprite);
+		miIA = new IA_Goomba (this);
 		PG = 0;
 	}
 	
@@ -122,6 +125,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	 */
 	public void morir ()
 	{
+		miIA.meMori(this);
 		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
 		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
 		super.morir();
@@ -224,14 +228,23 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	 * 
 	 * @param j IA del Enemigo.
 	 * @throws NullPointerException Si ia es null.
+	 * @throws IAexception Si se ingresa una IA que no es una IA_Goomba.
 	 */
-	public void setIA (IA ia) throws NullPointerException
+	public void setIA (IA ia) throws NullPointerException, IAexception
 	{
 		if (ia == null)
 			throw new NullPointerException ("Goomba.setIA()" + "\n" +
-                                            "Imposible asignar un Jugador null.");
+                                            "Imposible asignar una IA null.");
 		
-		miIA = ia;
+		try
+		{
+			miIA = (IA_Goomba) ia;
+		}
+		catch (ClassCastException e)
+		{
+			throw new IAexception ("Goomba.setIA()" + "\n" +
+                                   "Imposible asignar la IA ingresada. No es del tipo esperado. (IA_Goomba)");
+		}
 	}
 	
 	/**

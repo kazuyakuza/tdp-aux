@@ -1,7 +1,5 @@
 package ProyectoX.Logica.Mapa;
 
-import java.util.Iterator;
-
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.InicioNivelException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
@@ -324,6 +322,14 @@ public class Nivel
 	/**
 	 * Elimina el Actor actor del Nivel.
 	 * 
+	 * Si el actor que se quiere eliminar es:
+	 * Estructura => llamar a eliminarEstructura, y no a este método.
+	 * EspecialPowerUp => llamar a eliminarEspecialPowerUp, y no a este método.
+	 * PowerUp => llamar a eliminarPowerUp, y no a este método.
+	 * Enemigo => llamar a eliminarEnemigo, y no a este método.
+	 * 
+	 * Si además el actor es afectableXgravedad, entonces llamar a eliminarCaible, antes de llamar a alguno de los antes mencionados.
+	 * 
 	 * @param actor Actor a eliminar.
 	 * @throws NullPointerException Si actor es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un Actor que no pertenece al Nivel.
@@ -333,6 +339,11 @@ public class Nivel
 		if (actor == null)
 			throw new NullPointerException ("Nivel.eliminarActor()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		if (actores.isEmpty())
+			throw new AccionActorException ("Nivel.eliminarActor()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
+                                            "El nivel no tiene actores.");
+		
 		Position<Actor> p = actores.first();
 		while ((p != actores.last()) && (p.element() != actor))
 			p = actores.next(p);
@@ -345,6 +356,9 @@ public class Nivel
 	/**
 	 * Elimina la Estructura estructura del Nivel.
 	 * 
+	 * Se elimina automáticamente de la lista de actores.
+	 * NO LLAMAR eliminarActor.
+	 * 
 	 * @param estructura Estructura a eliminar.
 	 * @throws NullPointerException Si estructura es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar una Estructura que no pertenece al Nivel.
@@ -354,6 +368,11 @@ public class Nivel
 		if (estructura == null)
 			throw new NullPointerException ("Nivel.eliminarEstructura()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		if (estructuras.isEmpty())
+			throw new AccionActorException ("Nivel.eliminarEstructura()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
+                                            "El nivel no tiene actores.");
+		
 		Position<Estructura> p = estructuras.first();
 		while ((p != estructuras.last()) && (p.element() != estructura))
 			p = estructuras.next(p);
@@ -367,6 +386,9 @@ public class Nivel
 	/**
 	 * Elimina el EspecialPowerUp especialPowerUp del Nivel.
 	 * 
+	 * Se elimina automáticamente de la lista de estructuras.
+	 * NO LLAMAR eliminarEstructura.
+	 * 
 	 * @param especialPowerUp EspecialPowerUp a eliminar.
 	 * @throws NullPointerException Si especialPowerUp es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un especialPowerUp que no pertenece al Nivel.
@@ -376,6 +398,11 @@ public class Nivel
 		if (especialPowerUp == null)
 			throw new NullPointerException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		if (especialesPowerUp.isEmpty())
+			throw new AccionActorException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
+                                            "El nivel no tiene actores.");
+		
 		Position<EspecialPowerUp> p = especialesPowerUp.first();
 		while ((p != especialesPowerUp.last()) && (p.element() != especialPowerUp))
 			p = especialesPowerUp.next(p);
@@ -389,6 +416,9 @@ public class Nivel
 	/**
 	 * Elimina el PowerUp powerUp del Nivel.
 	 * 
+	 * Se elimina automáticamente de la lista de actores.
+	 * NO LLAMAR eliminarActor.
+	 * 
 	 * @param powerUp PowerUp a eliminar.
 	 * @throws NullPointerException Si powerUp es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un PowerUp que no pertenece al Nivel.
@@ -398,6 +428,11 @@ public class Nivel
 		if (powerUp == null)
 			throw new NullPointerException ("Nivel.eliminarPowerUp()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		if (powerUps.isEmpty())
+			throw new AccionActorException ("Nivel.eliminarPowerUp()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
+                                            "El nivel no tiene actores.");
+		
 		Position<PowerUp> p = powerUps.first();
 		while ((p != powerUps.last()) && (p.element() != powerUp))
 			p = powerUps.next(p);
@@ -411,6 +446,9 @@ public class Nivel
 	/**
 	 * Elimina el Enemigo enemigo del Nivel.
 	 * 
+	 * Se elimina automáticamente de la lista de actores.
+	 * NO LLAMAR eliminarActor.
+	 * 
 	 * @param enemigo Enemigo a eliminar.
 	 * @throws NullPointerException Si enemigo es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un Enemigo que no pertenece al Nivel.
@@ -420,6 +458,11 @@ public class Nivel
 		if (enemigo == null)
 			throw new NullPointerException ("Nivel.eliminarEnemigo()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		if (enemigos.isEmpty())
+			throw new AccionActorException ("Nivel.eliminarEnemigo()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
+                                            "El nivel no tiene actores.");
+		
 		Position<Enemigo> p = enemigos.first();
 		while ((p != enemigos.last()) && (p.element() != enemigo))
 			p = enemigos.next(p);
@@ -444,6 +487,11 @@ public class Nivel
 		if (caible == null)
 			throw new NullPointerException ("Nivel.eliminarCaible()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		if (caibles.isEmpty())
+			throw new AccionActorException ("Nivel.eliminarCaible()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo." + "\n" +
+                                            "El nivel no tiene actores.");
+		
 		Position<afectableXgravedad> p = caibles.first();
 		while ((p != caibles.last()) && (p.element() != caible))
 			p = caibles.next(p);
