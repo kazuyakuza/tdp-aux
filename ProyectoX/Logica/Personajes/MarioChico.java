@@ -106,7 +106,7 @@ public class MarioChico extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.getSpriteManager().cambiarSprite(muerto);
-		mario.morir(a);
+		mario.morir();
 	}	
 	
 	/**

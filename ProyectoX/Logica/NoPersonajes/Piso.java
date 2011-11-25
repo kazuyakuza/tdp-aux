@@ -5,6 +5,7 @@ import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 
 /**
  * Representa al Piso en el Juego.
@@ -34,37 +35,33 @@ public class Piso extends Actor implements Estructura
 	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor a.
-	 * No tiene ningún efecto con este Actor.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * @param a Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión. 
+	 * @param a Actor que colisiona al Actor actual. 
 	 */
-	public void colisionar (Actor a) throws ColisionException, NullPointerException
+	public void colisionar (Actor a)
 	{
-		/*No hace nada, no tiene efecto sobre otros Actores.*/
+		//No le afecta.
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param pj Actor que colisiona al Actor actual.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
+	public void colisionarPj (PjSeleccionable pj)
 	{
-		/*No hace nada, no tiene efecto sobre otros Actores.*/
+		//No le afecta.
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param bola Actor que colisiona al Actor actual.
 	 */
-	public void colisionarBola (BolaFuego bola) throws ColisionException
+	public void colisionarBola (BolaFuego bola)
 	{
-		//No hace nada, no tiene efecto sobre este actor.
+		//No le afecta.
 	}
 	
 	/**
@@ -72,9 +69,9 @@ public class Piso extends Actor implements Estructura
 	 * 
 	 * @param c Celda con los Actores a colisionar con el Actor actual. 
 	 */
-	protected void producirColisiones(Celda c)
+	protected void producirColisiones (Celda c)
 	{
-		/*No hace nada, nunca ocurre.*/	
+		//Nada ocurre	
 	}
 	
 	/**
@@ -82,9 +79,9 @@ public class Piso extends Actor implements Estructura
 	 * 
 	 * No tiene ningún efecto en este Actor.
 	 */
-	public void morir(Actor a) throws NullPointerException
+	public void morir()
 	{
-		/*No hace nada, nunca ocurre.*/
+		//Nunca ocurre.
 	}
 
 }

@@ -81,6 +81,6 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public void serDañado(Actor a)
 	{
-		a.morir(mario);		
+		a.morir();		
 	}
 }

@@ -183,22 +183,19 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * Realiza la acción de morir (ser destruido) de Mario.
 	 * 
 	 * @throws NullPointerException Si jugador es null.
+	 * @throws AccionActorException Si se produce un error al morir.
 	 */
-	public void morir (Actor a) throws NullPointerException, AccionActorException
+	public void morir () throws NullPointerException, AccionActorException
 	{				
-		if (a == null)
-			throw new NullPointerException ("Mario.morir()" + "\n" + 
-											"Imposible obtener los puntos perdidos por el causante de la muerte. Actor es null.");		
 		if (jugador == null)
 			throw new NullPointerException ("Mario.morir()" + "\n" +
                                             "Imposible quitar vida al Jugador. Jugador es null.");
 		
 		spriteManager.cambiarSprite(miCaracteristica.spriteMuerto());
-		super.morir(a);
+		super.morir();
 		
 		try
 		{
-			jugador.asignarPuntos(((Punteable)a).getPuntos(this));
 			jugador.quitarVida();
 		}
 		catch (ClassCastException e)
@@ -472,50 +469,62 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/*Métodos en Ejecución*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor.
-	 * Mario no provoca nada al colisionar con otros Actores.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * Los efectos de la colisión la provocan los otros Actores.
-	 * 
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param a Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si a es null.
+	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
 	public void colisionar (Actor a) throws ColisionException, NullPointerException
 	{
 		if (a == null)
 			throw new NullPointerException ("Mario.colisionar()" + "\n" +
             								"Imposible colisionar con Actor nulo.");
-		a.colisionarPj(this);
-	}
-	
-	/**
-	 * Realiza la acción de colisionar con otro Personaje Seleccionable.
-	 * Mario no provoca nada al colisionar con otro Personaje.
-	 * 
-	 * @throws ColisionException Si se produce algún error en la colisión.
-	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
-	{
 		
+		try
+		{
+			morir();
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("Mario.colisionar()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param pj Actor que colisiona al Actor actual.
 	 */
-	public void colisionarBola (BolaFuego bola) throws ColisionException
+	public void colisionarPj (PjSeleccionable pj)
 	{
-		//No hace nada, no tiene efecto.
+		//No le afecta.
+	}
+	
+	/**
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
+	 * 
+	 * @param bola Actor que colisiona al Actor actual.
+	 */
+	public void colisionarBola (BolaFuego bola)
+	{
+		//No le afecta.
 	}
 	
 	/**
 	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
-	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 * @param c Celda con los Actores a colisionar con el Actor actual.
+	 * @throws NullPointerException Si c es null.
 	 */
-	protected void producirColisiones (Celda c)
+	protected void producirColisiones (Celda c) throws NullPointerException
 	{
+		if (c == null)
+			throw new NullPointerException ("Mario.producirColisiones()" + "\n" +
+		      		                        "Imposible realizar colisiones. La celda indicada es null.");
+		
 		Iterator <Actor> actores = c.getActores();
 		while (actores.hasNext())
 			actores.next().colisionarPj(this);	
