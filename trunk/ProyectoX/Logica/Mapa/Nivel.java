@@ -1,5 +1,7 @@
 package ProyectoX.Logica.Mapa;
 
+import java.util.Iterator;
+
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.InicioNivelException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
@@ -46,7 +48,7 @@ public class Nivel
 	private PositionList<Llegada> llegadas; //Lista de todos los Actores Llegada en el Nivel actual.
 	private PositionList<Vacio> vacios; //Lista de todos los Actores Vacio en el Nivel actual.
 	private PositionList<Estructura> estructuras; //Lista de todos los Actores Estructura en el Nivel actual.
-	//private PositionList<EspecialPowerUp> especialesPowerUp; //Lista de todos los Actores EspecialPowerUp en el Nivel actual.
+	private PositionList<EspecialPowerUp> especialesPowerUp; //Lista de todos los Actores EspecialPowerUp en el Nivel actual.
 	private PositionList<PowerUp> powerUps; //Lista de todos los Actores PowerUp en el Nivel actual.
 	//private PositionList<Enemigo> enemigos; //Lista de todos los Actores Enemigo en el Nivel actual.
 	
@@ -68,7 +70,7 @@ public class Nivel
 		llegadas = new ListaPositionSimple<Llegada> ();
 		vacios = new ListaPositionSimple<Vacio> ();
 		estructuras = new ListaPositionSimple<Estructura> ();
-		//especialesPowerUp = new ListaPositionSimple<EspecialPowerUp> ();
+		especialesPowerUp = new ListaPositionSimple<EspecialPowerUp> ();
 		powerUps = new ListaPositionSimple<PowerUp> ();
 		//enemigos = new ListaPositionSimple<Enemigo> ();
 	}
@@ -148,7 +150,7 @@ public class Nivel
 		actores.addFirst(actor);
 		
 		//Agregación Actores Enemigos.
-		aux = 0;
+		/*aux = 0;
 		while (aux < 9)
 		{
 			Goomba goomba = new Goomba (cargadorSprite);
@@ -157,6 +159,7 @@ public class Nivel
 			actores.addFirst(goomba);
 			aux++;
 		}
+		*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
@@ -207,12 +210,13 @@ public class Nivel
 			aux++;
 		}
 		
-		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite), cargadorSprite);
+		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite),true, cargadorSprite);
 		bloqueActual.ABC[9][5].setOcupada(true);
 		bloqueActual.ABC[9][5].agregarEstructura(plataformaPUP);
 		plataformaPUP.setCeldaActual(bloqueActual.ABC[9][5]);
 		actores.addFirst(plataformaPUP);
-		estructuras.addFirst(plataformaPUP);
+		//estructuras.addFirst(plataformaPUP);
+		especialesPowerUp.addFirst(plataformaPUP);
 		
 		EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
 		bloqueActual.ABC[9][13].setOcupada(true);
@@ -220,6 +224,14 @@ public class Nivel
 		plataformaM.setCeldaActual(bloqueActual.ABC[9][13]);
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
+		
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),true, cargadorSprite);
+		bloqueActual.ABC[9][14].setOcupada(true);
+		bloqueActual.ABC[9][14].agregarEstructura(plataformaPUP2);
+		plataformaPUP2.setCeldaActual(bloqueActual.ABC[9][14]);
+		actores.addFirst(plataformaPUP2);
+		//estructuras.addFirst(plataformaPUP);
+		especialesPowerUp.addFirst(plataformaPUP2);
 		
 		
 		//Vacio en el Piso.
@@ -458,10 +470,10 @@ public class Nivel
 	 * @param cc Verificación de que es solicitado por un ControlCentral.
 	 * @return Lista de EspecialesPowerUp.
 	 */
-	/*public PositionList<EspecialPowerUp> getEspecialesPowerUp (ControlCentral cc)
+	public Iterator <EspecialPowerUp> getEspecialesPowerUp (ControlCentral cc)
 	{
-		return especialesPowerUp;
-	}*/
+		return especialesPowerUp.iterator();
+	}
 	
 	/**
 	 * Devuelve la Lista de PowerUps.

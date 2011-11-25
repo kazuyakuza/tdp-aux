@@ -18,7 +18,13 @@ import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.Bloque;
 import ProyectoX.Logica.Mapa.Nivel;
+import ProyectoX.Logica.NoPersonajes.Estructura;
+import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
+import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
+import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
+import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
+import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
@@ -174,6 +180,36 @@ public class ControlCentral implements Runnable, ControlThread
 		return caibles.iterator();
 	}
 	
+	/**
+	 * Cambia las plataformas EspecialPowerUp para que contenga FlorFuego.
+	 */
+	public void cambiarPlataformasFlor ()
+	{
+		Iterator <EspecialPowerUp> plataformas = nivel.getEspecialesPowerUp(this);
+		EspecialPowerUp plataforma;
+		while (plataformas.hasNext())
+		{
+			plataforma = plataformas.next();
+			if (plataforma.esCambiable())
+				plataforma.cambiarPowerUp(new FlorFuego (plataforma.getSpriteManager().getCargadorSprite()));			
+		}		
+	}
+	
+	/**
+	 * Cambia las plataformas EspecialPowerUp para que contenga SuperHongo.
+	 */
+	public void cambiarPlataformasSuperHongo ()
+	{
+		Iterator <EspecialPowerUp> plataformas = nivel.getEspecialesPowerUp(this);
+		EspecialPowerUp plataforma;
+		while (plataformas.hasNext())
+		{
+			plataforma = plataformas.next();
+			if (plataforma.esCambiable())
+				plataforma.cambiarPowerUp(new SuperHongo (plataforma.getSpriteManager().getCargadorSprite()));			
+		}
+	}
+	
 	/*Métodos en Ejecución*/
 	
 	/**
@@ -230,9 +266,8 @@ public class ControlCentral implements Runnable, ControlThread
 		{
 			try {
 				Thread.sleep((int) (getSleepTime()));
-				} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				} catch (InterruptedException e) {				
+					e.printStackTrace();
 				}
 				
 			((Actor) jugador.personaje).spriteManager.flashear();

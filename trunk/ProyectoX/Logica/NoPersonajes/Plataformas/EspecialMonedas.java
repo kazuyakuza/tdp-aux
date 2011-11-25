@@ -77,9 +77,9 @@ public class EspecialMonedas extends Irrompible
 			{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
 				if (hayMoneda())
 				{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
-					//moneda = monedas.remove(monedas.first());
-					monedas.remove(monedas.first());
-					mario.getJugador().agregarMoneda();
+					moneda = monedas.remove(monedas.first());					
+					mario.getJugador().asignarPuntos(moneda.getPuntos(mario));
+					mario.getJugador().agregarMoneda();					
 					if (!hayMoneda())
 						spriteManager.cambiarSprite(vacio);					
 				}			
