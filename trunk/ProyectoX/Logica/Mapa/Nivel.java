@@ -11,19 +11,19 @@ import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.NoPersonajes.Estructura;
+import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.NoPersonajes.Piso;
 import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
 import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
-import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
-
-import ProyectoX.Logica.NoPersonajes.PowerUps.*;
-import ProyectoX.Logica.NoPersonajes.Moneda;
-import ProyectoX.Logica.Personajes.Mario;
-
-import ProyectoX.Logica.Personajes.Enemigo.Goomba;
-import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialMonedas;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
+import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
+import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
+import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
+import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
+import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
+import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 
 /**
  * Representa un Nivel del Juego.
@@ -50,7 +50,7 @@ public class Nivel
 	private PositionList<Estructura> estructuras; //Lista de todos los Actores Estructura en el Nivel actual.
 	private PositionList<EspecialPowerUp> especialesPowerUp; //Lista de todos los Actores EspecialPowerUp en el Nivel actual.
 	private PositionList<PowerUp> powerUps; //Lista de todos los Actores PowerUp en el Nivel actual.
-	//private PositionList<Enemigo> enemigos; //Lista de todos los Actores Enemigo en el Nivel actual.
+	private PositionList<Enemigo> enemigos; //Lista de todos los Actores Enemigo en el Nivel actual.
 	
 	/*CONSTRUCTOR*/
 	
@@ -72,7 +72,7 @@ public class Nivel
 		estructuras = new ListaPositionSimple<Estructura> ();
 		especialesPowerUp = new ListaPositionSimple<EspecialPowerUp> ();
 		powerUps = new ListaPositionSimple<PowerUp> ();
-		//enemigos = new ListaPositionSimple<Enemigo> ();
+		enemigos = new ListaPositionSimple<Enemigo> ();
 	}
 	
 	/*COMANDOS*/
@@ -125,7 +125,7 @@ public class Nivel
 		mapa = new Mapa (this, 1, 1);
 		
 		//Creación Bloque 1 del Nivel. Que es el Bloque de inicio del Nivel.
-		bloqueActual = new Bloque(mapa, 0, 0, 15, 20);//Nivel de Piso default.
+		bloqueActual = new Bloque(mapa, 0, 0, 13, 20);//Nivel de Piso default.
 		
 		mapa.setBloque(0, 0, bloqueActual);
 		
@@ -136,8 +136,8 @@ public class Nivel
 			/*if (aux != 6)
 			{*/
 				Piso piso = new Piso(cargadorSprite);
-				bloqueActual.ABC[13][aux].agregarEstructura(piso);
-				piso.setCeldaActual(bloqueActual.ABC[13][aux]);
+				bloqueActual.ABC[11][aux].agregarEstructura(piso);
+				piso.setCeldaActual(bloqueActual.ABC[11][aux]);
 				actores.addFirst(piso);
 				estructuras.addFirst(piso);
 			//}
@@ -145,49 +145,49 @@ public class Nivel
 		}
 		
 		//Agregación Actor del Jugador.
-		bloqueActual.ABC[12][1].agregarActor(actor);
-		actor.setCeldaActual(bloqueActual.ABC[12][1]);
+		bloqueActual.ABC[10][1].agregarActor(actor);
+		actor.setCeldaActual(bloqueActual.ABC[10][1]);
 		actores.addFirst(actor);
 		
 		//Agregación Actores Enemigos.
-		/*aux = 0;
+		aux = 0;
 		while (aux < 9)
 		{
 			Goomba goomba = new Goomba (cargadorSprite);
-			bloqueActual.ABC[12][10 + aux].agregarActor(goomba);
-			goomba.setCeldaActual(bloqueActual.ABC[12][10 + aux]);
+			bloqueActual.ABC[1][10 + aux].agregarActor(goomba);
+			goomba.setCeldaActual(bloqueActual.ABC[1][10 + aux]);
 			actores.addFirst(goomba);
+			enemigos.addFirst(goomba);
 			aux++;
 		}
-		*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
-		bloqueActual.ABC[5][7].agregarActor(powerUp);
-		powerUp.setCeldaActual(bloqueActual.ABC[5][7]);
+		bloqueActual.ABC[3][7].agregarActor(powerUp);
+		powerUp.setCeldaActual(bloqueActual.ABC[3][7]);
 		actores.addLast(powerUp);
 		powerUps.addLast(powerUp);
 		
 		PowerUp flor = new FlorFuego(cargadorSprite);
-		bloqueActual.ABC[5][8].agregarActor(flor);
-		flor.setCeldaActual(bloqueActual.ABC[5][8]);
+		bloqueActual.ABC[3][8].agregarActor(flor);
+		flor.setCeldaActual(bloqueActual.ABC[3][8]);
 		actores.addLast(flor);
 		powerUps.addLast(flor);
 		
 		PowerUp bomba = new Estrella(cargadorSprite);
-		bloqueActual.ABC[10][6].agregarActor(bomba);
-		bomba.setCeldaActual(bloqueActual.ABC[10][6]);
+		bloqueActual.ABC[8][6].agregarActor(bomba);
+		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
 		
 		Moneda moneda1 = new Moneda(cargadorSprite);
-		bloqueActual.ABC[10][8].agregarActor(moneda1);
-		moneda1.setCeldaActual(bloqueActual.ABC[10][8]);
+		bloqueActual.ABC[8][8].agregarActor(moneda1);
+		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
 		actores.addLast(moneda1);
 		
 		Moneda moneda2 = new Moneda(cargadorSprite);
-		bloqueActual.ABC[12][8].agregarActor(moneda2);
-		moneda2.setCeldaActual(bloqueActual.ABC[12][8]);		
+		bloqueActual.ABC[10][8].agregarActor(moneda2);
+		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);		
 		actores.addLast(moneda2);
 		
 				
@@ -202,33 +202,33 @@ public class Nivel
 		while (aux < 12)
 		{
 			Irrompible plataforma = new Irrompible (cargadorSprite);
-			bloqueActual.ABC[9][aux].setOcupada(true);
-			bloqueActual.ABC[9][aux].agregarEstructura(plataforma);//Plataforma irrompible
-			plataforma.setCeldaActual(bloqueActual.ABC[9][aux]);
+			bloqueActual.ABC[7][aux].setOcupada(true);
+			bloqueActual.ABC[7][aux].agregarEstructura(plataforma);//Plataforma irrompible
+			plataforma.setCeldaActual(bloqueActual.ABC[7][aux]);
 			actores.addFirst(plataforma);
 			estructuras.addFirst(plataforma);
 			aux++;
 		}
 		
 		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite),true, cargadorSprite);
-		bloqueActual.ABC[9][5].setOcupada(true);
-		bloqueActual.ABC[9][5].agregarEstructura(plataformaPUP);
-		plataformaPUP.setCeldaActual(bloqueActual.ABC[9][5]);
+		bloqueActual.ABC[7][5].setOcupada(true);
+		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
+		plataformaPUP.setCeldaActual(bloqueActual.ABC[7][5]);
 		actores.addFirst(plataformaPUP);
 		//estructuras.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
 		EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
-		bloqueActual.ABC[9][13].setOcupada(true);
-		bloqueActual.ABC[9][13].agregarEstructura(plataformaM);
-		plataformaM.setCeldaActual(bloqueActual.ABC[9][13]);
+		bloqueActual.ABC[7][13].setOcupada(true);
+		bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
+		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
 		
 		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),true, cargadorSprite);
-		bloqueActual.ABC[9][14].setOcupada(true);
-		bloqueActual.ABC[9][14].agregarEstructura(plataformaPUP2);
-		plataformaPUP2.setCeldaActual(bloqueActual.ABC[9][14]);
+		bloqueActual.ABC[7][14].setOcupada(true);
+		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
+		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);
 		actores.addFirst(plataformaPUP2);
 		//estructuras.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP2);
@@ -329,7 +329,7 @@ public class Nivel
 	 * @throws NullPointerException Si especialPowerUp es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un especialPowerUp que no pertenece al Nivel.
 	 */
-	/*public void eliminarEspecialPowerUp (EspecialPowerUp especialPowerUp) throws NullPointerException, AccionActorException
+	public void eliminarEspecialPowerUp (EspecialPowerUp especialPowerUp) throws NullPointerException, AccionActorException
 	{
 		if (especialPowerUp == null)
 			throw new NullPointerException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
@@ -342,7 +342,7 @@ public class Nivel
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		especialesPowerUp.remove(p);
 		eliminarEstructuras((Estructura) especialPowerUp);
-	}*/
+	}
 	
 	/**
 	 * Elimina el PowerUp powerUp del Nivel.
@@ -373,7 +373,7 @@ public class Nivel
 	 * @throws NullPointerException Si enemigo es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un Enemigo que no pertenece al Nivel.
 	 */
-	/*public void eliminarEnemigo (Enemigo enemigo) throws NullPointerException, AccionActorException
+	public void eliminarEnemigo (Enemigo enemigo) throws NullPointerException, AccionActorException
 	{
 		if (enemigo == null)
 			throw new NullPointerException ("Nivel.eliminarPowerUps()" + "\n" +
@@ -385,8 +385,8 @@ public class Nivel
 			throw new AccionActorException ("Nivel.eliminarPowerUps()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		enemigos.remove(p);
-		eliminarActores(enemigo);
-	}*/
+		eliminarActores((Actor) enemigo);
+	}
 	
 	/*CONSULTAS*/
 	
@@ -470,9 +470,9 @@ public class Nivel
 	 * @param cc Verificación de que es solicitado por un ControlCentral.
 	 * @return Lista de EspecialesPowerUp.
 	 */
-	public Iterator <EspecialPowerUp> getEspecialesPowerUp (ControlCentral cc)
+	public PositionList<EspecialPowerUp> getEspecialesPowerUp (ControlCentral cc)
 	{
-		return especialesPowerUp.iterator();
+		return especialesPowerUp;
 	}
 	
 	/**
@@ -492,9 +492,9 @@ public class Nivel
 	 * @param cc Verificación de que es solicitado por un ControlCentral.
 	 * @return Lista de Enemigos.
 	 */
-	/*public PositionList<enemigo> getEnemigos (ControlCentral cc)
+	public PositionList<Enemigo> getEnemigos (ControlCentral cc)
 	{
 		return enemigos;
-	}*/
+	}
 
 }

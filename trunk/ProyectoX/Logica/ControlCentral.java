@@ -27,6 +27,7 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
+import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -185,14 +186,9 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void cambiarPlataformasFlor ()
 	{
-		Iterator <EspecialPowerUp> plataformas = nivel.getEspecialesPowerUp(this);
-		EspecialPowerUp plataforma;
-		while (plataformas.hasNext())
-		{
-			plataforma = plataformas.next();
+		for (EspecialPowerUp plataforma: nivel.getEspecialesPowerUp(this))
 			if (plataforma.esCambiable())
-				plataforma.cambiarPowerUp(new FlorFuego (plataforma.getSpriteManager().getCargadorSprite()));			
-		}		
+				plataforma.cambiarPowerUp(new FlorFuego (plataforma.getSpriteManager().getCargadorSprite()));	
 	}
 	
 	/**
@@ -200,14 +196,9 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void cambiarPlataformasSuperHongo ()
 	{
-		Iterator <EspecialPowerUp> plataformas = nivel.getEspecialesPowerUp(this);
-		EspecialPowerUp plataforma;
-		while (plataformas.hasNext())
-		{
-			plataforma = plataformas.next();
+		for (EspecialPowerUp plataforma: nivel.getEspecialesPowerUp(this))
 			if (plataforma.esCambiable())
-				plataforma.cambiarPowerUp(new SuperHongo (plataforma.getSpriteManager().getCargadorSprite()));			
-		}
+				plataforma.cambiarPowerUp(new SuperHongo (plataforma.getSpriteManager().getCargadorSprite()));
 	}
 	
 	/*Métodos en Ejecución*/
@@ -240,6 +231,10 @@ public class ControlCentral implements Runnable, ControlThread
 				for (UpNeeder un: a.getUpNeeders())
 					Tupdater.addUpNeeder(un);
 			
+			//Agregando Actores Caibles
+			for (Enemigo e: nivel.getEnemigos(this))
+				agregarAfectableXgravedad((afectableXgravedad) e);
+			
 			//Start Thread's
 			Tjugador.start();
 			Tgravedad.start();
@@ -258,11 +253,11 @@ public class ControlCentral implements Runnable, ControlThread
 	
 	public void test ()
 	{
-		//((Mario) jugador.personaje).crecerHongo();
-		//((Mario) jugador.personaje).crecerFlor();
+		((Mario) jugador.personaje).crecerHongo();
+		((Mario) jugador.personaje).crecerFlor();
 		
 		//while (true)
-		for (int i=0; i<10; i++)
+		/*for (int i=0; i<10; i++)
 		{
 			try {
 				Thread.sleep((int) (getSleepTime()));
@@ -272,7 +267,7 @@ public class ControlCentral implements Runnable, ControlThread
 				
 			((Actor) jugador.personaje).spriteManager.flashear();
 		}
-		((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());
+		((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
 	}
 	
 	/**

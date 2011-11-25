@@ -172,7 +172,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 				else
 				{
 					if (celdaAnterior.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la Celda anterior.
-						explotar(celdaAnterior.getActores().next());
+						explotar();
 					else
 						morir();
 				}
@@ -228,7 +228,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 				else
 				{
 					if (celdaSiguiente.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la siguiente Celda.
-						explotar(celdaSiguiente.getActores().next());
+						explotar();
 					else
 						morir();
 				}
@@ -259,7 +259,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	 * 
 	 * @param a Actor contra el que chocó y explotó.
 	 */
-	public void explotar (final Actor a)
+	public void explotar ()
 	{
 		spriteManager.cambiarSprite(explotando);
 		spriteManager.setGif(cantFramesExplotando);

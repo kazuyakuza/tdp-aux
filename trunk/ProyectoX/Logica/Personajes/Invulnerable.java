@@ -34,10 +34,11 @@ public class Invulnerable extends DecoracionCaracteristica
 		timer = new Timer (t, new ActionListener ()
 		{						
 			public void actionPerformed (ActionEvent e)
-			{				
+			{
+				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);
 				mario = null;
-				timer.stop();								
+				timer.stop();
 			}
 		});		
 	}
