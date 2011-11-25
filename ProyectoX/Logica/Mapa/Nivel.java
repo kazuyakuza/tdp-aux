@@ -18,6 +18,7 @@ import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialMonedas;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
 import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
@@ -176,11 +177,11 @@ public class Nivel
 		actores.addLast(flor);
 		powerUps.addLast(flor);
 		
-		PowerUp bomba = new Estrella(cargadorSprite);
+		/*PowerUp bomba = new Estrella(cargadorSprite);
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addLast(bomba);
-		powerUps.addLast(bomba);
+		powerUps.addLast(bomba);*/
 		
 		Moneda moneda1 = new Moneda(cargadorSprite);
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
@@ -228,6 +229,27 @@ public class Nivel
 		actores.addFirst(plataformaPUP2);
 		//estructuras.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP2);
+		
+		Rompible rompible = new Rompible (cargadorSprite);
+		bloqueActual.ABC[7][12].setOcupada(true);
+		bloqueActual.ABC[7][12].agregarEstructura(rompible);
+		rompible.setCeldaActual(bloqueActual.ABC[7][12]);
+		actores.addFirst(rompible);
+		estructuras.addFirst(rompible);
+		
+		Rompible r1 = new Rompible (cargadorSprite);
+		bloqueActual.ABC[7][2].setOcupada(true);
+		bloqueActual.ABC[7][2].agregarEstructura(r1);
+		r1.setCeldaActual(bloqueActual.ABC[7][2]);
+		actores.addFirst(r1);
+		estructuras.addFirst(r1);
+		
+		Rompible r2 = new Rompible (cargadorSprite);
+		bloqueActual.ABC[7][3].setOcupada(true);
+		bloqueActual.ABC[7][3].agregarEstructura(r2);
+		r2.setCeldaActual(bloqueActual.ABC[7][3]);
+		actores.addFirst(r2);
+		estructuras.addFirst(r2);
 		
 		
 		//Vacio en el Piso.

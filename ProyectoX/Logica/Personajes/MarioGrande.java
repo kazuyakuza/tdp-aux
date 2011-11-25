@@ -2,6 +2,7 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
 /**
  * Representa a Mario en estado MarioGrande (cuando Mario toma el Super Hongo) del juego.
@@ -103,6 +104,20 @@ public class MarioGrande extends Caracteristica
 		mario.getJugador().getControlCentral().cambiarPlataformasSuperHongo();
 		mario = null;
 	}
+	
+	/**
+	 * Realiza la acción de golpear una plataforma Rompible.
+	 * @param estructura es la plataforma Rompible que Mario golpea.
+	 * @throws NullPointerException si brick es null.
+	 */
+	public void golpearRompible (Rompible brick) throws NullPointerException
+	{
+		if (brick == null)
+			throw new NullPointerException ("MarioGrande.golpearRompible()" + "\n" + 
+											"Imposible golpear plataforma Rompible, brick es null.");
+		brick.morir();
+	}
+	
 	/**
 	 * Retorna los nombres de sprites correspondientes a la Caracteristica.
 	 * @retun un arreglo de Strings que contiene los nombres de sprites.

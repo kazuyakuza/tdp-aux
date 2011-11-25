@@ -9,6 +9,7 @@ import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Jugador;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
@@ -399,6 +400,19 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	{
 		miCaracteristica.serDañado(a);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+	}
+	
+	/**
+	 * Realiza la acción de golpear una plataforma Rompible.
+	 * @param estructura es la plataforma Rompible que Mario golpea.
+	 * @throws NullPointerException si brick es null.
+	 */
+	public void golpearRompible (Rompible brick) throws NullPointerException
+	{
+		if (brick == null)
+			throw new NullPointerException ("Mario.golpearRompible()" + "\n" + 
+											"Imposible golpear plataforma, es null.");
+		miCaracteristica.golpearRompible (brick);
 	}
 	
 	/**

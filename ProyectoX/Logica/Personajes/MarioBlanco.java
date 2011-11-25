@@ -6,6 +6,7 @@ import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
 /**
  * Representa a Mario en estado MarioBlanco. (cuando Mario toma la Flor de Fuego) del juego.
@@ -129,6 +130,19 @@ public class MarioBlanco extends Caracteristica
 		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 4000));
 		((Invulnerable)mario.getCaracteristica()).empezar();		
 		mario = null;
+	}
+	
+	/**
+	 * Realiza la acción de golpear una plataforma Rompible.
+	 * @param estructura es la plataforma Rompible que Mario golpea.
+	 * @throws NullPointerException si brick es null.
+	 */
+	public void golpearRompible (Rompible brick) throws NullPointerException
+	{
+		if (brick == null)
+			throw new NullPointerException ("MarioBlanco.golpearRompible()" + "\n" + 
+											"Imposible golpear plataforma Rompible, brick es null.");
+		brick.morir();
 	}
 	
 	/**
