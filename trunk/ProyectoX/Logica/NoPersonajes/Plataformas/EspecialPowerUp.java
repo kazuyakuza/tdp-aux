@@ -74,8 +74,9 @@ public class EspecialPowerUp extends Irrompible
 				{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino, no hacer nada.		
 					
 					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
-					powerUp.setCeldaActual(celdaSuperior);
-					celdaSuperior.agregarActor(powerUp);
+					powerUp.setCeldaActual(celdaSuperior);					
+					//celdaSuperior.agregarActor(powerUp);
+					celdaSuperior.agregarPowerUp(powerUp);					
 					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
 					powerUp = null;
 					spriteManager.cambiarSprite(vacio);

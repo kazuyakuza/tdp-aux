@@ -110,7 +110,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	 */
 	public void morir ()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
 		super.morir();
