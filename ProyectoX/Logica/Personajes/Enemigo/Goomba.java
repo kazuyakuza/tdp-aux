@@ -45,6 +45,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	
 	//Prioridades para el UpNeeder
 	//0 = morir
+	//1 = dañar PJ
 	//3 = spriteManager.cambiarSprite(quieto)
 	
 	/*CONSTRUCTOR*/
@@ -299,7 +300,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
+	public void colisionarPj (final PjSeleccionable pj) throws ColisionException, NullPointerException
 	{		
 		if (pj == null)
 			throw new NullPointerException ("Goomba.colisionarPj()" + "/n" +
@@ -307,16 +308,34 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 		
 		try
 		{
-			pj.getJugador().asignarPuntos(60);
+			final Mario mario = checkActorJugador(pj);
 			
-			if (! upNeeder.hayWorkerPrioridad(0))
-				upNeeder.addWorker(0, new Worker ()
-				{
-					public void work() throws Exception
+			if (celdaActual.getBloque().getSuperior(celdaActual) == mario.getCeldaActual())
+			{
+				pj.getJugador().asignarPuntos(60);
+				
+				if (! upNeeder.hayWorkerPrioridad(0))
+					upNeeder.addWorker(0, new Worker ()
 					{
-						morir();
-					}
-				});
+						public void work() throws Exception
+						{
+							morir();
+						}
+					});
+			}
+			else
+			{
+				final Goomba gAux = this;
+			
+				if (! upNeeder.hayWorkerPrioridad(1))
+					upNeeder.addWorker(1, new Worker ()
+					{
+						public void work() throws Exception
+						{
+							mario.serDañado(gAux);
+						}
+					});
+			}
 		}
 		catch (Exception e)
 		{
@@ -342,7 +361,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 		try
 		{
 			bola.getMario().getJugador().asignarPuntos(getPuntos(bola.getMario()));
-			bola.explotar(this);
+			bola.explotar();
 			if (! upNeeder.hayWorkerPrioridad(0))
 	            upNeeder.addWorker(0, new Worker ()
 	            {
