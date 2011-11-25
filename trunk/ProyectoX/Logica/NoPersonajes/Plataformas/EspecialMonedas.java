@@ -25,10 +25,10 @@ public class EspecialMonedas extends Irrompible
 	private static final String [] nombresSprites = {dirRecursos + "QuestionBlock-1.png",//0 = Plataforma con monedas.
 													 dirRecursos + "QuestionBlock-2.png",
 													 dirRecursos + "QuestionBlock-3.png",
-													 dirRecursos + "Empty-Block.gif"};	 //4 = Plataforma sin monedas.
+													 dirRecursos + "Empty-Block.gif"};	 //3 = Plataforma sin monedas.
 	
 	private static int cantFramesMovimiento = 3;
-	private static int vacio = 4;
+	private static int vacio = 3;
 	
 	//Atributos de Instancia
 	protected PositionList <Moneda> monedas;
