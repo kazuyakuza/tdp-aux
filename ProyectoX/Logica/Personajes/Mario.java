@@ -235,6 +235,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					celdaSuperior = celdaActual.getBloque().getSuperior(celdaActual);
 					if (!celdaSuperior.isOcupada())
 						moverseAcelda(celdaSuperior);
+					else //Mario colisiona una Estructura desde abajo.
+					{
+						this.producirColisiones(celdaSuperior);
+					}
 				}
 			}
 			else
@@ -464,17 +468,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	{
 		return miCaracteristica.multiplicadorBonus();
 	}
-		
-	/**
-	 * Devuelve el PowerUp que Mario necesita para evolucionar (crecer).
-	 * @return el PowerUP que Mario necesita para evolucionar (crecer).
-	 */
-	/*public abstract PowerUp crecimiento();
-	{
-		return miCaracteristica.crecimiento();
-	}*/	  
-	 
-		
+				
 	/*Métodos en Ejecución*/
 	
 	/**

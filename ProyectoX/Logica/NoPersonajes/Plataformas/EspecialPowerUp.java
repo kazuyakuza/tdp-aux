@@ -25,10 +25,10 @@ public class EspecialPowerUp extends Irrompible
 	private static final String [] nombresSprites = {dirRecursos + "QuestionBlock-1.png", //0 = Inicial, contiene PowerUp
 													 dirRecursos + "QuestionBlock-2.png",
 													 dirRecursos + "QuestionBlock-3.png",
-													 dirRecursos + "Empty-Block.gif"};	 //4 = Plataforma sin PowerUp
+													 dirRecursos + "Empty-Block.gif"};	 //3 = Plataforma sin PowerUp
 	
 	private static int cantFramesMovimiento = 3;
-	private static int vacio = 4;
+	private static int vacio = 3;
 	
 	//Atributos de Instancia
 	protected PowerUp powerUp;
