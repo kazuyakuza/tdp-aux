@@ -52,7 +52,7 @@ public class Estrella extends PowerUp implements Movible
 		if (mario == null)
 			throw new NullPointerException ("PowerUp.efecto()" + "\n" +
             								"Imposible aplicar efecto, mario es null");
-		//mario.setCaracteristica(new Invulnerable (mario.getCaracteristica (), 15000));		
+		
 		mario.setCaracteristica(new Destructor (mario.getCaracteristica(), 10000));
 		((Destructor)mario.getCaracteristica()).empezar();		
 	}
