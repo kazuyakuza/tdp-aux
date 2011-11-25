@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
 /**
  * Representa a la Caracteristica que Mario puede poseer, que le permite estar en estado destructor (destruye a los enemigos al colisionar) en el juego.
@@ -84,4 +85,5 @@ public class Destructor extends DecoracionCaracteristica
 	{
 		a.morir();		
 	}
+		
 }

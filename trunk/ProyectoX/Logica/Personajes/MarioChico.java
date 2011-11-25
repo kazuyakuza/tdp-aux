@@ -2,6 +2,7 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
 /**
  * Representa a Mario en estado MarioChico.
@@ -110,6 +111,16 @@ public class MarioChico extends Caracteristica
 		mario.getSpriteManager().cambiarSprite(muerto);
 		mario.morir();
 	}	
+	
+	/**
+	 * Realiza la acción de golpear una plataforma Rompible.
+	 * @param estructura es la plataforma Rompible que Mario golpea.
+	 * @throws NullPointerException si brick es null.
+	 */
+	public void golpearRompible (Rompible brick) throws NullPointerException
+	{
+		//No hace nada.
+	}
 	
 	/**
 	 * Retorna los nombres de sprites correspondientes a la Caracteristica.

@@ -2,6 +2,7 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
 public abstract class DecoracionCaracteristica extends Caracteristica
 {
@@ -82,6 +83,16 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 	public void serDañado(Actor a)
 	{
 		componente.serDañado(a);
+	}
+	
+	/**
+	 * Realiza la acción de golpear una plataforma Rompible.
+	 * @param estructura es la plataforma Rompible que Mario golpea.
+	 * @throws NullPointerException si brick es null.
+	 */
+	public void golpearRompible (Rompible brick) throws NullPointerException
+	{
+		componente.golpearRompible(brick);
 	}
 	
 	/**

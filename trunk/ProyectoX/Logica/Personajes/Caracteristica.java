@@ -2,6 +2,7 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 /**
  * Representa a las Características que Mario puede tener en el juego. 
  * En base a ésta, Mario tiene determinado comportamiento ante los demás Actores.
@@ -89,6 +90,13 @@ public abstract class Caracteristica
 	 * @param a es el Actor (enemigo) que colisionó con Mario.
 	 */
 	public abstract void serDañado(Actor a);
+	
+	/**
+	 * Realiza la acción de golpear una plataforma Rompible.
+	 * @param brick es la plataforma Rompible que Mario golpea.
+	 * @throws NullPointerException si bricks es null.
+	 */
+	public abstract void golpearRompible (Rompible brick) throws NullPointerException;
 	
 	/**
 	 * Retorna el multiplicador bonus que otorga ésta Caracteristica sobre los puntos.

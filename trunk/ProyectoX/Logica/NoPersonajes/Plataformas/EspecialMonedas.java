@@ -48,6 +48,11 @@ public class EspecialMonedas extends Irrompible
 		inicializar(monedas, cargadorSprite);
 	}
 	
+	/**
+	 * Inicializa al objeto, agregando a la lista de monedas, la cantidad especificada.
+	 * @param cantidad monedas a crear y agregar a la plataforma.
+	 * @param cargadorSprite Clase para cargar los sprites de las monedas.
+	 */
 	private void inicializar (int cantidad, CargadorSprite cargadorSprite)
 	{
 		for (int i=0; i < cantidad; i++)
