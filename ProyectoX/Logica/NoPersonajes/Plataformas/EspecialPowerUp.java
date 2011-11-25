@@ -4,10 +4,10 @@ import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
-import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
+import ProyectoX.Logica.ControlCentral;
 
 /**
  * Representa a una Plataforma Especial Power Up en el Juego.
@@ -31,8 +31,9 @@ public class EspecialPowerUp extends Irrompible
 	private static int cantFramesMovimiento = 3;
 	private static int vacio = 3;
 	
-	//Atributos de Instancia
+	//Atributos de Instancia	
 	protected PowerUp powerUp;
+	protected ControlCentral controlCentral;
 	protected boolean cambiable; //Determina si la plataforma puede cambiar, o no, su powerUp en el transcurso del juego.
 
 	/**
@@ -40,12 +41,13 @@ public class EspecialPowerUp extends Irrompible
 	 * 
 	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public EspecialPowerUp(PowerUp pwUp, boolean modificable, CargadorSprite cargadorSprite) 
+	public EspecialPowerUp(PowerUp pwUp, ControlCentral cc, boolean modificable, CargadorSprite cargadorSprite) 
 	{
 		super(cargadorSprite);
 		spriteManager.cargarSprites(nombresSprites);		
 		spriteManager.rotarGif(cantFramesMovimiento);
 		powerUp = pwUp;
+		controlCentral = cc;
 		cambiable = modificable;
 	}
 	
@@ -76,6 +78,7 @@ public class EspecialPowerUp extends Irrompible
 					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
 					powerUp.setCeldaActual(celdaSuperior);
 					celdaSuperior.agregarActor(powerUp);
+					controlCentral.agregarPowerUp(powerUp);
 					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
 					powerUp = null;
 					spriteManager.cambiarSprite(vacio);

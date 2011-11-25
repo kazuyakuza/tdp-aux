@@ -23,6 +23,8 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
+import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
+import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -153,6 +155,7 @@ public class Nivel
 		caibles.addFirst((afectableXgravedad) actor);
 		
 		//Agregación Actores Enemigos.
+		/*
 		aux = 0;
 		while (aux < 9)
 		{
@@ -163,7 +166,22 @@ public class Nivel
 			enemigos.addFirst(goomba);
 			caibles.addFirst((afectableXgravedad) goomba);
 			aux++;
-		}
+		}*/
+		/*
+		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
+		bloqueActual.ABC[4][5].agregarActor(kt1);
+		kt1.setCeldaActual(bloqueActual.ABC[4][5]);
+		actores.addFirst(kt1);
+		enemigos.addFirst(kt1);
+		caibles.addFirst(kt1);
+		
+		KoopaTroopa kt2 = new KoopaTroopa (new KTNormal(), cargadorSprite);
+		bloqueActual.ABC[4][4].agregarActor(kt2);
+		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
+		actores.addFirst(kt2);
+		enemigos.addFirst(kt2);
+		caibles.addFirst(kt2);
+		*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
@@ -211,7 +229,7 @@ public class Nivel
 			aux++;
 		}
 		
-		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite),true, cargadorSprite);
+		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite), cc, true, cargadorSprite);
 		bloqueActual.ABC[7][5].setOcupada(true);
 		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
 		plataformaPUP.setCeldaActual(bloqueActual.ABC[7][5]);
@@ -226,7 +244,7 @@ public class Nivel
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
 		
-		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),false, cargadorSprite);
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite), cc, false, cargadorSprite);
 		bloqueActual.ABC[7][14].setOcupada(true);
 		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
 		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);

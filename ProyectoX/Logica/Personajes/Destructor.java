@@ -7,6 +7,8 @@ import javax.swing.Timer;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Responsabilidades.Punteable;
+
 
 /**
  * Representa a la Caracteristica que Mario puede poseer, que le permite estar en estado destructor (destruye a los enemigos al colisionar) en el juego.
@@ -84,6 +86,7 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public void serDañado(Actor a)
 	{
+		mario.getJugador().asignarPuntos( ((Punteable)a).getPuntos(mario) );
 		a.morir();		
 	}
 		

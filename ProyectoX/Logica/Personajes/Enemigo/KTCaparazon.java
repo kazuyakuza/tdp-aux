@@ -11,8 +11,9 @@ public class KTCaparazon extends CaracteristicaKT
 	//Atributos de Clase
 	private static final String dirRecursos = "Enemigos/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a Goomba, la ubicación en los índices es:
-	                                                {dirRecursos + "GreenKoopaTroopa-Shell1.png", //0: KoopaTroopa quieto
-													 dirRecursos + "GreenKoopaTroopa-Shell2.png"};//1: KoopaTroopa movimiento
+	                                                {dirRecursos + "GreenKoopaTroopa-Shell1.gif", //0: KoopaTroopa quieto
+													 dirRecursos + "GreenKoopaTroopa-Shell1.gif", //1: KoopaTroopa quieto
+													 dirRecursos + "GreenKoopaTroopa-Shell2.gif"};//2: KoopaTroopa movimiento
 	
 	/*CONSRUCTORES*/
 	

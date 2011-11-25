@@ -110,8 +110,8 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	 */
 	public void morir ()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
-		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);		
+		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);		
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
 		super.morir();
@@ -164,6 +164,20 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		else
 			if (!(PG < 0))
 				PG -= efecto;
+	}
+	
+	/**
+	 * Setea a la CaracteristicaKT del KoopaTroopa con c.
+	 *  
+	 * @param c CaracteristicaKT con la que se setea al KoopaTroopa.
+	 * @throws NullPointerException si c es null.
+	 */
+	public void setCaracteristicaKT (CaracteristicaKT c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException ("KoopaTroopa.setCaracteristicaKT()" + "\n" + 
+											"Imposible asignar CaracteristicaKT, la misma es nula.");
+		miCaracteristica = c;
 	}
 	
 	/*CONSULTAS*/
@@ -219,48 +233,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (final PjSeleccionable pj) throws ColisionException, NullPointerException
-	{		/*
-		if (pj == null)
-			throw new NullPointerException ("Goomba.colisionarPj()" + "/n" +
-											"Imposible realizar colisión, actor nulo.");
-		
-		try
-		{
-			final Mario mario = checkActorJugador(pj);
-			
-			if (celdaActual.getBloque().getSuperior(celdaActual) == mario.getCeldaActual())
-			{
-				pj.getJugador().asignarPuntos(60);
-				
-				if (! upNeeder.hayWorkerPrioridad(0))
-					upNeeder.addWorker(0, new Worker ()
-					{
-						public void work() throws Exception
-						{
-							morir();
-						}
-					});
-			}
-			else
-			{
-				final KoopaTroopa gAux = this;
-			
-				if (! upNeeder.hayWorkerPrioridad(1))
-					upNeeder.addWorker(1, new Worker ()
-					{
-						public void work() throws Exception
-						{
-							mario.serDañado(gAux);
-						}
-					});
-			}
-		}
-		catch (Exception e)
-		{
-			throw new ColisionException ("Goomba.colisionarPj()" + "\n" +
-					                     "Detalles del Error:" + "\n" +
-					                     e.getMessage());
-		}*/
+	{		
 		if (pj == null)
 			throw new NullPointerException ("Goomba.colisionarPj()" + "/n" +
 											"Imposible realizar colisión, actor nulo.");
@@ -293,7 +266,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		
 		try
 		{
-			bola.getMario().getJugador().asignarPuntos(getPuntos(bola.getMario()));
+			bola.getMario().getJugador().asignarPuntos(this.getPuntos(bola.getMario()));
 			bola.explotar();
 			if (! upNeeder.hayWorkerPrioridad(0))
 	            upNeeder.addWorker(0, new Worker ()
