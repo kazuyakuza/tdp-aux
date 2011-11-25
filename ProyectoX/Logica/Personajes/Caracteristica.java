@@ -110,12 +110,6 @@ public abstract class Caracteristica
 	 */
 	public abstract String[] getNombresSprites();
 	
-	/**
-	 * Devuelve el PowerUp que esta Caracteristica necesita para evolucionar a otra (crecer).
-	 * @return el PowerUP que esta Caracteristica necesita para evolucionar a otra (crecer).
-	 */
-	//public abstract PowerUp crecimiento();
-		
 	/*COMANDOS*/
 	
 	/**

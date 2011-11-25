@@ -5,7 +5,6 @@ import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
-import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 
@@ -55,7 +54,7 @@ public class Rompible extends Actor implements Plataforma
 	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
 	{
 		if (pj == null)
-			throw new NullPointerException ("EspecialMonedas.colisionarPj()" + "/n" +
+			throw new NullPointerException ("Rompible.colisionarPj()" + "/n" +
 											"Imposible realizar colisión, actor nulo.");
 		
 		try
@@ -68,7 +67,7 @@ public class Rompible extends Actor implements Plataforma
 		}
 		catch (Exception e)
 		{
-			throw new ColisionException ("EspecialMonedas.colisionarPj()" + "\n" +
+			throw new ColisionException ("Rompible.colisionarPj()" + "\n" +
 					                     "Detalles del Error:" + "\n" +
 					                     e.getMessage());
 		}
