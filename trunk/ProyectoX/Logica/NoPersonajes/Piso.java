@@ -62,7 +62,7 @@ public class Piso extends Actor implements Estructura
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarBola (Actor bola) throws ColisionException
+	public void colisionarBola (BolaFuego bola) throws ColisionException
 	{
 		//No hace nada, no tiene efecto sobre este actor.
 	}

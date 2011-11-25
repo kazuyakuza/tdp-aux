@@ -46,12 +46,20 @@ public interface PjSeleccionable extends Personaje
 	 */
 	public void B ();
 	
+	/**
+	 * Setea al Jugador que controla al PjSeleccionable con j.
+	 * 
+	 * @param j Jugador del PjSeleccionable.
+	 * @throws NullPointerException Si j es null.
+	 */
+	public void setJugador (Jugador j) throws NullPointerException;
+	
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve el Jugador que controla a Mario.
+	 * Devuelve el Jugador que controla al PjSeleccionable.
 	 * 
-	 * @return Jugador que controla a Mario.
+	 * @return Jugador que controla al PjSeleccionable.
 	 */
 	public Jugador getJugador ();
 		
