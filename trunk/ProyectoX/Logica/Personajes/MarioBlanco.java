@@ -155,6 +155,7 @@ public class MarioBlanco extends Caracteristica
 		bola.setCeldaActual(mario.getCeldaActual());
 		mario.getSpriteManager().printNextMe(bola.getSpriteManager());
 		mario.getJugador().getControlCentral().agregarActor(bola);
+		//mario.getJugador().getControlCentral().agregarAfectableXgravedad(bola);
 		if (mario.izq)
 			bola.moverseAizquierda();
 		else
