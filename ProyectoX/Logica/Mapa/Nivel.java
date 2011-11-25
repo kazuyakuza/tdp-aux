@@ -25,6 +25,7 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Representa un Nivel del Juego.
@@ -52,6 +53,7 @@ public class Nivel
 	private PositionList<EspecialPowerUp> especialesPowerUp; //Lista de todos los Actores EspecialPowerUp en el Nivel actual.
 	private PositionList<PowerUp> powerUps; //Lista de todos los Actores PowerUp en el Nivel actual.
 	private PositionList<Enemigo> enemigos; //Lista de todos los Actores Enemigo en el Nivel actual.
+	private PositionList<afectableXgravedad> caibles; //Lista de todos los Actores afectables por la Gravedad.
 	
 	/*CONSTRUCTOR*/
 	
@@ -74,6 +76,7 @@ public class Nivel
 		especialesPowerUp = new ListaPositionSimple<EspecialPowerUp> ();
 		powerUps = new ListaPositionSimple<PowerUp> ();
 		enemigos = new ListaPositionSimple<Enemigo> ();
+		caibles = new ListaPositionSimple<afectableXgravedad> ();
 	}
 	
 	/*COMANDOS*/
@@ -149,9 +152,9 @@ public class Nivel
 		bloqueActual.ABC[10][1].agregarActor(actor);
 		actor.setCeldaActual(bloqueActual.ABC[10][1]);
 		actores.addFirst(actor);
+		caibles.addFirst((afectableXgravedad) actor);
 		
 		//Agregación Actores Enemigos.
-		/*
 		aux = 0;
 		while (aux < 9)
 		{
@@ -160,9 +163,9 @@ public class Nivel
 			goomba.setCeldaActual(bloqueActual.ABC[1][10 + aux]);
 			actores.addFirst(goomba);
 			enemigos.addFirst(goomba);
+			caibles.addFirst((afectableXgravedad) goomba);
 			aux++;
 		}
-		*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
@@ -170,18 +173,21 @@ public class Nivel
 		powerUp.setCeldaActual(bloqueActual.ABC[3][7]);
 		actores.addLast(powerUp);
 		powerUps.addLast(powerUp);
+		caibles.addLast((afectableXgravedad) powerUp);
 		
 		PowerUp flor = new FlorFuego(cargadorSprite);
 		bloqueActual.ABC[3][8].agregarActor(flor);
 		flor.setCeldaActual(bloqueActual.ABC[3][8]);
 		actores.addLast(flor);
 		powerUps.addLast(flor);
+		caibles.addLast((afectableXgravedad) flor);
 		
 		/*PowerUp bomba = new Estrella(cargadorSprite);
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addLast(bomba);
-		powerUps.addLast(bomba);*/
+		powerUps.addLast(bomba);
+		caibles.addLast((afectableXgravedad) bomba);*/
 		
 		Moneda moneda1 = new Moneda(cargadorSprite);
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
@@ -212,7 +218,7 @@ public class Nivel
 		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
 		plataformaPUP.setCeldaActual(bloqueActual.ABC[7][5]);
 		actores.addFirst(plataformaPUP);
-		//estructuras.addFirst(plataformaPUP);
+		estructuras.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
 		EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
@@ -222,12 +228,12 @@ public class Nivel
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
 		
-		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),false, cargadorSprite);
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),true, cargadorSprite);
 		bloqueActual.ABC[7][14].setOcupada(true);
 		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
 		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);
 		actores.addFirst(plataformaPUP2);
-		//estructuras.addFirst(plataformaPUP);
+		estructuras.addFirst(plataformaPUP2);
 		especialesPowerUp.addFirst(plataformaPUP2);
 		
 		Rompible rompible = new Rompible (cargadorSprite);
@@ -304,16 +310,16 @@ public class Nivel
 	 * @throws NullPointerException Si actor es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un Actor que no pertenece al Nivel.
 	 */
-	public void eliminarActores (Actor actor) throws NullPointerException, AccionActorException
+	public void eliminarActor (Actor actor) throws NullPointerException, AccionActorException
 	{
 		if (actor == null)
-			throw new NullPointerException ("Nivel.eliminarActores()" + "\n" +
+			throw new NullPointerException ("Nivel.eliminarActor()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
 		Position<Actor> p = actores.first();
 		while ((p != actores.last()) && (p.element() != actor))
 			p = actores.next(p);
 		if (p.element() != actor)
-			throw new AccionActorException ("Nivel.eliminarActores()" + "\n" +
+			throw new AccionActorException ("Nivel.eliminarActor()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		actores.remove(p);
 	}
@@ -325,19 +331,19 @@ public class Nivel
 	 * @throws NullPointerException Si estructura es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar una Estructura que no pertenece al Nivel.
 	 */
-	public void eliminarEstructuras (Estructura estructura) throws NullPointerException, AccionActorException
+	public void eliminarEstructura (Estructura estructura) throws NullPointerException, AccionActorException
 	{
 		if (estructura == null)
-			throw new NullPointerException ("Nivel.eliminarEstructuras()" + "\n" +
+			throw new NullPointerException ("Nivel.eliminarEstructura()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
 		Position<Estructura> p = estructuras.first();
 		while ((p != estructuras.last()) && (p.element() != estructura))
 			p = estructuras.next(p);
 		if (p.element() != estructura)
-			throw new AccionActorException ("Nivel.eliminarEstructuras()" + "\n" +
+			throw new AccionActorException ("Nivel.eliminarEstructura()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		estructuras.remove(p);
-		eliminarActores((Actor) estructura);
+		eliminarActor((Actor) estructura);
 	}
 	
 	/**
@@ -359,7 +365,7 @@ public class Nivel
 			throw new AccionActorException ("Nivel.eliminarEspecialPowerUp()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		especialesPowerUp.remove(p);
-		eliminarEstructuras((Estructura) especialPowerUp);
+		eliminarEstructura((Estructura) especialPowerUp);
 	}
 	
 	/**
@@ -369,19 +375,19 @@ public class Nivel
 	 * @throws NullPointerException Si powerUp es igual a null.
 	 * @throws AccionActorException Si se intenta eliminar un PowerUp que no pertenece al Nivel.
 	 */
-	public void eliminarPowerUps (PowerUp powerUp) throws NullPointerException, AccionActorException
+	public void eliminarPowerUp (PowerUp powerUp) throws NullPointerException, AccionActorException
 	{
 		if (powerUp == null)
-			throw new NullPointerException ("Nivel.eliminarPowerUps()" + "\n" +
+			throw new NullPointerException ("Nivel.eliminarPowerUp()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
 		Position<PowerUp> p = powerUps.first();
 		while ((p != powerUps.last()) && (p.element() != powerUp))
 			p = powerUps.next(p);
 		if (p.element() != powerUp)
-			throw new AccionActorException ("Nivel.eliminarPowerUps()" + "\n" +
+			throw new AccionActorException ("Nivel.eliminarPowerUp()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		powerUps.remove(p);
-		eliminarActores(powerUp);
+		eliminarActor(powerUp);
 	}
 	
 	/**
@@ -394,16 +400,39 @@ public class Nivel
 	public void eliminarEnemigo (Enemigo enemigo) throws NullPointerException, AccionActorException
 	{
 		if (enemigo == null)
-			throw new NullPointerException ("Nivel.eliminarPowerUps()" + "\n" +
+			throw new NullPointerException ("Nivel.eliminarEnemigo()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " es null.");
 		Position<Enemigo> p = enemigos.first();
 		while ((p != enemigos.last()) && (p.element() != enemigo))
 			p = enemigos.next(p);
 		if (p.element() != enemigo)
-			throw new AccionActorException ("Nivel.eliminarPowerUps()" + "\n" +
+			throw new AccionActorException ("Nivel.eliminarEnemigo()" + "\n" +
                                             "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
 		enemigos.remove(p);
-		eliminarActores((Actor) enemigo);
+		eliminarActor((Actor) enemigo);
+	}
+	
+	/**
+	 * Elimina el Actor Caible caible del Nivel.
+	 * 
+	 * Se debe también llamar al Eliminar especifico para ese Actor. (eliminarPowerUp(), eliminarEnemigo(), etc.)
+	 * 
+	 * @param caible Actor Caible a eliminar.
+	 * @throws NullPointerException Si caible es igual a null.
+	 * @throws AccionActorException Si se intenta eliminar un Actor Caible que no pertenece al Nivel.
+	 */
+	public void eliminarCaible (afectableXgravedad caible) throws NullPointerException, AccionActorException
+	{
+		if (caible == null)
+			throw new NullPointerException ("Nivel.eliminarCaible()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " es null.");
+		Position<afectableXgravedad> p = caibles.first();
+		while ((p != caibles.last()) && (p.element() != caible))
+			p = caibles.next(p);
+		if (p.element() != caible)
+			throw new AccionActorException ("Nivel.eliminarCaible()" + "\n" +
+                                            "El Actor que está intentando eliminar del Nivel " + id + " no pertenece a al mismo.");
+		caibles.remove(p);
 	}
 	
 	/*CONSULTAS*/
@@ -513,6 +542,17 @@ public class Nivel
 	public PositionList<Enemigo> getEnemigos (ControlCentral cc)
 	{
 		return enemigos;
+	}
+	
+	/**
+	 * Devuelve la Lista de Caibles.
+	 * 
+	 * @param cc Verificación de que es solicitado por un ControlCentral.
+	 * @return Lista de Caibles.
+	 */
+	public PositionList<afectableXgravedad> getCaibles (ControlCentral cc)
+	{
+		return caibles;
 	}
 
 }

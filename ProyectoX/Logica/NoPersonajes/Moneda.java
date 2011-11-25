@@ -103,7 +103,7 @@ public class Moneda extends Actor implements Punteable
 	 */
 	public void morir()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
 		super.morir();
 	}
 	

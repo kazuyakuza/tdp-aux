@@ -122,7 +122,8 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	 */
 	public void morir ()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
 		super.morir();
 	}
 	

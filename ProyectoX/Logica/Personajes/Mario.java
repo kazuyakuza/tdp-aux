@@ -193,6 +193,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
                                             "Imposible quitar vida al Jugador. Jugador es null.");
 		
 		spriteManager.cambiarSprite(miCaracteristica.spriteMuerto());
+		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
+		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
 		super.morir();
 		
 		try
