@@ -22,9 +22,9 @@ public class EspecialPowerUp extends Irrompible
 {
 	//Atributos de Clase
 	private static final String dirRecursos = "Estructuras/Plataformas/";
-	private static final String [] nombresSprites = {dirRecursos + "QuestionBlock-1.gif", //0 = Inicial, contiene PowerUp
-													 dirRecursos + "QuestionBlock-2.gif",
-													 dirRecursos + "QuestionBlock-3.gif",
+	private static final String [] nombresSprites = {dirRecursos + "QuestionBlock-1.png", //0 = Inicial, contiene PowerUp
+													 dirRecursos + "QuestionBlock-2.png",
+													 dirRecursos + "QuestionBlock-3.png",
 													 dirRecursos + "Empty-Block.gif"};	 //4 = Plataforma sin PowerUp
 	
 	private static int cantFramesMovimiento = 3;
@@ -58,9 +58,10 @@ public class EspecialPowerUp extends Irrompible
 		Mario mario = checkActorJugador (actorJugador);	
 		Celda celdaSuperior;
 		if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
-		{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
+		{//Si la colisión de Mario es desde abajo, sacar al powerUp, sino, no hacer nada.			
 			if (hayPowerUp())
-			{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.			
+			{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino no hacer nada.		
+				
 				celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
 				powerUp.setCeldaActual(celdaSuperior);
 				celdaSuperior.agregarActor(powerUp);

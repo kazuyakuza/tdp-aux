@@ -207,6 +207,21 @@ public class Nivel
 			aux++;
 		}
 		
+		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite), cargadorSprite);
+		bloqueActual.ABC[9][5].setOcupada(true);
+		bloqueActual.ABC[9][5].agregarEstructura(plataformaPUP);
+		plataformaPUP.setCeldaActual(bloqueActual.ABC[9][5]);
+		actores.addFirst(plataformaPUP);
+		estructuras.addFirst(plataformaPUP);
+		
+		EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
+		bloqueActual.ABC[9][13].setOcupada(true);
+		bloqueActual.ABC[9][13].agregarEstructura(plataformaM);
+		plataformaM.setCeldaActual(bloqueActual.ABC[9][13]);
+		actores.addFirst(plataformaM);
+		estructuras.addFirst(plataformaM);
+		
+		
 		//Vacio en el Piso.
 		//bloqueActual.ABC[6][6].setOcupada(false);
 		
