@@ -9,6 +9,7 @@ import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -112,53 +113,63 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor.
-	 * Mario no provoca nada al colisionar con otros Actores.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * Los efectos de la colisión la provocan los otros Actores.
-	 * 
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param a Actor que colisiona al Actor actual. 
 	 */
-	public void colisionar (Actor a) throws ColisionException
+	public void colisionar (Actor a)
 	{
-		//No hace nada, un Power Up no produce efectos de colision sobre otros Actores que no son PjSeleccionable.
+		//No le afecta.
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con otro Personaje Seleccionable.
-	 * Mario no provoca nada al colisionar con otro Personaje.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
+	 * @param pj Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
-	{		
-		Mario mario = checkActorJugador (actorJugador);
-		mario.getJugador().asignarPuntos(this.getPuntos(mario));
-		this.efecto (mario);
-		this.morir(mario);		
-	}
-	
-	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
-	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
-	 */
-	public void colisionarBola (BolaFuego bola) throws ColisionException
+	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
 	{
-		//No hace nada, no tiene efecto sobre este actor.
+		if (pj == null)
+			throw new NullPointerException ("PowerUp.colisionarPj()" + "\n" +
+					                        "Imposible realizar colisión. El PjSeleccionable ingresado es null.");
+		
+		try
+		{
+			Mario mario = checkActorJugador (pj);
+			
+			pj.getJugador().asignarPuntos(getPuntos(mario));
+			efecto(mario);
+			
+			morir();
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("PowerUp.colisionarPj()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
-	 * Realiza las colisiones del PowerUp actual con los Actores que se encuentran en la Celda c.
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
+	 * 
+	 * @param bola Actor que colisiona al Actor actual.
+	 */
+	public void colisionarBola (BolaFuego bola)
+	{
+		//No le afecta.
+	}
+	
+	/**
+	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
 	 * @param c Celda con los Actores a colisionar con el Actor actual. 
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		Iterator <Actor> actores = c.getActores();
-		while (actores.hasNext())
-			actores.next().colisionar(this);	
+		//Nada ocurre	
 	}
 	
 	

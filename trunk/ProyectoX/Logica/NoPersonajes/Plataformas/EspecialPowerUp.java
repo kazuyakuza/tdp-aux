@@ -7,6 +7,7 @@ import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 
 /**
  * Representa a una Plataforma Especial Power Up en el Juego.
@@ -47,29 +48,44 @@ public class EspecialPowerUp extends Irrompible
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException si se produce algún error en la colisión.
-	 * @throws NullPointerException si actorJugador es null.
+	 * Extraer su PowerUp.
+	 * 
+	 * @param pj Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
-	{		
-		Mario mario = checkActorJugador (actorJugador);	
-		Celda celdaSuperior;
-		if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
-		{//Si la colisión de Mario es desde abajo, sacar al powerUp, sino, no hacer nada.			
-			if (hayPowerUp())
-			{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino no hacer nada.		
-				
-				celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
-				powerUp.setCeldaActual(celdaSuperior);
-				celdaSuperior.agregarActor(powerUp);
-				this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
-				powerUp = null;
-				spriteManager.cambiarSprite(vacio);					
-			}			
-		}			
+	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
+	{
+		if (pj == null)
+			throw new NullPointerException ("EspecialPowerUp.colisionarPj()" + "/n" +
+											"Imposible realizar colisión, actor nulo.");
+		
+		try
+		{
+			Mario mario = checkActorJugador (pj);	
+			Celda celdaSuperior;
+			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
+			{//Si la colisión de Mario es desde abajo, sacar al powerUp, sino, no hacer nada.			
+				if (hayPowerUp())
+				{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino no hacer nada.		
+					
+					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
+					powerUp.setCeldaActual(celdaSuperior);
+					celdaSuperior.agregarActor(powerUp);
+					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
+					powerUp = null;
+					spriteManager.cambiarSprite(vacio);					
+				}			
+			}
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("EspecialPowerUp.colisionarPj()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**

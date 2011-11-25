@@ -9,8 +9,11 @@ import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
+import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Responsabilidades.Movible;
+import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -21,7 +24,7 @@ import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Goomba extends Actor implements Enemigo, Movible, afectableXgravedad
+public class Goomba extends Actor implements Enemigo, Movible, afectableXgravedad, Punteable
 {
 	
 	//Atributos de Clase
@@ -117,10 +120,10 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	/**
 	 * Realiza la acción de morir (ser destruido) de Goomba.
 	 */
-	public void morir (Actor a)
+	public void morir ()
 	{
 		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
-		super.morir(a);
+		super.morir();
 	}
 	
 	/**
@@ -267,36 +270,67 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor.
+	 * Retorna los puntos que un Punteable otorga.
 	 * 
-	 * Los efectos de la colisión la provocan los otros Actores.
-	 * 
-	 * @throws ColisionException Si se produce algún error en la colisión.
-	 * @throws NullPointerException Si a es null.
+	 * @param mario Mario al que se le calculan los puntos a otorgar.
+	 * @return los puntos que otorga.
 	 */
-	public void colisionar (Actor a) throws ColisionException, NullPointerException
+	public int getPuntos (Mario mario)
 	{
-		//No produce ningún efecto.
+		return 60;
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * @throws ColisionException Si se produce algún error en la colisión.
-	 * @throws NullPointerException Si actorJugador es null.
+	 * @param a Actor que colisiona al Actor actual.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
+	public void colisionar (Actor a)
 	{
-		if (actorJugador == null)
-			throw new NullPointerException ("Goomba.colisionarPJ()" + "\n" +
-					                        "Imposible efectuar colision. El Actor Jugador pasado por parámetro es null.");
-		//falta...
+		//No le afecta.
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
+	 * Muere el Goomba actual.
+	 * 
+	 * @param pj Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
+	 * @throws ColisionException Si se produce algún error en la colisión.
+	 */
+	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
+	{		
+		if (pj == null)
+			throw new NullPointerException ("Goomba.colisionarPj()" + "/n" +
+											"Imposible realizar colisión, actor nulo.");
+		
+		try
+		{
+			pj.getJugador().asignarPuntos(60);
+			
+			if (! upNeeder.hayWorkerPrioridad(0))
+				upNeeder.addWorker(0, new Worker ()
+				{
+					public void work() throws Exception
+					{
+						morir();
+					}
+				});
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("Goomba.colisionarPj()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
+	}
+	
+	/**
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
+	 * 
+	 * @param bola Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarBola (final BolaFuego bola) throws ColisionException, NullPointerException
@@ -304,27 +338,43 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 		if (bola == null)
 			throw new NullPointerException ("Goomba.colisionarPJ()" + "\n" +
 					                        "Imposible efectuar colision. El Actor Jugador pasado por parámetro es null.");
-		bola.explotar(this);
-		if (! upNeeder.hayWorkerPrioridad(0))
-            upNeeder.addWorker(0, new Worker ()
-            {
-            	public void work() throws Exception
-            	{
-            		morir(bola);
-            	}
-            });
+		
+		try
+		{
+			bola.getMario().getJugador().asignarPuntos(getPuntos(bola.getMario()));
+			bola.explotar(this);
+			if (! upNeeder.hayWorkerPrioridad(0))
+	            upNeeder.addWorker(0, new Worker ()
+	            {
+	            	public void work() throws Exception
+	            	{
+	            		morir();
+	            	}
+	            });
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("Vacio.colisionarBola()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
 	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
-	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 * @param c Celda con los Actores a colisionar con el Actor actual.
+	 * @throws NullPointerException Si c es null.
 	 */
-	protected void producirColisiones (Celda c)
+	protected void producirColisiones (Celda c) throws NullPointerException
 	{
+		if (c == null)
+			throw new NullPointerException ("BolaFuego.producirColisiones()" + "\n" +
+					                        "Imposible realizar colisiones. La celda indicada es null.");
+		
 		Iterator <Actor> actores = c.getActores();
 		while (actores.hasNext())
-			actores.next().colisionarPj(this);	
+			actores.next().colisionar(this);
 	}
 	
 }

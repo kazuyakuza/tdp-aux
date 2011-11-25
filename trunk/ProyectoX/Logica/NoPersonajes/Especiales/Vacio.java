@@ -7,6 +7,7 @@ import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Responsabilidades.Punteable;
 
 /**
@@ -39,10 +40,12 @@ public class Vacio extends Actor implements Punteable
 	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor a.
-	 * Produce la muerte de dicho actor.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * @param a Actor con el que se va a colisionar.
+	 * Mata al Actor a.
+	 * 
+	 * @param a Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si a es null.
 	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
 	public void colisionar (Actor a) throws ColisionException, NullPointerException
@@ -50,33 +53,72 @@ public class Vacio extends Actor implements Punteable
 		if (a == null)
 			throw new NullPointerException ("Vacio.colisionar()" + "/n" +
 											"Imposible realizar colisión, actor nulo.");
-		a.morir(this);
+		
+		try
+		{
+			a.morir();
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("Vacio.colisionar()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
-	 * Produce la muerte del personaje.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
+	 * Mata al Personaje Seleccionable.
+	 * 
+	 * @param pj Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
+	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
 	{		
-		if (actorJugador == null)
+		if (pj == null)
 			throw new NullPointerException ("Vacio.colisionarPj()" + "/n" +
 											"Imposible realizar colisión, actor nulo.");
-		actorJugador.morir(this);
+		
+		try
+		{
+			pj.getJugador().asignarPuntos(15);
+			pj.morir();
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("Vacio.colisionarPj()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
+	 * Mata la Bola.
+	 * 
+	 * @param bola Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarBola (BolaFuego bola) throws ColisionException
+	public void colisionarBola (BolaFuego bola) throws ColisionException, NullPointerException
 	{
-		//No hace nada, no tiene efecto sobre este actor.
+		if (bola == null)
+			throw new NullPointerException ("Vacio.colisionarBola()" + "/n" +
+											"Imposible realizar colisión, actor nulo.");
+		
+		try
+		{
+			bola.morir();
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("Vacio.colisionarBola()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
@@ -84,9 +126,9 @@ public class Vacio extends Actor implements Punteable
 	 * 
 	 * @param c Celda con los Actores a colisionar con el Actor actual. 
 	 */
-	protected void producirColisiones(Celda c)
+	protected void producirColisiones (Celda c)
 	{
-		/*No hace nada, nunca ocurre.*/	
+		//Nada ocurre	
 	}
 	
 	/**
@@ -94,9 +136,9 @@ public class Vacio extends Actor implements Punteable
 	 * 
 	 * No tiene ningún efecto en este Actor.
 	 */
-	public void morir(Actor a) throws NullPointerException
+	public void morir()
 	{
-		/*No hace nada, nunca ocurre.*/
+		//Nunca ocurre.
 	}
 	
 	/**

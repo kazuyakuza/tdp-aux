@@ -10,6 +10,7 @@ import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 
 /**
  * Representa a todos los objetos virtuales que pueden desarrolar una "actuación" dentro del juego.
@@ -113,40 +114,44 @@ public abstract class Actor
 	/**
 	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
-	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 * @param c Celda con los Actores a colisionar con el Actor actual.
+	 * @throws NullPointerException Si c es null.
 	 */
-	protected abstract void producirColisiones (Celda c);
+	protected abstract void producirColisiones (Celda c) throws NullPointerException;
 	
 	/*COMANDOS ABSTRACTOS*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor a.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * @param a Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param a Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si a es null.
+	 * @throws ColisionException Si se produce algún error en la colisión.  
 	 */
-	public abstract void colisionar (Actor a) throws ColisionException;
+	public abstract void colisionar (Actor a) throws ColisionException, NullPointerException;
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @param pj Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public abstract void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException;
+	public abstract void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException;
 	
 	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
+	 * @param bola Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public abstract void colisionarBola (BolaFuego bola) throws ColisionException;
+	public abstract void colisionarBola (BolaFuego bola) throws ColisionException, NullPointerException;
 	
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir (Actor a)
+	public void morir ()
 	{
 		spriteManager.setEliminar();
 		celdaActual.sacarActor(this);
@@ -161,19 +166,19 @@ public abstract class Actor
 	/**
 	 * Realiza un checkeo sobre actorJugador para verificar que no sea nulo y que sea un objeto Mario.
 	 * 
-	 * @param actorJugador Actor que se quiere comprobar si es un Mario.
+	 * @param pj Actor que se quiere comprobar si es un Mario.
 	 * @return el objeto Mario.
-	 * @throws ColisionException si actorJugador no es objeto Mario.
-	 * @throws NullPointerException si actorJugador es null.
+	 * @throws ColisionException si pj no es objeto Mario.
+	 * @throws NullPointerException si pj es null.
 	 */
-	protected Mario checkActorJugador (Actor actorJugador) throws ColisionException, NullPointerException
+	protected Mario checkActorJugador (PjSeleccionable pj) throws ColisionException, NullPointerException
 	{
-		if (actorJugador == null)
+		if (pj == null)
 			throw new NullPointerException ("Actor.checkActorJugador()" + "\n" +
 					                        "Imposible colisionar con Actor nulo.");
 		try
 		{	
-			Mario mario = (Mario) actorJugador;
+			Mario mario = (Mario) pj;
 			return mario;
 		}
 		catch (ClassCastException e) 

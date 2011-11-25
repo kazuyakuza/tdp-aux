@@ -6,6 +6,7 @@ import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.NoPersonajes.Moneda;
 
 /**
@@ -54,27 +55,42 @@ public class EspecialMonedas extends Irrompible
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException si se produce algún error en la colisión.
-	 * @throws NullPointerException si actorJugador es null.
+	 * Le da Monedas al PjSeleccionable pj.
+	 * 
+	 * @param pj Actor que colisiona al Actor actual.
+	 * @throws NullPointerException Si pj es null.
+	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
-	{		
-		Mario mario = checkActorJugador (actorJugador);
-		Moneda moneda;
-		if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
-		{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
-			if (hayMoneda())
-			{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
-				//moneda = monedas.remove(monedas.first());
-				monedas.remove(monedas.first());
-				mario.getJugador().agregarMoneda();
-				if (!hayMoneda())
-					spriteManager.cambiarSprite(vacio);					
-			}			
-		}			
+	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
+	{
+		if (pj == null)
+			throw new NullPointerException ("EspecialMonedas.colisionarPj()" + "/n" +
+											"Imposible realizar colisión, actor nulo.");
+		
+		try
+		{
+			Mario mario = checkActorJugador (pj);
+			Moneda moneda;
+			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
+			{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
+				if (hayMoneda())
+				{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
+					//moneda = monedas.remove(monedas.first());
+					monedas.remove(monedas.first());
+					mario.getJugador().agregarMoneda();
+					if (!hayMoneda())
+						spriteManager.cambiarSprite(vacio);					
+				}			
+			}
+		}
+		catch (Exception e)
+		{
+			throw new ColisionException ("EspecialMonedas.colisionarPj()" + "\n" +
+					                     "Detalles del Error:" + "\n" +
+					                     e.getMessage());
+		}
 	}
 	
 	/**
@@ -95,7 +111,5 @@ public class EspecialMonedas extends Irrompible
 	{
 		return !monedas.isEmpty();
 	}
-	
-	
 
 }

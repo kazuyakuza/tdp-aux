@@ -9,6 +9,7 @@ import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Responsabilidades.Movible;
 
 /**
@@ -63,49 +64,47 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
-	 * Realiza la acción de colisionar con otro Actor a.
-	 * No tiene ningún efecto con este Actor.
+	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
-	 * @param a Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión. 
+	 * @param a Actor que colisiona al Actor actual. 
 	 */
-	public void colisionar (Actor a) throws ColisionException, NullPointerException
+	public void colisionar (Actor a)
 	{
-		if (a == null)
-			throw new NullPointerException ("BolaFuego.colisionar()" + "\n" +
-											"Imposible realizar la colisión, actor nulo.");
-		a.colisionarBola(this);
+		//No le afecta.
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con un Personaje Seleccionable de un Jugador.
+	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param pj Actor que colisiona al Actor actual.
 	 */
-	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
+	public void colisionarPj (PjSeleccionable pj)
 	{
-		/*No hace nada, no tiene efecto sobre otros Actores.*/
+		//No le afecta.
 	}
 	
 	/**
-	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.
+	 * Efecto provocado por la Bola de Fuego bola que colisiona con el Actor actual.
 	 * 
-	 * @param actorJugador Actor con el que se va a colisionar.
-	 * @throws ColisionException Si se produce algún error en la colisión.
+	 * @param bola Actor que colisiona al Actor actual.
 	 */
-	public void colisionarBola (BolaFuego bola) throws ColisionException
+	public void colisionarBola (BolaFuego bola)
 	{
-		//No hace nada, no tiene efecto sobre estos actores.
+		//No le afecta.
 	}
 	
 	/**
 	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
-	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 * @param c Celda con los Actores a colisionar con el Actor actual.
+	 * @throws NullPointerException Si c es null.
 	 */
-	protected void producirColisiones(Celda c)
+	protected void producirColisiones (Celda c) throws NullPointerException
 	{
+		if (c == null)
+			throw new NullPointerException ("BolaFuego.producirColisiones()" + "\n" +
+					                         "Imposible realizar colisiones. La celda indicada es null.");
+		
 		Iterator <Actor> actores = c.getActores();
 		while (actores.hasNext())
 			actores.next().colisionarBola(this);
@@ -134,13 +133,11 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	
 	/**
 	 * Realiza la acción de morir del Actor.
-	 * 
-	 * No tiene ningún efecto en este Actor.
 	 */
-	public void morir(Actor a) throws NullPointerException
+	public void morir()
 	{
 		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
-		super.morir(a);
+		super.morir();
 	}
 	
 	/**
@@ -177,11 +174,11 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 					if (celdaAnterior.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la Celda anterior.
 						explotar(celdaAnterior.getActores().next());
 					else
-						morir(this);
+						morir();
 				}
 			}
 			else
-				morir(this);
+				morir();
 		}
 		catch (NullPointerException e1)
 		{
@@ -233,11 +230,11 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 					if (celdaSiguiente.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la siguiente Celda.
 						explotar(celdaSiguiente.getActores().next());
 					else
-						morir(this);
+						morir();
 				}
 			}
 			else
-				morir(this);
+				morir();
 		}
 		catch (NullPointerException e1)
 		{
@@ -271,7 +268,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 		{
 			public void work() throws Exception
 			{
-				morir(a);
+				morir();
 			}
 		});
 	}

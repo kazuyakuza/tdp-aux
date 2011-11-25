@@ -18,13 +18,9 @@ import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.Bloque;
 import ProyectoX.Logica.Mapa.Nivel;
-import ProyectoX.Logica.NoPersonajes.Estructura;
-import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
-import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
-import ProyectoX.Logica.Personajes.MarioGrande;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**

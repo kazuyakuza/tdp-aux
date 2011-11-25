@@ -47,6 +47,11 @@ public interface PjSeleccionable extends Personaje
 	public void B ();
 	
 	/**
+	 * Realiza la acción "morir".
+	 */
+	public void morir ();
+	
+	/**
 	 * Setea al Jugador que controla al PjSeleccionable con j.
 	 * 
 	 * @param j Jugador del PjSeleccionable.
