@@ -1,5 +1,6 @@
 package ProyectoX.Grafico;
 
+import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Grafico.Sprite.SpriteManager;
@@ -90,6 +91,10 @@ public class BloqueGrafico
 		if (sp == null)
 			throw new NullPointerException ("BloqueGrafico.eliminarSprite()" + "\n" +
                                             "El SpriteManager que está intentado ingresar es null.");
+		if (sprites.isEmpty())
+			throw new SpriteException ("BloqueGrafico.eliminarSprite()" + "\n" +
+                                        "El SpriteManager que se intenta eliminar no pertenece al BloqueGrafico actual." + "\n" +
+                                        "El BloqueGrafico no tiene SpriteManager.");
 		
 		Position<SpriteManager> aux = sprites.first();
 		while ((aux != sprites.last()) && (aux.element() != sp))

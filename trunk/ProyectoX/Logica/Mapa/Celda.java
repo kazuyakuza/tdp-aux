@@ -4,12 +4,12 @@ import java.util.Iterator;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
+import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.Position;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.Estructura;
-import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 
 /**
  * Representa un espacio en el mapa del Juego.
@@ -100,26 +100,6 @@ public class Celda
 	}
 	
 	/**
-	 * Agrega PowerUp a la Celda.
-	 * 
-	 * @param pwUp PowerUp a agregar.
-	 * @throws NullPointerException Si se ingresa un PowerUp igual a null.
-	 * @throws AccionActorException Si se intenta agregar un PowerUp a una Celda totalmente ocupada.
-	 */
-	public void agregarPowerUp (PowerUp pwUp) throws NullPointerException, AccionActorException
-	{
-		if (pwUp == null)
-			throw new NullPointerException ("Celda.agregarActor()" + "\n" +
-                                            "El Actor que está intentando agregar a la Celda es null.");
-		if (totalmenteOcupada)
-			throw new AccionActorException("Celda.agregarActor()" + "\n" +
-                                           "Imposible agregar Actor a la celda de posición (" + posFila + "," + posColumna + ")." + "\n" +
-					                       "La celda está totalmente ocupada.");
-		actores.addLast(pwUp);		
-		bloque.getMapa().getNivel().agregarPowerUp (pwUp);
-	}
-	
-	/**
 	 * Saca el Actor pasado por parámetro.
 	 * 
 	 * @param actor Actor a sacar de la Celda.
@@ -132,6 +112,11 @@ public class Celda
 		if (actor == null)
 			throw new NullPointerException ("Celda.sacarActor()" + "\n" +
                                             "El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") es null.");
+		if (actores.isEmpty())
+			throw new SpriteException ("Celda.sacarActor()" + "\n" +
+                                       "El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma." + "\n" +
+                                       "La Celda no tiene Actores.");
+		
 		Position<Actor> p = actores.first();
 		while ((p != actores.last()) && (p.element() != actor))
 			p = actores.next(p);

@@ -1,9 +1,8 @@
 package ProyectoX.Logica.Personajes.Enemigo;
 
-import ProyectoX.Logica.Jugador;
-import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Personajes.Personaje;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
+import ProyectoX.Logica.Responsabilidades.Punteable;
 
 /**
  * Contiene las acciones de un Enemigo.

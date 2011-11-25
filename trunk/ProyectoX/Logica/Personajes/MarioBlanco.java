@@ -1,8 +1,6 @@
 package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Librerias.Threads.UpNeeder;
-import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;

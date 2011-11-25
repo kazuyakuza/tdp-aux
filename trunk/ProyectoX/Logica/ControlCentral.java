@@ -3,13 +3,12 @@ package ProyectoX.Logica;
 import java.util.Iterator;
 
 import ProyectoX.Excepciones.ControlCentralException;
+import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Grafico.BloqueGrafico;
 import ProyectoX.Grafico.Escenario;
 import ProyectoX.Grafico.VentanaPrincipal;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
-import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.Position;
-import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.Threads.AliveThread;
 import ProyectoX.Librerias.Threads.ControlThread;
 import ProyectoX.Librerias.Threads.UpNeeder;
@@ -18,16 +17,14 @@ import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.Bloque;
 import ProyectoX.Logica.Mapa.Nivel;
-import ProyectoX.Logica.NoPersonajes.Estructura;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
-import ProyectoX.Logica.NoPersonajes.Especiales.Llegada;
-import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
-import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
+import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
+import ProyectoX.Logica.Personajes.Enemigo.IA.IAControl;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -53,10 +50,11 @@ public class ControlCentral implements Runnable, ControlThread
 	private Jugador jugador;
 	private Nivel nivel;
 	private Gravedad gravedad;
+	private IAControl iaControl;
 	
 	//Threads
 	private Thread Tactual;
-	private AliveThread Tescenario, Tjugador, Tgravedad;
+	private AliveThread Tescenario, Tjugador, Tgravedad, TiaControl;
 	private Updater Tupdater;
 	
 	/*CONSTRUCTOR*/
@@ -98,6 +96,8 @@ public class ControlCentral implements Runnable, ControlThread
 			
 			gravedad = new Gravedad(this);
 			
+			iaControl = new IAControl ();
+			
 			ventanaPrincipal.agregarEscenario(e);
 			escenario.inicializarGrafica();
 			escenario.agregarControl(c);
@@ -107,6 +107,7 @@ public class ControlCentral implements Runnable, ControlThread
 			Tescenario = new AliveThread (this, 0.25, escenario);
 			Tjugador = new AliveThread (this, 1, jugador);
 			Tgravedad = new AliveThread (this, 1, gravedad);
+			TiaControl = new AliveThread (this, 1, iaControl);
 			Tupdater = new Updater (this, 0.5);
 		}
 		catch (Exception exception)
@@ -227,6 +228,10 @@ public class ControlCentral implements Runnable, ControlThread
 			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
 			escenario.setBloqueGraficoActual(bloqueGrafico);
 			
+			//Agrego IAs al IAControl
+			for (Enemigo e: nivel.getEnemigos(this))
+				iaControl.addIA(e.getIA());
+			
 			//Agregando UpNeeders al Updater
 			for (Actor a: nivel.getActores(this))
 				for (UpNeeder un: a.getUpNeeders())
@@ -234,6 +239,7 @@ public class ControlCentral implements Runnable, ControlThread
 			
 			//Start Thread's
 			Tjugador.start();
+			TiaControl.start();
 			Tgravedad.start();
 			Tupdater.start();
 			Tescenario.start();
@@ -310,10 +316,13 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void ganarNivel ()
 	{
-		Position<Actor> p = nivel.getActores(this).first();
-		while (p.element() != jugador.personaje())
-			p = nivel.getActores(this).next(p);
-		nivel.getActores(this).remove(p);
+		if (!nivel.getActores(this).isEmpty())
+		{
+			Position<Actor> p = nivel.getActores(this).first();
+			while (p.element() != jugador.personaje())
+				p = nivel.getActores(this).next(p);
+			nivel.getActores(this).remove(p);
+		}
 		
 		try
 		{
@@ -340,21 +349,24 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void perderNivel ()
 	{
-		Position<Actor> p = nivel.getActores(this).first();
-		while ((p != nivel.getActores(this).last()) &&(p.element() != jugador.personaje()))
-			p = nivel.getActores(this).next(p);
+		if (!nivel.getActores(this).isEmpty())
+		{
+			Position<Actor> p = nivel.getActores(this).first();
+			while ((p != nivel.getActores(this).last()) && (p.element() != jugador.personaje()))
+				p = nivel.getActores(this).next(p);
 		
-		if (p.element() != jugador.personaje())
-			try
-			{
-				throw new ControlCentralException("Imposible encontrar Personaje del Jugador en la lista de Atores.");
-			}
-			catch (ControlCentralException exception)
-			{
-				ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
-			}
+			if (p.element() != jugador.personaje())
+				try
+				{
+					throw new ControlCentralException("Imposible encontrar Personaje del Jugador en la lista de Actores.");
+				}
+				catch (ControlCentralException exception)
+				{
+					ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
+				}
 		
-		nivel.getActores(this).remove(p);
+				nivel.getActores(this).remove(p);
+		}
 		
 		try
 		{
