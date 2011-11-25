@@ -13,7 +13,8 @@ public class KTNormal extends CaracteristicaKT
 	private static final String dirRecursos = "Enemigos/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a Goomba, la ubicación en los índices es:
 	                                                {dirRecursos + "GreenKoopaTroopa-1.png", //0: KoopaTroopa quieto
-													 dirRecursos + "GreenKoopaTroopa-2.png"};//1: KoopaTroopa movimiento
+													 dirRecursos + "GreenKoopaTroopa-1.png", //1: KoopaTroopa quieto
+													 dirRecursos + "GreenKoopaTroopa-2.png"};//2: KoopaTroopa movimiento
 	
 	/*CONSRUCTORES*/
 	
@@ -144,14 +145,15 @@ public class KTNormal extends CaracteristicaKT
 	{
 		Celda celdaActual = koopa.getCeldaActual();
 		if (celdaActual.getBloque().getSuperior(celdaActual) == mario.getCeldaActual())
-		{
-			mario.getJugador().asignarPuntos(60);
+		{			
 			if (! koopa.getUpNeeder().hayWorkerPrioridad(0))
 				koopa.getUpNeeder().addWorker(0, new Worker ()
 				{
 					public void work() throws Exception
 					{
-						koopa.morir();
+						//koopa.morir();
+						koopa.setCaracteristicaKT(new KTCaparazon (koopa));
+						koopa = null;
 					}
 				});
 		}

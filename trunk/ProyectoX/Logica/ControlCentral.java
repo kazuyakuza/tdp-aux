@@ -147,8 +147,9 @@ public class ControlCentral implements Runnable, ControlThread
 	
 	public void agregarPowerUp (PowerUp pu)
 	{
-		nivel.getPowerUps(this).addLast(pu);
-		agregarAfectableXgravedad(pu);
+		//nivel.getPowerUps(this).addLast(pu);
+		//agregarAfectableXgravedad(pu);
+		nivel.agregarPowerUp(pu);
 	}
 	
 	/*CONSULTAS*/

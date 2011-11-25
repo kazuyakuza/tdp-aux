@@ -9,8 +9,8 @@ public abstract class CaracteristicaKT
 {
 	//Atributos de Clase
 	//Numeros de los Sprites.
-	protected static int quieto = 0;
-	protected static int movimiento = 1;
+	protected static int quieto = 1;
+	protected static int movimiento = 2;
 	
 	//Atributos de Instancia
 	protected KoopaTroopa koopa;
