@@ -228,7 +228,7 @@ public class Nivel
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
 		
-		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),true, cargadorSprite);
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),false, cargadorSprite);
 		bloqueActual.ABC[7][14].setOcupada(true);
 		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
 		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);
@@ -301,6 +301,24 @@ public class Nivel
 	public void setBloqueActual (Bloque bloque)
 	{
 		bloqueActual = bloque;
+	}
+	
+	/**
+	 * Agrega PowerUp al nivel.
+	 * 
+	 * @param pwUp PowerUp a agregar.
+	 * @throws NullPointerException Si se ingresa un PowerUp igual a null.
+	 * @throws AccionActorException Si se intenta agregar un PowerUp a una Celda totalmente ocupada.
+	 */
+	public void agregarPowerUp (PowerUp pwUp) throws NullPointerException, AccionActorException
+	{
+		if (pwUp == null)
+			throw new NullPointerException ("Celda.agregarActor()" + "\n" +
+                                            "El Actor que está intentando agregar a la Celda es null.");
+		
+		actores.addLast(pwUp);
+		powerUps.addLast(pwUp);
+		caibles.addLast(pwUp);
 	}
 	
 	/**
