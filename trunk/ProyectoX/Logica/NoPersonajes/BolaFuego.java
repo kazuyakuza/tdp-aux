@@ -85,7 +85,6 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	 */
 	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
 	{
-		System.out.println("Bola presente, tocada por el jugador.");
 		/*No hace nada, no tiene efecto sobre otros Actores.*/
 	}
 	

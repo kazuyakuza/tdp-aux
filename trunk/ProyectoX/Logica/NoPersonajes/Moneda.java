@@ -1,42 +1,43 @@
-package ProyectoX.Logica.NoPersonajes.Especiales;
+package ProyectoX.Logica.NoPersonajes;
 
-import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
-import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Responsabilidades.Punteable;
 
 /**
- * Representa al vacío lugar donde todo actor que llegua se muere.
- * Cuando un Actor colisiona (se ubica en la misma celda) con un Vacio, dicho Actor se muere.
+ * Representa a la Moneda del juego.
+ * Cuando un Mario agarra una Moneda, su jugador aumenta su cantidad de monedas en 1 y obtiene puntos.
  * 
  * Proyecto X
  * 
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Vacio extends Actor implements Punteable
-{
+public class Moneda extends Actor implements Punteable
+{	
 	//Atributos de Clase
 	private static final String dirRecursos = "Objetos/";
-	private static final String [] nombresSprites = {dirRecursos + "Vacio.png"};
-	
-	/*CONTRUCTOR*/
+	private static final String [] nombresSprites = {dirRecursos + "Coin-1.png",
+		                                             dirRecursos + "Coin-2.png",
+		                                             dirRecursos + "Coin-3.png",};
+		
+	private static int cantFramesMovimiento = 3;
 	
 	/**
-	 * Crea un Vacio.
+	 * Crea una Moneda.
 	 * 	 
 	 * @param cargadorSprite Clase para cargar los sprites.	 
 	 */
-	public Vacio(CargadorSprite cargadorSprite) 
+	public Moneda(CargadorSprite cargadorSprite) 
 	{
-		super (nombresSprites, cargadorSprite);
+		super(nombresSprites, cargadorSprite);			
+		spriteManager.rotarGif(cantFramesMovimiento);
 	}
 	
-	/*COMANDOS IMPLEMENTADOS*/
+/*COMANDOS IMPLEMENTADOS*/
 	
 	/**
 	 * Realiza la acción de colisionar con otro Actor a.
@@ -47,10 +48,7 @@ public class Vacio extends Actor implements Punteable
 	 */
 	public void colisionar (Actor a) throws ColisionException, NullPointerException
 	{
-		if (a == null)
-			throw new NullPointerException ("Vacio.colisionar()" + "/n" +
-											"Imposible realizar colisión, actor nulo.");
-		a.morir(this);
+		//No tiene efectos sobre estos actores.
 	}
 	
 	/**
@@ -62,10 +60,10 @@ public class Vacio extends Actor implements Punteable
 	 */
 	public void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException
 	{		
-		if (actorJugador == null)
-			throw new NullPointerException ("Vacio.colisionarPj()" + "/n" +
-											"Imposible realizar colisión, actor nulo.");
-		actorJugador.morir(this);
+		Mario mario = checkActorJugador (actorJugador);
+		mario.getJugador().agregarMoneda();
+		mario.getJugador().asignarPuntos(this.getPuntos(mario));
+		this.morir(mario);
 	}
 	
 	/**
@@ -88,7 +86,7 @@ public class Vacio extends Actor implements Punteable
 	{
 		/*No hace nada, nunca ocurre.*/	
 	}
-	
+		
 	/**
 	 * Realiza la acción de morir del Actor.
 	 * 
@@ -96,7 +94,8 @@ public class Vacio extends Actor implements Punteable
 	 */
 	public void morir(Actor a) throws NullPointerException
 	{
-		/*No hace nada, nunca ocurre.*/
+		celdaActual.getBloque().getMapa().getNivel().eliminarActores(this);
+		super.morir(a);
 	}
 	
 	/**
@@ -106,7 +105,7 @@ public class Vacio extends Actor implements Punteable
 	 */
 	public int getPuntos(Mario mario)
 	{
-		return 15;
+		return 5;
 	}
 
 }
