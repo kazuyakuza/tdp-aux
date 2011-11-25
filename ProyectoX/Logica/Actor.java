@@ -133,7 +133,7 @@ public abstract class Actor
 	 * @param actorJugador Actor con el que se va a colisionar.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public abstract void colisionarPj (Actor actorJugador) throws ColisionException;
+	public abstract void colisionarPj (Actor actorJugador) throws ColisionException, NullPointerException;
 	
 	/**
 	 * Realiza la acción de colisionar con una Bola de Fuego de un Jugador.

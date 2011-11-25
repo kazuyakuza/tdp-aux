@@ -66,11 +66,13 @@ public class Jugador implements Worker
 	public void agregarMoneda ()
 	{
 		monedas++;
+		System.out.println("Monedas del jugador: " + monedas);
 		if (monedas == maxMonedas)
 		{
 			monedas = 0;
 			agregarVida();
 		}
+		
 	}
 	
 	/**
@@ -107,6 +109,7 @@ public class Jugador implements Worker
 	public void asignarPuntos (int pts)
 	{
 		puntos += pts;
+		System.out.println("Puntos del jugador: " + puntos);
 	}
 	
 	/*CONSULTAS*/

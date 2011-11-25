@@ -15,9 +15,13 @@ import ProyectoX.Logica.NoPersonajes.Especiales.Vacio;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 
 import ProyectoX.Logica.NoPersonajes.PowerUps.*;
+import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.Personajes.Mario;
+
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
+import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialMonedas;
+import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 
 /**
  * Representa un Nivel del Juego.
@@ -172,11 +176,23 @@ public class Nivel
 		bomba.setCeldaActual(bloqueActual.ABC[10][6]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
+		
+		Moneda moneda1 = new Moneda(cargadorSprite);
+		bloqueActual.ABC[10][8].agregarActor(moneda1);
+		moneda1.setCeldaActual(bloqueActual.ABC[10][8]);
+		actores.addLast(moneda1);
+		
+		Moneda moneda2 = new Moneda(cargadorSprite);
+		bloqueActual.ABC[12][8].agregarActor(moneda2);
+		moneda2.setCeldaActual(bloqueActual.ABC[12][8]);		
+		actores.addLast(moneda2);
+		
 				
-		BolaFuego bola = new BolaFuego((Mario)actor,cargadorSprite);
+		/*BolaFuego bola = new BolaFuego((Mario)actor,cargadorSprite);
 		bloqueActual.ABC[6][10].agregarActor(bola);
 		bola.setCeldaActual(bloqueActual.ABC[6][10]);
 		actores.addLast(bola);
+		*/
 		
 		//Agregación Actores no Personjes.
 		aux = 6;
