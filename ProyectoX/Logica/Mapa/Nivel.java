@@ -221,7 +221,7 @@ public class Nivel
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
 		
-		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),true, cargadorSprite);
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite),false, cargadorSprite);
 		bloqueActual.ABC[7][14].setOcupada(true);
 		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
 		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);
