@@ -33,7 +33,7 @@ public class EspecialPowerUp extends Irrompible
 	
 	//Atributos de Instancia
 	protected PowerUp powerUp;
-	protected boolean cambiable; //Determina si la plataforma puede cambiar o no su powerUp en el transcurso del juego.
+	protected boolean cambiable; //Determina si la plataforma puede cambiar, o no, su powerUp en el transcurso del juego.
 
 	/**
 	 * Crea una Plataforma EspecialPowerUp.
@@ -71,7 +71,7 @@ public class EspecialPowerUp extends Irrompible
 			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
 			{//Si la colisión de Mario es desde abajo, sacar al powerUp, sino, no hacer nada.			
 				if (hayPowerUp())
-				{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino no hacer nada.		
+				{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino, no hacer nada.		
 					
 					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
 					powerUp.setCeldaActual(celdaSuperior);

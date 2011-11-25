@@ -1,6 +1,7 @@
 package ProyectoX.Logica.Personajes.Enemigo;
 
 import ProyectoX.Logica.Jugador;
+import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Personajes.Personaje;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 
@@ -13,7 +14,7 @@ import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public interface Enemigo extends Personaje
+public interface Enemigo extends Personaje, Punteable
 {
 	
 	/*COMANDOS*/

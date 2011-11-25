@@ -13,7 +13,6 @@ import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Responsabilidades.Movible;
-import ProyectoX.Logica.Responsabilidades.Punteable;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -24,7 +23,7 @@ import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Goomba extends Actor implements Enemigo, Movible, afectableXgravedad, Punteable
+public class Goomba extends Actor implements Enemigo, Movible, afectableXgravedad
 {
 	
 	//Atributos de Clase

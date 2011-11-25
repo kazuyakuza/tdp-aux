@@ -97,6 +97,7 @@ public class MarioChico extends Caracteristica
 	public void crecerFlor () throws AccionActorException
 	{
 		mario.setCaracteristica(new MarioGrande(mario));
+		mario.getJugador().getControlCentral().cambiarPlataformasFlor();
 		mario = null;
 	}
 	

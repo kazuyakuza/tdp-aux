@@ -150,6 +150,7 @@ public class Nivel
 		actores.addFirst(actor);
 		
 		//Agregación Actores Enemigos.
+		/*
 		aux = 0;
 		while (aux < 9)
 		{
@@ -160,6 +161,7 @@ public class Nivel
 			enemigos.addFirst(goomba);
 			aux++;
 		}
+		*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
@@ -190,12 +192,6 @@ public class Nivel
 		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);		
 		actores.addLast(moneda2);
 		
-				
-		/*BolaFuego bola = new BolaFuego((Mario)actor,cargadorSprite);
-		bloqueActual.ABC[6][10].agregarActor(bola);
-		bola.setCeldaActual(bloqueActual.ABC[6][10]);
-		actores.addLast(bola);
-		*/
 		
 		//Agregación Actores no Personjes.
 		aux = 6;
