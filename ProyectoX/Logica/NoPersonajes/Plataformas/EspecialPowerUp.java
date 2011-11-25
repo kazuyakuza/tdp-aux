@@ -33,18 +33,20 @@ public class EspecialPowerUp extends Irrompible
 	
 	//Atributos de Instancia
 	protected PowerUp powerUp;
+	protected boolean cambiable; //Determina si la plataforma puede cambiar o no su powerUp en el transcurso del juego.
 
 	/**
 	 * Crea una Plataforma EspecialPowerUp.
 	 * 
 	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public EspecialPowerUp(PowerUp pwUp, CargadorSprite cargadorSprite) 
+	public EspecialPowerUp(PowerUp pwUp, boolean modificable, CargadorSprite cargadorSprite) 
 	{
 		super(cargadorSprite);
 		spriteManager.cargarSprites(nombresSprites);		
 		spriteManager.rotarGif(cantFramesMovimiento);
 		powerUp = pwUp;
+		cambiable = modificable;
 	}
 	
 	/**
@@ -73,8 +75,8 @@ public class EspecialPowerUp extends Irrompible
 					
 					celdaSuperior = this.celdaActual.getBloque().getSuperior(this.celdaActual);
 					powerUp.setCeldaActual(celdaSuperior);
-					celdaSuperior.agregarActor(powerUp);
-					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
+					celdaSuperior.agregarActor(powerUp);					
+					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());					
 					powerUp = null;
 					spriteManager.cambiarSprite(vacio);					
 				}			
@@ -86,6 +88,25 @@ public class EspecialPowerUp extends Irrompible
 					                     "Detalles del Error:" + "\n" +
 					                     e.getMessage());
 		}
+	}
+	
+	/**
+	 * Cambia el Powerup que la plataforma contiene, si la misma lo permite.
+	 * @param pwUp es el PowerUp nuevo que se cambia por el viejo almacenado, si es que la plataforma es cambiable.
+	 */
+	public void cambiarPowerUp (PowerUp pwUp)
+	{
+		if (cambiable)
+			powerUp = pwUp;
+	}
+	
+	/**
+	 * Verifica si la plataforma permite cambiar su PowerUp.
+	 * @return Verdadero si la plataforma permite cambiar a su PowerUp almacenado, falso, en caso contrario.
+	 */
+	public boolean esCambiable()
+	{
+		return cambiable;
 	}
 	
 	/**
