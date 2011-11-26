@@ -54,9 +54,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	public BolaFuego(Mario pj, CargadorSprite cargadorSprite) 
 	{
 		super(nombresSprites, cargadorSprite);
-		mario = pj;
-		//miIA = new IA();
-		
+		mario = pj;		
 		spriteManager.cambiarSprite(enMovimiento);
 		spriteManager.rotarGif(cantFramesMovimiento);
 	}

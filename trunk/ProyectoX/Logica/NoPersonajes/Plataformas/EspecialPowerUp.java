@@ -79,7 +79,8 @@ public class EspecialPowerUp extends Irrompible
 					powerUp.setCeldaActual(celdaSuperior);
 					celdaSuperior.agregarActor(powerUp);
 					controlCentral.agregarPowerUp(powerUp);
-					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
+					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());					
+					cambiable = false;
 					powerUp = null;
 					spriteManager.cambiarSprite(vacio);
 				}			

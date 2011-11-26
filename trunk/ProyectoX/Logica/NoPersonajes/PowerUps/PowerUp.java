@@ -149,10 +149,9 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 		{
 			Mario mario = checkActorJugador (pj);
 			
-			pj.getJugador().asignarPuntos(getPuntos(mario));
-			efecto(mario);
-			
-			morir();
+			pj.getJugador().asignarPuntos(this.getPuntos(mario));
+			this.efecto(mario);			
+			this.morir();
 		}
 		catch (Exception e)
 		{

@@ -17,7 +17,7 @@ import ProyectoX.Logica.Personajes.Enemigo.IA.IAKT;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
-public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgravedad
+public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectableXgravedad
 {	
 	//Atributos de Instancia
 	protected CaracteristicaKT miCaracteristica;
