@@ -168,19 +168,19 @@ public class Nivel
 			aux++;
 		}*/
 		
-		Goomba goomba = new Goomba (cargadorSprite);
+		/*Goomba goomba = new Goomba (cargadorSprite);
 		bloqueActual.ABC[1][10].agregarActor(goomba);
 		goomba.setCeldaActual(bloqueActual.ABC[1][10]);
 		actores.addFirst(goomba);
 		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba);
+		caibles.addFirst((afectableXgravedad) goomba);*/
 		
-		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
+		/*KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
 		bloqueActual.ABC[3][3].agregarActor(kt1);
 		kt1.setCeldaActual(bloqueActual.ABC[3][3]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
-		caibles.addFirst(kt1);
+		caibles.addFirst(kt1);*/
 		
 		/*
 		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon(), cargadorSprite);

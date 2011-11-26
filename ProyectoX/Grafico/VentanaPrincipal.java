@@ -25,12 +25,9 @@ public class VentanaPrincipal extends JFrame
 	private int largo = 640;
 	private int alto = 480;
 	
-	@SuppressWarnings("unused")
 	private String version = "Versión 0.1";
-	@SuppressWarnings("unused")
 	private String[] autores = {"Javier Eduardo Barrocal","Pablo Isaias Chacar"};
-	@SuppressWarnings("unused")
-	private String infoExtra = "";
+	private String[] infoExtra = {"Proyecto X", "Tecnología de Programación", "2do Cuatrimestre 2011"};
 	private String tituloJuego = "Mario TDP 2011";
 	
 	//Variables de Instancia
@@ -192,7 +189,17 @@ public class VentanaPrincipal extends JFrame
 	 */
 	public void mostrarInfo ()
 	{
-		//mostrarInfo();
+		mensajeError (tituloJuego + " " + version,
+				      tituloJuego + "\n" +
+				      "Versión " + version + "\n" +
+				      "\n" +
+				      "Autores:" + "\n" +
+				      autores[0] + "\n" +
+				      autores[1] + "\n" +
+				      "\n" +
+				      infoExtra[0] + "\n" +
+				      infoExtra[1] + "\n" +
+				      infoExtra[2] + "\n",false);
 	}
 	
 	/**

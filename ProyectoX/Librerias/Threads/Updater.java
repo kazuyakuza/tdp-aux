@@ -12,7 +12,7 @@ import ProyectoX.Librerias.TDALista.PositionList;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Updater extends AliveThread implements Worker
+public class Updater implements Worker
 {
 	
 	//Atributos de Instancia
@@ -24,14 +24,9 @@ public class Updater extends AliveThread implements Worker
 	 * Crea un Updater con el ControlThread control.
 	 * Se asigna como Worker de si mismo.
 	 * Crea una lista vacía de UpNeeders.
-	 * 
-	 * @param control ControlThread que controla la ejecución del objeto a crear.
-	 * @param p Porcentaje de tiempo. (p>0) y (p<=1)
 	 */
-	public Updater(ControlThread control, double p)
+	public Updater()
 	{
-		super(control, p, null);
-		worker = this;
 		upNeeders = new ListaPositionSimple<UpNeeder> ();
 	}
 	
@@ -112,8 +107,6 @@ public class Updater extends AliveThread implements Worker
 	 */
 	protected void limpiar ()
 	{
-		super.limpiar ();
-		
 		for (UpNeeder un: upNeeders)
 			removeUpNeeder (un);
 		
