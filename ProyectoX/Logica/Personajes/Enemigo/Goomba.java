@@ -13,7 +13,7 @@ import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
-import ProyectoX.Logica.Personajes.Enemigo.IA.IA_Goomba;
+import ProyectoX.Logica.Personajes.Enemigo.IA.IAGoomba;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -34,7 +34,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	                                                {dirRecursos + "Goomba-1.png", //0: Goomba quieto
 													 dirRecursos + "Goomba-2.png"};//1: Goomba movimiento
 	//Atributos de Instancia
-	protected IA_Goomba miIA;
+	protected IAGoomba miIA;
 	protected int PG;//Potencia de la Gravedad.
 	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
@@ -60,7 +60,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	public Goomba (CargadorSprite cargadorSprite)
 	{
 		super (nombresSprites, cargadorSprite);
-		miIA = new IA_Goomba (this);
+		miIA = new IAGoomba (this);
 		PG = 0;
 	}
 	
@@ -226,9 +226,9 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	/**
 	 * Setea la IA que controla al Enemigo con ia.
 	 * 
-	 * @param j IA del Enemigo.
+	 * @param ia IA del Enemigo.
 	 * @throws NullPointerException Si ia es null.
-	 * @throws IAexception Si se ingresa una IA que no es una IA_Goomba.
+	 * @throws IAexception Si se ingresa una IA que no es una IAGoomba.
 	 */
 	public void setIA (IA ia) throws NullPointerException, IAexception
 	{
@@ -238,12 +238,12 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 		
 		try
 		{
-			miIA = (IA_Goomba) ia;
+			miIA = (IAGoomba) ia;
 		}
 		catch (ClassCastException e)
 		{
 			throw new IAexception ("Goomba.setIA()" + "\n" +
-                                   "Imposible asignar la IA ingresada. No es del tipo esperado. (IA_Goomba)");
+                                   "Imposible asignar la IA ingresada. No es del tipo esperado. (IAGoomba)");
 		}
 	}
 	

@@ -93,7 +93,8 @@ public abstract class IA
 							               "Detalles del Error:" + "\n" +
 							               e.getMessage());
 				}
-				setActuar();
+				if (!(actuar < 0))
+					setActuar();
 			}
 			else
 				actuar--;

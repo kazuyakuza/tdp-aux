@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Excepciones.IAexception;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
@@ -12,6 +13,7 @@ import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
+import ProyectoX.Logica.Personajes.Enemigo.IA.IAKT;
 import ProyectoX.Logica.Responsabilidades.Movible;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -19,7 +21,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 {	
 	//Atributos de Instancia
 	protected CaracteristicaKT miCaracteristica;
-	protected IA miIA;
+	protected IAKT miIA;
 	protected int PG;//Potencia de la Gravedad.
 	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
@@ -45,7 +47,8 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		super (c.getNombresSprites(), cargadorSprite);
 		miCaracteristica = c;
 		c.setKoopaTroopa(this);
-		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());		
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+		miIA = new IAKT (this);
 		PG = 0;
 	}
 	
@@ -103,7 +106,6 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		
 	}
 	
 	/**
@@ -111,9 +113,9 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	 */
 	public void morir ()
 	{
+		miIA.meMori(this);
 		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);		
-		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
-		//celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);		
+		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
 		super.morir();
@@ -140,18 +142,39 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	}
 	
 	/**
+	 * KoopaTroopa realiza la acción de recuperarse.
+	 * 
+	 * Esto es, recuperar el estado KTNormal si está en estado KTCaparazón.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al recuperarse.
+	 */
+	public void recuperarse () throws AccionActorException
+	{
+		miCaracteristica.recuperarse();
+	}
+	
+	/**
 	 * Setea la IA que controla al Enemigo con ia.
 	 * 
-	 * @param j IA del Enemigo.
+	 * @param ia IA del Enemigo.
 	 * @throws NullPointerException Si ia es null.
+	 * @throws IAexception Si se ingresa una IA que no es una IAKT.
 	 */
-	public void setIA (IA ia) throws NullPointerException
+	public void setIA (IA ia) throws NullPointerException, IAexception
 	{
 		if (ia == null)
-			throw new NullPointerException ("Goomba.setIA()" + "\n" +
-                                            "Imposible asignar un Jugador null.");
+			throw new NullPointerException ("KoopaTroopa.setIA()" + "\n" +
+                                            "Imposible asignar una IA null.");
 		
-		miIA = ia;
+		try
+		{
+			miIA = (IAKT) ia;
+		}
+		catch (ClassCastException e)
+		{
+			throw new IAexception ("KoopaTroopa.setIA()" + "\n" +
+                                   "Imposible asignar la IA ingresada. No es del tipo esperado. (IAKT)");
+		}
 	}
 	
 	/**
@@ -179,6 +202,8 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		if (c == null)
 			throw new NullPointerException ("KoopaTroopa.setCaracteristicaKT()" + "\n" + 
 											"Imposible asignar CaracteristicaKT, la misma es nula.");
+		
+		miIA.cambieDeEstado(this);
 		miCaracteristica = c;
 	}
 	

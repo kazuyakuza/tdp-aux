@@ -11,9 +11,12 @@ public class KTCaparazon extends CaracteristicaKT
 	//Atributos de Clase
 	private static final String dirRecursos = "Enemigos/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a Goomba, la ubicación en los índices es:
-	                                                {dirRecursos + "GreenKoopaTroopa-Shell1.gif", //0: KoopaTroopa quieto
+	                                                {dirRecursos + "GreenKoopaTroopa-Shell2.gif", //0: KoopaTroopa quieto
 													 dirRecursos + "GreenKoopaTroopa-Shell1.gif", //1: KoopaTroopa quieto
-													 dirRecursos + "GreenKoopaTroopa-Shell2.gif"};//2: KoopaTroopa movimiento
+													 dirRecursos + "GreenKoopaTroopa-Shell1.gif"};//2: KoopaTroopa movimiento
+	
+	//Atributos de Instancia
+	private int tiempoEnRecuperarse;
 	
 	/*CONSRUCTORES*/
 	
@@ -32,7 +35,8 @@ public class KTCaparazon extends CaracteristicaKT
 	 */	
 	public KTCaparazon (KoopaTroopa kt)
 	{
-		super(kt);		
+		super(kt);
+		tiempoEnRecuperarse = 6;
 	}
 	
 	/*METODOS IMPLEMENTADOS*/
@@ -54,6 +58,27 @@ public class KTCaparazon extends CaracteristicaKT
 	public void moverseAderecha () throws AccionActorException
 	{
 		//No hace nada, no puede moverse.
+	}
+	
+	/**
+	 * KoopaTroopa realiza la acción de recuperarse.
+	 * 
+	 * Esto es, recuperar el estado KTNormal si está en estado KTCaparazón.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al recuperarse.
+	 */
+	public void recuperarse () throws AccionActorException
+	{
+		if (((tiempoEnRecuperarse % 2) == 0) && (tiempoEnRecuperarse <= 4))
+			koopa.getSpriteManager().cambiarSprite(tiempoEnRecuperarse/2);
+		
+		if (tiempoEnRecuperarse >= 0)
+			tiempoEnRecuperarse--;
+		else
+		{
+			koopa.setCaracteristicaKT(new KTNormal(koopa));
+			koopa = null;
+		}
 	}
 	
 	/**

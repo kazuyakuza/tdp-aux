@@ -25,7 +25,6 @@ import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
-import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -183,14 +182,14 @@ public class Nivel
 		enemigos.addFirst(kt1);		
 		caibles.addFirst(kt1);
 		
-		
+		/*
 		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon(), cargadorSprite);
 		bloqueActual.ABC[4][4].agregarActor(kt2);
 		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
 		actores.addFirst(kt2);
-		//enemigos.addFirst(kt2);
+		enemigos.addFirst(kt2);
 		caibles.addFirst(kt2);
-		
+		*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
