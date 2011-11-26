@@ -3,6 +3,8 @@ package ProyectoX.Logica.Personajes.Enemigo;
 import ProyectoX.Logica.Personajes.Personaje;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Responsabilidades.Punteable;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Contiene las acciones de un Enemigo.
@@ -13,7 +15,7 @@ import ProyectoX.Logica.Responsabilidades.Punteable;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public interface Enemigo extends Personaje, Punteable
+public interface Enemigo extends Personaje, Punteable, Posicionable, afectableXgravedad
 {
 	
 	/*COMANDOS*/

@@ -14,11 +14,13 @@ import ProyectoX.Librerias.Threads.WorkersSincronizados;
 import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.Bloque;
+import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Mapa.Nivel;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
+import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
@@ -140,6 +142,7 @@ public class ControlCentral implements Runnable, ControlThread
 		nivel.getActores(this).addLast(a);
 		for (UpNeeder un: a.getUpNeeders())
 			updater.addUpNeeder(un);
+		updater.addUpNeeder(a.getSpriteManager().getUpNeeder());
 	}
 	
 	public void agregarAfectableXgravedad (afectableXgravedad aXg)
@@ -149,10 +152,9 @@ public class ControlCentral implements Runnable, ControlThread
 	}
 	
 	public void agregarPowerUp (PowerUp pu)
-	{
-		//nivel.getPowerUps(this).addLast(pu);
-		//agregarAfectableXgravedad(pu);
-		nivel.agregarPowerUp(pu);
+	{		
+		updater.addUpNeeder(pu.getSpriteManager().getUpNeeder());		
+		nivel.agregarPowerUp(pu);		
 	}
 	
 	/*CONSULTAS*/
@@ -205,6 +207,38 @@ public class ControlCentral implements Runnable, ControlThread
 		for (EspecialPowerUp plataforma: nivel.getEspecialesPowerUp(this))
 			if (plataforma.esCambiable())
 				plataforma.cambiarPowerUp(new SuperHongo (plataforma.getSpriteManager().getCargadorSprite()));
+	}
+	
+	/**
+	 * Realiza la exploción de la BombaNuclear en el juego.
+	 * Mata a todos los enemigos que se encuentren en un radio de 10 celdas.
+	 * 
+	 * @param bomba es la BombaNuclear que se activó en el juego.
+	 * @throws NullPointerException si bomba es null.
+	 */
+	public void explotarBombaNuclear (BombaNuclear bomba) throws NullPointerException
+	{
+		for (Enemigo enemigo: nivel.getEnemigos(this))			
+			if (distancia (bomba.getCeldaActual(),enemigo.getCeldaActual()) <= 10 )			
+				((Actor)enemigo).morir();		
+	}
+	
+	/**
+	 * Calcula la distancia que hay entre las Celdas.
+	 * @param c1 Celda que se desea calcular su distancia a c2.
+	 * @param c2 Celda que se desea calcular su distancia a c1.
+	 * @return entero que es la distancia entre las Celdas c1 y c2.
+	 * @throws NullPointerException si c1 o c2 son null.
+	 */
+	protected int distancia (Celda c1, Celda c2) throws NullPointerException
+	{
+		if (c1 == null || c2 == null)
+			throw new NullPointerException ("ControlCentral.distancia()" + "\n" +
+											"Imposible calcular distancia, alguna celda ess nulas.");
+				
+		int x = Math.abs(c1.getPosFila() - c2.getPosFila());
+		int y = Math.abs(c1.getPosColumna() - c2.getPosColumna());		
+		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
 	}
 	
 	/*Métodos en Ejecución*/

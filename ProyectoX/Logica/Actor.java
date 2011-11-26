@@ -10,6 +10,7 @@ import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
 
 /**
  * Representa a todos los objetos virtuales que pueden desarrolar una "actuación" dentro del juego.
@@ -20,7 +21,7 @@ import ProyectoX.Logica.Personajes.PjSeleccionable;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public abstract class Actor
+public abstract class Actor implements Posicionable
 {
 	
 	//Variables de Instancia

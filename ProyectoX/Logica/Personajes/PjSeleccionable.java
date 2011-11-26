@@ -1,6 +1,8 @@
 package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Logica.Jugador;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Contiene las acciones de un Personaje Seleccionable.
@@ -11,7 +13,7 @@ import ProyectoX.Logica.Jugador;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public interface PjSeleccionable extends Personaje
+public interface PjSeleccionable extends Personaje, Posicionable, afectableXgravedad
 {
 	
 	/*COMANDOS*/

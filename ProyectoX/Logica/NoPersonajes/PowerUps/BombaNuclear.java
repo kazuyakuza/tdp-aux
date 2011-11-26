@@ -2,6 +2,8 @@ package ProyectoX.Logica.NoPersonajes.PowerUps;
 
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Personajes.Mario;
+import ProyectoX.Logica.ControlCentral;
+import ProyectoX.Logica.Mapa.Bloque;
 
 /**
  * Representa a los power ups Bomba Nuclear del juego. El efecto sobre Mario es nulo, provoca la muerte de todos sus enemigos en la pantalla.
@@ -19,6 +21,7 @@ public class BombaNuclear extends PowerUp
 	
 	//Atributos de Instancia
 	//protected IAPowerUp miIA;
+	protected ControlCentral controlCentral; 
 	
 	/*CONSTRUCTORES*/	
 
@@ -26,9 +29,10 @@ public class BombaNuclear extends PowerUp
 	 * Crea una Bomba Nuclear del juego.
 	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public BombaNuclear(CargadorSprite cargadorSprite) 
+	public BombaNuclear(ControlCentral cc, CargadorSprite cargadorSprite) 
 	{
 		super (nombresSprites, cargadorSprite);
+		controlCentral = cc;
 	}
 	
 	/*METODOS IMPLEMENTADOS*/
@@ -41,8 +45,9 @@ public class BombaNuclear extends PowerUp
 	{
 		if (mario == null)
 			throw new NullPointerException ("PowerUp.efecto()" + "\n" +
-            								"Imposible aplicar efecto, mario es null");
-		//Destruir a todos los enemigos.
+            								"Imposible aplicar efecto, mario es null");		
+				
+		controlCentral.explotarBombaNuclear(this);				
 	}
 	
 	/**

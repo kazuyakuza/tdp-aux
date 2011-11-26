@@ -21,10 +21,12 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
 import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
+import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
+import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -167,31 +169,34 @@ public class Nivel
 			caibles.addFirst((afectableXgravedad) goomba);
 			aux++;
 		}*/
-		
-		/*Goomba goomba = new Goomba (cargadorSprite);
+		/*
+		Goomba goomba = new Goomba (cargadorSprite);
 		bloqueActual.ABC[1][10].agregarActor(goomba);
 		goomba.setCeldaActual(bloqueActual.ABC[1][10]);
 		actores.addFirst(goomba);
 		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba);*/
+		caibles.addFirst((afectableXgravedad) goomba);
+		*/
 		
-		/*KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
+		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
 		bloqueActual.ABC[3][3].agregarActor(kt1);
 		kt1.setCeldaActual(bloqueActual.ABC[3][3]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
-		caibles.addFirst(kt1);*/
+		caibles.addFirst(kt1);
 		
-		/*
+		
 		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon(), cargadorSprite);
-		bloqueActual.ABC[4][4].agregarActor(kt2);
-		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
+		bloqueActual.ABC[4][17].agregarActor(kt2);
+		kt2.setCeldaActual(bloqueActual.ABC[4][17]);
 		actores.addFirst(kt2);
 		enemigos.addFirst(kt2);
 		caibles.addFirst(kt2);
-		*/
+		
+		
 		
 		//Agregacion de un power up.
+		
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
 		bloqueActual.ABC[3][7].agregarActor(powerUp);
 		powerUp.setCeldaActual(bloqueActual.ABC[3][7]);
@@ -206,13 +211,14 @@ public class Nivel
 		powerUps.addLast(flor);
 		caibles.addLast((afectableXgravedad) flor);
 		
-		/*PowerUp bomba = new Estrella(cargadorSprite);
-		bloqueActual.ABC[8][6].agregarActor(bomba);
-		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
+		PowerUp bomba = new BombaNuclear(cc,cargadorSprite);
+		bloqueActual.ABC[8][7].agregarActor(bomba);
+		bomba.setCeldaActual(bloqueActual.ABC[8][7]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
-		caibles.addLast((afectableXgravedad) bomba);*/
+		caibles.addLast((afectableXgravedad) bomba);
 		
+		/*
 		Moneda moneda1 = new Moneda(cargadorSprite);
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
 		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
@@ -222,7 +228,7 @@ public class Nivel
 		bloqueActual.ABC[10][8].agregarActor(moneda2);
 		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);		
 		actores.addLast(moneda2);
-		
+		*/
 		
 		//Agregación Actores no Personjes.
 		aux = 6;
