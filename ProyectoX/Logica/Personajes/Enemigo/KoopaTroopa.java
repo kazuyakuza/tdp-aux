@@ -45,7 +45,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		super (c.getNombresSprites(), cargadorSprite);
 		miCaracteristica = c;
 		c.setKoopaTroopa(this);
-		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());		
 		PG = 0;
 	}
 	
@@ -91,18 +91,19 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		}
 		catch (NullPointerException e1)
 		{
-			throw new AccionActorException ("Goomba.caer()" + "\n" +
+			throw new AccionActorException ("KoopaTroopa.caer()" + "\n" +
                                             "Imposible realizar la acción caer." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
 		catch (Exception e2)
 		{
-			throw new AccionActorException ("Goomba.caer()" + "\n" +
+			throw new AccionActorException ("KoopaTroopa.caer()" + "\n" +
                                             "Imposible realizar la acción caer a/desde Celda de posición (" + celdaInferior.getPosFila() + "," + celdaInferior.getPosColumna() + ")." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		
 	}
 	
 	/**
@@ -111,7 +112,8 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	public void morir ()
 	{
 		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);		
-		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);		
+		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		//celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);		
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
 		super.morir();

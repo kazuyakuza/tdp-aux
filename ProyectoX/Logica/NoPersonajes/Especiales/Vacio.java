@@ -83,7 +83,7 @@ public class Vacio extends Actor implements Punteable
 		
 		try
 		{
-			pj.getJugador().asignarPuntos(15);
+			pj.getJugador().asignarPuntos(this.getPuntos((Mario)pj));
 			pj.morir();
 		}
 		catch (Exception e)

@@ -25,6 +25,7 @@ import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
+import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
@@ -167,21 +168,29 @@ public class Nivel
 			caibles.addFirst((afectableXgravedad) goomba);
 			aux++;
 		}*/
-		/*
+		
+		Goomba goomba = new Goomba (cargadorSprite);
+		bloqueActual.ABC[1][10].agregarActor(goomba);
+		goomba.setCeldaActual(bloqueActual.ABC[1][10]);
+		actores.addFirst(goomba);
+		enemigos.addFirst(goomba);
+		caibles.addFirst((afectableXgravedad) goomba);
+		
 		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
-		bloqueActual.ABC[4][5].agregarActor(kt1);
-		kt1.setCeldaActual(bloqueActual.ABC[4][5]);
-		actores.addFirst(kt1);
-		enemigos.addFirst(kt1);
+		bloqueActual.ABC[3][3].agregarActor(kt1);
+		kt1.setCeldaActual(bloqueActual.ABC[3][3]);
+		actores.addFirst(kt1);		
+		enemigos.addFirst(kt1);		
 		caibles.addFirst(kt1);
 		
-		KoopaTroopa kt2 = new KoopaTroopa (new KTNormal(), cargadorSprite);
+		
+		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon(), cargadorSprite);
 		bloqueActual.ABC[4][4].agregarActor(kt2);
 		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
 		actores.addFirst(kt2);
-		enemigos.addFirst(kt2);
+		//enemigos.addFirst(kt2);
 		caibles.addFirst(kt2);
-		*/
+		
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo(cargadorSprite);
