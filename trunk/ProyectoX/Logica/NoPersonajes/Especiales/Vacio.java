@@ -1,6 +1,5 @@
 package ProyectoX.Logica.NoPersonajes.Especiales;
 
-import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
@@ -83,7 +82,7 @@ public class Vacio extends Actor implements Punteable
 		
 		try
 		{
-			pj.getJugador().asignarPuntos(this.getPuntos((Mario)pj));
+			pj.getJugador().asignarPuntos(15);
 			pj.morir();
 		}
 		catch (Exception e)

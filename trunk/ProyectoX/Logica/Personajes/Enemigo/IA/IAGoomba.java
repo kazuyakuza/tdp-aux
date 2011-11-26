@@ -1,9 +1,7 @@
 package ProyectoX.Logica.Personajes.Enemigo.IA;
 
-import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.IAexception;
 import ProyectoX.Logica.Mapa.Celda;
-import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 
 /**
@@ -14,7 +12,7 @@ import ProyectoX.Logica.Personajes.Enemigo.Goomba;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class IA_Goomba extends IA
+public class IAGoomba extends IA
 {
 	
 	//Atributos de Instancia
@@ -29,7 +27,7 @@ public class IA_Goomba extends IA
 	 * 
 	 * @param g Goomba marioneta de la IA a crear.
 	 */
-	public IA_Goomba (Goomba g)
+	public IAGoomba (Goomba g)
 	{
 		super(g);
 		setActuar();
@@ -48,10 +46,10 @@ public class IA_Goomba extends IA
 	public void meMori (Goomba g) throws NullPointerException, IAexception
 	{
 		if (g == null)
-			throw new NullPointerException ("IA_Goomba.meMori()" + "\n" +
+			throw new NullPointerException ("IAGoomba.meMori()" + "\n" +
                                             "Imposible verificar muerte. El Goomba ingresado es null.");
 		if (g != cast())
-			throw new IAexception ("IA_Goomba.meMori()" + "\n" +
+			throw new IAexception ("IAGoomba.meMori()" + "\n" +
 					                        "Imposible verificar muerte. El Goomba ingresado no es la marioneta de la IA actual.");
 		actuar = -1;
 	}

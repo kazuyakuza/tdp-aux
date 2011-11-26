@@ -54,6 +54,15 @@ public abstract class CaracteristicaKT
 	public abstract void moverseAderecha () throws AccionActorException;
 	
 	/**
+	 * KoopaTroopa realiza la acción de recuperarse.
+	 * 
+	 * Esto es, recuperar el estado KTNormal si está en estado KTCaparazón.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al recuperarse.
+	 */
+	public abstract void recuperarse () throws AccionActorException;
+	
+	/**
 	 * Efecto provocado por el Personaje Seleccionable pj que colisiona con el Actor actual.
 	 * 
 	 * Muere el KoopaTroopa actual.

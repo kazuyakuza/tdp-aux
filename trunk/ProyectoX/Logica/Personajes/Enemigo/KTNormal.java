@@ -53,7 +53,7 @@ public class KTNormal extends CaracteristicaKT
 			
 			if (celdaActual.getBloque().hayAnterior(celdaActual))
 			{
-				koopa.getSpriteManager().cambiarSprite(-movimiento);
+				koopa.getSpriteManager().cambiarSprite(movimiento);
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
 					koopa.moverseAcelda(celdaAnterior);
@@ -63,7 +63,7 @@ public class KTNormal extends CaracteristicaKT
                     {
                     	public void work() throws Exception
                     	{
-                    		koopa.getSpriteManager().cambiarSprite(-quieto);
+                    		koopa.getSpriteManager().cambiarSprite(quieto);
                     	}
                     });
 			}
@@ -101,7 +101,7 @@ public class KTNormal extends CaracteristicaKT
 			
 			if (celdaActual.getBloque().haySiguiente(celdaActual))
 			{
-				koopa.getSpriteManager().cambiarSprite(movimiento);
+				koopa.getSpriteManager().cambiarSprite(-movimiento);
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
 					koopa.moverseAcelda(celdaSiguiente);
@@ -111,7 +111,7 @@ public class KTNormal extends CaracteristicaKT
                     {
                     	public void work() throws Exception
                     	{
-                    		koopa.getSpriteManager().cambiarSprite(quieto);
+                    		koopa.getSpriteManager().cambiarSprite(-quieto);
                     	}
                     });
 			}
@@ -130,6 +130,16 @@ public class KTNormal extends CaracteristicaKT
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+	}
+	
+	/**
+	 * KoopaTroopa realiza la acción de recuperarse.
+	 * 
+	 * En estado normal nunca se recupera.
+	 */
+	public void recuperarse ()
+	{
+		//Nada ocurre.
 	}
 	
 	/**
@@ -159,14 +169,14 @@ public class KTNormal extends CaracteristicaKT
 		}
 		else
 		{
-			final KoopaTroopa gAux = koopa;
+			final KoopaTroopa ktAux = koopa;
 		
 			if (! koopa.getUpNeeder().hayWorkerPrioridad(1))
 				koopa.getUpNeeder().addWorker(1, new Worker ()
 				{
 					public void work() throws Exception
 					{
-						mario.serDañado(gAux);
+						mario.serDañado(ktAux);
 					}
 				});
 		}		
