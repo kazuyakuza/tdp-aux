@@ -177,6 +177,7 @@ public class Nivel
 		enemigos.addFirst(goomba);
 		caibles.addFirst((afectableXgravedad) goomba);
 		*/
+		/*
 		
 		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal(), cargadorSprite);
 		bloqueActual.ABC[3][3].agregarActor(kt1);
@@ -192,7 +193,7 @@ public class Nivel
 		actores.addFirst(kt2);
 		enemigos.addFirst(kt2);
 		caibles.addFirst(kt2);
-		
+		*/
 		
 		
 		//Agregacion de un power up.
@@ -210,14 +211,14 @@ public class Nivel
 		actores.addLast(flor);
 		powerUps.addLast(flor);
 		caibles.addLast((afectableXgravedad) flor);
-		
+		/*
 		PowerUp bomba = new BombaNuclear(cc,cargadorSprite);
 		bloqueActual.ABC[8][7].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][7]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
 		caibles.addLast((afectableXgravedad) bomba);
-		
+		*/
 		/*
 		Moneda moneda1 = new Moneda(cargadorSprite);
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
@@ -250,14 +251,14 @@ public class Nivel
 		actores.addFirst(plataformaPUP);
 		estructuras.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
-		
-		EspecialMonedas plataformaM = new EspecialMonedas (3, cargadorSprite);
+		/*
+		EspecialMonedas plataformaM = new EspecialMonedas (1, cargadorSprite);
 		bloqueActual.ABC[7][13].setOcupada(true);
 		bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
 		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
-		
+		*/
 		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite), cc, false, cargadorSprite);
 		bloqueActual.ABC[7][14].setOcupada(true);
 		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
