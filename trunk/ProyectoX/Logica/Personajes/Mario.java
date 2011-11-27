@@ -548,8 +548,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
             								"Imposible colisionar con Actor nulo.");
 		
 		try
-		{			
-			a.colisionarPj(this);
+		{
+			morir();
 		}
 		catch (Exception e)
 		{

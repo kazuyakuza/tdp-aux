@@ -69,7 +69,7 @@ public class SpriteManager implements ImageObserver
 	public SpriteManager (String[] nombresSprites, CargadorSprite cargadorSprite) throws CargaRecursoException
 	{
 		bloqueGrafico = null;
-		upNeeder = new UpNeeder(1);
+		upNeeder = new UpNeeder(5);
 		this.cargadorSprite = cargadorSprite;
 		cargarSprites(nombresSprites);
 		posX = posY = -1;
@@ -438,19 +438,19 @@ public class SpriteManager implements ImageObserver
 					                               "Detalles del Error:" + "\n" +
 					                               "Error al llamar SpriteManager.posicion(), donde posX y posY del SpriteManager son iguales a -1.");
 		
-		double X = posX;
-		double Y = posY;
+		double X = posY; //Intercambio entre posY Columnas y posición en eje X
+		double Y = posX; //Intercambio entre posX filas y posición en eje Y
 		
 		//Si el Srite es mayor a 32x32, entonces se lo ubica 32 pixeles mas arriba.
-		if (spriteActual.getHeight() > 32)
+		if (spriteActual.getWidth() > 32)
 		{
-			X -= ((spriteActual.getHeight()/32.0) - 1);
+			X -= ((spriteActual.getWidth()/32.0) - 1);
 			if ((X % (int) X) <= 0.25)
 				X = (int) X;
 		}
-		if (spriteActual.getWidth() > 32)
+		if (spriteActual.getHeight() > 32)
 		{
-			Y -= ((spriteActual.getWidth()/32.0) - 1);
+			Y -= ((spriteActual.getHeight()/32.0) - 1);
 			if ((Y % (int) Y) <= 0.25)
 				Y = (int) Y;
 		}

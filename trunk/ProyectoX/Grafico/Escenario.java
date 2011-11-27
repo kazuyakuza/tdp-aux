@@ -11,8 +11,10 @@ import java.awt.Transparency;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import ProyectoX.Excepciones.BoundaryViolationException;
 import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.EscenarioIncompletoException;
+import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.StringEmptyException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Grafico.Sprite.SpriteManager;
@@ -39,7 +41,10 @@ public class Escenario extends Canvas implements Worker
 	private VentanaPrincipal ventanaPrincipal;
 	private BufferedImage fondo;
 	private BufferStrategy bufferStrategy;
-	private BloqueGrafico anterior, actual, siguiente;
+	private BloqueGrafico[][] bloques;
+	private int[] actual;
+	private SpriteManager spriteCentral; //El Escenario debe centrarse respecto al spriteCentral. Es el sprite que debe mostrar en todo momento. (El sprite del personaje del jugador)
+	private double difPosX, difPosY; //Diferencia de Posiciones de impreción de los bloques respecto a la posición del spriteCentral.
 	private int largo, alto;
 	
 	/*CONSTRUCTOR*/
@@ -62,9 +67,10 @@ public class Escenario extends Canvas implements Worker
 		largo = ventanaPrincipal.largo();
 		alto = ventanaPrincipal.alto();
 		fondo = null;
-		anterior = null;
-		actual = null;
-		siguiente = null;
+		bloques = null;
+		actual = new int[2];
+		spriteCentral = null;
+		difPosX = difPosY = 0;
 	}
 	
 	/*COMANDOS*/
@@ -117,6 +123,36 @@ public class Escenario extends Canvas implements Worker
 	}
 	
 	/**
+	 * Agrega el SpriteManager Central (el sprite del personaje del jugador) al Escenario.
+	 * 
+	 * @param sp SpriteManager Central.
+	 * @throws NullPointerException Si sp es null.
+	 */
+	public void agregarSpriteCentral (SpriteManager sp) throws NullPointerException
+	{
+		if (sp == null)
+			throw new NullPointerException ("Escenario.agregarSpriteCentral()" + "\n" +
+					                        "Imposible agregar el SpriteManager Central. El SpriteManager ingresado es null.");
+		
+		spriteCentral = sp;
+	}
+	
+	/**
+	 * Agrega todos los Bloques Gráficos a mostrar.
+	 * 
+	 * @param bsg Nuevos Bloques GRáficos.
+	 * @throws NullPointerException Si bsg es null.
+	 */
+	public void agregarBloquesGrafico (BloqueGrafico[][] bsg) throws NullPointerException
+	{
+		if (bsg == null)
+			throw new NullPointerException ("Escenario.agregarBloquesGrafico()" + "\n" +
+					                        "Imposible agregar el SpriteManager Central. El SpriteManager ingresado es null.");
+		
+		bloques = bsg;
+	}
+	
+	/**
 	 * Agrega el fondo al Escenario.
 	 * 
 	 * @param fondoNombre Nombre del archivo imagen del fondo.
@@ -154,33 +190,31 @@ public class Escenario extends Canvas implements Worker
 	}
 	
 	/**
-	 * Cambia el BloqueGrafico anterior por el pasado por parámetro bg.
-	 * 
-	 * @param bg Nuevo BloqueGrafico.
-	 */
-	public void setBloqueGraficoAnterior (BloqueGrafico bg)
-	{
-		anterior = bg;
-	}
-	
-	/**
 	 * Cambia el BloqueGrafico actual por el pasado por parámetro bg.
+	 * Donde bg es la posición del bloque en la matriz bloques.
+	 * bg[0] = fila del BloqueGrafico
+	 * bg[1] = columna del BloqueGrafico
+	 * 
+	 * Las filas y columnas van desde el (0,0).
 	 * 
 	 * @param bg Nuevo BloqueGrafico.
+	 * @throws NullPointerException Si bg es null.
+	 * @throws BoundaryViolationException Si bg.length > 2
+	 * @throws PosicionIncorrectaException Si la posición es incorrecta.
 	 */
-	public void setBloqueGraficoActual (BloqueGrafico bg)
+	public void setBloqueGraficoActual (int[] bg) throws NullPointerException, BoundaryViolationException, PosicionIncorrectaException
 	{
+		if (bg == null)
+			throw new NullPointerException ("Escenario.setBloqueGraficoActual()" + "\n" +
+					                        "La posición del bloque que está queriendo setear como bloque actual es null.");
+		if (bg.length > 2)
+			throw new BoundaryViolationException ("Escenario.setBloqueGraficoActual()" + "\n" +
+                                                  "El arreglo ingresado no corresponde a lo esperado. Debe ser de 2 componentes talque {fila, columna}.");
+		if ((bg[0] < 0) || (bg[0] >= bloques.length)
+		 || (bg[1] < 0) || (bg[1] >= bloques[0].length))
+			throw new PosicionIncorrectaException ("Escenario.setBloqueGraficoActual()" + "\n" +
+                                                   "La posición ingresada no corresponde a la matriz de bloques actual.");
 		actual = bg;
-	}
-	
-	/**
-	 * Cambia el BloqueGrafico siguiente por el pasado por parámetro bg.
-	 * 
-	 * @param bg Nuevo BloqueGrafico.
-	 */
-	public void setBloqueGraficosiguiente (BloqueGrafico bg)
-	{
-		siguiente = bg;
 	}
 	
 	/**
@@ -189,24 +223,25 @@ public class Escenario extends Canvas implements Worker
 	public void limpiar ()
 	{
 		fondo = null;
-		anterior.limpiar();
-		anterior = null;
-		actual.limpiar();
+		
+		for (int i=0; i < bloques.length; i++)
+			for (int j=0; j < bloques[0].length; i++)
+				if (bloques[i][j] != null)
+					bloques[i][j].limpiar();
+		bloques = null;
 		actual = null;
-		siguiente.limpiar();
-		siguiente = null;
 	}
 	
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve el BloqueGrafico anterior.
+	 * Devuelve los Bloques Graficos.
 	 * 
-	 * @return BloqueGrafico anterior.
+	 * @return Bloques Graficos.
 	 */
-	public BloqueGrafico getBloqueGraficoAnterior ()
+	public BloqueGrafico[][] agregarBloquesGraficos ()
 	{
-		return anterior;
+		return bloques;
 	}
 	
 	/**
@@ -216,17 +251,45 @@ public class Escenario extends Canvas implements Worker
 	 */
 	public BloqueGrafico getBloqueGraficoActual ()
 	{
-		return actual;
+		return bloques[actual[0]][actual[1]];
 	}
 	
 	/**
-	 * Devuelve el BloqueGrafico siguiente.
+	 * Devuelve el BloqueGrafico actual.
 	 * 
-	 * @return BloqueGrafico siguiente.
+	 * @return BloqueGrafico actual.
 	 */
-	public BloqueGrafico getBloqueGraficosiguiente ()
+	private BloqueGrafico actual ()
 	{
-		return siguiente;
+		return getBloqueGraficoActual();
+	}
+	
+	/**
+	 * Devuelve la posX del spriteCentral.
+	 * 
+	 * @return posX del spriteCentral.
+	 */
+	private double scX ()
+	{
+		return spriteCentral.posicion()[0] * medidaPixelCelda;
+	}
+	
+	/**
+	 * Devuelve la posY del spriteCentral.
+	 * 
+	 * @return posY del spriteCentral.
+	 */
+	private double scY ()
+	{
+		return spriteCentral.posicion()[1] * medidaPixelCelda;
+	}
+	
+	/**
+	 * Distancia en el eje x de la posición del spriteCentral al centro del bloque actual.
+	 */
+	private double dXcB ()
+	{
+		return Math.abs(scX() - largo/2);//((actual().maxX * medidaPixelCelda)/2));
 	}
 	
 	/*Métodos en Ejecución*/
@@ -238,13 +301,22 @@ public class Escenario extends Canvas implements Worker
 	 */
 	public void work () throws EscenarioIncompletoException
 	{
-		if ((fondo == null) || ((anterior == null) && (actual == null) && (siguiente == null)))
+		if ((fondo == null) || (bloques == null) || (actual == null) || (spriteCentral == null))
 			throw new EscenarioIncompletoException ("Escenario.work()" + "\n" +
 					                                "El Escenario no ha sido totalmente inicializado." + "\n" +
 					                                "(fondo == null) -> " + (fondo == null) + "\n" +
-					                                "(actual == null) -> " + (actual == null));
+					                                "(bloques == null) -> " + (bloques == null) + "\n" +
+					                                "(actual == null) -> " + (actual == null) + "\n" +
+					                                "(spriteCentral == null) -> " + (spriteCentral == null));
 		
-		imprimirBloque(actual);
+		if (scX() >= largo/2)
+		{
+			//System.out.println(/*(actual().maxX * medidaPixelCelda) - largo -*/ dXcB());
+			if ((actual().maxX * medidaPixelCelda) > largo)
+				difPosX = Math.abs(/*(actual().maxX * medidaPixelCelda) - largo +*/ dXcB());
+		}
+		//difPosX = (actual().maxX * medidaPixelCelda)/2 - scX();
+		imprimirBloque(actual());
 	}
 	
 	/**
@@ -262,8 +334,8 @@ public class Escenario extends Canvas implements Worker
 			if (sp.isEliminar())
 				bloqueGrafico.eliminarSprite(sp);
 			else
-				g.drawImage(sp.getSpriteActual(), ((int) (sp.posicion()[1] * medidaPixelCelda))
-						                        , ((int) (sp.posicion()[0] * medidaPixelCelda)) + difPiso, this);
+				g.drawImage(sp.getSpriteActual(), (int) ((sp.posicion()[0] * medidaPixelCelda) - difPosX)
+						                        , (int) ((sp.posicion()[1] * medidaPixelCelda)/* - difPosY*/) + difPiso, this);
 		}
 		bufferStrategy.show();
 	}

@@ -1,6 +1,5 @@
 package ProyectoX.Grafico;
 
-import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Grafico.Sprite.SpriteManager;
