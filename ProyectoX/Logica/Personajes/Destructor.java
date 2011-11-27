@@ -22,6 +22,7 @@ public class Destructor extends DecoracionCaracteristica
 {
 	//Atributos de Instancia
 	protected Timer timer;
+	protected Timer flash;
 	
 	
 	/*CONSTRUCTORES*/
@@ -41,18 +42,30 @@ public class Destructor extends DecoracionCaracteristica
 			{
 				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);			
+				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
+				mario.getSpriteManager().cambiarSprite(quieto);
 				mario = null;
-				timer.stop();										
+				System.out.println("Se termino el efecto de estrella.");
+				flash.stop();
+				timer.stop();				
 			}
-		});			
+		});
+		flash = new Timer (200, new ActionListener ()
+		{
+			public void actionPerformed (ActionEvent e)
+			{
+				mario.getSpriteManager().flashear();
+			}
+		});
 	}
 	
 	/**
 	 * Empieza el tiempo de duración del efecto de Destructor.
 	 */
 	public void empezar ()
-	{			
+	{		
 		timer.start();
+		flash.start();
 	}
 	
 	/**
@@ -65,6 +78,7 @@ public class Destructor extends DecoracionCaracteristica
 	{
 		componente.crecerHongo();		
 		componente = mario.getCaracteristica();
+		mario.setCaracteristica(this);		
 	}
 	
 	/**
@@ -75,9 +89,9 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public void crecerFlor () throws AccionActorException
 	{
-		componente.crecerFlor();
-		//componente = componente.getMario().getCaracteristica();
+		componente.crecerFlor();		
 		componente = mario.getCaracteristica();
+		mario.setCaracteristica(this);			
 	}
 	
 	/**

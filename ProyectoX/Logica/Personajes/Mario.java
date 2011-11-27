@@ -424,10 +424,9 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 */
 	public void setCaracteristica (Caracteristica c)
 	{
-		miCaracteristica = c;
-		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+		miCaracteristica = c;		
 	}
-	
+		
 	/**
 	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
 	 * 
@@ -498,8 +497,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
             								"Imposible colisionar con Actor nulo.");
 		
 		try
-		{
-			morir();
+		{			
+			a.colisionarPj(this);
 		}
 		catch (Exception e)
 		{

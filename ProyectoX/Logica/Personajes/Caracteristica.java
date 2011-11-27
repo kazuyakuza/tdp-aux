@@ -44,7 +44,7 @@ public abstract class Caracteristica
 	protected Caracteristica(Mario pj)
 	{
 		mario = pj;
-		mario.getSpriteManager().cargarSprites(this.getNombresSprites());
+		mario.getSpriteManager().cargarSprites(this.getNombresSprites());		
 	}
 	
 	/*METODOS ABSTRACTOS*/
