@@ -44,8 +44,7 @@ public class Destructor extends DecoracionCaracteristica
 				mario.setCaracteristica(componente);			
 				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
 				mario.getSpriteManager().cambiarSprite(quieto);
-				mario = null;
-				System.out.println("Se termino el efecto de estrella.");
+				mario = null;				
 				flash.stop();
 				timer.stop();				
 			}
