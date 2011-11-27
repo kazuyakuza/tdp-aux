@@ -32,7 +32,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	//Atributos de Instancia
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
-	protected boolean izq = false;//Inidica si MarioBlanco está mirando hacia la izquierda.
+	protected boolean izq = false;//Inidica si MarioBlanco está mirando hacia la izquierda.	
 	protected int PG;//Potencia de la Gravedad.
 	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
@@ -57,7 +57,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		miCaracteristica = c;
 		c.setMario(this);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
-		PG = 0;
+		PG = 0;		
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -116,7 +116,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
 	public void caer () throws AccionActorException
-	{
+	{/*
 		Celda celdaInferior = celdaActual;
 		try 
 		{
@@ -178,6 +178,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		*/
+		miCaracteristica.caer();
 	}
 	
 	/**
@@ -216,7 +218,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al saltar.
 	 */
 	public void saltar () throws AccionActorException
-	{		
+	{/*
 		Celda celdaSuperior = celdaActual;
 		try 
 		{
@@ -248,7 +250,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		catch (NullPointerException e1)
 		{
 			throw new AccionActorException ("Mario.saltar()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+                                            "Imposible realizar la acción saltar." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
@@ -259,6 +261,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		*/
+		miCaracteristica.saltar();
 	}
 	
 	/**
@@ -267,7 +271,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
 	public void moverseAizquierda () throws AccionActorException
-	{
+	{/*
 		Celda celdaAnterior = celdaActual;
 		try 
 		{
@@ -295,7 +299,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		catch (NullPointerException e1)
 		{
 			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+                                            "Imposible realizar la acción moverAizquierda." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
@@ -306,6 +310,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		*/
+		miCaracteristica.moverseAizquierda();
 	}
 	
 	/**
@@ -314,7 +320,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
 	public void moverseAderecha () throws AccionActorException
-	{		
+	{	/*
 		Celda celdaSiguiente = celdaActual;
 		try 
 		{
@@ -342,7 +348,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		catch (NullPointerException e1)
 		{
 			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+                                            "Imposible realizar la acción moverAderecha." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
@@ -353,6 +359,20 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		*/
+		miCaracteristica.moverseAderecha();
+	}
+	
+	public void cambiarSpriteQuieto ()
+	{
+		if (! upNeeder.hayWorkerPrioridad(5))
+            upNeeder.addWorker(5, new Worker ()
+            {
+            	public void work() throws Exception
+            	{
+            		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+            	}
+            });
 	}
 	
 	/**
@@ -441,6 +461,28 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 				PG -= efecto;
 	}
 	
+	/**
+	 * Setea si Mario mira hacia izquierda, pero solo si es su propia Caracteristica el que produjo la llamada
+	 * @param c Caracteristica para comprobar que sea la misma que la de Mario la que produjo la llamada.
+	 * @param iz boolean que indica si mario mira hacia izq.
+	 */
+	public void mirarIzq(Caracteristica c, boolean iz)
+	{
+		if (c == miCaracteristica)
+			izq = iz;
+	}
+	
+	/**
+	 * Setea el PG de Mario, pero solo si es su propia Caracteristica el que produjo la llamada
+	 * @param c Caracteristica para comprobar que sea la misma que la de Mario la que produjo la llamada.
+	 * @param pg entero con el que se setea pg.
+	 */
+	public void setPG (Caracteristica c, int pg)
+	{
+		if (c == miCaracteristica)
+			PG = pg;
+	}
+			
 	/*CONSULTAS*/
 	
 	/**
@@ -450,9 +492,9 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 */
 	public int getPG ()
 	{
-		return PG;
+		return PG;		
 	}
-	
+			
 	/**
 	 * Devuelve el Jugador que controla a Mario.
 	 * 
@@ -479,6 +521,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	public int multiplicadorBonus()
 	{
 		return miCaracteristica.multiplicadorBonus();
+	}
+	
+	/**
+	 * Verifica si Mario está mirando hacia la izquierda.
+	 * @return Verdadero si Mario mira hacia la izquierda, falaso, en caso contrario.
+	 */
+	public boolean miraIzq()
+	{
+		return izq;
 	}
 				
 	/*Métodos en Ejecución*/

@@ -37,7 +37,7 @@ public class Invulnerable extends DecoracionCaracteristica
 			{
 				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);
-				mario = null;
+				//mario = null;
 				timer.stop();
 			}
 		});		
