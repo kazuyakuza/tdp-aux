@@ -61,6 +61,7 @@ public class Invulnerable extends DecoracionCaracteristica
 	{
 		componente.crecerHongo();		
 		componente = mario.getCaracteristica();
+		mario.setCaracteristica(this);
 	}
 	
 	/**
@@ -73,6 +74,7 @@ public class Invulnerable extends DecoracionCaracteristica
 	{
 		componente.crecerFlor();		
 		componente = mario.getCaracteristica();
+		mario.setCaracteristica(this);
 	}
 	
 	/**
