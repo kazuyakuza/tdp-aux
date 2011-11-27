@@ -152,8 +152,9 @@ public class ControlCentral implements Runnable, ControlThread
 	}
 	
 	public void agregarPowerUp (PowerUp pu)
-	{		
-		updater.addUpNeeder(pu.getSpriteManager().getUpNeeder());		
+	{			
+		for (UpNeeder un: pu.getUpNeeders())
+			updater.addUpNeeder(un);
 		nivel.agregarPowerUp(pu);		
 	}
 	
@@ -291,26 +292,7 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
 	}
-	
-	public void test ()
-	{
-		((Mario) jugador.personaje).crecerHongo();
-		((Mario) jugador.personaje).crecerFlor();
 		
-		//while (true)
-		/*for (int i=0; i<10; i++)
-		{
-			try {
-				Thread.sleep((int) (getSleepTime()));
-				} catch (InterruptedException e) {				
-					e.printStackTrace();
-				}
-				
-			((Actor) jugador.personaje).spriteManager.flashear();
-		}
-		((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
-	}
-	
 	/**
 	 * Devuelve el tiempo indicado de espera entre cada ejecución para un AliveThread.
 	 * 

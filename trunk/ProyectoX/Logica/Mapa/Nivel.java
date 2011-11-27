@@ -236,55 +236,55 @@ public class Nivel
 		while (aux < 12)
 		{
 			Irrompible plataforma = new Irrompible (cargadorSprite);
-			bloqueActual.ABC[7][aux].setOcupada(true);
-			bloqueActual.ABC[7][aux].agregarEstructura(plataforma);//Plataforma irrompible
-			plataforma.setCeldaActual(bloqueActual.ABC[7][aux]);
+			bloqueActual.ABC[8][aux].setOcupada(true);
+			bloqueActual.ABC[8][aux].agregarEstructura(plataforma);//Plataforma irrompible
+			plataforma.setCeldaActual(bloqueActual.ABC[8][aux]);
 			actores.addFirst(plataforma);
 			estructuras.addFirst(plataforma);
 			aux++;
 		}
 		
 		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(cargadorSprite), cc, true, cargadorSprite);
-		bloqueActual.ABC[7][5].setOcupada(true);
-		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
-		plataformaPUP.setCeldaActual(bloqueActual.ABC[7][5]);
+		bloqueActual.ABC[8][5].setOcupada(true);
+		bloqueActual.ABC[8][5].agregarEstructura(plataformaPUP);
+		plataformaPUP.setCeldaActual(bloqueActual.ABC[8][5]);
 		actores.addFirst(plataformaPUP);
 		estructuras.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		/*
 		EspecialMonedas plataformaM = new EspecialMonedas (1, cargadorSprite);
-		bloqueActual.ABC[7][13].setOcupada(true);
-		bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
-		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
+		bloqueActual.ABC[8][13].setOcupada(true);
+		bloqueActual.ABC[8][13].agregarEstructura(plataformaM);
+		plataformaM.setCeldaActual(bloqueActual.ABC[8][13]);
 		actores.addFirst(plataformaM);
 		estructuras.addFirst(plataformaM);
 		*/
 		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(cargadorSprite), cc, false, cargadorSprite);
-		bloqueActual.ABC[7][14].setOcupada(true);
-		bloqueActual.ABC[7][14].agregarEstructura(plataformaPUP2);
-		plataformaPUP2.setCeldaActual(bloqueActual.ABC[7][14]);
+		bloqueActual.ABC[8][14].setOcupada(true);
+		bloqueActual.ABC[8][14].agregarEstructura(plataformaPUP2);
+		plataformaPUP2.setCeldaActual(bloqueActual.ABC[8][14]);
 		actores.addFirst(plataformaPUP2);
 		estructuras.addFirst(plataformaPUP2);
 		especialesPowerUp.addFirst(plataformaPUP2);
 		
 		Rompible rompible = new Rompible (cargadorSprite);
-		bloqueActual.ABC[7][12].setOcupada(true);
-		bloqueActual.ABC[7][12].agregarEstructura(rompible);
-		rompible.setCeldaActual(bloqueActual.ABC[7][12]);
+		bloqueActual.ABC[8][12].setOcupada(true);
+		bloqueActual.ABC[8][12].agregarEstructura(rompible);
+		rompible.setCeldaActual(bloqueActual.ABC[8][12]);
 		actores.addFirst(rompible);
 		estructuras.addFirst(rompible);
 		
 		Rompible r1 = new Rompible (cargadorSprite);
-		bloqueActual.ABC[7][2].setOcupada(true);
-		bloqueActual.ABC[7][2].agregarEstructura(r1);
-		r1.setCeldaActual(bloqueActual.ABC[7][2]);
+		bloqueActual.ABC[8][2].setOcupada(true);
+		bloqueActual.ABC[8][2].agregarEstructura(r1);
+		r1.setCeldaActual(bloqueActual.ABC[8][2]);
 		actores.addFirst(r1);
 		estructuras.addFirst(r1);
 		
 		Rompible r2 = new Rompible (cargadorSprite);
-		bloqueActual.ABC[7][3].setOcupada(true);
-		bloqueActual.ABC[7][3].agregarEstructura(r2);
-		r2.setCeldaActual(bloqueActual.ABC[7][3]);
+		bloqueActual.ABC[8][3].setOcupada(true);
+		bloqueActual.ABC[8][3].agregarEstructura(r2);
+		r2.setCeldaActual(bloqueActual.ABC[8][3]);
 		actores.addFirst(r2);
 		estructuras.addFirst(r2);
 		
