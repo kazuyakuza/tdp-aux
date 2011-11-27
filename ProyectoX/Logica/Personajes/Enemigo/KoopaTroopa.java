@@ -75,7 +75,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public void caer () throws AccionActorException
+	public synchronized void caer () throws AccionActorException
 	{
 		Celda celdaInferior = celdaActual;
 		try 

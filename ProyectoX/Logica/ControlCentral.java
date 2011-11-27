@@ -142,7 +142,6 @@ public class ControlCentral implements Runnable, ControlThread
 		nivel.getActores(this).addLast(a);
 		for (UpNeeder un: a.getUpNeeders())
 			updater.addUpNeeder(un);
-		updater.addUpNeeder(a.getSpriteManager().getUpNeeder());
 	}
 	
 	public void agregarAfectableXgravedad (afectableXgravedad aXg)
@@ -256,7 +255,9 @@ public class ControlCentral implements Runnable, ControlThread
 			
 			//Inicialización Gráfica.
 			Bloque bloqueActual = nivel.getBloqueActual();
-			BloqueGrafico bloqueGrafico = new BloqueGrafico (bloqueActual.getFilas(), bloqueActual.getColumnas());
+			BloqueGrafico[][] bloques = new BloqueGrafico[1][1];
+			BloqueGrafico bloqueGrafico = new BloqueGrafico (bloqueActual.getColumnas() - 1, bloqueActual.getFilas() - 1);
+			bloques[0][0] = bloqueGrafico;
 			//Agregando Piso
 			bloqueGrafico.setNivelPiso(bloqueActual.getNivelPiso());
 			for (Actor a: nivel.getActores(this))
@@ -264,8 +265,11 @@ public class ControlCentral implements Runnable, ControlThread
 				bloqueGrafico.agregarSprite(a.spriteManager);
 				a.spriteManager.setBloqueGrafico(this, bloqueGrafico);
 			}
+			
 			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
-			escenario.setBloqueGraficoActual(bloqueGrafico);
+			escenario.agregarBloquesGrafico(bloques);
+			escenario.setBloqueGraficoActual(new int[] {0,0});
+			escenario.agregarSpriteCentral(((Actor) jugador.personaje).spriteManager);
 			
 			//Agrego IAs al IAControl
 			for (Enemigo e: nivel.getEnemigos(this))
@@ -292,7 +296,27 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
 	}
+	
+	public void test ()
+	{
+		/*((Mario) jugador.personaje).crecerHongo();
+		((Mario) jugador.personaje).crecerFlor();*/
 		
+		while (true)
+		/*for (int i=0; i<10; i++)*/
+		{
+			/*try {
+				Thread.sleep((int) (getSleepTime()));
+				} catch (InterruptedException e) {				
+					e.printStackTrace();
+				}
+				
+			((Actor) jugador.personaje).spriteManager.flashear();*/
+			ventanaPrincipal.repaint();
+		}
+		//((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
+	}
+	
 	/**
 	 * Devuelve el tiempo indicado de espera entre cada ejecución para un AliveThread.
 	 * 
