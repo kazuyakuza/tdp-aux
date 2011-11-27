@@ -35,7 +35,7 @@ public class Destructor extends DecoracionCaracteristica
 	 */
 	public Destructor (Caracteristica comp, int t)
 	{		
-		super (comp);		
+		super (comp);
 		timer = new Timer (t, new ActionListener ()
 		{				
 			public void actionPerformed (ActionEvent e)
