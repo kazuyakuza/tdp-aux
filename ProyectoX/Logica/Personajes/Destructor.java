@@ -44,7 +44,7 @@ public class Destructor extends DecoracionCaracteristica
 				mario.setCaracteristica(componente);			
 				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
 				mario.getSpriteManager().cambiarSprite(quieto);
-				mario = null;				
+				//mario = null;				
 				flash.stop();
 				timer.stop();				
 			}

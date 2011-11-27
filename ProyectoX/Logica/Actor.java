@@ -31,7 +31,7 @@ public abstract class Actor implements Posicionable
 	  //Actualizador
 	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	  //Logica
-	protected Celda celdaActual;
+	protected Celda celdaActual;	
 	
 	/*CONSTRUCTOR*/
 	
@@ -54,7 +54,7 @@ public abstract class Actor implements Posicionable
 		
 		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
 		upNeeder = new UpNeeder (5);
-		celdaActual = null;
+		celdaActual = null;		
 	}
 	
 	/*COMANDOS*/
