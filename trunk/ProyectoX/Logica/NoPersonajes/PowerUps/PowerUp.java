@@ -35,9 +35,9 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	/**
 	 * Crea un PowerUp.
 	 */
-	protected PowerUp (String[] nombresSprites, CargadorSprite cargadorSprite) throws NullPointerException
+	protected PowerUp (String[] nombresSprites) throws NullPointerException
 	{
-		super(nombresSprites, cargadorSprite);
+		super(nombresSprites);
 		PG = 0;
 	}
 	

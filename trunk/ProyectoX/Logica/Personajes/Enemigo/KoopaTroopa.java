@@ -6,6 +6,8 @@ import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Excepciones.IAexception;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
@@ -27,7 +29,8 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
                      //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 
-	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	
 	//Prioridades para el UpNeeder
 	//0 = morir
@@ -39,12 +42,13 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	/**
 	 * Crea un Personaje Seleccionable Mario con la Caracteristica pasada por parámetro.
 	 * 
-	 * @param c Caracteristica de Mario con la que se inicializa.
-	 * @param cargadorSprite Clase para cargar los sprites.
+	 * @param c Caracteristica de KoopaTroopa con la que se inicializa.
 	 */
-	public KoopaTroopa (CaracteristicaKT c, CargadorSprite cargadorSprite)
+	public KoopaTroopa (CaracteristicaKT c)
 	{
-		super (c.getNombresSprites(), cargadorSprite);
+		super (c.getNombresSprites());
+		upNeeder = new UpNeeder (5);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		miCaracteristica = c;
 		c.setKoopaTroopa(this);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
@@ -118,7 +122,11 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
+		
 		super.morir();
+		
+		upNeeder.notUpdate();
+		upNeeder = null;
 	}
 	
 	/**
@@ -239,6 +247,18 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	{
 		return 90;
 	}
+	
+	/**
+	 * Devuelve el UpNeeder del Actor.
+	 * 
+	 * @return UpNeeder del Actor.
+	 */
+	public UpNeeder getUpNeeder ()
+	{
+		return upNeeder;
+	}
+	
+	/*Métodos en Ejecución*/
 	
 	/**
 	 * Efecto provocado por el Actor a que colisiona con el Actor actual.

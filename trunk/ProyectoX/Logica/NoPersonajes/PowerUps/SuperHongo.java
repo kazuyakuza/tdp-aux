@@ -28,11 +28,10 @@ public class SuperHongo extends PowerUp implements Movible
 	
 	/**
 	 * Crea un Super Hongo del juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public SuperHongo(CargadorSprite cargadorSprite) 
+	public SuperHongo() 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 	}
 	
 	/*METODOS IMPLEMENTADOS*/

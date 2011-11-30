@@ -5,6 +5,8 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Jugador;
@@ -38,6 +40,9 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
                      //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
 	//Prioridades para el UpNeeder
 	//0 = spriteManager.cambiarSprite(saltando)
 	//4 = luego de disparar spriteManager.cambiarSprite(-quieto)
@@ -49,11 +54,12 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * Crea un Personaje Seleccionable Mario con la Caracteristica pasada por parámetro.
 	 * 
 	 * @param c Caracteristica de Mario con la que se inicializa.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Mario (Caracteristica c, CargadorSprite cargadorSprite)
+	public Mario (Caracteristica c)
 	{
-		super (c.getNombresSprites(), cargadorSprite);
+		super (c.getNombresSprites());
+		upNeeder = new UpNeeder (5);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		miCaracteristica = c;
 		c.setMario(this);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
@@ -65,7 +71,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "arriba".
 	 */
-	public synchronized void arriba ()
+	public void arriba ()
 	{
 		saltar();
 	}
@@ -73,7 +79,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "abajo".
 	 */
-	public synchronized void abajo ()
+	public void abajo ()
 	{
 		miCaracteristica.agacharse();
 	}
@@ -81,7 +87,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public synchronized void izquierda ()
+	public void izquierda ()
 	{
 		moverseAizquierda();
 	}
@@ -89,7 +95,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public synchronized void derecha ()
+	public void derecha ()
 	{
 		moverseAderecha();
 	}
@@ -97,7 +103,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "A".
 	 */
-	public synchronized void A ()
+	public void A ()
 	{
 		miCaracteristica.accionA();
 	}
@@ -105,9 +111,17 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "B".
 	 */
-	public synchronized void B ()
+	public void B ()
 	{
 		miCaracteristica.accionB();
+	}
+	
+	/**
+	 * Especifica la no acción.
+	 */
+	public void quieto ()
+	{
+		cambiarSpriteQuieto();
 	}
 	
 	/**
@@ -116,7 +130,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
 	public void caer () throws AccionActorException
-	{/*
+	{
 		Celda celdaInferior = celdaActual;
 		try 
 		{
@@ -127,41 +141,16 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 			{
 				celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
 				if (!celdaInferior.isOcupada())
+				{
 					moverseAcelda(celdaInferior);
+					if (izq)
+						spriteManager.cambiarSprite(-miCaracteristica.spriteSaltando());
+					else
+						spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
+				}
 				else
 					PG = 0;
 			}
-			
-			if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
-	        {
-				if (! upNeeder.hayWorkerPrioridad(5))
-					upNeeder.addWorker(5,
-							new Worker ()
-							{
-								public void work() throws Exception
-								{
-									if (izq)
-										spriteManager.cambiarSprite(-miCaracteristica.spriteQuieto());
-									else
-										spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
-								}
-							});
-			}
-	        else
-	        {
-	        	if (! upNeeder.hayWorkerPrioridad(0))
-	        		upNeeder.addWorker(0,
-	        				new Worker ()
-	        				{
-	        					public void work() throws Exception
-	        					{
-	        						if (izq)
-	        							spriteManager.cambiarSprite(-miCaracteristica.spriteSaltando());
-									else
-										spriteManager.cambiarSprite(miCaracteristica.spriteSaltando());
-	                            }
-	        				});
-	        }
 		
 		}
 		catch (NullPointerException e1)
@@ -178,8 +167,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		*/
-		miCaracteristica.caer();
+		
+		//miCaracteristica.caer();
 	}
 	
 	/**
@@ -197,7 +186,11 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		spriteManager.cambiarSprite(miCaracteristica.spriteMuerto());
 		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
 		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		
 		super.morir();
+		
+		upNeeder.notUpdate();
+		upNeeder = null;
 		
 		try
 		{
@@ -218,7 +211,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al saltar.
 	 */
 	public void saltar () throws AccionActorException
-	{/*
+	{
 		Celda celdaSuperior = celdaActual;
 		try 
 		{
@@ -261,8 +254,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		*/
-		miCaracteristica.saltar();
+		
+		//miCaracteristica.saltar();
 	}
 	
 	/**
@@ -271,7 +264,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
 	public void moverseAizquierda () throws AccionActorException
-	{/*
+	{
 		Celda celdaAnterior = celdaActual;
 		try 
 		{
@@ -282,18 +275,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 			{
 				izq = true;
 				spriteManager.cambiarSprite(-miCaracteristica.spriteCaminando());
+				spriteManager.setGif(3);
 				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
-				
-				if (! upNeeder.hayWorkerPrioridad(5))
-					upNeeder.addWorker(5, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		spriteManager.cambiarSprite(-miCaracteristica.spriteQuieto());
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -310,8 +295,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		*/
-		miCaracteristica.moverseAizquierda();
+		
+		//miCaracteristica.moverseAizquierda();
 	}
 	
 	/**
@@ -320,7 +305,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
 	public void moverseAderecha () throws AccionActorException
-	{	/*
+	{	
 		Celda celdaSiguiente = celdaActual;
 		try 
 		{
@@ -331,18 +316,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 			{
 				izq = false;
 				spriteManager.cambiarSprite(miCaracteristica.spriteCaminando());
+				spriteManager.setGif(3);
 				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);
-				
-				if (! upNeeder.hayWorkerPrioridad(5))
-                    upNeeder.addWorker(5, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -359,8 +336,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		*/
-		miCaracteristica.moverseAderecha();
+		
+		//miCaracteristica.moverseAderecha();
 	}
 	
 	public void cambiarSpriteQuieto ()
@@ -370,7 +347,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
             {
             	public void work() throws Exception
             	{
-            		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+					if (izq)
+						spriteManager.cambiarSprite(-miCaracteristica.spriteQuieto());
+					else
+						spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
             	}
             });
 	}
@@ -413,6 +393,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		miCaracteristica.crecerFlor();
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 	}
+	
 	/**
 	 * Realiza la acción de ser colisionado por un enemigo.
 	 * @param a es el Actor (enemigo) que colisiona con Mario.
@@ -530,6 +511,16 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	public boolean miraIzq()
 	{
 		return izq;
+	}
+	
+	/**
+	 * Devuelve el UpNeeder del Actor.
+	 * 
+	 * @return UpNeeder del Actor.
+	 */
+	public UpNeeder getUpNeeder ()
+	{
+		return upNeeder;
 	}
 				
 	/*Métodos en Ejecución*/

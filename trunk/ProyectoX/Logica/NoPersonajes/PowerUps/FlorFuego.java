@@ -27,11 +27,10 @@ public class FlorFuego extends PowerUp
 
 	/**
 	 * Crea una Flor de Fuego del juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public FlorFuego(CargadorSprite cargadorSprite) 
+	public FlorFuego() 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 		getSpriteManager().rotarGif(4);
 	}
 	

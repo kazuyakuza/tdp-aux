@@ -101,7 +101,7 @@ public class Escenario extends Canvas implements Worker
 	 */
 	private void transparentarCursor ()
 	{
-		BufferedImage cursor = new CargadorSprite().crearCombatible(10, 10, Transparency.BITMASK);
+		BufferedImage cursor = CargadorSprite.getCargador().crearCombatible(10, 10, Transparency.BITMASK);
 		Toolkit t = Toolkit.getDefaultToolkit();
 		Cursor c = t.createCustomCursor(cursor, new Point(5,5), "null");
 		this.setCursor(c);
@@ -156,12 +156,11 @@ public class Escenario extends Canvas implements Worker
 	 * Agrega el fondo al Escenario.
 	 * 
 	 * @param fondoNombre Nombre del archivo imagen del fondo.
-	 * @param cargadorSprite Cargador de Sprite para cargar la imagen.
 	 * @throws NullPointerException Si fondoNombre o cargadorSprite son null.
 	 * @throws StringEmptyException Si el fondoNombre es igual a vacío.
 	 * @throws CargaRecursoException Error al cargar el Sprite.
 	 */
-	public void agregarFondo (String fondoNombre, CargadorSprite cargadorSprite) throws NullPointerException, StringEmptyException, CargaRecursoException
+	public void agregarFondo (String fondoNombre) throws NullPointerException, StringEmptyException, CargaRecursoException
 	{
 		if (fondoNombre == null)
 			throw new NullPointerException ("Escenario.agregarFondo()" + "\n" +
@@ -169,13 +168,10 @@ public class Escenario extends Canvas implements Worker
 		if (fondoNombre.equals(""))
 			throw new StringEmptyException ("Escenario.agregarFondo()" + "\n" +
 					                        "Imposible agregar fondo. Es nombre del fondo es vacío.");
-		if (cargadorSprite == null)
-			throw new NullPointerException ("Escenario.agregarFondo()" + "\n" +
-					                        "Imposible agregar fondo. El CargadorSprite es null.");
 		
 		try
 		{
-			fondo = cargadorSprite.obtenerSprite(fondoNombre, this);
+			fondo = CargadorSprite.getCargador().obtenerSprite(fondoNombre, this);
 			Graphics2D g = (Graphics2D) fondo.getGraphics();
 			g.setPaint(new TexturePaint(fondo, new Rectangle(0, 0, fondo.getWidth(), fondo.getHeight())));
 			g.fillRect(0, 0, fondo.getWidth(), fondo.getHeight());
@@ -310,11 +306,11 @@ public class Escenario extends Canvas implements Worker
 					                                "(spriteCentral == null) -> " + (spriteCentral == null));
 		
 		if (scX() >= largo/2)
-		{
+		//{
 			//System.out.println(/*(actual().maxX * medidaPixelCelda) - largo -*/ dXcB());
 			if ((actual().maxX * medidaPixelCelda) > largo)
 				difPosX = Math.abs(/*(actual().maxX * medidaPixelCelda) - largo +*/ dXcB());
-		}
+		//}
 		//difPosX = (actual().maxX * medidaPixelCelda)/2 - scX();
 		imprimirBloque(actual());
 	}
@@ -335,7 +331,7 @@ public class Escenario extends Canvas implements Worker
 				bloqueGrafico.eliminarSprite(sp);
 			else
 				g.drawImage(sp.getSpriteActual(), (int) ((sp.posicion()[0] * medidaPixelCelda) - difPosX)
-						                        , (int) ((sp.posicion()[1] * medidaPixelCelda)/* - difPosY*/) + difPiso, this);
+						                        , (int) ((sp.posicion()[1] * medidaPixelCelda) - difPosY) + difPiso, this);
 		}
 		bufferStrategy.show();
 	}

@@ -101,6 +101,7 @@ public class BloqueGrafico
 		if (aux.element() != sp)
 			throw new SpriteException ("BloqueGrafico.eliminarSprite()" + "\n" +
                                        "El SpriteManager que se intenta eliminar no pertenece al BloqueGrafico actual.");
+		sp.limpiar();
 		sprites.remove(aux);
 	}
 	

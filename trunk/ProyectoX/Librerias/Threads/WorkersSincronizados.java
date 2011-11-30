@@ -56,13 +56,35 @@ public class WorkersSincronizados
 	}
 	
 	/**
-	 * Realiza una ejecución del Worker2.
+	 * Realiza una ejecución del Worker2 cuando comienza la ejecución del Worker1.
 	 * 
 	 * @throws Exception Si se produce alguna excepción al realizar el trabajo.
 	 */
-	private void work2 () throws Exception
+	private void work2WhenW1Start () throws Exception
 	{
 		while (ejecucionesW1 == 0) {} //Espera a que se empiece a ejecutar el Worker1.
+		
+		if (ejecucionesW2 <= sincronizacion)
+		{
+			worker2.work();
+			ejecucionesW2++;
+			
+			if (ejecucionesW2 == sincronizacion)
+			{
+				ejecucionesW1 = 0;
+				ejecucionesW2 = 0;
+			}
+		}
+	}
+	
+	/**
+	 * Realiza una ejecución del Worker2 cuando termina la ejecución del Worker1.
+	 * 
+	 * @throws Exception Si se produce alguna excepción al realizar el trabajo.
+	 */
+	private void work2WhenW1End () throws Exception
+	{
+		while ((ejecucionesW1 == 0) || (ejecucionesW1 == 1)) {} //Espera a que se termine de ejecutar el Worker1.
 		
 		if (ejecucionesW2 <= sincronizacion)
 		{
@@ -110,17 +132,30 @@ public class WorkersSincronizados
 	/**
 	 * Devuelve el Worker2 sincronizado con el Worker1.
 	 * 
+	 * Si whenWorker1Start == true, entonces el Worker2 se empezará a ejecutar cuando el Worker1 se empiece a ejecutar.
+	 * Si whenWorker1Start == false, entonces el Worker2 se empezará a ejecutar cuando el Worker1 se termine de ejecutar.
+	 * 
+	 * @param whenWorker1Start Inidica el Worker2 a devolver.
 	 * @return Worker2 sincronizado con el Worker1.
 	 */
-	public Worker getWorker2 ()
+	public Worker getWorker2 (boolean whenWorker1Start)
 	{
-		return new Worker ()
-				{
-					public void work() throws Exception
+		if (whenWorker1Start)
+			return new Worker ()
 					{
-						work2();
-					}
-				};
+						public void work() throws Exception
+						{
+							work2WhenW1Start();
+						}
+					};
+		else
+			return new Worker ()
+					{
+						public void work() throws Exception
+						{
+							work2WhenW1End();
+						}
+					};		
 	}
 
 }

@@ -38,12 +38,10 @@ public class EspecialPowerUp extends Irrompible
 
 	/**
 	 * Crea una Plataforma EspecialPowerUp.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public EspecialPowerUp(PowerUp pwUp, ControlCentral cc, boolean modificable, CargadorSprite cargadorSprite) 
+	public EspecialPowerUp(PowerUp pwUp, ControlCentral cc, boolean modificable) 
 	{
-		super(cargadorSprite);
+		super();
 		spriteManager.cargarSprites(nombresSprites);		
 		spriteManager.rotarGif(cantFramesMovimiento);
 		powerUp = pwUp;

@@ -23,12 +23,10 @@ public class Irrompible extends Actor implements Plataforma
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Irrompible(CargadorSprite cargadorSprite)
+	public Irrompible()
 	{
-		super(nombresSprites, cargadorSprite);
+		super(nombresSprites);
 	}	
 	
 	/*COMANDOS IMPLEMENTADOS*/

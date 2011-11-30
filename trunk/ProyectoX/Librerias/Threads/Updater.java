@@ -18,6 +18,9 @@ public class Updater implements Worker
 	//Atributos de Instancia
 	private PositionList<UpNeeder> upNeeders;
 	
+	//Mi Instancia
+	private static Updater updater = new Updater ();
+	
 	/*CONSTRUCTOR*/
 	
 	/**
@@ -25,7 +28,7 @@ public class Updater implements Worker
 	 * Se asigna como Worker de si mismo.
 	 * Crea una lista vacía de UpNeeders.
 	 */
-	public Updater()
+	private Updater()
 	{
 		upNeeders = new ListaPositionSimple<UpNeeder> ();
 	}
@@ -71,6 +74,18 @@ public class Updater implements Worker
 		if (p.element() != un)
 			throw new NoExisteUpNeederException ("El UpNeeder que está intentando sacar no existe.");
 		return upNeeders.remove(p);
+	}
+	
+	/*CONSULTAS*/
+		
+	/**
+	 * Devuelve el Updater.
+	 * 
+	 * @return Updater.
+	 */
+	public static Updater getUpdater ()
+	{
+		return updater;
 	}
 	
 	/*Métodos en Ejecución*/

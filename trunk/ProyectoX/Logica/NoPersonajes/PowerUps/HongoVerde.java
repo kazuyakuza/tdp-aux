@@ -27,11 +27,10 @@ public class HongoVerde extends PowerUp implements Movible
 	
 	/**
 	 * Crea un Hongo Verde del juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public HongoVerde(CargadorSprite cargadorSprite) 
+	public HongoVerde() 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 	}
 	
 	/*METODOS IMPLEMENTADOS*/
