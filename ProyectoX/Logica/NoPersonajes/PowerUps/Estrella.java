@@ -32,11 +32,10 @@ public class Estrella extends PowerUp implements Movible
 
 	/**
 	 * Crea una Estrella del juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Estrella (CargadorSprite cargadorSprite) 
+	public Estrella () 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 		getSpriteManager().rotarGif(4);
 	}
 	

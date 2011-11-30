@@ -10,6 +10,7 @@ import ProyectoX.Librerias.Threads.AliveThread;
 import ProyectoX.Librerias.Threads.ControlThread;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Librerias.Threads.WorkersSincronizados;
 import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
@@ -46,11 +47,9 @@ public class ControlCentral implements Runnable, ControlThread
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
 	private Escenario escenario;
-	private CargadorSprite cargadorSprite;
 	private Jugador jugador;
 	private Nivel nivel;
 	private Gravedad gravedad;
-	private Updater updater;
 	private IAControl iaControl;
 	
 	//Threads
@@ -84,19 +83,15 @@ public class ControlCentral implements Runnable, ControlThread
 			Tactual = null;
 			ventanaPrincipal = ventana;
 			escenario = e;
-			
-			cargadorSprite = new CargadorSprite ();
 		
-			Mario PJ = new Mario (new MarioChico(), cargadorSprite);
+			Mario PJ = new Mario (new MarioChico());
 			Control c = new Teclado();
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
 			
-			nivel = new Nivel(1);
+			nivel = new Nivel(0);
 			
 			gravedad = new Gravedad(this);
-			
-			updater = new Updater ();
 			
 			iaControl = new IAControl ();
 			
@@ -106,14 +101,34 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.repaint();
 			
 			//Crea y Asigna WorkersSincronizados
-			WorkersSincronizados ws1 = new WorkersSincronizados (updater, 1, escenario);
+			//WorkersSincronizados ws = new WorkersSincronizados (escenario, 1, Updater.getUpdater());
 			
 			//Crear y Asignar Threads
-			Tescenario = new AliveThread (this, 0.5, ws1.getWorker2());
+			/*Tescenario = new AliveThread (this, 0.5, ws.getWorker1());
 			Tjugador = new AliveThread (this, 1, jugador);
 			Tgravedad = new AliveThread (this, 1, gravedad);
 			TiaControl = new AliveThread (this, 1, iaControl);
-			Tupdater = new AliveThread (this, 0.5, ws1.getWorker1());
+			Tupdater = new AliveThread (this, 0.1, ws.getWorker2(false));*/
+			
+			//TEST
+			
+			WorkersSincronizados ws1 = new WorkersSincronizados (iaControl, 1, jugador);
+			WorkersSincronizados ws2 = new WorkersSincronizados (ws1.getWorker2(true), 1,
+					                                             new Worker ()
+			                                                     {
+																	public void work() throws Exception
+																	{
+																		Thread.sleep((int) (getSleepTime() * 0.5));
+																		Updater.getUpdater().work();
+																	}
+			                                                     });
+			
+			//Crear y Asignar Threads
+			Tescenario = new AliveThread (this, 0.5, escenario);
+			Tjugador = new AliveThread (this, 1, ws2.getWorker1());
+			Tgravedad = new AliveThread (this, 1, gravedad);
+			TiaControl = new AliveThread (this, 1, ws1.getWorker1());
+			Tupdater = new AliveThread (this, 0, ws2.getWorker2(false));
 		}
 		catch (Exception exception)
 		{
@@ -140,8 +155,6 @@ public class ControlCentral implements Runnable, ControlThread
 	public void agregarActor (Actor a)
 	{
 		nivel.getActores(this).addLast(a);
-		for (UpNeeder un: a.getUpNeeders())
-			updater.addUpNeeder(un);
 	}
 	
 	public void agregarAfectableXgravedad (afectableXgravedad aXg)
@@ -152,8 +165,6 @@ public class ControlCentral implements Runnable, ControlThread
 	
 	public void agregarPowerUp (PowerUp pu)
 	{			
-		for (UpNeeder un: pu.getUpNeeders())
-			updater.addUpNeeder(un);
 		nivel.agregarPowerUp(pu);		
 	}
 	
@@ -196,7 +207,7 @@ public class ControlCentral implements Runnable, ControlThread
 	{
 		for (EspecialPowerUp plataforma: nivel.getEspecialesPowerUp(this))
 			if (plataforma.esCambiable())
-				plataforma.cambiarPowerUp(new FlorFuego (plataforma.getSpriteManager().getCargadorSprite()));	
+				plataforma.cambiarPowerUp(new FlorFuego ());	
 	}
 	
 	/**
@@ -206,7 +217,7 @@ public class ControlCentral implements Runnable, ControlThread
 	{
 		for (EspecialPowerUp plataforma: nivel.getEspecialesPowerUp(this))
 			if (plataforma.esCambiable())
-				plataforma.cambiarPowerUp(new SuperHongo (plataforma.getSpriteManager().getCargadorSprite()));
+				plataforma.cambiarPowerUp(new SuperHongo ());
 	}
 	
 	/**
@@ -251,7 +262,7 @@ public class ControlCentral implements Runnable, ControlThread
 		try
 		{
 			//Inicialización Lógica.
-			nivel.inicializarNivel((Actor) jugador.personaje, this, cargadorSprite);
+			nivel.inicializarNivel((Actor) jugador.personaje, this);
 			
 			//Inicialización Gráfica.
 			Bloque bloqueActual = nivel.getBloqueActual();
@@ -266,7 +277,7 @@ public class ControlCentral implements Runnable, ControlThread
 				a.spriteManager.setBloqueGrafico(this, bloqueGrafico);
 			}
 			
-			escenario.agregarFondo(nivel.fondo(), cargadorSprite);
+			escenario.agregarFondo(nivel.fondo());
 			escenario.agregarBloquesGrafico(bloques);
 			escenario.setBloqueGraficoActual(new int[] {0,0});
 			escenario.agregarSpriteCentral(((Actor) jugador.personaje).spriteManager);
@@ -274,11 +285,6 @@ public class ControlCentral implements Runnable, ControlThread
 			//Agrego IAs al IAControl
 			for (Enemigo e: nivel.getEnemigos(this))
 				iaControl.addIA(e.getIA());
-			
-			//Agregando UpNeeders al Updater
-			for (Actor a: nivel.getActores(this))
-				for (UpNeeder un: a.getUpNeeders())
-					updater.addUpNeeder(un);
 			
 			//Start Thread's
 			Tjugador.start();
@@ -312,7 +318,6 @@ public class ControlCentral implements Runnable, ControlThread
 				}
 				
 			((Actor) jugador.personaje).spriteManager.flashear();*/
-			ventanaPrincipal.repaint();
 		}
 		//((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
 	}

@@ -28,13 +28,11 @@ public class Moneda extends Actor implements Punteable
 	private static int cantFramesMovimiento = 3;
 	
 	/**
-	 * Crea una Moneda.
-	 * 	 
-	 * @param cargadorSprite Clase para cargar los sprites.	 
+	 * Crea una Moneda. 
 	 */
-	public Moneda(CargadorSprite cargadorSprite) 
+	public Moneda() 
 	{
-		super(nombresSprites, cargadorSprite);			
+		super(nombresSprites);			
 		spriteManager.rotarGif(cantFramesMovimiento);
 	}
 	

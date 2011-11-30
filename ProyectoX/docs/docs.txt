@@ -17,3 +17,6 @@ Se determinó que los actores mueren cuando caen a la última fila del bloque y qu
 
 Se decidió que Jugador, a través de un hilo, está pendiente de las acciones que desea realizar el usuario, y cuando escucha (con oyentes) lo que el usuario quiere, le comunica 
 al personaje lo que debe hacer.
+
+REESCRIBIR:
+GoF Singleton -> CargadorSprite, Updater

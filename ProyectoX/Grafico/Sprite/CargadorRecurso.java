@@ -18,6 +18,13 @@ public abstract class CargadorRecurso
 	//Variables de Clase
 	private String dirRecursos = "ProyectoX/Recursos/";
 	
+	/*CONSTRUCTOR*/
+	
+	/**
+	 * Contructor para clases hijas.
+	 */
+	protected CargadorRecurso () {}
+	
 	/*COMANDOS*/
 	
 	/**

@@ -36,27 +36,24 @@ public class EspecialMonedas extends Irrompible
 
 	/**
 	 * Crea una Plataforma EspecialMonedas.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public EspecialMonedas(int monedas,CargadorSprite cargadorSprite) 
+	public EspecialMonedas(int monedas) 
 	{
-		super(cargadorSprite);
+		super();
 		spriteManager.cargarSprites(nombresSprites);
 		spriteManager.rotarGif(cantFramesMovimiento);
 		this.monedas = new ListaPositionSimple <Moneda> ();
-		inicializar(monedas, cargadorSprite);
+		inicializar(monedas);
 	}
 	
 	/**
 	 * Inicializa al objeto, agregando a la lista de monedas, la cantidad especificada.
 	 * @param cantidad monedas a crear y agregar a la plataforma.
-	 * @param cargadorSprite Clase para cargar los sprites de las monedas.
 	 */
-	private void inicializar (int cantidad, CargadorSprite cargadorSprite)
+	private void inicializar (int cantidad)
 	{
 		for (int i=0; i < cantidad; i++)
-			this.monedas.addLast(new Moneda (cargadorSprite));
+			this.monedas.addLast(new Moneda ());
 	}
 	
 	/**

@@ -24,12 +24,10 @@ public class Rompible extends Actor implements Plataforma
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Rompible(CargadorSprite cargadorSprite)
+	public Rompible()
 	{
-		super(nombresSprites, cargadorSprite);
+		super(nombresSprites);
 	}	
 
 /*COMANDOS IMPLEMENTADOS*/

@@ -6,6 +6,8 @@ import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Excepciones.IAexception;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
@@ -44,6 +46,9 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 	protected static int quieto = 0;
 	protected static int movimiento = 1;
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
 	//Prioridades para el UpNeeder
 	//0 = morir
 	//1 = dañar PJ
@@ -53,13 +58,12 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 	
 	/**
 	 * Crea un Personaje Seleccionable Mario con la Caracteristica pasada por parámetro.
-	 * 
-	 * @param c Caracteristica de Mario con la que se inicializa.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Goomba (CargadorSprite cargadorSprite)
+	public Goomba ()
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
+		upNeeder = new UpNeeder (5);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		miIA = new IAGoomba (this);
 		PG = 0;
 	}
@@ -128,7 +132,11 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 		miIA.meMori(this);
 		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
 		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		
 		super.morir();
+		
+		upNeeder.notUpdate();
+		upNeeder = null;
 	}
 	
 	/**

@@ -51,7 +51,7 @@ public abstract class Caracteristica
 	 */	
 	protected Caracteristica(Mario pj)
 	{
-		mario = pj;		
+		mario = pj;
 		mario.getSpriteManager().cargarSprites(this.getNombresSprites());		
 	}
 	

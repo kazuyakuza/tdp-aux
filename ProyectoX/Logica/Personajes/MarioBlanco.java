@@ -155,7 +155,7 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void disparar ()
 	{
-		BolaFuego bola = new BolaFuego (mario, mario.getSpriteManager().getCargadorSprite());
+		BolaFuego bola = new BolaFuego (mario);
 		mario.getCeldaActual().agregarActor(bola);
 		bola.setCeldaActual(mario.getCeldaActual());
 		mario.getSpriteManager().printNextMe(bola.getSpriteManager());

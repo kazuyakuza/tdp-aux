@@ -26,6 +26,17 @@ public class CargadorSprite extends CargadorRecurso
 	//Variables de Clase
 	private static String dirSprites = "Imagenes/";
 	
+	//Mi Instancia
+	private static CargadorSprite cargadorSprite = new CargadorSprite ();
+	
+	/**
+	 * Redefición de Constructor Default.
+	 */
+	private CargadorSprite ()
+	{
+		super();
+	}
+	
 	/*COMANDOS*/
 
 	/**
@@ -93,6 +104,18 @@ public class CargadorSprite extends CargadorRecurso
 		GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
 		BufferedImage combatible = gc.createCompatibleImage(ancho, alto, transparency);
 		return combatible;
+	}
+	
+	/*CONSULTAS*/
+	
+	/**
+	 * Devuelve el CargadorSprite.
+	 * 
+	 * @return CargadorSprite.
+	 */
+	public static CargadorSprite getCargador ()
+	{
+		return cargadorSprite;
 	}
 
 }

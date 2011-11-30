@@ -22,12 +22,10 @@ public class Piso extends Actor implements Estructura
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public Piso(CargadorSprite cargadorSprite)
+	public Piso()
 	{
-		super(nombresSprites, cargadorSprite);
+		super(nombresSprites);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/

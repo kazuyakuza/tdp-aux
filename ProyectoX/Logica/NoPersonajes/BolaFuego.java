@@ -5,6 +5,8 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Grafico.Sprite.CargadorSprite;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
@@ -42,19 +44,22 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	protected Mario mario;
 	//protected IA miIA;
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
 	//Prioridades en UpNeeder
 	//0 = morir (explotar)
 	//1 = moverseAizquierda, moverseAderecha.
 
 	/**
 	 * Crea una Plataforma Irrompible.
-	 * 
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public BolaFuego(Mario pj, CargadorSprite cargadorSprite) 
+	public BolaFuego(Mario pj) 
 	{
-		super(nombresSprites, cargadorSprite);
-		mario = pj;		
+		super(nombresSprites);
+		mario = pj;
+		upNeeder = new UpNeeder (5);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		spriteManager.cambiarSprite(enMovimiento);
 		spriteManager.rotarGif(cantFramesMovimiento);
 	}
@@ -135,7 +140,11 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	public void morir()
 	{
 		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		
 		super.morir();
+		
+		upNeeder.notUpdate();
+		upNeeder = null;
 	}
 	
 	/**

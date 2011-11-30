@@ -34,12 +34,11 @@ public class Llegada extends Actor
 	 * Crea una Llegada.
 	 * 
 	 * @param cc ControlCentral del Juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 * @throws NullPointerException Si cc es null.
 	 */
-	public Llegada (ControlCentral cc, CargadorSprite cargadorSprite) throws NullPointerException
+	public Llegada (ControlCentral cc) throws NullPointerException
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 		
 		if (cc == null)
 			throw new NullPointerException ("Llegada." + "\n" +

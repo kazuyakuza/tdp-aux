@@ -27,13 +27,11 @@ public class Vacio extends Actor implements Punteable
 	/*CONTRUCTOR*/
 	
 	/**
-	 * Crea un Vacio.
-	 * 	 
-	 * @param cargadorSprite Clase para cargar los sprites.	 
+	 * Crea un Vacio. 
 	 */
-	public Vacio(CargadorSprite cargadorSprite) 
+	public Vacio() 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/

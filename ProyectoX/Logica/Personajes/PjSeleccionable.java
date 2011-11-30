@@ -49,6 +49,11 @@ public interface PjSeleccionable extends Personaje, Posicionable, afectableXgrav
 	public void B ();
 	
 	/**
+	 * No realiza ninguna acción.
+	 */
+	public void quieto ();
+	
+	/**
 	 * Realiza la acción "morir".
 	 */
 	public void morir ();

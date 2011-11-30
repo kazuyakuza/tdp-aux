@@ -28,8 +28,6 @@ public abstract class Actor implements Posicionable
 	  //Grafica y Sonido
 	protected SpriteManager spriteManager;
 	//private SoundManager soundManager;
-	  //Actualizador
-	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	  //Logica
 	protected Celda celdaActual;	
 	
@@ -37,23 +35,18 @@ public abstract class Actor implements Posicionable
 	
 	/**
 	 * Recibe los nombres de los Sprites para el Actor actual, y crea el SpriteManager.
-	 * El SpriteManager carga los sprites con el CargadorSprite pasado por parámetro.
+	 * El SpriteManager carga los sprites.
 	 * 
 	 * @param nombresSprites Nombres de los archivos de las imagenes del Sprite para este Actor.
-	 * @param cargadorSprite Clase para cargar los sprites.
-	 * @throws NullPointerException Si nombresSprites es null, o cargadorSprite es null.
+	 * @throws NullPointerException Si nombresSprites es null.
 	 */
-	protected Actor (String[] nombresSprites, CargadorSprite cargadorSprite)
+	protected Actor (String[] nombresSprites)
 	{
 		if ((nombresSprites == null) || (nombresSprites.length == 0))
 			throw new NullPointerException ("Actor." + "\n" +
 					                        "Imposible crear Actor. nombresSprites es null.");
-		if (cargadorSprite == null)
-			throw new NullPointerException ("Actor." + "\n" +
-                                            "Imposible crear Actor. cargadorSprite es null.");
 		
-		spriteManager = new SpriteManager (nombresSprites, cargadorSprite);
-		upNeeder = new UpNeeder (5);
+		spriteManager = new SpriteManager (nombresSprites);
 		celdaActual = null;		
 	}
 	
@@ -158,9 +151,6 @@ public abstract class Actor implements Posicionable
 		
 		spriteManager = null;
 		celdaActual = null;
-		
-		upNeeder.notUpdate();
-		upNeeder = null;
 	}
 	
 	/**
@@ -208,29 +198,6 @@ public abstract class Actor implements Posicionable
 	public Celda getCeldaActual ()
 	{
 		return celdaActual;
-	}
-	
-	/**
-	 * Devuelve el UpNeeder del Actor.
-	 * 
-	 * @return UpNeeder del Actor.
-	 */
-	public UpNeeder getUpNeeder ()
-	{
-		return upNeeder;
-	}
-	
-	/**
-	 * Devuelve el UpNeeder del Actor junto con el UpNeeder del SpriteManager.
-	 * 
-	 * @return UpNeeder del Actor junto con el UpNeeder del SpriteManager.
-	 */
-	public PositionList<UpNeeder> getUpNeeders ()
-	{
-		PositionList<UpNeeder> r = new ListaPositionSimple<UpNeeder> ();
-		r.addFirst(upNeeder);
-		r.addFirst(spriteManager.getUpNeeder());
-		return r;
 	}
 
 }

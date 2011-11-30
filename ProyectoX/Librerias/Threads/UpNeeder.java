@@ -80,6 +80,8 @@ public class UpNeeder
 	
 	/**
 	 * Indica que el UpNeeder ya no necesita ser actualizado.
+	 * 
+	 * Es eliminado en el Updater.
 	 */
 	public void notUpdate ()
 	{

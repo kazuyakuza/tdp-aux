@@ -27,11 +27,10 @@ public class BombaNuclear extends PowerUp
 
 	/**
 	 * Crea una Bomba Nuclear del juego.
-	 * @param cargadorSprite Clase para cargar los sprites.
 	 */
-	public BombaNuclear(ControlCentral cc, CargadorSprite cargadorSprite) 
+	public BombaNuclear(ControlCentral cc) 
 	{
-		super (nombresSprites, cargadorSprite);
+		super (nombresSprites);
 		controlCentral = cc;
 	}
 	
