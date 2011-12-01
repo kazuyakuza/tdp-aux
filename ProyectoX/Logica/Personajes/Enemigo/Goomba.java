@@ -5,7 +5,6 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Excepciones.IAexception;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
@@ -17,7 +16,7 @@ import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IAGoomba;
 import ProyectoX.Logica.Responsabilidades.Movible;
-import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
+
 
 /**
  * Representa al Enemigo Goomba del Juego.
@@ -27,7 +26,7 @@ import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Goomba extends Actor implements Enemigo, Movible //, afectableXgravedad
+public class Goomba extends Actor implements Enemigo, Movible
 {
 	
 	//Atributos de Clase
@@ -99,9 +98,9 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayInferior(celdaActual))
+			if (celdaActual.hayInferior())
 			{
-				celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+				celdaInferior = celdaActual.getInferior();
 				if (!celdaInferior.isOcupada())
 					moverseAcelda(celdaInferior);
 				else
@@ -152,10 +151,10 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
+			if (celdaActual.hayAnterior())
 			{
 				spriteManager.cambiarSprite(-movimiento);
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
 				
@@ -198,10 +197,10 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
+			if (celdaActual.haySiguiente())
 			{
 				spriteManager.cambiarSprite(movimiento);
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);
 				
@@ -262,7 +261,7 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 	 */
 	public void efectoGravedad (int efecto)
 	{
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+		if (celdaActual.getInferior().isOcupada())
 			PG = 0;
 		else
 			if (!(PG < 0))
@@ -331,7 +330,7 @@ public class Goomba extends Actor implements Enemigo, Movible //, afectableXgrav
 		{
 			final Mario mario = checkActorJugador(pj);
 			
-			if (celdaActual.getBloque().getSuperior(celdaActual) == mario.getCeldaActual())
+			if (celdaActual.getSuperior() == mario.getCeldaActual())
 			{
 				pj.getJugador().asignarPuntos(60);
 				

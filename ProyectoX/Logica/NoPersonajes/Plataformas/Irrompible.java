@@ -1,6 +1,5 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;

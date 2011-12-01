@@ -1,10 +1,7 @@
 package ProyectoX.Logica.NoPersonajes.PowerUps;
 
-import java.util.Iterator;
-
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
@@ -50,7 +47,7 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	 */
 	public void efectoGravedad (int efecto)
 	{
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+		if (celdaActual.getInferior().isOcupada())
 			PG = 0;
 		else
 			if (!(PG < 0))
@@ -100,7 +97,7 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+			celdaInferior = celdaActual.getInferior();
 			if (!celdaInferior.isOcupada())
 				moverseAcelda(celdaInferior);
 			else
@@ -149,7 +146,7 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 		{
 			Mario mario = checkActorJugador (pj);
 			
-			pj.getJugador().asignarPuntos(this.getPuntos(mario));
+			pj.getJugador().asignarPuntos(this.getPuntos(mario));			 
 			this.efecto(mario);			
 			this.morir();
 		}

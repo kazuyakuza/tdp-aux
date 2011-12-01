@@ -1,11 +1,7 @@
 package ProyectoX.Logica;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Grafico.Sprite.SpriteManager;
-import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Librerias.TDALista.PositionList;
-import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -96,11 +92,11 @@ public abstract class Actor implements Posicionable
 		if (c == null)
 			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
-		
-		producirColisiones(c);
+				
 		celdaActual.sacarActor(this);
 		celdaActual = c;
 		celdaActual.agregarActor(this);
+		producirColisiones(c);			
 		spriteManager.actualizar(celdaActual.getPosicion());
 	}
 	

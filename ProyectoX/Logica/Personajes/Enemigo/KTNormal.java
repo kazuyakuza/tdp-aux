@@ -5,7 +5,6 @@ import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
-import ProyectoX.Logica.Personajes.PjSeleccionable;
 
 public class KTNormal extends CaracteristicaKT
 {
@@ -51,10 +50,10 @@ public class KTNormal extends CaracteristicaKT
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
+			if (celdaActual.hayAnterior())
 			{
 				koopa.getSpriteManager().cambiarSprite(movimiento);
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 					koopa.moverseAcelda(celdaAnterior);
 				
@@ -99,10 +98,10 @@ public class KTNormal extends CaracteristicaKT
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
+			if (celdaActual.haySiguiente())
 			{
 				koopa.getSpriteManager().cambiarSprite(-movimiento);
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					koopa.moverseAcelda(celdaSiguiente);
 				
@@ -154,7 +153,7 @@ public class KTNormal extends CaracteristicaKT
 	public void colisionarPj (final Mario mario) throws ColisionException, NullPointerException
 	{
 		Celda celdaActual = koopa.getCeldaActual();
-		if (celdaActual.getBloque().getSuperior(celdaActual) == mario.getCeldaActual())
+		if (celdaActual.getSuperior() == mario.getCeldaActual())
 		{			
 			if (! koopa.getUpNeeder().hayWorkerPrioridad(0))
 				koopa.getUpNeeder().addWorker(0, new Worker ()

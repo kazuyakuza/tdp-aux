@@ -1,7 +1,6 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
@@ -58,7 +57,7 @@ public class Rompible extends Actor implements Plataforma
 		try
 		{
 			Mario mario = checkActorJugador (pj);			
-			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
+			if (colisionAbajo(mario))
 			{//Si la colisión de Mario es desde abajo, romper plataforma, sino, no hacer nada.			
 				mario.golpearRompible(this);											
 			}
@@ -93,12 +92,14 @@ public class Rompible extends Actor implements Plataforma
 	
 	/**
 	 * Verifica si la colisión con el Actor proviene desde abajo.
-	 * @param a Actor con el que se colisiona.
-	 * @return Verdadero si el Actor a se encuentra abajo, falso, en caso contrario.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario a se encuentra abajo, falso, en caso contrario.
 	 */
-	protected boolean colisionAbajo (Actor a)
-	{
-		return this.celdaActual.getBloque().getInferior(this.celdaActual) == a.getCeldaActual();
+	protected boolean colisionAbajo (Mario mario)
+	{		
+		//Mario se encuentra debajo de la plataforma si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);
+		return (vector[0] == 0 && vector[1] == 1);
 	}
 	
 	/**
