@@ -1,8 +1,11 @@
 package ProyectoX.Logica.NoPersonajes.PowerUps;
 
+import java.util.Iterator;
+
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -77,8 +80,8 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	 */
 	public void morir ()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarPowerUp(this);
-		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
+		ActualizadorNivel.act().eliminarPowerUp(this);
+		
 		super.morir();
 	}
 	
@@ -146,7 +149,7 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 		{
 			Mario mario = checkActorJugador (pj);
 			
-			pj.getJugador().asignarPuntos(this.getPuntos(mario));			 
+			pj.getJugador().asignarPuntos(this.getPuntos(mario));
 			this.efecto(mario);			
 			this.morir();
 		}
@@ -171,12 +174,18 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	/**
 	 * Realiza las colisiones del Actor actual con los Actores que se encuentran en la Celda c.
 	 * 
-	 * @param c Celda con los Actores a colisionar con el Actor actual. 
+	 * @param c Celda con los Actores a colisionar con el Actor actual.
+	 * @throws NullPointerException Si c es null.
 	 */
-	protected void producirColisiones (Celda c)
+	protected void producirColisiones (Celda c) throws NullPointerException
 	{
-		//Nada ocurre	
-	}
-	
+		if (c == null)
+			throw new NullPointerException ("PowerUp.producirColisiones()" + "\n" +
+					                        "Imposible realizar colisiones. La celda indicada es null.");
+		
+		Iterator <Actor> actores = c.getActores();
+		while (actores.hasNext())
+			actores.next().colisionar(this);
+	}	
 	
 }

@@ -9,6 +9,7 @@ import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -16,7 +17,7 @@ import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IAGoomba;
 import ProyectoX.Logica.Responsabilidades.Movible;
-
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
 /**
  * Representa al Enemigo Goomba del Juego.
@@ -26,7 +27,7 @@ import ProyectoX.Logica.Responsabilidades.Movible;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class Goomba extends Actor implements Enemigo, Movible
+public class Goomba extends Actor implements Enemigo, Movible, afectableXgravedad
 {
 	
 	//Atributos de Clase
@@ -44,6 +45,7 @@ public class Goomba extends Actor implements Enemigo, Movible
 	//Numeros de los Sprites.
 	protected static int quieto = 0;
 	protected static int movimiento = 1;
+	protected boolean mov; //Mejora del moviemiento.
 	
 	//Actualizador
 	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
@@ -51,7 +53,6 @@ public class Goomba extends Actor implements Enemigo, Movible
 	//Prioridades para el UpNeeder
 	//0 = morir
 	//1 = dañar PJ
-	//3 = spriteManager.cambiarSprite(quieto)
 	
 	/*CONSTRUCTOR*/
 	
@@ -61,10 +62,11 @@ public class Goomba extends Actor implements Enemigo, Movible
 	public Goomba ()
 	{
 		super (nombresSprites);
-		upNeeder = new UpNeeder (5);
+		upNeeder = new UpNeeder (1);
 		Updater.getUpdater().addUpNeeder(upNeeder);
 		miIA = new IAGoomba (this);
 		PG = 0;
+		mov = true;
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -72,7 +74,7 @@ public class Goomba extends Actor implements Enemigo, Movible
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public synchronized void izquierda ()
+	public void izquierda ()
 	{
 		moverseAizquierda();
 	}
@@ -80,7 +82,7 @@ public class Goomba extends Actor implements Enemigo, Movible
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public synchronized void derecha ()
+	public void derecha ()
 	{
 		moverseAderecha();
 	}
@@ -90,7 +92,7 @@ public class Goomba extends Actor implements Enemigo, Movible
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public synchronized void caer () throws AccionActorException
+	public void caer () throws AccionActorException
 	{
 		Celda celdaInferior = celdaActual;
 		try 
@@ -129,13 +131,15 @@ public class Goomba extends Actor implements Enemigo, Movible
 	public void morir ()
 	{
 		miIA.meMori(this);
-		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);
-		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		
+		ActualizadorNivel.act().eliminarCaible(this);
+		ActualizadorNivel.act().eliminarEnemigo(this);
 		
 		super.morir();
 		
 		upNeeder.notUpdate();
 		upNeeder = null;
+		miIA = null;
 	}
 	
 	/**
@@ -153,19 +157,14 @@ public class Goomba extends Actor implements Enemigo, Movible
 			
 			if (celdaActual.hayAnterior())
 			{
-				spriteManager.cambiarSprite(-movimiento);
+				if (mov)
+					spriteManager.cambiarSprite(movimiento);
+				else
+					spriteManager.cambiarSprite(quieto);
+				mov = !mov;
 				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);
-				
-				if (! upNeeder.hayWorkerPrioridad(3))
-					upNeeder.addWorker(3, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		spriteManager.cambiarSprite(-quieto);
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -199,19 +198,14 @@ public class Goomba extends Actor implements Enemigo, Movible
 			
 			if (celdaActual.haySiguiente())
 			{
-				spriteManager.cambiarSprite(movimiento);
+				if (mov)
+					spriteManager.cambiarSprite(movimiento);
+				else
+					spriteManager.cambiarSprite(quieto);
+				mov = !mov;
 				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);
-				
-				if (! upNeeder.hayWorkerPrioridad(3))
-                    upNeeder.addWorker(3, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		spriteManager.cambiarSprite(quieto);
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -408,7 +402,7 @@ public class Goomba extends Actor implements Enemigo, Movible
 	protected void producirColisiones (Celda c) throws NullPointerException
 	{
 		if (c == null)
-			throw new NullPointerException ("BolaFuego.producirColisiones()" + "\n" +
+			throw new NullPointerException ("Goomba.producirColisiones()" + "\n" +
 					                        "Imposible realizar colisiones. La celda indicada es null.");
 		
 		Iterator <Actor> actores = c.getActores();

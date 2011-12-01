@@ -2,9 +2,9 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.Responsabilidades.Posicionable;
-import ProyectoX.Logica.Mapa.Celda;
 
 /**
  * Representa a Mario en estado MarioGrande (cuando Mario toma el Super Hongo) del juego.
@@ -285,7 +285,6 @@ public class MarioGrande extends Caracteristica
 		celdaGrande = c;
 		celdaGrande.agregarActor(mario);
 		mario.producirColisiones(c);
-		//mario.getSpriteManager().actualizar(celdaGrande.getPosicion());
 	}
 	
 }

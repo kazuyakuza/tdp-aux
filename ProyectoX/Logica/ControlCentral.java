@@ -5,23 +5,21 @@ import java.util.Iterator;
 import ProyectoX.Grafico.BloqueGrafico;
 import ProyectoX.Grafico.Escenario;
 import ProyectoX.Grafico.VentanaPrincipal;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.AliveThread;
 import ProyectoX.Librerias.Threads.ControlThread;
-import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Librerias.Threads.WorkersSincronizados;
 import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Bloque;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Mapa.Nivel;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
-import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
-import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
-import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
+import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
+import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
@@ -101,17 +99,6 @@ public class ControlCentral implements Runnable, ControlThread
 			ventanaPrincipal.repaint();
 			
 			//Crea y Asigna WorkersSincronizados
-			//WorkersSincronizados ws = new WorkersSincronizados (escenario, 1, Updater.getUpdater());
-			
-			//Crear y Asignar Threads
-			/*Tescenario = new AliveThread (this, 0.5, ws.getWorker1());
-			Tjugador = new AliveThread (this, 1, jugador);
-			Tgravedad = new AliveThread (this, 1, gravedad);
-			TiaControl = new AliveThread (this, 1, iaControl);
-			Tupdater = new AliveThread (this, 0.1, ws.getWorker2(false));*/
-			
-			//TEST
-			
 			WorkersSincronizados ws1 = new WorkersSincronizados (iaControl, 1, jugador);
 			WorkersSincronizados ws2 = new WorkersSincronizados (ws1.getWorker2(true), 1,
 					                                             new Worker ()
@@ -150,22 +137,6 @@ public class ControlCentral implements Runnable, ControlThread
 			throw new NullPointerException ("ControlCentral.agregarThread()" + "\n" +
                                             "El thread que se quiere agregar es null.");
 		Tactual = t;
-	}
-	
-	public void agregarActor (Actor a)
-	{
-		nivel.getActores(this).addLast(a);
-	}
-	
-	public void agregarAfectableXgravedad (afectableXgravedad aXg)
-	{
-		nivel.getCaibles(this).addFirst(aXg);
-		agregarActor((Actor) aXg);
-	}
-	
-	public void agregarPowerUp (PowerUp pu)
-	{			
-		nivel.agregarPowerUp(pu);		
 	}
 	
 	/*CONSULTAS*/
@@ -229,7 +200,7 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void explotarBombaNuclear (BombaNuclear bomba) throws NullPointerException
 	{
-		for (Enemigo enemigo: nivel.getEnemigos(this))			
+		for (Enemigo enemigo: nivel.getEnemigos(this))
 			if (distancia (bomba.getCeldaActual(),enemigo.getCeldaActual()) <= 10 )			
 				((Actor)enemigo).morir();		
 	}
@@ -263,6 +234,10 @@ public class ControlCentral implements Runnable, ControlThread
 		{
 			//Inicialización Lógica.
 			nivel.inicializarNivel((Actor) jugador.personaje, this);
+			
+			//Inicialización ActualizadorNivel.
+			ActualizadorNivel.act().agregarControl(this);
+			ActualizadorNivel.act().agregarNivel(nivel);
 			
 			//Inicialización Gráfica.
 			Bloque bloqueActual = nivel.getBloqueActual();

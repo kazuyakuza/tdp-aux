@@ -62,6 +62,8 @@ public abstract class IA
 	/**
 	 * Devuelve actuar.
 	 * 
+	 * Si actuar < 0, entonces la IA es eliminada (y llama al método limpiar()) por el IAControl.
+	 * 
 	 * @return Actuar.
 	 */
 	public final int getActuar ()

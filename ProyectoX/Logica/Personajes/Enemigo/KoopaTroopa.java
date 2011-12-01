@@ -9,6 +9,7 @@ import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -16,8 +17,9 @@ import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IAKT;
 import ProyectoX.Logica.Responsabilidades.Movible;
+import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
-public class KoopaTroopa extends Actor implements Enemigo, Movible
+public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgravedad
 {	
 	//Atributos de Instancia
 	protected CaracteristicaKT miCaracteristica;
@@ -45,7 +47,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 	public KoopaTroopa (CaracteristicaKT c)
 	{
 		super (c.getNombresSprites());
-		upNeeder = new UpNeeder (5);
+		upNeeder = new UpNeeder (3);
 		Updater.getUpdater().addUpNeeder(upNeeder);
 		miCaracteristica = c;
 		c.setKoopaTroopa(this);
@@ -59,7 +61,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public synchronized void izquierda ()
+	public void izquierda ()
 	{
 		miCaracteristica.moverseAizquierda();
 	}
@@ -67,7 +69,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public synchronized void derecha ()
+	public void derecha ()
 	{
 		miCaracteristica.moverseAderecha();
 	}
@@ -77,7 +79,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public synchronized void caer () throws AccionActorException
+	public void caer () throws AccionActorException
 	{
 		Celda celdaInferior = celdaActual;
 		try 
@@ -116,8 +118,10 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 	public void morir ()
 	{
 		miIA.meMori(this);
-		celdaActual.getBloque().getMapa().getNivel().eliminarCaible(this);		
-		celdaActual.getBloque().getMapa().getNivel().eliminarEnemigo(this);
+		
+		ActualizadorNivel.act().eliminarCaible(this);		
+		ActualizadorNivel.act().eliminarEnemigo(this);
+		
 		miCaracteristica.setKoopaTroopa(null);
 		miCaracteristica = null;
 		
@@ -125,6 +129,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 		
 		upNeeder.notUpdate();
 		upNeeder = null;
+		miIA = null;
 	}
 	
 	/**
@@ -339,7 +344,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible
 	protected void producirColisiones (Celda c) throws NullPointerException
 	{
 		if (c == null)
-			throw new NullPointerException ("BolaFuego.producirColisiones()" + "\n" +
+			throw new NullPointerException ("KoopaTroopa.producirColisiones()" + "\n" +
 					                        "Imposible realizar colisiones. La celda indicada es null.");
 		
 		Iterator <Actor> actores = c.getActores();

@@ -42,10 +42,10 @@ public class Destructor extends DecoracionCaracteristica
 			{
 				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);			
-				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
-				mario.getSpriteManager().cambiarSprite(quieto);							
 				flash.stop();
-				timer.stop();				
+				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
+				mario.getSpriteManager().cambiarSprite(quieto);
+				timer.stop();
 			}
 		});
 		flash = new Timer (200, new ActionListener ()

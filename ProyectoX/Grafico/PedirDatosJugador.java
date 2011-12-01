@@ -72,7 +72,6 @@ public class PedirDatosJugador extends JPanel
 				NombreJugador = new JTextField();
 				this.add(NombreJugador);
 				NombreJugador.setBounds((largo/2+10), (alto/2-50), 200, 30);
-				NombreJugador.setText("Testeando");
 			}
 			{
 				EmpezarJuego = new JButton();

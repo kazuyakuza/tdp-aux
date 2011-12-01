@@ -1,11 +1,12 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
 import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Logica.ControlCentral;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
-import ProyectoX.Logica.ControlCentral;
 
 /**
  * Representa a una Plataforma Especial Power Up en el Juego.
@@ -74,7 +75,9 @@ public class EspecialPowerUp extends Irrompible
 					celdaSuperior = this.celdaActual.getSuperior();
 					powerUp.setCeldaActual(celdaSuperior);
 					celdaSuperior.agregarActor(powerUp);
-					controlCentral.agregarPowerUp(powerUp);
+					
+					ActualizadorNivel.act().agregarPowerUp(powerUp);
+					
 					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());					
 					cambiable = false;
 					powerUp = null;

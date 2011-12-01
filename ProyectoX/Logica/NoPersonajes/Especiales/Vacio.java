@@ -124,7 +124,7 @@ public class Vacio extends Actor implements Punteable
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		//Nada ocurre	
+		//Nada ocurre.
 	}
 	
 	/**

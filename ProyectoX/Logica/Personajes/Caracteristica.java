@@ -425,6 +425,5 @@ public abstract class Caracteristica
 	{		
 		return (mario.getPG() == 0) && (PS < maxPS);
 	}
-	
-	
+
 }

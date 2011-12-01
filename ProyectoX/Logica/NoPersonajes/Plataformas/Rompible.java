@@ -2,6 +2,7 @@ package ProyectoX.Logica.NoPersonajes.Plataformas;
 
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.Personajes.Mario;
@@ -87,7 +88,7 @@ public class Rompible extends Actor implements Plataforma
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		//Nada ocurre	
+		//Nada ocurre.
 	}
 	
 	/**
@@ -109,8 +110,10 @@ public class Rompible extends Actor implements Plataforma
 	 */
 	public void morir()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarEstructura(this);
+		ActualizadorNivel.act().eliminarPlataforma(this);
+		
 		celdaActual.setOcupada(false);
+		
 		super.morir();
 	}
 }

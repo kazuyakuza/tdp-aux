@@ -21,7 +21,6 @@ public class IAControl implements Worker
 {
 	
 	//Atributos de Instancia
-	//protected ControlCentral controlCentral;
 	protected PositionList<IA> IAs;
 	
 	/*CONSTRUCTOR*/
