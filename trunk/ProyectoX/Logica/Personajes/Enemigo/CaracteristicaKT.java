@@ -2,7 +2,6 @@ package ProyectoX.Logica.Personajes.Enemigo;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Mario;
 
 public abstract class CaracteristicaKT 

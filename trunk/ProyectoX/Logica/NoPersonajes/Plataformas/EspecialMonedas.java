@@ -1,10 +1,8 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
-import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.NoPersonajes.Moneda;
@@ -75,7 +73,7 @@ public class EspecialMonedas extends Irrompible
 		{
 			Mario mario = checkActorJugador (pj);
 			Moneda moneda;
-			if ( (this.celdaActual.getBloque().hayInferior(this.celdaActual)) && (colisionAbajo(mario)) )
+			if (colisionAbajo(mario))
 			{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
 				if (hayMoneda())
 				{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
@@ -97,12 +95,14 @@ public class EspecialMonedas extends Irrompible
 	
 	/**
 	 * Verifica si la colisión con el Actor proviene desde abajo.
-	 * @param a Actor con el que se colisiona.
-	 * @return Verdadero si el Actor a se encuentra abajo, falso, en caso contrario.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario a se encuentra abajo, falso, en caso contrario.
 	 */
-	protected boolean colisionAbajo (Actor a)
+	protected boolean colisionAbajo (Mario mario)
 	{
-		return this.celdaActual.getBloque().getInferior(this.celdaActual) == a.getCeldaActual();
+		//Mario se encuentra debajo de la plataforma si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);		
+		return (vector[0] == 0 && vector[1] == 1);
 	}
 	
 	/**

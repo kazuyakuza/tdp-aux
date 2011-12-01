@@ -3,7 +3,6 @@ package ProyectoX.Logica.Personajes.Enemigo;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Librerias.Threads.Worker;
-import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
 
 public class KTCaparazon extends CaracteristicaKT

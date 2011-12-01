@@ -5,8 +5,7 @@ import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
-
-import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
 
 /**
  * Representa a las Características que Mario puede tener en el juego. 
@@ -22,8 +21,7 @@ public abstract class Caracteristica
 {
 	//Atributos de Clase
 	private static int maxPS = 4;//Máxima Potencia de Salto.
-	private int PS = 0;//Potencia de Salto Actual.
-	
+		
 	//Numeros de los Sprites.
 	protected static int muerto = 0;
 	protected static int quieto = 1;
@@ -31,6 +29,7 @@ public abstract class Caracteristica
 	protected static int saltando = 5;
 	
 	//Atributos de Instancia
+	protected int PS = 0;//Potencia de Salto Actual.
 	protected Mario mario;
 		
 	/*CONSTRUCTORES*/
@@ -134,16 +133,16 @@ public abstract class Caracteristica
 			if (mario.getCeldaActual() == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (mario.getCeldaActual().getBloque().hayInferior(mario.getCeldaActual()))
+			if (mario.getCeldaActual().hayInferior())
 			{
-				celdaInferior = mario.getCeldaActual().getBloque().getInferior(mario.getCeldaActual());
+				celdaInferior = mario.getCeldaActual().getInferior();
 				if (!celdaInferior.isOcupada())
 					mario.moverseAcelda(celdaInferior);
 				else
-					mario.setPG(this, 0);
+					mario.setPG(0);
 			}
 			
-			if (mario.getCeldaActual().getBloque().getInferior(mario.getCeldaActual()).isOcupada())
+			if (mario.getCeldaActual().getInferior().isOcupada())
 	        {
 				if (! mario.getUpNeeder().hayWorkerPrioridad(5))
 					mario.getUpNeeder().addWorker(5,
@@ -203,17 +202,17 @@ public abstract class Caracteristica
 		{
 			if (mario.getCeldaActual() == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");			
-			if ((mario.getPG() == 0) && (PS < maxPS))
+			if (condicionSaltar())
 			{
 				if (mario.miraIzq())
 					mario.getSpriteManager().cambiarSprite(-saltando);
 				else
 					mario.getSpriteManager().cambiarSprite(saltando);
-				if (mario.getCeldaActual().getBloque().haySuperior(mario.getCeldaActual()))
+				if (mario.getCeldaActual().haySuperior())
 				{
-					mario.setPG(this, mario.getPG()+1);
-					PS++;					
-					celdaSuperior = mario.getCeldaActual().getBloque().getSuperior(mario.getCeldaActual());
+					mario.setPG(mario.getPG()+1);
+					this.PS++;					
+					celdaSuperior = mario.getCeldaActual().getSuperior();
 					if (!celdaSuperior.isOcupada())
 						mario.moverseAcelda(celdaSuperior);
 					else //Mario colisiona una Estructura desde abajo.
@@ -224,7 +223,7 @@ public abstract class Caracteristica
 			}
 			else
 				if (mario.getPG() != -1)
-					PS = 0;
+					this.PS = 0;
 		}
 		catch (NullPointerException e1)
 		{
@@ -255,11 +254,11 @@ public abstract class Caracteristica
 			if (mario.getCeldaActual() == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (mario.getCeldaActual().getBloque().hayAnterior(mario.getCeldaActual()))
+			if (mario.getCeldaActual().hayAnterior())
 			{
-				mario.mirarIzq(this, true);
+				mario.mirarIzq(true);
 				mario.getSpriteManager().cambiarSprite(-caminando);
-				celdaAnterior = mario.getCeldaActual().getBloque().getAnterior(mario.getCeldaActual());
+				celdaAnterior = mario.getCeldaActual().getAnterior();
 				if (!celdaAnterior.isOcupada())
 					mario.moverseAcelda(celdaAnterior);
 				
@@ -302,11 +301,11 @@ public abstract class Caracteristica
 			if (mario.getCeldaActual() == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (mario.getCeldaActual().getBloque().haySiguiente(mario.getCeldaActual()))
+			if (mario.getCeldaActual().haySiguiente())
 			{
-				mario.mirarIzq(this, false);
+				mario.mirarIzq(false);
 				mario.getSpriteManager().cambiarSprite(caminando);
-				celdaSiguiente = mario.getCeldaActual().getBloque().getSiguiente(mario.getCeldaActual());
+				celdaSiguiente = mario.getCeldaActual().getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					mario.moverseAcelda(celdaSiguiente);
 								
@@ -356,29 +355,75 @@ public abstract class Caracteristica
 		return mario;
 	}
 			
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado muerto de Mario.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario muerto.
+	 */
 	public int spriteMuerto()
 	{
 		return muerto;
 	}
 		
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado de Mario caminando.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario caminando.
+	 */
 	public int spriteCaminando()
 	{
 		return caminando;
 	}
 	
+	/**
+	 * Retorna la cantidad de sprites que representan a Mario caminando.
+	 * @return entero equivalente a la cantidad de sprites que animan a Mario caminando.
+	 */
 	public int cantSpritesCaminando()
 	{
 		return 3;
 	}
 	
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado de Mario saltando.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario saltando.
+	 */
 	public int spriteSaltando()
 	{
 		return saltando;
 	}
 	
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado quieto de Mario.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario quieto.
+	 */
 	public int spriteQuieto()
 	{
 		return quieto;
+	}
+	
+	/**
+	 * Calcula un vector que representa la distancia de Mario al Actor a en el eje cartesiano.
+	 * El vector es de tamñano 2 (x,y). 
+	 * En el índice 0 se ubica la distancia de Mario al Actor a en el eje x. Si el valor es positivo, el Actor se encuentra a la derecha de Mario, sino a la izquierda.	 * 
+	 * En el índice 1 se ubica la distancia de Mario al Actor a en el eje y. Si el valor es positivo, el Actor se encuentra por encima (arriba) de Mario, sino por debajo (abajo).
+	 * 
+	 * @param a Actor Posicionable que se utiliza para calcular la distancia hacia Mario.
+	 * @return un arreglo de dos componentes (x,y) que contiene la distancia de Mario hacia el Actor a en el eje cartesinano.
+	 */
+	public int[] vectorDistancia (Posicionable a)
+	{
+		int [] vector = new int[2];
+		vector[0] = a.getCeldaActual().getPosColumna() - mario.getCeldaActual().getPosColumna();
+		vector[1] = mario.getCeldaActual().getPosFila() - a.getCeldaActual().getPosFila();
+		return vector;
+	}
+	
+	/**
+	 * Verifica que se cumpla la condicón para saltar.
+	 * @return verdadero si se cumple la condición para saltar, falso, en caso contrario.
+	 */
+	protected boolean condicionSaltar ()
+	{		
+		return (mario.getPG() == 0) && (PS < maxPS);
 	}
 	
 	

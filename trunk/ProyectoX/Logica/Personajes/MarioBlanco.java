@@ -6,6 +6,7 @@ import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
 
 /**
  * Representa a Mario en estado MarioBlanco. (cuando Mario toma la Flor de Fuego) del juego.
@@ -45,7 +46,8 @@ public class MarioBlanco extends Caracteristica
 	public MarioBlanco (Mario pj)
 	{
 		super(pj);
-		celdaGrande = mario.getCeldaActual().getBloque().getSuperior(mario.getCeldaActual());
+		celdaGrande = mario.getCeldaActual().getSuperior();
+		celdaGrande.agregarActor(mario);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -185,6 +187,48 @@ public class MarioBlanco extends Caracteristica
 		return 10;
 	}
 	
+	/**
+	 * Calcula un vector que representa la distancia más cercana de Mario al Actor a en el eje cartesiano.
+	 * El vector es de tamñano 2 (x,y). 
+	* En el índice 0 se ubica la distancia de Mario al Actor a en el eje x. Si el valor es positivo, el Actor se encuentra a la derecha de Mario, sino a la izquierda.	 * 
+	 * En el índice 1 se ubica la distancia de Mario al Actor a en el eje y. Si el valor es positivo, el Actor se encuentra por encima (arriba) de Mario, sino por debajo (abajo).
+	 * 
+	 * @param a Actor Posicionable que se utiliza para calcular la distancia hacia Mario.
+	 * @return un arreglo de dos componentes (x,y) que contiene la distancia más cercana de Mario hacia el Actor a en el eje cartesinano.
+	 */
+	public int[] vectorDistancia (Posicionable a)
+	{
+		int [] vector = new int[2];
+		if (distancia (mario.getCeldaActual(), a.getCeldaActual()) <= distancia (celdaGrande, a.getCeldaActual()))
+		{//Si la celda inferior de Mario (celdaActual) es la más cercana al Actor.
+			vector = super.vectorDistancia(a);
+		}
+		else 
+		{//Sino, la celda más cercana de Mario al Actor es la celda superior (celdaGrande). 
+			vector[0] = a.getCeldaActual().getPosColumna() - celdaGrande.getPosColumna();
+			vector[1] = celdaGrande.getPosFila() - a.getCeldaActual().getPosFila();
+		}
+		return vector;
+	}
+	
+	/**
+	 * Calcula la distancia que hay entre las Celdas.
+	 * @param c1 Celda que se desea calcular su distancia a c2.
+	 * @param c2 Celda que se desea calcular su distancia a c1.
+	 * @return entero que es la distancia entre las Celdas c1 y c2.
+	 * @throws NullPointerException si c1 o c2 son null.
+	 */
+	protected int distancia (Celda c1, Celda c2) throws NullPointerException
+	{
+		if (c1 == null || c2 == null)
+			throw new NullPointerException ("ControlCentral.distancia()" + "\n" +
+											"Imposible calcular distancia, alguna celda ess nulas.");
+				
+		int x = Math.abs(c1.getPosFila() - c2.getPosFila());
+		int y = Math.abs(c1.getPosColumna() - c2.getPosColumna());		
+		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
+	}
+	
 /*METODOS REDEFINIDOS*/
 	
 	/**
@@ -194,9 +238,9 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void caer () throws AccionActorException
 	{		
-		super.caer();
-		if ( celdaGrande != null && mario.getCeldaActual() != celdaGrande.getBloque().getInferior(celdaGrande) )
-			moverseAcelda (celdaGrande.getBloque().getInferior(celdaGrande));				
+		super.caer();		
+		if ( celdaGrande != null && mario.getCeldaActual() != celdaGrande.getInferior() )
+			moverseAcelda (celdaGrande.getInferior());			
 	}
 	
 	/**
@@ -206,14 +250,24 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void saltar () throws AccionActorException
 	{		
-		if (celdaGrande != null && celdaGrande.getBloque().haySuperior(celdaGrande))
+		if (condicionSaltar ())
 		{
-			Celda celdaSuperior = celdaGrande.getBloque().getSuperior(celdaGrande);
-			if (!celdaSuperior.isOcupada())
+			if (celdaGrande != null && celdaGrande.haySuperior())
 			{
-				super.saltar();
-				moverseAcelda (celdaSuperior);
+				Celda celdaSuperior = celdaGrande.getSuperior();
+				if (!celdaSuperior.isOcupada())
+				{					
+					moverseAcelda (celdaSuperior);
+					super.saltar();					
+				}
+				else //Mario colisiona una Estructura desde abajo.
+					mario.producirColisiones(celdaSuperior);
 			}
+		}
+		else
+		{
+			if (mario.getPG() != -1)
+				PS = 0;			
 		}
 	}
 	
@@ -224,13 +278,13 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void moverseAizquierda () throws AccionActorException
 	{
-		if (celdaGrande != null && celdaGrande.getBloque().hayAnterior(celdaGrande))
+		if (celdaGrande != null && celdaGrande.hayAnterior())
 		{
-			Celda celdaAnterior = celdaGrande.getBloque().getAnterior(celdaGrande);
+			Celda celdaAnterior = celdaGrande.getAnterior();
 			if (!celdaAnterior.isOcupada())
 			{
 				super.moverseAizquierda();
-				if (mario.getCeldaActual() != celdaGrande.getBloque().getInferior(celdaGrande))
+				if (mario.getCeldaActual() != celdaGrande.getInferior())
 					moverseAcelda (celdaAnterior);
 			}
 		}
@@ -243,14 +297,14 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void moverseAderecha () throws AccionActorException
 	{		
-		if (celdaGrande != null && celdaGrande.getBloque().haySiguiente(celdaGrande))
+		if (celdaGrande != null && celdaGrande.haySiguiente())
 		{
-			Celda celdaSiguiente = celdaGrande.getBloque().getSiguiente(celdaGrande);
+			Celda celdaSiguiente = celdaGrande.getSiguiente();
 			if (!celdaSiguiente.isOcupada())
 			{
-				super.moverseAizquierda();
-				if (mario.getCeldaActual() != celdaGrande.getBloque().getInferior(celdaGrande))
-					moverseAcelda (celdaSiguiente);
+				super.moverseAderecha();
+				if (mario.getCeldaActual() != celdaGrande.getInferior())
+					this.moverseAcelda (celdaSiguiente);
 			}
 		}
 	}
@@ -269,10 +323,10 @@ public class MarioBlanco extends Caracteristica
 			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
 		
-		mario.producirColisiones(c);
 		celdaGrande.sacarActor(mario);
 		celdaGrande = c;
 		celdaGrande.agregarActor(mario);
+		mario.producirColisiones(c);
 		//mario.getSpriteManager().actualizar(celdaGrande.getPosicion());
 	}
 	

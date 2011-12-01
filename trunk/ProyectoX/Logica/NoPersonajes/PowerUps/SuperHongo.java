@@ -1,7 +1,6 @@
 package ProyectoX.Logica.NoPersonajes.PowerUps;
 
 import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Responsabilidades.Movible;
@@ -66,9 +65,9 @@ public class SuperHongo extends PowerUp implements Movible
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
+			if (celdaActual.haySiguiente())
 			{				
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					moverseAcelda(celdaSiguiente);					
 			}
@@ -100,9 +99,9 @@ public class SuperHongo extends PowerUp implements Movible
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
+			if (celdaActual.hayAnterior())
 			{				
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 					moverseAcelda(celdaAnterior);								
 			}

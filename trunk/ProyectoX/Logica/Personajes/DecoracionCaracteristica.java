@@ -3,6 +3,7 @@ package ProyectoX.Logica.Personajes;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
+import ProyectoX.Logica.Responsabilidades.Posicionable;
 
 public abstract class DecoracionCaracteristica extends Caracteristica
 {
@@ -112,4 +113,126 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 	{		
 		return componente.getNombresSprites();
 	}
+	
+/*COMANDOS*/
+	
+	/**
+	 * Realiza la Acción Caer, producida por el efecto de la Gravedad.
+	 * 
+	 * @throws AccionActorException Si se produce un error al caer.
+	 */
+	public void caer () throws AccionActorException
+	{
+		componente.caer();
+	}	
+	
+	/**
+	 * Mario realiza la acción de saltar.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al saltar.
+	 */
+	public void saltar () throws AccionActorException
+	{		
+		componente.saltar();
+	}
+	
+	/**
+	 * Mario realiza la acción de moverse hacia la izquierda.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
+	 */
+	public void moverseAizquierda () throws AccionActorException
+	{
+		componente.moverseAizquierda();
+	}
+	
+	/**
+	 * Mario realiza la acción de moverse hace la derecha.
+	 * 
+	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
+	 */
+	public void moverseAderecha () throws AccionActorException
+	{		
+		componente.moverseAderecha();
+	}
+	
+	/**
+	 * Setea al Mario al que la Caracteristica representa con pj.
+	 * @param pj es el Mario con el que se setea a la Caracteristica.
+	 */
+	public void setMario (Mario pj)
+	{
+		mario = pj;
+	}
+	
+	/*CONSULTAS*/
+	
+	/**
+	 * Retorna el Mario asociado a la Caracteristica.
+	 * @return el Mario asociado a la Caracteristica.
+	 */
+	public Mario getMario()
+	{
+		return mario;
+	}
+			
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado muerto de Mario.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario muerto.
+	 */
+	public int spriteMuerto()
+	{
+		return componente.spriteMuerto();
+	}
+		
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado de Mario caminando.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario caminando.
+	 */
+	public int spriteCaminando()
+	{
+		return componente.spriteCaminando();
+	}
+	
+	/**
+	 * Retorna la cantidad de sprites que representan a Mario caminando.
+	 * @return entero equivalente a la cantidad de sprites que animan a Mario caminando.
+	 */
+	public int cantSpritesCaminando()
+	{
+		return componente.cantSpritesCaminando();
+	}
+	
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado de Mario saltando.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario saltando.
+	 */
+	public int spriteSaltando()
+	{
+		return componente.spriteSaltando();
+	}
+	
+	/**
+	 * Retorna el índice del arreglo donde se encuentra el sprite que representa el estado quieto de Mario.
+	 * @return un entero que es el índice del arreglo de sprite donde está el de Mario quieto.
+	 */
+	public int spriteQuieto()
+	{
+		return componente.spriteQuieto();
+	}
+	
+	/**
+	 * Calcula un vector que representa la distancia más cercana de Mario al Actor a en el eje cartesiano.
+	 * El vector es de tamñano 2 (x,y). 
+	 * En el índice 0 se ubica la distancia de Mario al Actor a en el eje x.
+	 * En el índice 1 se ubica la distancia de Mario al Actor a en el eje y.
+	 * 
+	 * @param a Actor Posicionable que se utiliza para calcular la distancia hacia Mario.
+	 * @return un arreglo de dos componentes (x,y) que contiene la distancia más cercana de Mario hacia el Actor a en el eje cartesinano.
+	 */
+	public int[] vectorDistancia (Posicionable a)
+	{
+		return componente.vectorDistancia(a);
+	}
+	
 }

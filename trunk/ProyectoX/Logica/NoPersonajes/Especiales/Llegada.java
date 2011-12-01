@@ -1,7 +1,6 @@
 package ProyectoX.Logica.NoPersonajes.Especiales;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.Mapa.Celda;

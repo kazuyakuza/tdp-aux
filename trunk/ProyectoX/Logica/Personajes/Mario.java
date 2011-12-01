@@ -1,10 +1,8 @@
 package ProyectoX.Logica.Personajes;
 
 import java.util.Iterator;
-
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
@@ -25,12 +23,7 @@ import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
  * @author Pablo Isaias Chacar LU:67704
  */
 public class Mario extends Actor implements PjSeleccionable, Movible, afectableXgravedad
-{	
-
-	//Atributos de Clase
-	private static int maxPS = 4;//Máxima Potencia de Salto.
-	private int PS = 0;//Potencia de Salto Actual.
-	
+{				
 	//Atributos de Instancia
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
@@ -71,15 +64,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "arriba".
 	 */
-	public void arriba ()
+	public synchronized void arriba ()
 	{
-		saltar();
+		miCaracteristica.saltar();
 	}
 	
 	/**
 	 * Especifica la acción "abajo".
 	 */
-	public void abajo ()
+	public synchronized void abajo ()
 	{
 		miCaracteristica.agacharse();
 	}
@@ -87,23 +80,23 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public void izquierda ()
+	public synchronized void izquierda ()
 	{
-		moverseAizquierda();
+		miCaracteristica.moverseAizquierda();
 	}
 	
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public void derecha ()
+	public synchronized void derecha ()
 	{
-		moverseAderecha();
+		miCaracteristica.moverseAderecha();
 	}
 	
 	/**
 	 * Especifica la acción "A".
 	 */
-	public void A ()
+	public synchronized void A ()
 	{
 		miCaracteristica.accionA();
 	}
@@ -111,7 +104,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "B".
 	 */
-	public void B ()
+	public synchronized void B ()
 	{
 		miCaracteristica.accionB();
 	}
@@ -129,8 +122,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public void caer () throws AccionActorException
-	{
+	public synchronized void caer () throws AccionActorException
+	{/*
 		Celda celdaInferior = celdaActual;
 		try 
 		{
@@ -167,8 +160,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		
-		//miCaracteristica.caer();
+		*/
+		miCaracteristica.caer();
 	}
 	
 	/**
@@ -211,7 +204,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al saltar.
 	 */
 	public void saltar () throws AccionActorException
-	{
+	{/*
 		Celda celdaSuperior = celdaActual;
 		try 
 		{
@@ -254,8 +247,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		
-		//miCaracteristica.saltar();
+		*/
+		miCaracteristica.saltar();
 	}
 	
 	/**
@@ -264,7 +257,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
 	public void moverseAizquierda () throws AccionActorException
-	{
+	{/*
 		Celda celdaAnterior = celdaActual;
 		try 
 		{
@@ -295,8 +288,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-		
-		//miCaracteristica.moverseAizquierda();
+		*/		
 	}
 	
 	/**
@@ -305,7 +297,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
 	public void moverseAderecha () throws AccionActorException
-	{	
+	{	/*
 		Celda celdaSiguiente = celdaActual;
 		try 
 		{
@@ -336,10 +328,10 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
+		*/
 		
-		//miCaracteristica.moverseAderecha();
 	}
-	
+
 	public void cambiarSpriteQuieto ()
 	{
 		if (! upNeeder.hayWorkerPrioridad(5))
@@ -354,7 +346,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
             	}
             });
 	}
-	
+
 	/**
 	 * Setea al Jugador que controla a Mario con j.
 	 * 
@@ -435,7 +427,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 */
 	public void efectoGravedad (int efecto)
 	{
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+		if (celdaActual.getInferior().isOcupada())
 			PG = 0;
 		else
 			if (!(PG < 0))
@@ -443,25 +435,21 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	}
 	
 	/**
-	 * Setea si Mario mira hacia izquierda, pero solo si es su propia Caracteristica el que produjo la llamada
-	 * @param c Caracteristica para comprobar que sea la misma que la de Mario la que produjo la llamada.
+	 * Setea si Mario mira hacia izquierda.	 
 	 * @param iz boolean que indica si mario mira hacia izq.
 	 */
-	public void mirarIzq(Caracteristica c, boolean iz)
+	public void mirarIzq(boolean iz)
 	{
-		if (c == miCaracteristica)
-			izq = iz;
+		izq = iz;
 	}
 	
 	/**
-	 * Setea el PG de Mario, pero solo si es su propia Caracteristica el que produjo la llamada
-	 * @param c Caracteristica para comprobar que sea la misma que la de Mario la que produjo la llamada.
+	 * Setea el PG de Mario.	 
 	 * @param pg entero con el que se setea pg.
 	 */
-	public void setPG (Caracteristica c, int pg)
-	{
-		if (c == miCaracteristica)
-			PG = pg;
+	public void setPG (int pg)
+	{		
+		PG = pg;
 	}
 			
 	/*CONSULTAS*/
@@ -511,6 +499,20 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	public boolean miraIzq()
 	{
 		return izq;
+	}
+	
+	/**
+	 * Calcula un vector que representa la distancia de Mario al Actor a en el eje cartesiano.
+	 * El vector es de tamñano 2 (x,y). 
+	 * En el índice 0 se ubica la distancia de Mario al Actor a en el eje x.
+	 * En el índice 1 se ubica la distancia de Mario al Actor a en el eje y.
+	 * 
+	 * @param a Actor que se utiliza para calcular la distancia hacia Mario.
+	 * @return un arreglo de dos componentes (x,y) que contiene la distancia de Mario hacia el Actor a en el eje cartesinano.
+	 */
+	public int[] vectorDistancia (Actor a)
+	{
+		return miCaracteristica.vectorDistancia(a);
 	}
 	
 	/**

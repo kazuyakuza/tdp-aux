@@ -5,7 +5,6 @@ import java.util.Iterator;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Excepciones.IAexception;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
@@ -17,9 +16,8 @@ import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IA;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IAKT;
 import ProyectoX.Logica.Responsabilidades.Movible;
-import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
-public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectableXgravedad
+public class KoopaTroopa extends Actor implements Enemigo, Movible
 {	
 	//Atributos de Instancia
 	protected CaracteristicaKT miCaracteristica;
@@ -87,9 +85,9 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayInferior(celdaActual))
+			if (celdaActual.hayInferior())
 			{
-				celdaInferior = celdaActual.getBloque().getInferior(celdaActual);
+				celdaInferior = celdaActual.getInferior();
 				if (!celdaInferior.isOcupada())
 					moverseAcelda(celdaInferior);
 				else
@@ -192,7 +190,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible //, afectable
 	 */
 	public void efectoGravedad (int efecto)
 	{
-		if (celdaActual.getBloque().getInferior(celdaActual).isOcupada())
+		if (celdaActual.getInferior().isOcupada())
 			PG = 0;
 		else
 			if (!(PG < 0))

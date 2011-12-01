@@ -1,6 +1,5 @@
 package ProyectoX.Logica.NoPersonajes.PowerUps;
 
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Logica.Personajes.Mario;
 
 /**

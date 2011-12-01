@@ -3,8 +3,6 @@ package ProyectoX.Logica.NoPersonajes;
 import java.util.Iterator;
 
 import ProyectoX.Excepciones.AccionActorException;
-import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
@@ -160,9 +158,9 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
+			if (celdaActual.hayAnterior())
 			{				
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
+				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 				{
 					moverseAcelda(celdaAnterior);
@@ -216,9 +214,9 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 			if (celdaActual == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
+			if (celdaActual.haySiguiente())
 			{	
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
+				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 				{
 					moverseAcelda(celdaSiguiente);

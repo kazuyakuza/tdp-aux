@@ -218,6 +218,116 @@ public class Celda
 	}
 	
 	/**
+	 * Verifica si hay una Celda a izquierda de ésta.
+	 * 
+	 * Hay una Celda a izquierda si:
+	 * - hay una Celda a izquierda en su bloque.
+	 * - o hay una Celda a izquierda en el Bloque a izquierda del Bloque Actual.
+	 * 	 
+	 * @return True:  existe una Celda a izquierda de ésta.
+	 *         False: demas casos.	
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean hayAnterior () throws PosicionIncorrectaException
+	{		
+		return bloque.hayAnterior(this);	
+	}
+	
+	/**
+	 * Verifica si hay una Celda a derecha de ésta.
+	 * 
+	 * Hay una Celda a derecha si:
+	 * - hay una Celda a derecha en su bloque.
+	 * - o hay una Celda a derecha en el Bloque a derecha del Bloque Actual.
+	 * 	 
+	 * @return True:  existe una Celda a derecha de ésta.
+	 *         False: demas casos.	
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean haySiguiente () throws PosicionIncorrectaException
+	{		
+		return bloque.haySiguiente(this);			
+	}
+	
+	/**
+	 * Verifica si hay una Celda por encima de ésta.
+	 * 
+	 * Hay una Celda por encima si:
+	 * - hay una Celda por encima en su bloque.
+	 * - o hay una Celda por encima en el Bloque por encima del Bloque Actual.
+	 * 	
+	 * @return True:  existe una Celda por encima de ésta.
+	 *         False: demas casos.	 
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean haySuperior () throws PosicionIncorrectaException
+	{		
+		return bloque.haySuperior(this);	
+	}
+	
+	/**
+	 * Verifica si hay una Celda por debajo de ésta.
+	 * 
+	 * Hay una Celda por debajo si:
+	 * - hay una Celda por debajo en su bloque.
+	 * - o hay una Celda por debajo en el Bloque por debajo del Bloque Actual.
+	 * 	 
+	 * @return True:  existe una Celda por debajo de ésta.
+	 *         False: demas casos.	
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public boolean hayInferior () throws PosicionIncorrectaException
+	{		
+		return bloque.hayInferior(this);	
+	}
+	
+	/**
+	 * Devuelve su Celda vecina anterior.
+	 *
+	 * @return Celda vecina que se encuentra a la izquierda de ésta.	 
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public Celda getAnterior () throws PosicionIncorrectaException
+	{		
+		return bloque.getAnterior(this);	
+	}
+	
+	/**
+	 * Devuelve su Celda vecina siguiente.
+	 * 	
+	 * @return Celda vecina que se ubica a la derecha de ésta.	 
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public Celda getSiguiente () throws PosicionIncorrectaException
+	{
+		
+		return bloque.getSiguiente(this);			
+	}
+	
+	/**
+	 * Devuelve su Celda vecina superior.
+	 * 	 
+	 * @return Celda vecina que se encuentra por encima de ésta.
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public Celda getSuperior () throws PosicionIncorrectaException
+	{
+		
+		return bloque.getSuperior(this);	
+	}
+	
+	/**
+	 * Devuelve su Celda vecina inferior.
+	 *	 
+	 * @return Celda vecina que se ubica por debajo de ésta.	 
+	 * @throws PosicionIncorrectaException Si se pide una Celda en una posición imposible o incorrecta.
+	 */
+	public Celda getInferior () throws PosicionIncorrectaException
+	{		
+		return bloque.getInferior(this);	
+	}
+	
+	/**
 	 * Devuelve el Bloque al que pertenece la Celda.
 	 * 
 	 * @return Bloque al que pertenece la Celda.
@@ -226,5 +336,5 @@ public class Celda
 	{
 		return bloque;
 	}
-
+	
 }

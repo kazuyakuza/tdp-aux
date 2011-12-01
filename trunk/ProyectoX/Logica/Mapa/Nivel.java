@@ -2,7 +2,6 @@ package ProyectoX.Logica.Mapa;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Excepciones.InicioNivelException;
-import ProyectoX.Grafico.Sprite.CargadorSprite;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.Position;
 import ProyectoX.Librerias.TDALista.PositionList;
@@ -18,7 +17,6 @@ import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
-import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
@@ -196,8 +194,8 @@ public class Nivel
 		
 		//Agregacion de un power up.
 		/*PowerUp powerUp = new SuperHongo();
-		bloqueActual.ABC[3][7].agregarActor(powerUp);
-		powerUp.setCeldaActual(bloqueActual.ABC[3][7]);
+		bloqueActual.ABC[10][7].agregarActor(powerUp);
+		powerUp.setCeldaActual(bloqueActual.ABC[10][7]);
 		actores.addLast(powerUp);
 		powerUps.addLast(powerUp);
 		caibles.addLast((afectableXgravedad) powerUp);
@@ -214,18 +212,19 @@ public class Nivel
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
-		caibles.addLast((afectableXgravedad) bomba);*/
+		caibles.addLast((afectableXgravedad) bomba);
+		*/
 		
 		/*Moneda moneda1 = new Moneda();
-		bloqueActual.ABC[8][8].agregarActor(moneda1);
-		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
+		bloqueActual.ABC[10][9].agregarActor(moneda1);
+		moneda1.setCeldaActual(bloqueActual.ABC[10][9]);
 		actores.addLast(moneda1);
-		
+		/*
 		Moneda moneda2 = new Moneda();
-		bloqueActual.ABC[10][8].agregarActor(moneda2);
-		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);		
-		actores.addLast(moneda2);*/
-		
+		bloqueActual.ABC[2][4].agregarActor(moneda2);
+		moneda2.setCeldaActual(bloqueActual.ABC[2][4]);		
+		actores.addLast(moneda2);
+		*/
 		
 		//Agregación Actores no Personjes.
 		aux = 6;
