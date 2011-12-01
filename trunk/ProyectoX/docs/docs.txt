@@ -19,4 +19,4 @@ Se decidió que Jugador, a través de un hilo, está pendiente de las acciones que 
 al personaje lo que debe hacer.
 
 REESCRIBIR:
-GoF Singleton -> CargadorSprite, Updater
+GoF Singleton -> CargadorSprite, Updater, ActualizadorNivel

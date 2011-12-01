@@ -67,7 +67,7 @@ public class Irrompible extends Actor implements Plataforma
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		//Nada ocurre	
+		//Nada ocurre.
 	}
 	
 	/**

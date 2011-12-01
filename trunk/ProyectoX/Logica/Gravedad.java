@@ -56,8 +56,7 @@ public class Gravedad implements Worker
 		}
 		catch (NullPointerException e)
 		{
-			/*if (i == 0)
-				throw e;*/
+			
 		}
 	}
 	

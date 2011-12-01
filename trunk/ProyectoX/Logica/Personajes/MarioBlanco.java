@@ -3,6 +3,7 @@ package ProyectoX.Logica.Personajes;
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
@@ -161,8 +162,10 @@ public class MarioBlanco extends Caracteristica
 		mario.getCeldaActual().agregarActor(bola);
 		bola.setCeldaActual(mario.getCeldaActual());
 		mario.getSpriteManager().printNextMe(bola.getSpriteManager());
-		mario.getJugador().getControlCentral().agregarActor(bola);
-		//mario.getJugador().getControlCentral().agregarAfectableXgravedad(bola);
+		
+		ActualizadorNivel.act().agregarActor(bola);
+		//ActualizadorNivel.act().agregarAfectableXgravedad(bola);
+		
 		if (mario.izq)
 			bola.moverseAizquierda();
 		else
@@ -327,7 +330,6 @@ public class MarioBlanco extends Caracteristica
 		celdaGrande = c;
 		celdaGrande.agregarActor(mario);
 		mario.producirColisiones(c);
-		//mario.getSpriteManager().actualizar(celdaGrande.getPosicion());
 	}
 	
 }

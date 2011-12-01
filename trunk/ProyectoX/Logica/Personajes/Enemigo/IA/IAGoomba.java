@@ -38,7 +38,9 @@ public class IAGoomba extends IA
 	/*COMANDOS*/
 	
 	/**
-	 * La marionata indica a la IA q se murió.
+	 * La marioneta indica a la IA q se murió.
+	 * 
+	 * Actualiza a actuar con -1, y por lo tanto es eliminada por el IAControl.
 	 * 
 	 * @throws NullPointerException Si g es null.
 	 * @throws IAexception Si se ingresa un Goomba que no es la marioneta de la IA actual.

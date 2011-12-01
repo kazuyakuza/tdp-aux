@@ -2,8 +2,6 @@ package ProyectoX.Logica.Personajes.Enemigo.IA;
 
 import ProyectoX.Excepciones.IAexception;
 import ProyectoX.Logica.Mapa.Celda;
-import ProyectoX.Logica.Personajes.Enemigo.Goomba;
-import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 
 /**
@@ -43,7 +41,7 @@ public class IAKT extends IA
 	/*COMANDOS*/
 	
 	/**
-	 * La marionata indica a la IA q cambió de estado..
+	 * La marioneta indica a la IA q cambió de estado.
 	 * 
 	 * @throws NullPointerException Si kt es null.
 	 * @throws IAexception Si se ingresa un KoopaTroopa que no es la marioneta de la IA actual.
@@ -60,7 +58,9 @@ public class IAKT extends IA
 	}
 	
 	/**
-	 * La marionata indica a la IA q se murió.
+	 * La marioneta indica a la IA q se murió.
+	 * 
+	 * Actualiza a actuar con -1, y por lo tanto es eliminada por el IAControl.
 	 * 
 	 * @throws NullPointerException Si kt es null.
 	 * @throws IAexception Si se ingresa un KoopaTroopa que no es la marioneta de la IA actual.
@@ -98,7 +98,7 @@ public class IAKT extends IA
 	/*CONSULTAS*/
 	
 	/**
-	 * Realiza el cast necesario para obtener los métodos de Goomba.
+	 * Realiza el cast necesario para obtener los métodos de KoopaTroopa.
 	 */
 	private KoopaTroopa cast ()
 	{

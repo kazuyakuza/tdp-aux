@@ -7,6 +7,7 @@ import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
@@ -137,7 +138,8 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	 */
 	public void morir()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		//ActualizadorNivel.act().eliminarCaible(this);
+		ActualizadorNivel.act().eliminarActor(this);
 		
 		super.morir();
 		

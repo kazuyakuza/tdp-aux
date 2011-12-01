@@ -1,7 +1,7 @@
 package ProyectoX.Logica.NoPersonajes.PowerUps;
 
-import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.ControlCentral;
+import ProyectoX.Logica.Personajes.Mario;
 
 /**
  * Representa a los power ups Bomba Nuclear del juego. El efecto sobre Mario es nulo, provoca la muerte de todos sus enemigos en la pantalla.

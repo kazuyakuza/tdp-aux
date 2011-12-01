@@ -120,6 +120,8 @@ public class SpriteManager implements ImageObserver
 	 * Cambio = 0 "mirando hacia fuera de la pantalla"
 	 * Cambio > 0 "mirando hacia la derecha"
 	 * 
+	 * Setea al sprite como no gif.
+	 * 
 	 * @param cambio Numero del sprite a cambiar.
 	 * @throws SpriteException Si se ingresa un valor erróneo de cambio de sprite.
 	 */
@@ -455,8 +457,7 @@ public class SpriteManager implements ImageObserver
 		double Y = posX; //Intercambio entre posX filas y posición en eje Y
 		
 		//Si el Srite es mayor a 32x32, entonces se lo ubica 32 pixeles mas arriba.
-		//ESTO ES UN PARCHE!!!
-		/*if (spriteActual.getWidth() > 32)
+		if (spriteActual.getWidth() > 32)
 		{
 			X -= ((spriteActual.getWidth()/32.0) - 1);
 			if ((X % (int) X) <= 0.25)
@@ -467,7 +468,7 @@ public class SpriteManager implements ImageObserver
 			Y -= ((spriteActual.getHeight()/32.0) - 1);
 			if ((Y % (int) Y) <= 0.25)
 				Y = (int) Y;
-		}*/
+		}
 		
 		return new double[] {X, Y};
 	}

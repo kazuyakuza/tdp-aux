@@ -2,6 +2,7 @@ package ProyectoX.Logica.NoPersonajes;
 
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
@@ -100,7 +101,8 @@ public class Moneda extends Actor implements Punteable
 	 */
 	public void morir()
 	{
-		celdaActual.getBloque().getMapa().getNivel().eliminarActor(this);
+		ActualizadorNivel.act().eliminarActor(this);
+		
 		super.morir();
 	}
 	

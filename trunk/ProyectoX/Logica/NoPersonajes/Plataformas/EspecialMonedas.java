@@ -1,11 +1,11 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
 import ProyectoX.Excepciones.ColisionException;
-import ProyectoX.Librerias.TDALista.PositionList;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
+import ProyectoX.Librerias.TDALista.PositionList;
+import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
-import ProyectoX.Logica.NoPersonajes.Moneda;
 
 /**
  * Representa a una Plataforma Especial Monedas en el Juego.

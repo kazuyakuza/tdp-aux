@@ -100,7 +100,7 @@ public class Llegada extends Actor
 	 */
 	protected void producirColisiones (Celda c)
 	{
-		//Nada ocurre	
+		//Nada ocurre.
 	}
 	
 	/**
