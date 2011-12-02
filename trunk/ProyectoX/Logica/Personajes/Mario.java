@@ -180,38 +180,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a izquierda.
 	 */
 	public void moverseAizquierda () throws AccionActorException
-	{/* TODAVIA NO LO BORRES
-		Celda celdaAnterior = celdaActual;
-		try 
-		{
-			if (celdaActual == null)
-				throw new NullPointerException ("La celdaActual del Actor es null.");
-			
-			if (celdaActual.getBloque().hayAnterior(celdaActual))
-			{
-				izq = true;
-				spriteManager.cambiarSprite(-miCaracteristica.spriteCaminando());
-				spriteManager.setGif(3);
-				celdaAnterior = celdaActual.getBloque().getAnterior(celdaActual);
-				if (!celdaAnterior.isOcupada())
-					moverseAcelda(celdaAnterior);
-			}
-		}
-		catch (NullPointerException e1)
-		{
-			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
-                                            "Imposible realizar la acción moverAizquierda." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e1.getMessage());
-		}
-		catch (Exception e2)
-		{
-			throw new AccionActorException ("Mario.moverseAizquierda()" + "\n" +
-                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e2.getMessage());
-		}
-		*/
+	{
 		miCaracteristica.moverseAizquierda();
 	}
 	
@@ -221,38 +190,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
 	public void moverseAderecha () throws AccionActorException
-	{/*	TODAVIA NO LO BORRES
-		Celda celdaSiguiente = celdaActual;
-		try 
-		{
-			if (celdaActual == null)
-				throw new NullPointerException ("La celdaActual del Actor es null.");
-			
-			if (celdaActual.getBloque().haySiguiente(celdaActual))
-			{
-				izq = false;
-				spriteManager.cambiarSprite(miCaracteristica.spriteCaminando());
-				spriteManager.setGif(3);
-				celdaSiguiente = celdaActual.getBloque().getSiguiente(celdaActual);
-				if (!celdaSiguiente.isOcupada())
-					moverseAcelda(celdaSiguiente);
-			}
-		}
-		catch (NullPointerException e1)
-		{
-			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
-                                            "Imposible realizar la acción moverAderecha." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e1.getMessage());
-		}
-		catch (Exception e2)
-		{
-			throw new AccionActorException ("Mario.moverseAderecha()" + "\n" +
-                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
-					                        "Detalles del error:" + "\n" +
-					                        e2.getMessage());
-		}
-		*/
+	{
 		miCaracteristica.moverseAderecha();
 	}
 

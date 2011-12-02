@@ -279,15 +279,36 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void moverseAizquierda () throws AccionActorException
 	{
-		if (celdaGrande != null && celdaGrande.hayAnterior())
+		Celda celdaAnterior = celdaGrande;
+		try 
 		{
-			Celda celdaAnterior = celdaGrande.getAnterior();
-			if (!celdaAnterior.isOcupada())
+			//if (celdaGrande == null)
+				//throw new NullPointerException ("La celdaGrande del Actor es null.");
+			
+			if ((celdaGrande != null) && celdaGrande.hayAnterior())
 			{
-				super.moverseAizquierda();
-				if (mario.getCeldaActual() != celdaGrande.getInferior())
-					moverseAcelda (celdaAnterior);
+				celdaAnterior = celdaGrande.getAnterior();
+				if (!celdaAnterior.isOcupada())
+				{
+					super.moverseAizquierda();
+					if (mario.getCeldaActual() != celdaGrande.getInferior())
+						moverseAcelda (celdaAnterior);
+				}
 			}
+		}
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("MarioBlanco.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("MarioBlanco.moverseAizquierda()" + "\n" +
+                                            "Imposible realizar la acción moverAizquierda a/desde Celda de posición (" + celdaAnterior.getPosFila() + "," + celdaAnterior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
 		}
 	}
 	
@@ -298,15 +319,36 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void moverseAderecha () throws AccionActorException
 	{		
-		if (celdaGrande != null && celdaGrande.haySiguiente())
+		Celda celdaSiguiente = celdaGrande;
+		try 
 		{
-			Celda celdaSiguiente = celdaGrande.getSiguiente();
-			if (!celdaSiguiente.isOcupada())
+			//if (celdaGrande == null)
+				//throw new NullPointerException ("La celdaGrande del Actor es null.");
+			
+			if (celdaGrande != null && celdaGrande.haySiguiente())
 			{
-				super.moverseAderecha();
-				if (mario.getCeldaActual() != celdaGrande.getInferior())
-					this.moverseAcelda (celdaSiguiente);
+				celdaSiguiente = celdaGrande.getSiguiente();
+				if (!celdaSiguiente.isOcupada())
+				{
+					super.moverseAderecha();
+					if (mario.getCeldaActual() != celdaGrande.getInferior())
+						this.moverseAcelda (celdaSiguiente);
+				}
 			}
+		}
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("MarioGrande.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("MarioGrande.moverseAderecha()" + "\n" +
+                                            "Imposible realizar la acción moverAderecha a/desde Celda de posición (" + celdaSiguiente.getPosFila() + "," + celdaSiguiente.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
 		}
 	}
 	
