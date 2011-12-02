@@ -1,5 +1,7 @@
 package ProyectoX.Logica.Mapa;
 
+import java.util.Random;
+
 import ProyectoX.Excepciones.InicioNivelException;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.PositionList;
@@ -14,14 +16,15 @@ import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Irrompible;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Plataforma;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
+import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
 import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
 import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
+import ProyectoX.Logica.NoPersonajes.PowerUps.HongoVerde;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
-import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
@@ -315,6 +318,8 @@ public class Nivel
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(2, true);
 		
+		//Agregación Actores no Personjes.
+		
 		//Agregación Piso
 		int aux = 0;
 		int aux2 = 0;
@@ -333,13 +338,11 @@ public class Nivel
 			aux++;
 		}
 		
-		//Agregación Actores no Personjes.
-		
 		//Vacio en el Piso.
 		Vacio vacio1 = new Vacio ();
 		bloqueActual.ABC[13][14].agregarActor(vacio1);
 		vacio1.setCeldaActual(bloqueActual.ABC[13][14]);
-		actores.addLast(vacio1);
+		actores.addFirst(vacio1);
 		//Piso al costado del Vacio.
 		Piso piso1 = new Piso();
 		bloqueActual.ABC[13][13].setOcupada(true);
@@ -352,13 +355,14 @@ public class Nivel
 		piso2.setCeldaActual(bloqueActual.ABC[13][15]);
 		actores.addFirst(piso2);
 		
+		//Vacio en el Piso.
 		aux = 27;
 		while (aux <= 30)
 		{
 			Vacio vacio2 = new Vacio ();
 			bloqueActual.ABC[13][aux].agregarActor(vacio2);
 			vacio2.setCeldaActual(bloqueActual.ABC[13][aux]);
-			actores.addLast(vacio2);
+			actores.addFirst(vacio2);
 			aux++;
 		}
 		//Piso al costado del Vacio.
@@ -374,61 +378,76 @@ public class Nivel
 		actores.addFirst(p2);
 		
 		//Irrompibles
+		Irrompible plataforma0 = new Irrompible ();
+		bloqueActual.ABC[5][9].setOcupada(true);
+		bloqueActual.ABC[5][9].agregarEstructura(plataforma0);
+		plataforma0.setCeldaActual(bloqueActual.ABC[5][9]);
+		actores.addFirst(plataforma0);
+		plataformas.addFirst(plataforma0);
+		
+		//Irrompibles
 		aux = 6; aux2 = 24;
-		while ((aux <= 11) && (aux2 >= 18))
+		while ((aux <= 11) && (aux2 > 18))
 		{
 			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[aux][aux2].setOcupada(true);
-			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma);//Plataforma irrompible
+			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma);
 			plataforma.setCeldaActual(bloqueActual.ABC[aux][aux2]);
 			actores.addFirst(plataforma);
 			plataformas.addFirst(plataforma);
 			aux2--;
 			Irrompible plataforma2 = new Irrompible ();
 			bloqueActual.ABC[aux][aux2].setOcupada(true);
-			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma2);//Plataforma irrompible
+			bloqueActual.ABC[aux][aux2].agregarEstructura(plataforma2);
 			plataforma2.setCeldaActual(bloqueActual.ABC[aux][aux2]);
 			actores.addFirst(plataforma2);
 			plataformas.addFirst(plataforma2);
-			aux2--;
 			aux++;
 		}
+		
+		//Irrompibles
 		aux = 26;
 		while (aux <= 30)
 		{
 			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[6][aux].setOcupada(true);
-			bloqueActual.ABC[6][aux].agregarEstructura(plataforma);//Plataforma irrompible
+			bloqueActual.ABC[6][aux].agregarEstructura(plataforma);
 			plataforma.setCeldaActual(bloqueActual.ABC[6][aux]);
 			actores.addFirst(plataforma);
 			plataformas.addFirst(plataforma);
 			aux++;
 		}
-		aux = 6;
+		
+		//Irrompibles
+		aux = 3;
 		while (aux <= 11)
 		{
 			Irrompible plataforma = new Irrompible ();
 			bloqueActual.ABC[aux][31].setOcupada(true);
-			bloqueActual.ABC[aux][31].agregarEstructura(plataforma);//Plataforma irrompible
+			bloqueActual.ABC[aux][31].agregarEstructura(plataforma);
 			plataforma.setCeldaActual(bloqueActual.ABC[aux][31]);
 			actores.addFirst(plataforma);
 			plataformas.addFirst(plataforma);
 			aux++;
 		}
+		
+		//Irrompibles
 		Irrompible plataforma = new Irrompible ();
-		bloqueActual.ABC[5][9].setOcupada(true);
-		bloqueActual.ABC[5][9].agregarEstructura(plataforma);//Plataforma irrompible
-		plataforma.setCeldaActual(bloqueActual.ABC[5][9]);
+		bloqueActual.ABC[11][26].setOcupada(true);
+		bloqueActual.ABC[11][26].agregarEstructura(plataforma);
+		plataforma.setCeldaActual(bloqueActual.ABC[11][26]);
 		actores.addFirst(plataforma);
 		plataformas.addFirst(plataforma);
 		
-		Rompible r1 = new Rompible ();
-		bloqueActual.ABC[9][8].setOcupada(true);
-		bloqueActual.ABC[9][8].agregarEstructura(r1);
-		r1.setCeldaActual(bloqueActual.ABC[9][8]);
-		actores.addFirst(r1);
-		plataformas.addFirst(r1);
+		//Irrompibles
+		Irrompible plataforma2 = new Irrompible ();
+		bloqueActual.ABC[6][37].setOcupada(true);
+		bloqueActual.ABC[6][37].agregarEstructura(plataforma2);
+		plataforma2.setCeldaActual(bloqueActual.ABC[6][37]);
+		actores.addFirst(plataforma2);
+		plataformas.addFirst(plataforma2);
 		
+		//EspecialPowerUp
 		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(), cc, true);
 		bloqueActual.ABC[9][9].setOcupada(true);
 		bloqueActual.ABC[9][9].agregarEstructura(plataformaPUP);
@@ -437,35 +456,48 @@ public class Nivel
 		plataformas.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
-		Rompible r2 = new Rompible ();
-		bloqueActual.ABC[9][10].setOcupada(true);
-		bloqueActual.ABC[9][10].agregarEstructura(r2);
-		r2.setCeldaActual(bloqueActual.ABC[9][10]);
-		actores.addFirst(r2);
-		plataformas.addFirst(r2);
-		
-		aux = 34;
+		aux = 34; int cantMonedas = 0; PowerUp pw = null;
 		while (aux <= 39)
 		{
 			if ((aux%2) == 0)
 			{
-				EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(), cc, false);
-				bloqueActual.ABC[8][14].setOcupada(true);
-				bloqueActual.ABC[8][14].agregarEstructura(plataformaPUP2);
-				plataformaPUP2.setCeldaActual(bloqueActual.ABC[8][14]);
+				switch (aux)
+				{
+					case 34: pw = new SuperHongo(); break;
+					case 36: pw = new BombaNuclear(cc); break;
+					default: pw = new Estrella(); break;
+				}
+				EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (pw, cc, false);
+				bloqueActual.ABC[9][aux].setOcupada(true);
+				bloqueActual.ABC[9][aux].agregarEstructura(plataformaPUP2);
+				plataformaPUP2.setCeldaActual(bloqueActual.ABC[9][aux]);
 				actores.addFirst(plataformaPUP2);
 				plataformas.addFirst(plataformaPUP2);
 				especialesPowerUp.addFirst(plataformaPUP2);
 			}
 			else
 			{
-				EspecialMonedas plataformaM = new EspecialMonedas (3);
-				bloqueActual.ABC[7][13].setOcupada(true);
-				bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
-				plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
+				do cantMonedas = new Random ().nextInt(6); while (cantMonedas == 0);
+				EspecialMonedas plataformaM = new EspecialMonedas (cantMonedas);
+				bloqueActual.ABC[9][aux].setOcupada(true);
+				bloqueActual.ABC[9][aux].agregarEstructura(plataformaM);
+				plataformaM.setCeldaActual(bloqueActual.ABC[9][aux]);
 				actores.addFirst(plataformaM);
 				plataformas.addFirst(plataformaM);
 			}
+			aux++;
+		}
+		
+		aux = 36;
+		while (aux <= 38)
+		{
+			EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new HongoVerde(), cc, false);
+			bloqueActual.ABC[3][aux].setOcupada(true);
+			bloqueActual.ABC[3][aux].agregarEstructura(plataformaPUP2);
+			plataformaPUP2.setCeldaActual(bloqueActual.ABC[3][aux]);
+			actores.addFirst(plataformaPUP2);
+			plataformas.addFirst(plataformaPUP2);
+			especialesPowerUp.addFirst(plataformaPUP2);
 			aux++;
 		}
 		
@@ -475,47 +507,89 @@ public class Nivel
 			if ((aux%2) == 0)
 			{
 				Rompible rompible = new Rompible ();
-				bloqueActual.ABC[8][12].setOcupada(true);
-				bloqueActual.ABC[8][12].agregarEstructura(rompible);
-				rompible.setCeldaActual(bloqueActual.ABC[8][12]);
+				bloqueActual.ABC[8][aux].setOcupada(true);
+				bloqueActual.ABC[8][aux].agregarEstructura(rompible);
+				rompible.setCeldaActual(bloqueActual.ABC[8][aux]);
 				actores.addFirst(rompible);
 				plataformas.addFirst(rompible);
 			}
 			else
 			{
-				EspecialMonedas plataformaM = new EspecialMonedas (3);
-				bloqueActual.ABC[7][13].setOcupada(true);
-				bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
-				plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
+				do cantMonedas = new Random ().nextInt(6); while (cantMonedas == 0);
+				EspecialMonedas plataformaM = new EspecialMonedas (cantMonedas);
+				bloqueActual.ABC[8][aux].setOcupada(true);
+				bloqueActual.ABC[8][aux].agregarEstructura(plataformaM);
+				plataformaM.setCeldaActual(bloqueActual.ABC[8][aux]);
 				actores.addFirst(plataformaM);
 				plataformas.addFirst(plataformaM);
 			}
 			aux++;
 		}
 		
+		Rompible r4 = new Rompible ();
+		bloqueActual.ABC[7][56].setOcupada(true);
+		bloqueActual.ABC[7][56].agregarEstructura(r4);
+		r4.setCeldaActual(bloqueActual.ABC[7][56]);
+		actores.addFirst(r4);
+		plataformas.addFirst(r4);
+		
+		Rompible r3 = new Rompible ();
+		bloqueActual.ABC[7][46].setOcupada(true);
+		bloqueActual.ABC[7][46].agregarEstructura(r3);
+		r3.setCeldaActual(bloqueActual.ABC[7][46]);
+		actores.addFirst(r3);
+		plataformas.addFirst(r3);
+		
+		Rompible r5 = new Rompible ();
+		bloqueActual.ABC[8][39].setOcupada(true);
+		bloqueActual.ABC[8][39].agregarEstructura(r5);
+		r5.setCeldaActual(bloqueActual.ABC[8][39]);
+		actores.addFirst(r5);
+		plataformas.addFirst(r5);
+		
+		Rompible r6 = new Rompible ();
+		bloqueActual.ABC[8][34].setOcupada(true);
+		bloqueActual.ABC[8][34].agregarEstructura(r6);
+		r6.setCeldaActual(bloqueActual.ABC[8][34]);
+		actores.addFirst(r6);
+		plataformas.addFirst(r6);
+		
+		Rompible r2 = new Rompible ();
+		bloqueActual.ABC[9][10].setOcupada(true);
+		bloqueActual.ABC[9][10].agregarEstructura(r2);
+		r2.setCeldaActual(bloqueActual.ABC[9][10]);
+		actores.addFirst(r2);
+		plataformas.addFirst(r2);
+		
+		Rompible r1 = new Rompible ();
+		bloqueActual.ABC[9][8].setOcupada(true);
+		bloqueActual.ABC[9][8].agregarEstructura(r1);
+		r1.setCeldaActual(bloqueActual.ABC[9][8]);
+		actores.addFirst(r1);
+		plataformas.addFirst(r1);
+		
 		//Agregación Actores Enemigos.
 		
-		aux = 11;
-		while (aux <= 13)
+		//Goombas
+		aux = 48;
+		while (aux <= 54)
 		{
-			if (aux != 12)
-			{
-				Goomba goomba = new Goomba ();
-				bloqueActual.ABC[11][aux].agregarActor(goomba);
-				goomba.setCeldaActual(bloqueActual.ABC[11][aux]);
-				actores.addFirst(goomba);
-				enemigos.addFirst(goomba);
-				caibles.addFirst((afectableXgravedad) goomba);
-			}
-			aux++;
+			Goomba goomba = new Goomba ();
+			bloqueActual.ABC[7][aux].agregarActor(goomba);
+			goomba.setCeldaActual(bloqueActual.ABC[7][aux]);
+			actores.addFirst(goomba);
+			enemigos.addFirst(goomba);
+			caibles.addFirst(goomba);
+			aux++;aux++;
 		}
 		
-		Goomba goomba = new Goomba ();
-		bloqueActual.ABC[11][25].agregarActor(goomba);
-		goomba.setCeldaActual(bloqueActual.ABC[11][25]);
-		actores.addFirst(goomba);
-		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba);
+		//KoopaTroopas
+		KoopaTroopa kt2 = new KoopaTroopa (new KTNormal());
+		bloqueActual.ABC[11][42].agregarActor(kt2);
+		kt2.setCeldaActual(bloqueActual.ABC[11][42]);
+		actores.addFirst(kt2);
+		enemigos.addFirst(kt2);
+		caibles.addFirst(kt2);
 		
 		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
 		bloqueActual.ABC[11][37].agregarActor(kt1);
@@ -524,12 +598,35 @@ public class Nivel
 		enemigos.addFirst(kt1);		
 		caibles.addFirst(kt1);
 		
-		KoopaTroopa kt2 = new KoopaTroopa (new KTNormal());
-		bloqueActual.ABC[11][42].agregarActor(kt2);
-		kt2.setCeldaActual(bloqueActual.ABC[11][42]);
-		actores.addFirst(kt2);
-		enemigos.addFirst(kt2);
-		caibles.addFirst(kt2);
+		KoopaTroopa kt3 = new KoopaTroopa (new KTNormal());
+		bloqueActual.ABC[8][37].agregarActor(kt3);
+		kt3.setCeldaActual(bloqueActual.ABC[8][37]);
+		actores.addFirst(kt3);		
+		enemigos.addFirst(kt3);		
+		caibles.addFirst(kt3);
+		
+		Goomba goomba = new Goomba ();
+		bloqueActual.ABC[11][25].agregarActor(goomba);
+		goomba.setCeldaActual(bloqueActual.ABC[11][25]);
+		actores.addFirst(goomba);
+		enemigos.addFirst(goomba);
+		caibles.addFirst(goomba);
+		
+		//Goombas
+		aux = 11;
+		while (aux <= 13)
+		{
+			if (aux != 12)
+			{
+				Goomba goomba0 = new Goomba ();
+				bloqueActual.ABC[11][aux].agregarActor(goomba0);
+				goomba0.setCeldaActual(bloqueActual.ABC[11][aux]);
+				actores.addFirst(goomba0);
+				enemigos.addFirst(goomba0);
+				caibles.addFirst(goomba0);
+			}
+			aux++;
+		}
 		
 		//Agregación Monedas
 		aux = 20;
@@ -538,25 +635,52 @@ public class Nivel
 			Moneda moneda1 = new Moneda();
 			bloqueActual.ABC[11][aux].agregarActor(moneda1);
 			moneda1.setCeldaActual(bloqueActual.ABC[11][aux]);
-			actores.addLast(moneda1);
+			actores.addFirst(moneda1);
 			aux++;
 		}
 		aux = 21;
-		while (aux <= 24)
+		while (aux <= 30)
 		{
 			Moneda moneda1 = new Moneda();
 			bloqueActual.ABC[10][aux].agregarActor(moneda1);
 			moneda1.setCeldaActual(bloqueActual.ABC[10][aux]);
-			actores.addLast(moneda1);
+			actores.addFirst(moneda1);
 			aux++;
 		}
 		aux = 22;
-		while (aux <= 24)
+		while (aux <= 30)
 		{
 			Moneda moneda1 = new Moneda();
 			bloqueActual.ABC[9][aux].agregarActor(moneda1);
 			moneda1.setCeldaActual(bloqueActual.ABC[9][aux]);
-			actores.addLast(moneda1);
+			actores.addFirst(moneda1);
+			aux++;
+		}
+		aux = 23;
+		while (aux <= 30)
+		{
+			Moneda moneda1 = new Moneda();
+			bloqueActual.ABC[8][aux].agregarActor(moneda1);
+			moneda1.setCeldaActual(bloqueActual.ABC[8][aux]);
+			actores.addFirst(moneda1);
+			aux++;
+		}
+		aux = 24;
+		while (aux <= 30)
+		{
+			Moneda moneda1 = new Moneda();
+			bloqueActual.ABC[7][aux].agregarActor(moneda1);
+			moneda1.setCeldaActual(bloqueActual.ABC[7][aux]);
+			actores.addFirst(moneda1);
+			aux++;
+		}
+		aux = 8;
+		while (aux <= 10)
+		{
+			Moneda moneda1 = new Moneda();
+			bloqueActual.ABC[8][aux].agregarActor(moneda1);
+			moneda1.setCeldaActual(bloqueActual.ABC[8][aux]);
+			actores.addFirst(moneda1);
 			aux++;
 		}
 		
@@ -571,6 +695,9 @@ public class Nivel
 			aux++;
 		}
 		
+		//Agregación Techo Mapa
+		bloqueActual.setFilaOcupada(0, true);
+		
 		//Agregación Final Mapa
 		bloqueActual.setColumnaOcupada(69, true);
 		
@@ -578,6 +705,7 @@ public class Nivel
 		bloqueActual.ABC[11][5].agregarActor(actor);
 		actor.setCeldaActual(bloqueActual.ABC[11][5]);
 		actores.addFirst(actor);
+		pjs.addFirst((PjSeleccionable) actor);
 		caibles.addFirst((afectableXgravedad) actor);
 	}
 	

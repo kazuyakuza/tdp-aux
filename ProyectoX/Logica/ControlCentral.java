@@ -21,7 +21,6 @@ import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
 import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
-import ProyectoX.Logica.Personajes.Caracteristica;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
@@ -89,7 +88,7 @@ public class ControlCentral implements Runnable, ControlThread
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
 			
-			nivel = new Nivel(0);
+			nivel = new Nivel(1);
 			
 			gravedad = new Gravedad(this);
 			
@@ -118,26 +117,6 @@ public class ControlCentral implements Runnable, ControlThread
 			Tgravedad = new AliveThread (this, 1, gravedad);
 			TiaControl = new AliveThread (this, 1, ws1.getWorker1());
 			Tupdater = new AliveThread (this, 0, ws2.getWorker2(false));
-			
-			//Crea y Asigna WorkersSincronizados
-			/*WorkersSincronizados ws1 = new WorkersSincronizados (iaControl, 1, jugador);
-			WorkersSincronizados ws2 = new WorkersSincronizados (ws1.getWorker2(true), 1, gravedad);
-			WorkersSincronizados ws3 = new WorkersSincronizados (ws2.getWorker2(false), 1,
-					                                             new Worker ()
-			                                                     {
-																	public void work() throws Exception
-																	{
-																		Thread.sleep((int) (getSleepTime() * 0.5));
-																		Updater.getUpdater().work();
-																	}
-			                                                     });
-			
-			//Crear y Asignar Threads
-			Tescenario = new AliveThread (this, 0.5, escenario);
-			Tjugador = new AliveThread (this, 1, ws2.getWorker1());
-			Tgravedad = new AliveThread (this, 1, ws3.getWorker1());
-			TiaControl = new AliveThread (this, 1, ws1.getWorker1());
-			Tupdater = new AliveThread (this, 0, ws3.getWorker2(false));*/
 		}
 		catch (Exception exception)
 		{
