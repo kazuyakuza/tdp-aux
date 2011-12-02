@@ -17,6 +17,7 @@ public class Gravedad implements Worker
 	
 	//Atributos de Instancia
 	protected ControlCentral controlCentral;
+	private int i; //Manejo de NullPointerException en el método Work.
 	
 	/*CONTRUCTOR*/
 	
@@ -40,24 +41,12 @@ public class Gravedad implements Worker
 	/*Métodos en Ejecución*/
 	
 	/**
-	 * Provoca la caída del Actor a sí no se encuentra sobre una Celda sólida (totalemente ocupada).
-	 * 	
-	 * @param a es el actor al cual la gravedad debe afectar.
+	 * Provoca la caída de los Actores afectables por gravedad.
 	 */
 	public void work()
-	{	
-		Iterator<afectableXgravedad> actores = controlCentral.getCaibles();
-		int i = 0;
-		while (actores.hasNext())
-		try
-		{
-			afectar(actores.next());
-			i++;
-		}
-		catch (NullPointerException e)
-		{
-			
-		}
+	{
+		for (afectableXgravedad actor: controlCentral.getCaibles())
+			afectar(actor);
 	}
 	
 	/**
@@ -75,7 +64,11 @@ public class Gravedad implements Worker
 		if (a.getPG() == -1)
 			a.caer();
 		else
+		{
 			a.efectoGravedad(1);
+			if (a.getPG() == -1)
+				a.caer();
+		}
 	}
 
 }

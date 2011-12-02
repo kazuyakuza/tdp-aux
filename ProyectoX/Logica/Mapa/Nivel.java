@@ -145,7 +145,7 @@ public class Nivel
 		}
 		
 		//Agregación Actores Enemigos.
-		aux = 0;
+		/*aux = 0;
 		while (aux < 8)
 		{
 			Goomba goomba = new Goomba ();
@@ -155,28 +155,28 @@ public class Nivel
 			enemigos.addFirst(goomba);
 			caibles.addFirst((afectableXgravedad) goomba);
 			aux++;
-		}
+		}*/
 		
-		Goomba goomba = new Goomba ();
+		/*Goomba goomba = new Goomba ();
 		bloqueActual.ABC[10][10].agregarActor(goomba);
 		goomba.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(goomba);
 		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba);
+		caibles.addFirst((afectableXgravedad) goomba)*/
 		
-		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
+		/*KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
 		bloqueActual.ABC[10][10].agregarActor(kt1);
 		kt1.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
-		caibles.addFirst(kt1);
+		caibles.addFirst(kt1);*/
 		
-		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
+		/*KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
 		bloqueActual.ABC[4][4].agregarActor(kt2);
 		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
 		actores.addFirst(kt2);
 		enemigos.addFirst(kt2);
-		caibles.addFirst(kt2);
+		caibles.addFirst(kt2);*/
 		
 		//Agregacion de un power up.
 		PowerUp powerUp = new SuperHongo();
@@ -223,7 +223,7 @@ public class Nivel
 			aux++;
 		}
 		
-		Irrompible plataforma = new Irrompible ();
+		/*Irrompible plataforma = new Irrompible ();
 		bloqueActual.ABC[10][9].setOcupada(true);
 		bloqueActual.ABC[10][9].agregarEstructura(plataforma);//Plataforma irrompible
 		plataforma.setCeldaActual(bloqueActual.ABC[10][9]);
@@ -234,7 +234,7 @@ public class Nivel
 		bloqueActual.ABC[10][19].agregarEstructura(plataforma2);//Plataforma irrompible
 		plataforma2.setCeldaActual(bloqueActual.ABC[10][19]);
 		actores.addFirst(plataforma2);
-		plataformas.addFirst(plataforma2);
+		plataformas.addFirst(plataforma2);*/
 		
 		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(), cc, true);
 		bloqueActual.ABC[7][5].setOcupada(true);

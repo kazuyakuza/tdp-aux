@@ -29,6 +29,8 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
                      //Si PG=0, el Actor no es afectado por la Gravedad (está sobre un lugar sólido).
                      //Si PG<0, el Actor es afectado por la Gravedad, y se produce la acción de caer.
 
+	protected boolean mov; //Mejora del moviemiento.
+	
 	//Actualizador
 	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	
@@ -54,6 +56,7 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
 		miIA = new IAKT (this);
 		PG = 0;
+		mov = true;
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/

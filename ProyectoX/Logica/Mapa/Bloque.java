@@ -146,16 +146,6 @@ public class Bloque
 	/*CONSULTAS*/
 	
 	/**
-	 * Devuelve el Mapa al que pertenece el Bloque.
-	 * 
-	 * @return Mapa al que pertenece el Bloque.
-	 */
-	public Mapa getMapa ()
-	{
-		return mapa;
-	}
-	
-	/**
 	 * Devuelve la Posición del Bloque en el Mapa.
 	 * 
 	 * @return Arreglo de dos componentes con la Posición del Bloque en el Mapa. Donde arreglo[0] es la fila de la posición, y arreglo[1] es la columna de la posición.
