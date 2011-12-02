@@ -22,10 +22,12 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.HongoVerde;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
+import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
+import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -149,69 +151,73 @@ public class Nivel
 		
 		//Agregación Actores Enemigos.
 		/*aux = 0;
-		while (aux < 8)
+		while (aux < 1)
 		{
 			Goomba goomba = new Goomba ();
 			bloqueActual.ABC[10][10 + aux].agregarActor(goomba);
 			goomba.setCeldaActual(bloqueActual.ABC[10][10 + aux]);
 			actores.addFirst(goomba);
 			enemigos.addFirst(goomba);
-			caibles.addFirst((afectableXgravedad) goomba);
+			caibles.addFirst(goomba);
 			aux++;
 		}*/
-		
+		/*
 		/*Goomba goomba = new Goomba ();
 		bloqueActual.ABC[10][10].agregarActor(goomba);
 		goomba.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(goomba);
 		enemigos.addFirst(goomba);
-		caibles.addFirst((afectableXgravedad) goomba)*/
-		
+		caibles.addFirst(goomba);
+		*/
 		/*KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
 		bloqueActual.ABC[10][10].agregarActor(kt1);
 		kt1.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
 		caibles.addFirst(kt1);*/
-		
-		/*KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
+		/*
+		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
 		bloqueActual.ABC[4][4].agregarActor(kt2);
 		kt2.setCeldaActual(bloqueActual.ABC[4][4]);
 		actores.addFirst(kt2);
 		enemigos.addFirst(kt2);
-		caibles.addFirst(kt2);*/
-		
+		caibles.addFirst(kt2);
+		*/
 		//Agregacion de un power up.
-		PowerUp powerUp = new SuperHongo();
-		bloqueActual.ABC[3][7].agregarActor(powerUp);
-		powerUp.setCeldaActual(bloqueActual.ABC[3][7]);
-		actores.addLast(powerUp);
-		powerUps.addLast(powerUp);
-		caibles.addLast((afectableXgravedad) powerUp);
+
+		
+		PowerUp hongo = new SuperHongo();
+		bloqueActual.ABC[3][7].agregarActor(hongo);
+		hongo.setCeldaActual(bloqueActual.ABC[3][7]);
+		actores.addLast(hongo);
+		powerUps.addLast(hongo);
+		caibles.addLast(hongo);
 		
 		PowerUp flor = new FlorFuego();
 		bloqueActual.ABC[3][8].agregarActor(flor);
 		flor.setCeldaActual(bloqueActual.ABC[3][8]);
 		actores.addLast(flor);
 		powerUps.addLast(flor);
-		caibles.addLast((afectableXgravedad) flor);
+		caibles.addLast(flor);
 		
+		/*		
 		PowerUp bomba = new Estrella();
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
-		caibles.addLast((afectableXgravedad) bomba);
-		
+		caibles.addLast(bomba);*/
+		/*
 		Moneda moneda1 = new Moneda();
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
 		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
-		actores.addLast(moneda1);
-		
+		actores.addLast(moneda1);	
+
 		Moneda moneda2 = new Moneda();
 		bloqueActual.ABC[10][8].agregarActor(moneda2);
-		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);		
+		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);	
 		actores.addLast(moneda2);
+		*/
 		
 		//Agregación Actores no Personjes.
 		aux = 6;
@@ -238,7 +244,8 @@ public class Nivel
 		plataforma2.setCeldaActual(bloqueActual.ABC[10][19]);
 		actores.addFirst(plataforma2);
 		plataformas.addFirst(plataforma2);*/
-		
+
+		/*
 		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(), cc, true);
 		bloqueActual.ABC[7][5].setOcupada(true);
 		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
@@ -282,7 +289,7 @@ public class Nivel
 		r2.setCeldaActual(bloqueActual.ABC[7][3]);
 		actores.addFirst(r2);
 		plataformas.addFirst(r2);
-		
+		*/
 		
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(0, true);
@@ -295,7 +302,7 @@ public class Nivel
 		actor.setCeldaActual(bloqueActual.ABC[10][1]);
 		actores.addFirst(actor);
 		pjs.addFirst((PjSeleccionable) actor);
-		caibles.addFirst((afectableXgravedad) actor);
+		caibles.addFirst ((afectableXgravedad)actor);
 	}
 	
 	/**

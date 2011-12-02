@@ -2,6 +2,7 @@ package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
 import ProyectoX.Logica.Actor;
+import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.Responsabilidades.Posicionable;
 
@@ -167,6 +168,16 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 		mario = pj;
 	}
 	
+	/**
+	 * Modifica la Celda actual del actor por la Celda c, actualizando su ubicación.
+	 * @param c es la nueva Celda para el Actor.
+	 * @throws NullPointerException si c es null.
+	 */
+	protected void actualizarCelda (Celda c) throws NullPointerException
+	{
+		componente.actualizarCelda(c);
+	}
+	
 	/*CONSULTAS*/
 	
 	/**
@@ -235,6 +246,15 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 	public int[] vectorDistancia (Posicionable a)
 	{
 		return componente.vectorDistancia(a);
+	}
+	
+	/**
+	 * Verifica que se cumpla la condicón para saltar.
+	 * @return verdadero si se cumple la condición para saltar, falso, en caso contrario.
+	 */
+	protected boolean condicionSaltar ()
+	{		
+		return componente.condicionSaltar();
 	}
 	
 }

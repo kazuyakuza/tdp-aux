@@ -69,8 +69,8 @@ public class EspecialPowerUp extends Irrompible
 			Celda celdaSuperior;
 			if (colisionAbajo(mario))
 			{//Si la colisión de Mario es desde abajo, sacar al powerUp, sino, no hacer nada.			
-				if (hayPowerUp())
-				{//Si hay powerUp, sacarlo y agregarlo a la celda superior, sino, no hacer nada.		
+				if (hayPowerUp() && !celdaActual.getSuperior().isOcupada())
+				{//Si hay powerUp y en la celda superior no otra estructura, sacar y agregar al powerUp a la celda superior, sino, no hacer nada.		
 					
 					celdaSuperior = this.celdaActual.getSuperior();
 					powerUp.setCeldaActual(celdaSuperior);

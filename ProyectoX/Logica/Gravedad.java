@@ -59,7 +59,7 @@ public class Gravedad implements Worker
 	{
 		if (a == null)
 			throw new NullPointerException ("Gravedad.afectar()" + "\n" +
-					                        "Imposible afectar al Actor a, a es null.");
+					                        "Imposible afectar al Actor a, a es null. ");
 		
 		if (a.getPG() == -1)
 			a.caer();

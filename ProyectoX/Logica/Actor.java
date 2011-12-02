@@ -93,11 +93,31 @@ public abstract class Actor implements Posicionable
 			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
 				
+		this.producirColisiones(c);
+		this.actualizarCelda(c);
+		/*
 		celdaActual.sacarActor(this);
 		celdaActual = c;
-		celdaActual.agregarActor(this);
-		spriteManager.actualizar(celdaActual.getPosicion());
-		producirColisiones(c);
+		celdaActual.agregarActor(this);				
+		*/	
+		//spriteManager.actualizar(celdaActual.getPosicion());
+	}
+	
+	/**
+	 * Modifica la Celda actual del actor por la Celda c, actualizando su ubicación.
+	 * @param c es la nueva Celda para el Actor.
+	 * @throws NullPointerException si c es null.
+	 */
+	protected void actualizarCelda (Celda c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException ("Actor.ActualizarCelda()" + "\n" +
+                                            "Imposible moverse a la Celda c. c es null");
+		
+		celdaActual.sacarActor(this);
+		//celdaActual = c;
+		this.setCeldaActual(c);
+		celdaActual.agregarActor(this);	
 	}
 	
 	/**
