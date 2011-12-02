@@ -143,16 +143,14 @@ public class KTNormal extends CaracteristicaKT
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
 	public void colisionarPj (final Mario mario) throws ColisionException, NullPointerException
-	{
-		Celda celdaActual = koopa.getCeldaActual();
-		if (celdaActual.getSuperior() == mario.getCeldaActual())
+	{		
+		if (koopa.colisionArriba(mario))
 		{			
 			if (! koopa.getUpNeeder().hayWorkerPrioridad(0))
 				koopa.getUpNeeder().addWorker(0, new Worker ()
 				{
 					public void work() throws Exception
-					{
-						//koopa.morir(); <------- ?
+					{						
 						koopa.setCaracteristicaKT(new KTCaparazon (koopa));
 						koopa = null;
 					}

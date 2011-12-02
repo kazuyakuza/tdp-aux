@@ -44,7 +44,7 @@ public class MarioGrande extends Caracteristica
 	public MarioGrande (Mario pj)
 	{
 		super(pj);
-		celdaGrande = mario.getCeldaActual().getSuperior();
+		celdaGrande = mario.getCeldaActual().getSuperior();		
 		celdaGrande.agregarActor(mario);			
 	}
 	
@@ -63,7 +63,8 @@ public class MarioGrande extends Caracteristica
 			mario.getSpriteManager().cambiarSprite(agachado);
 		
 		celdaGrande.sacarActor(mario);
-		celdaGrande = mario.getCeldaActual();		
+		//celdaGrande = mario.getCeldaActual();
+		celdaGrande = null;
 	}
 	
 	/**
@@ -196,7 +197,8 @@ public class MarioGrande extends Caracteristica
 	 */
 	protected boolean agachado()
 	{
-		return celdaGrande == mario.getCeldaActual();
+		//return celdaGrande == mario.getCeldaActual();
+		return celdaGrande == null;
 	}
 	
 	/*METODOS REDEFINIDOS*/
@@ -379,8 +381,8 @@ public class MarioGrande extends Caracteristica
 			celdaGrande = c.getSuperior();
 			celdaGrande.agregarActor(mario);
 		}
-		//System.out.println("La celdaGrande de Mario es: " + celdaGrande.getPosFila() + " , "+ celdaGrande.getPosColumna() + " )");
-		//System.out.println("La celdaActual de Mario es: " + mario.getCeldaActual().getPosFila() + " , "+ mario.getCeldaActual().getPosColumna() + " )");
+		System.out.println("La celdaGrande de Mario es: " + celdaGrande.getPosFila() + " , "+ celdaGrande.getPosColumna() + " )");
+		System.out.println("La celdaActual de Mario es: " + mario.getCeldaActual().getPosFila() + " , "+ mario.getCeldaActual().getPosColumna() + " )");
 	}
 	
 }
