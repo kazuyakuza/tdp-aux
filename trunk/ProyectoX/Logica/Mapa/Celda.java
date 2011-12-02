@@ -328,6 +328,23 @@ public class Celda
 	}
 	
 	/**
+	 * Calcula la distancia que hay entre las Celdas.
+	 * @param c Celda con la que se desea calcular la distancia a ésta.	 
+	 * @return entero que es la distancia entre las Celdas c y ésta.
+	 * @throws NullPointerException si c es null.
+	 */
+	public int distancia (Celda c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException ("ControlCentral.distancia()" + "\n" +
+											"Imposible calcular distancia, alguna celda ess nulas.");
+				
+		int x = Math.abs(this.getPosFila() - c.getPosFila());
+		int y = Math.abs(this.getPosColumna() - c.getPosColumna());		
+		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
+	}
+	
+	/**
 	 * Devuelve el Bloque al que pertenece la Celda.
 	 * 
 	 * @return Bloque al que pertenece la Celda.

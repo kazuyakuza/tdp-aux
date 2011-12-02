@@ -88,7 +88,7 @@ public class ControlCentral implements Runnable, ControlThread
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
 			
-			nivel = new Nivel(1);
+			nivel = new Nivel(0);
 			
 			gravedad = new Gravedad(this);
 			
@@ -202,7 +202,9 @@ public class ControlCentral implements Runnable, ControlThread
 	public void explotarBombaNuclear (BombaNuclear bomba) throws NullPointerException
 	{
 		for (Enemigo enemigo: nivel.getEnemigos(this))
-			if (distancia (bomba.getCeldaActual(),enemigo.getCeldaActual()) <= 10 )			
+			//if (distancia (bomba.getCeldaActual(),enemigo.getCeldaActual()) <= 10 )
+			
+			if (bomba.getCeldaActual().distancia(enemigo.getCeldaActual()) <= 10 )
 				((Actor)enemigo).morir();		
 	}
 	
@@ -213,6 +215,7 @@ public class ControlCentral implements Runnable, ControlThread
 	 * @return entero que es la distancia entre las Celdas c1 y c2.
 	 * @throws NullPointerException si c1 o c2 son null.
 	 */
+	/*
 	protected int distancia (Celda c1, Celda c2) throws NullPointerException
 	{
 		if (c1 == null || c2 == null)
@@ -222,7 +225,7 @@ public class ControlCentral implements Runnable, ControlThread
 		int x = Math.abs(c1.getPosFila() - c2.getPosFila());
 		int y = Math.abs(c1.getPosColumna() - c2.getPosColumna());		
 		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
-	}
+	}*/
 	
 	/*Métodos en Ejecución*/
 	

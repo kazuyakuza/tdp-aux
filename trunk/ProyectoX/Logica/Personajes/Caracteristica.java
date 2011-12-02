@@ -258,7 +258,7 @@ public abstract class Caracteristica
 		catch (NullPointerException e1)
 		{
 			throw new AccionActorException ("Caracteristica.moverseAizquierda()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+                                            "Imposible realizar la acción moverseAizquierda." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
@@ -272,7 +272,7 @@ public abstract class Caracteristica
 	}
 	
 	/**
-	 * Mario realiza la acción de moverse hace la derecha.
+	 * Mario realiza la acción de moverse hacia la derecha.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
@@ -317,6 +317,22 @@ public abstract class Caracteristica
 	public void setMario (Mario pj)
 	{
 		mario = pj;
+	}
+		
+	/**
+	 * Modifica la Celda actual del actor por la Celda c, actualizando su ubicación.
+	 * @param c es la nueva Celda para el Actor.
+	 * @throws NullPointerException si c es null.
+	 */
+	protected void actualizarCelda (Celda c) throws NullPointerException
+	{
+		if (c == null)
+			throw new NullPointerException ("Actor.ActualizarCelda()" + "\n" +
+                                            "Imposible moverse a la Celda c. c es null");
+		
+		mario.getCeldaActual().sacarActor(mario);
+		mario.setCeldaActual(c);
+		mario.getCeldaActual().agregarActor(mario);	
 	}
 	
 	/*CONSULTAS*/

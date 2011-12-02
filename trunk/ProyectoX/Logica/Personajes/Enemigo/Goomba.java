@@ -326,7 +326,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 			
 			if (celdaActual.getSuperior() == mario.getCeldaActual())
 			{
-				pj.getJugador().asignarPuntos(60);
+				pj.getJugador().asignarPuntos(this.getPuntos(mario));
 				
 				if (! upNeeder.hayWorkerPrioridad(0))
 					upNeeder.addWorker(0, new Worker ()
@@ -340,7 +340,7 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 			else
 			{
 				final Goomba gAux = this;
-			
+				
 				if (! upNeeder.hayWorkerPrioridad(1))
 					upNeeder.addWorker(1, new Worker ()
 					{

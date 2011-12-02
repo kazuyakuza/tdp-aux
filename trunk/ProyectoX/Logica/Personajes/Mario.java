@@ -452,5 +452,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		while (actores.hasNext())
 			actores.next().colisionarPj(this);	
 	}
+	
+	/**
+	 * Modifica la Celda actual del actor por la Celda c.
+	 * @param c es la nueva Celda para el Actor.
+	 * @throws NullPointerException si c es null.
+	 */
+	protected void actualizarCelda (Celda c) throws NullPointerException
+	{		
+		miCaracteristica.actualizarCelda(c);
+	}
 
 }
