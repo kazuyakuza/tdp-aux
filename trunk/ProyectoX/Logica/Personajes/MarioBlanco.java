@@ -137,7 +137,7 @@ public class MarioBlanco extends Caracteristica
 		mario.setCaracteristica(new MarioGrande(mario));
 		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 4000));
 		((Invulnerable)mario.getCaracteristica()).empezar();		
-		//mario = null;
+		//mario = null; <----- ?
 	}
 	
 	/**
@@ -232,7 +232,7 @@ public class MarioBlanco extends Caracteristica
 		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
 	}
 	
-/*METODOS REDEFINIDOS*/
+	/*METODOS REDEFINIDOS*/
 	
 	/**
 	 * Realiza la Acción Caer, producida por el efecto de la Gravedad.
@@ -268,10 +268,8 @@ public class MarioBlanco extends Caracteristica
 			}
 		}
 		else
-		{
-			if (mario.getPG() != -1)
-				PS = 0;			
-		}
+			if ((mario.getPG() != -1) && (mario.getCeldaActual().getInferior().isOcupada()))
+				PS = 0;
 	}
 	
 	/**
@@ -323,7 +321,7 @@ public class MarioBlanco extends Caracteristica
 	public void moverseAcelda (Celda c) throws NullPointerException
 	{
 		if (c == null)
-			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
+			throw new NullPointerException ("MarioBlanco.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
 		
 		celdaGrande.sacarActor(mario);

@@ -96,8 +96,8 @@ public abstract class Actor implements Posicionable
 		celdaActual.sacarActor(this);
 		celdaActual = c;
 		celdaActual.agregarActor(this);
-		producirColisiones(c);			
 		spriteManager.actualizar(celdaActual.getPosicion());
+		producirColisiones(c);
 	}
 	
 	/**

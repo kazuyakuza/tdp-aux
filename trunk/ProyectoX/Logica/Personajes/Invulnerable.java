@@ -16,6 +16,7 @@ import ProyectoX.Logica.Actor;
  */
 public class Invulnerable extends DecoracionCaracteristica
 {
+	
 	//Atributos de Instancia
 	protected Timer timer;
 	

@@ -137,42 +137,30 @@ public abstract class Caracteristica
 			{
 				celdaInferior = mario.getCeldaActual().getInferior();
 				if (!celdaInferior.isOcupada())
+				{
+					if (mario.miraIzq())
+						mario.getSpriteManager().cambiarSprite(-saltando);
+					else
+						mario.getSpriteManager().cambiarSprite(saltando);
 					mario.moverseAcelda(celdaInferior);
+				}
 				else
+				{
+					if (mario.miraIzq())
+						mario.getSpriteManager().cambiarSprite(-spriteQuieto());
+					else
+						mario.getSpriteManager().cambiarSprite(spriteQuieto());
 					mario.setPG(0);
-			}
-			
-			if (mario.getCeldaActual().getInferior().isOcupada())
-	        {
-				if (! mario.getUpNeeder().hayWorkerPrioridad(5))
-					mario.getUpNeeder().addWorker(5,
-							new Worker ()
-							{
-								public void work() throws Exception
-								{
-									if (mario.miraIzq())
-										mario.getSpriteManager().cambiarSprite(-quieto);
-									else
-										mario.getSpriteManager().cambiarSprite(quieto);
-								}
-							});
-			}
-	        else
-	        {
-	        	if (! mario.getUpNeeder().hayWorkerPrioridad(0))
-	        		mario.getUpNeeder().addWorker(0,
-	        				new Worker ()
-	        				{
-	        					public void work() throws Exception
-	        					{
-	        						if (mario.miraIzq())
-	        							mario.getSpriteManager().cambiarSprite(-saltando);
-									else
-										mario.getSpriteManager().cambiarSprite(saltando);
-	                            }
-	        				});
-	        }
-		
+					if (! mario.getUpNeeder().hayWorkerPrioridad(1))
+						mario.getUpNeeder().addWorker(1, new Worker ()
+			            {
+			            	public void work() throws Exception
+			            	{
+			            		PS = 0;
+			            	}
+			            });
+				}
+			}		
 		}
 		catch (NullPointerException e1)
 		{	
@@ -201,7 +189,8 @@ public abstract class Caracteristica
 		try 
 		{
 			if (mario.getCeldaActual() == null)
-				throw new NullPointerException ("La celdaActual del Actor es null.");			
+				throw new NullPointerException ("La celdaActual del Actor es null.");
+			
 			if (condicionSaltar())
 			{
 				if (mario.miraIzq())
@@ -210,11 +199,13 @@ public abstract class Caracteristica
 					mario.getSpriteManager().cambiarSprite(saltando);
 				if (mario.getCeldaActual().haySuperior())
 				{
-					mario.setPG(mario.getPG()+1);
-					this.PS++;					
 					celdaSuperior = mario.getCeldaActual().getSuperior();
 					if (!celdaSuperior.isOcupada())
+					{
+						mario.setPG(mario.getPG()+1);
+						this.PS++;
 						mario.moverseAcelda(celdaSuperior);
+					}
 					else //Mario colisiona una Estructura desde abajo.
 					{
 						mario.producirColisiones(celdaSuperior);
@@ -222,8 +213,8 @@ public abstract class Caracteristica
 				}
 			}
 			else
-				if (mario.getPG() != -1)
-					this.PS = 0;
+				if ((mario.getPG() != -1) && (mario.getCeldaActual().getInferior().isOcupada()))
+					PS = 0;
 		}
 		catch (NullPointerException e1)
 		{
@@ -258,18 +249,10 @@ public abstract class Caracteristica
 			{
 				mario.mirarIzq(true);
 				mario.getSpriteManager().cambiarSprite(-caminando);
+				mario.getSpriteManager().setGif(cantSpritesCaminando());
 				celdaAnterior = mario.getCeldaActual().getAnterior();
 				if (!celdaAnterior.isOcupada())
 					mario.moverseAcelda(celdaAnterior);
-				
-				if (! mario.getUpNeeder().hayWorkerPrioridad(5))
-					mario.getUpNeeder().addWorker(5, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		mario.getSpriteManager().cambiarSprite(-quieto);
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -305,18 +288,10 @@ public abstract class Caracteristica
 			{
 				mario.mirarIzq(false);
 				mario.getSpriteManager().cambiarSprite(caminando);
+				mario.getSpriteManager().setGif(cantSpritesCaminando());
 				celdaSiguiente = mario.getCeldaActual().getSiguiente();
 				if (!celdaSiguiente.isOcupada())
-					mario.moverseAcelda(celdaSiguiente);
-								
-				if (! mario.getUpNeeder().hayWorkerPrioridad(5))
-					mario.getUpNeeder().addWorker(5, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		mario.getSpriteManager().cambiarSprite(quieto);
-                    	}
-                    });								
+					mario.moverseAcelda(celdaSiguiente);								
 			}
 		}
 		catch (NullPointerException e1)

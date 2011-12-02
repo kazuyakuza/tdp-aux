@@ -7,6 +7,7 @@ import ProyectoX.Logica.Responsabilidades.Posicionable;
 
 public abstract class DecoracionCaracteristica extends Caracteristica
 {
+	
 	//Atributos de Instancia
 	protected Caracteristica componente;
 	
@@ -23,6 +24,7 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 		componente = comp;
 		mario = comp.getMario();
 		mario.getSpriteManager().cargarSprites(this.getNombresSprites());
+		mario.getSpriteManager().cambiarSprite(quieto);
 	}
 	
 	/**
@@ -114,7 +116,7 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 		return componente.getNombresSprites();
 	}
 	
-/*COMANDOS*/
+	/*COMANDOS*/
 	
 	/**
 	 * Realiza la Acción Caer, producida por el efecto de la Gravedad.

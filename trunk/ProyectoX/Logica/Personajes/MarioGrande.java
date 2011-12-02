@@ -16,6 +16,7 @@ import ProyectoX.Logica.Responsabilidades.Posicionable;
  */
 public class MarioGrande extends Caracteristica
 {
+	
 	//Atributos de Clase
 	private static final String dirRecursos = "Mario/";
 	private static final String [] nombresSprites = //En este arreglo se encuentran todas las rutas a las imagenes correspondientes a MarioGrande, la ubicación en los índices es:
@@ -223,10 +224,8 @@ public class MarioGrande extends Caracteristica
 			}
 		}
 		else
-		{
-			if (mario.getPG() != -1)
-				PS = 0;			
-		}
+			if ((mario.getPG() != -1) && (mario.getCeldaActual().getInferior().isOcupada()))
+				PS = 0;
 	}
 	
 	/**
@@ -278,9 +277,9 @@ public class MarioGrande extends Caracteristica
 	public void moverseAcelda (Celda c) throws NullPointerException
 	{
 		if (c == null)
-			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
+			throw new NullPointerException ("MarioGrande.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
-				
+		
 		celdaGrande.sacarActor(mario);
 		celdaGrande = c;
 		celdaGrande.agregarActor(mario);

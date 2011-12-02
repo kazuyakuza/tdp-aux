@@ -52,19 +52,15 @@ public class KTNormal extends CaracteristicaKT
 			
 			if (celdaActual.hayAnterior())
 			{
-				koopa.getSpriteManager().cambiarSprite(movimiento);
+				if (koopa.mov)
+					koopa.getSpriteManager().cambiarSprite(movimiento);
+				else
+					koopa.getSpriteManager().cambiarSprite(quieto);
+				koopa.mov = !koopa.mov;
+				
 				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 					koopa.moverseAcelda(celdaAnterior);
-				
-				if (! koopa.getUpNeeder().hayWorkerPrioridad(3))
-					koopa.getUpNeeder().addWorker(3, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		koopa.getSpriteManager().cambiarSprite(quieto);
-                    	}
-                    });
 			}
 			
 		}
@@ -100,19 +96,15 @@ public class KTNormal extends CaracteristicaKT
 			
 			if (celdaActual.haySiguiente())
 			{
-				koopa.getSpriteManager().cambiarSprite(-movimiento);
+				if (koopa.mov)
+					koopa.getSpriteManager().cambiarSprite(-movimiento);
+				else
+					koopa.getSpriteManager().cambiarSprite(-quieto);
+				koopa.mov = !koopa.mov;
+				
 				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					koopa.moverseAcelda(celdaSiguiente);
-				
-				if (! koopa.getUpNeeder().hayWorkerPrioridad(3))
-                    koopa.getUpNeeder().addWorker(3, new Worker ()
-                    {
-                    	public void work() throws Exception
-                    	{
-                    		koopa.getSpriteManager().cambiarSprite(-quieto);
-                    	}
-                    });
 			}
 		}
 		catch (NullPointerException e1)
@@ -160,7 +152,7 @@ public class KTNormal extends CaracteristicaKT
 				{
 					public void work() throws Exception
 					{
-						//koopa.morir();
+						//koopa.morir(); <------- ?
 						koopa.setCaracteristicaKT(new KTCaparazon (koopa));
 						koopa = null;
 					}
