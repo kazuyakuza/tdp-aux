@@ -64,7 +64,7 @@ public class MarioBlanco extends Caracteristica
 			mario.getSpriteManager().cambiarSprite(agachado);
 		
 		celdaGrande.sacarActor(mario);
-		celdaGrande = mario.getCeldaActual();
+		celdaGrande = null;
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class MarioBlanco extends Caracteristica
 	 */
 	protected boolean agachado()
 	{
-		return celdaGrande == mario.getCeldaActual();
+		return celdaGrande == null;
 	}
 	
 	/*METODOS REDEFINIDOS*/

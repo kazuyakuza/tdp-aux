@@ -296,6 +296,18 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	}
 	
 	/**
+	 * Verifica si la colisión con el Actor proviene desde arriba.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario se encuentra arriba, falso, en caso contrario.
+	 */
+	protected boolean colisionArriba (Mario mario)
+	{
+		//Mario se encuentra arriba del Goomba si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);
+		return (vector[0] == 0 && vector[1] == -1);
+	}
+	
+	/**
 	 * Efecto provocado por el Actor a que colisiona con el Actor actual.
 	 * 
 	 * @param a Actor que colisiona al Actor actual.
@@ -324,7 +336,8 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 		{
 			final Mario mario = checkActorJugador(pj);
 			
-			if (celdaActual.getSuperior() == mario.getCeldaActual())
+			//if (celdaActual.getSuperior() == mario.getCeldaActual())
+			if (colisionArriba(mario))
 			{
 				pj.getJugador().asignarPuntos(this.getPuntos(mario));
 				

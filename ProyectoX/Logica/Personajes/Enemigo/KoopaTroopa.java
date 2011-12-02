@@ -264,6 +264,18 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 		return upNeeder;
 	}
 	
+	/**
+	 * Verifica si la colisión con el Actor proviene desde arriba.
+	 * @param mario Mario con el que se colisiona.
+	 * @return Verdadero si Mario se encuentra arriba, falso, en caso contrario.
+	 */
+	protected boolean colisionArriba (Mario mario)
+	{
+		//Mario se encuentra arriba del KoopaTroopa si y solo si para Mario el vectorDistancia = (0,1).
+		int [] vector = mario.vectorDistancia(this);
+		return (vector[0] == 0 && vector[1] == -1);
+	}
+	
 	/*Métodos en Ejecución*/
 	
 	/**
