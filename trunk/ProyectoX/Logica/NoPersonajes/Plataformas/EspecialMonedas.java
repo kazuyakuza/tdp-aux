@@ -3,6 +3,7 @@ package ProyectoX.Logica.NoPersonajes.Plataformas;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.PositionList;
+import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
@@ -50,8 +51,13 @@ public class EspecialMonedas extends Irrompible
 	 */
 	private void inicializar (int cantidad)
 	{
+		Moneda m = null;
 		for (int i=0; i < cantidad; i++)
-			this.monedas.addLast(new Moneda ());
+		{
+			m = new Moneda ();
+			this.monedas.addLast(m);
+			m.getSpriteManager().setNotGif();
+		}
 	}
 	
 	/**
@@ -77,9 +83,15 @@ public class EspecialMonedas extends Irrompible
 			{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
 				if (hayMoneda())
 				{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
-					moneda = monedas.remove(monedas.first());					
+					moneda = monedas.remove(monedas.first());
+					
+					moneda.getSpriteManager().actualizar(celdaActual.getSuperior().getPosicion());
+					moneda.getSpriteManager().rotarGif(moneda.getCantFramesMovimiento());
+					spriteManager.printNextMe(moneda.getSpriteManager());
 					mario.getJugador().asignarPuntos(moneda.getPuntos(mario));
-					mario.getJugador().agregarMoneda();					
+					mario.getJugador().agregarMoneda();
+					moneda.matate(this);
+					
 					if (!hayMoneda())
 						spriteManager.cambiarSprite(vacio);					
 				}			

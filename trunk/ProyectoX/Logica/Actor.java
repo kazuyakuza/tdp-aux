@@ -154,9 +154,17 @@ public abstract class Actor implements Posicionable
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir ()
+	public void morir () throws NullPointerException
 	{
+		if (spriteManager == null)
+			throw new NullPointerException ("Actor.morir()" + "\n" +
+					                        "Imposible morir. SpriteManager es null.");
+		if (celdaActual == null)
+			throw new NullPointerException ("Actor.morir()" + "\n" +
+					                        "Imposible morir. CeldaActual es null.");
+		
 		spriteManager.setEliminar();
+		
 		celdaActual.sacarActor(this);
 		
 		spriteManager = null;

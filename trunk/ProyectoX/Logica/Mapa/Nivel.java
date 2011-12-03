@@ -257,12 +257,12 @@ public class Nivel
 		plataformas.addFirst(plataformaPUP3);
 		especialesPowerUp.addFirst(plataformaPUP3);
 		
-		/*EspecialMonedas plataformaM = new EspecialMonedas (3);
+		EspecialMonedas plataformaM = new EspecialMonedas (3);
 		bloqueActual.ABC[7][13].setOcupada(true);
 		bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
 		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
 		actores.addFirst(plataformaM);
-		plataformas.addFirst(plataformaM);*/
+		plataformas.addFirst(plataformaM);
 		
 		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(), cc, false);
 		bloqueActual.ABC[7][14].setOcupada(true);
@@ -466,7 +466,16 @@ public class Nivel
 		plataformas.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
-		aux = 34; int cantMonedas = 0; PowerUp pw = null;
+		 int cantMonedas = 0; 
+		do cantMonedas = new Random ().nextInt(6); while (cantMonedas == 0);
+		EspecialMonedas plataformaM0 = new EspecialMonedas (cantMonedas);
+		bloqueActual.ABC[9][34].setOcupada(true);
+		bloqueActual.ABC[9][34].agregarEstructura(plataformaM0);
+		plataformaM0.setCeldaActual(bloqueActual.ABC[9][34]);
+		actores.addFirst(plataformaM0);
+		plataformas.addFirst(plataformaM0);
+		
+		aux = 35;PowerUp pw = null;
 		while (aux <= 39)
 		{
 			if ((aux%2) == 0)

@@ -25,10 +25,10 @@ public class VentanaPrincipal extends JFrame
 	private int largo = 640;
 	private int alto = 480;
 	
-	private String version = "Versión 0.1";
+	private String version = "Versión 0.5";
 	private String[] autores = {"Javier Eduardo Barrocal","Pablo Isaias Chacar"};
 	private String[] infoExtra = {"Proyecto X", "Tecnología de Programación", "2do Cuatrimestre 2011"};
-	private String tituloJuego = "Mario TDP 2011";
+	private String tituloJuego = "Super Contra Bros";
 	
 	//Variables de Instancia
 	private Menu menu;
