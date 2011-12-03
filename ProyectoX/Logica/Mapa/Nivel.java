@@ -18,16 +18,13 @@ import ProyectoX.Logica.NoPersonajes.Plataformas.Plataforma;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
 import ProyectoX.Logica.NoPersonajes.PowerUps.Estrella;
-import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.HongoVerde;
 import ProyectoX.Logica.NoPersonajes.PowerUps.PowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
-import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.Goomba;
 import ProyectoX.Logica.Personajes.Enemigo.KTNormal;
-import ProyectoX.Logica.Personajes.Enemigo.KTCaparazon;
 import ProyectoX.Logica.Personajes.Enemigo.KoopaTroopa;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -183,40 +180,39 @@ public class Nivel
 		enemigos.addFirst(kt2);
 		caibles.addFirst(kt2);
 		*/
-		//Agregacion de un power up.
-
 		
-		PowerUp hongo = new SuperHongo();
+		//Agregacion de un power up.
+		/*PowerUp hongo = new SuperHongo();
 		bloqueActual.ABC[3][7].agregarActor(hongo);
 		hongo.setCeldaActual(bloqueActual.ABC[3][7]);
-		actores.addLast(hongo);
-		powerUps.addLast(hongo);
-		caibles.addLast(hongo);
+		actores.addFirst(hongo);
+		powerUps.addFirst(hongo);
+		caibles.addFirst(hongo);
 		
 		PowerUp flor = new FlorFuego();
 		bloqueActual.ABC[3][8].agregarActor(flor);
 		flor.setCeldaActual(bloqueActual.ABC[3][8]);
-		actores.addLast(flor);
-		powerUps.addLast(flor);
-		caibles.addLast(flor);
+		actores.addFirst(flor);
+		powerUps.addFirst(flor);
+		caibles.addFirst(flor);*/
 		
 				
 		PowerUp bomba = new BombaNuclear(cc);
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
-		actores.addLast(bomba);
-		powerUps.addLast(bomba);
-		caibles.addLast(bomba);
+		actores.addFirst(bomba);
+		powerUps.addFirst(bomba);
+		caibles.addFirst(bomba);
 		/*
 		Moneda moneda1 = new Moneda();
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
 		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
-		actores.addLast(moneda1);	
+		actores.addFirst(moneda1);	
 
 		Moneda moneda2 = new Moneda();
 		bloqueActual.ABC[10][8].agregarActor(moneda2);
 		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);	
-		actores.addLast(moneda2);
+		actores.addFirst(moneda2);
 		*/
 		
 		//Agregación Actores no Personjes.
@@ -245,7 +241,6 @@ public class Nivel
 		actores.addFirst(plataforma2);
 		plataformas.addFirst(plataforma2);*/
 
-		/*
 		EspecialPowerUp plataformaPUP = new EspecialPowerUp (new SuperHongo(), cc, true);
 		bloqueActual.ABC[7][5].setOcupada(true);
 		bloqueActual.ABC[7][5].agregarEstructura(plataformaPUP);
@@ -254,13 +249,20 @@ public class Nivel
 		plataformas.addFirst(plataformaPUP);
 		especialesPowerUp.addFirst(plataformaPUP);
 		
-		EspecialMonedas plataformaM = new EspecialMonedas (3);
+		EspecialPowerUp plataformaPUP3= new EspecialPowerUp (new HongoVerde(), cc, true);
+		bloqueActual.ABC[7][15].setOcupada(true);
+		bloqueActual.ABC[7][15].agregarEstructura(plataformaPUP3);
+		plataformaPUP3.setCeldaActual(bloqueActual.ABC[7][15]);
+		actores.addFirst(plataformaPUP3);
+		plataformas.addFirst(plataformaPUP3);
+		especialesPowerUp.addFirst(plataformaPUP3);
+		
+		/*EspecialMonedas plataformaM = new EspecialMonedas (3);
 		bloqueActual.ABC[7][13].setOcupada(true);
 		bloqueActual.ABC[7][13].agregarEstructura(plataformaM);
 		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
 		actores.addFirst(plataformaM);
-		plataformas.addFirst(plataformaM);
-		*/
+		plataformas.addFirst(plataformaM);*/
 		
 		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(), cc, false);
 		bloqueActual.ABC[7][14].setOcupada(true);
@@ -270,7 +272,7 @@ public class Nivel
 		plataformas.addFirst(plataformaPUP2);
 		especialesPowerUp.addFirst(plataformaPUP2);
 		/*
-		Rompible rompible = new Rompible ();
+		/*Rompible rompible = new Rompible ();
 		bloqueActual.ABC[7][12].setOcupada(true);
 		bloqueActual.ABC[7][12].agregarEstructura(rompible);
 		rompible.setCeldaActual(bloqueActual.ABC[7][12]);

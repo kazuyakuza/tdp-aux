@@ -1,5 +1,7 @@
 package ProyectoX.Logica.NoPersonajes.Plataformas;
 
+import java.util.Random;
+
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Logica.ControlCentral;
 import ProyectoX.Logica.Mapa.ActualizadorNivel;
@@ -78,7 +80,15 @@ public class EspecialPowerUp extends Irrompible
 					
 					ActualizadorNivel.act().agregarPowerUp(powerUp);
 					
-					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());					
+					this.getSpriteManager().printNextMe(powerUp.getSpriteManager());
+					
+					{//Agrega movimiento (izquierda o derecha) inicial Random al PowerUp saliente.
+						if ((new Random().nextInt() % 2) == 0)
+							powerUp.moverseAizquierda();
+						else
+							powerUp.moverseAderecha();
+					}
+					
 					cambiable = false;
 					powerUp = null;
 					spriteManager.cambiarSprite(vacio);

@@ -1,6 +1,9 @@
 package ProyectoX.Logica.NoPersonajes;
 
 import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
@@ -27,12 +30,20 @@ public class Moneda extends Actor implements Punteable
 		
 	private static int cantFramesMovimiento = 3;
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
+	//Prioridades en UpNeeder
+	//0 = morir
+	
 	/**
 	 * Crea una Moneda. 
 	 */
 	public Moneda() 
 	{
-		super(nombresSprites);			
+		super(nombresSprites);
+		upNeeder = new UpNeeder (0);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 		spriteManager.rotarGif(cantFramesMovimiento);
 	}
 	
@@ -66,7 +77,13 @@ public class Moneda extends Actor implements Punteable
 			pj.getJugador().agregarMoneda();
 			pj.getJugador().asignarPuntos(5);
 			
-			morir();
+			upNeeder.addWorker(0, new Worker ()
+			{
+				public void work() throws Exception
+				{
+					morir();
+				}
+			});
 		}
 		catch (Exception e)
 		{

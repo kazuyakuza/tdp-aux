@@ -1,6 +1,9 @@
 package ProyectoX.Logica.NoPersonajes.Especiales;
 
 import ProyectoX.Excepciones.ColisionException;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.NoPersonajes.BolaFuego;
@@ -23,6 +26,12 @@ public class Vacio extends Actor implements Punteable
 	private static final String dirRecursos = "Objetos/";
 	private static final String [] nombresSprites = {dirRecursos + "Vacio.png"};
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
+	//Prioridades en UpNeeder
+	//0 = provocar muertes
+	
 	/*CONTRUCTOR*/
 	
 	/**
@@ -31,6 +40,8 @@ public class Vacio extends Actor implements Punteable
 	public Vacio() 
 	{
 		super (nombresSprites);
+		upNeeder = new UpNeeder (0);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 	}
 	
 	/*COMANDOS IMPLEMENTADOS*/
@@ -44,7 +55,7 @@ public class Vacio extends Actor implements Punteable
 	 * @throws NullPointerException Si a es null.
 	 * @throws ColisionException Si se produce algún error en la colisión. 
 	 */
-	public void colisionar (Actor a) throws ColisionException, NullPointerException
+	public void colisionar (final Actor a) throws ColisionException, NullPointerException
 	{
 		if (a == null)
 			throw new NullPointerException ("Vacio.colisionar()" + "/n" +
@@ -52,7 +63,13 @@ public class Vacio extends Actor implements Punteable
 		
 		try
 		{
-			a.morir();
+			upNeeder.addWorker(0, new Worker ()
+			{
+				public void work() throws Exception
+				{
+					a.morir();
+				}
+			});
 		}
 		catch (Exception e)
 		{
@@ -71,7 +88,7 @@ public class Vacio extends Actor implements Punteable
 	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
+	public void colisionarPj (final PjSeleccionable pj) throws ColisionException, NullPointerException
 	{		
 		if (pj == null)
 			throw new NullPointerException ("Vacio.colisionarPj()" + "/n" +
@@ -80,7 +97,14 @@ public class Vacio extends Actor implements Punteable
 		try
 		{
 			pj.getJugador().asignarPuntos(15);
-			pj.morir();
+			
+			upNeeder.addWorker(0, new Worker ()
+			{
+				public void work() throws Exception
+				{
+					pj.morir();
+				}
+			});
 		}
 		catch (Exception e)
 		{
@@ -99,7 +123,7 @@ public class Vacio extends Actor implements Punteable
 	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarBola (BolaFuego bola) throws ColisionException, NullPointerException
+	public void colisionarBola (final BolaFuego bola) throws ColisionException, NullPointerException
 	{
 		if (bola == null)
 			throw new NullPointerException ("Vacio.colisionarBola()" + "/n" +
@@ -107,7 +131,13 @@ public class Vacio extends Actor implements Punteable
 		
 		try
 		{
-			bola.morir();
+			upNeeder.addWorker(0, new Worker ()
+			{
+				public void work() throws Exception
+				{
+					bola.morir();
+				}
+			});
 		}
 		catch (Exception e)
 		{

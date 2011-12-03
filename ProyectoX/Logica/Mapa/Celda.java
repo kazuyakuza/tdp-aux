@@ -117,13 +117,12 @@ public class Celda
                                        "El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma." + "\n" +
                                        "La Celda no tiene Actores.");
 		
-		Position<Actor> p = actores.first();
-		while ((p != actores.last()) && (p.element() != actor))
-			p = actores.next(p);
-		if (p.element() != actor)
-			throw new AccionActorException ("Celda.sacarActor()" + "\n" +
-                                            "El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma.");
-		return actores.remove(p);
+		for (Actor a: actores)
+			if (a == actor)
+				return eliminarActor(a);
+		
+		throw new AccionActorException ("Celda.sacarActor()" + "\n" +
+                "El Actor que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma.");
 	}
 	
 	/**
@@ -143,12 +142,25 @@ public class Celda
 			throw new AccionActorException("Celda.sacarEstructura()" + "\n" +
                                            "Imposible sacar una Estructura de una Celda que no está totalmente ocupada.");
 		
+		for (Actor a: actores)
+			if (a == estructura)
+				return eliminarActor(a);
+		
+		throw new AccionActorException ("Celda.sacarEstructura()" + "\n" +
+                "La Estructura que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma.");
+	}
+	
+	/**
+	 * Saca el Actor pasado por parámetro.
+	 * 
+	 * @param actor Actor a sacar de la Celda.
+	 * @return Actor sacado de la Celda.
+	 */
+	private Actor eliminarActor (Actor actor)
+	{
 		Position<Actor> p = actores.first();
-		while ((p != actores.last()) && (p.element() != estructura))
+		while ((p != actores.last()) && (p.element() != actor))
 			p = actores.next(p);
-		if (p.element() != estructura)
-			throw new AccionActorException ("Celda.sacarEstructura()" + "\n" +
-                                            "La Estructura que está intentando sacar de la Celda (" + posFila + "," + posColumna + ") no pertenece a la misma.");
 		return actores.remove(p);
 	}
 	

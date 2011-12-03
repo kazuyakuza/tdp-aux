@@ -1,6 +1,7 @@
 package ProyectoX.Logica.Personajes;
 
 import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.NoPersonajes.Plataformas.Rompible;
 
@@ -109,8 +110,15 @@ public class MarioChico extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.getSpriteManager().cambiarSprite(muerto);
-		mario.morir();
-	}	
+		if (! mario.getUpNeeder().hayWorkerPrioridad(0))
+			mario.getUpNeeder().addWorker(0, new Worker ()
+            {
+            	public void work() throws Exception
+            	{
+            		mario.morir();
+            	}
+            });	
+	}
 	
 	/**
 	 * Realiza la acción de golpear una plataforma Rompible.
