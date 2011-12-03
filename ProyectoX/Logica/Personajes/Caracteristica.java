@@ -64,6 +64,11 @@ public abstract class Caracteristica
 	public abstract void agacharse () throws AccionActorException;
 	
 	/**
+	 * Realiza la acción de pararse.
+	 */
+	public abstract void pararse ();
+	
+	/**
 	 * Mario realiza la acción A.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al realizar la acción A.

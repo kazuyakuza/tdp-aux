@@ -215,6 +215,8 @@ public class Jugador implements Worker
 				actuando = true;
 				personaje.abajo();
 			}
+			else
+				personaje.pararse();
 		
 		if (control.izquierda())
 		{

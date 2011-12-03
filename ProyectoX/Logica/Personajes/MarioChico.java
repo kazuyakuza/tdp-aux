@@ -59,6 +59,14 @@ public class MarioChico extends Caracteristica
 	}
 	
 	/**
+	 * Realiza la acción de pararse.
+	 */
+	public void pararse ()
+	{
+		//Esta Caracteristica no hace nada.
+	}
+	
+	/**
 	 * Mario realiza la acción A.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al realizar la acción A.

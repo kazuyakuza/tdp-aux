@@ -172,6 +172,7 @@ public class Nivel
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
 		caibles.addFirst(kt1);
+		
 		/*
 		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
 		bloqueActual.ABC[4][4].agregarActor(kt2);
@@ -196,14 +197,15 @@ public class Nivel
 		powerUps.addFirst(flor);
 		caibles.addFirst(flor);*/
 		
-				
-		PowerUp bomba = new BombaNuclear(cc);
+		/*
+		PowerUp bomba = new Estrella();
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addFirst(bomba);
 		powerUps.addFirst(bomba);
 		caibles.addFirst(bomba);
-		/*
+		*/
+		
 		Moneda moneda1 = new Moneda();
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
 		moneda1.setCeldaActual(bloqueActual.ABC[8][8]);
@@ -213,7 +215,7 @@ public class Nivel
 		bloqueActual.ABC[10][8].agregarActor(moneda2);
 		moneda2.setCeldaActual(bloqueActual.ABC[10][8]);	
 		actores.addFirst(moneda2);
-		*/
+		
 		
 		//Agregación Actores no Personjes.
 		aux = 6;

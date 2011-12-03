@@ -39,6 +39,14 @@ public abstract class DecoracionCaracteristica extends Caracteristica
 	}
 	
 	/**
+	 * Realiza la acción de pararse.
+	 */
+	public void pararse ()
+	{
+		componente.pararse();
+	}
+	
+	/**
 	 * Mario realiza la acción A.
 	 * 
 	 * @throws AccionActorException Si se produce algún error al realizar la acción A.
