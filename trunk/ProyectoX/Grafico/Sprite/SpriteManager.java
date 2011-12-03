@@ -12,6 +12,7 @@ import ProyectoX.Excepciones.CargaRecursoException;
 import ProyectoX.Excepciones.PosicionIncorrectaException;
 import ProyectoX.Excepciones.SpriteException;
 import ProyectoX.Grafico.BloqueGrafico;
+import ProyectoX.Librerias.Threads.EmptyUpNeederException;
 import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
@@ -225,9 +226,9 @@ public class SpriteManager implements ImageObserver
 	 * 
 	 * @param X Nueva posición X.
 	 * @param Y Nueva posición Y.
-	 * @throws PosicionIncorrectaException Si se ingresa una posición incorrecta.
+	 * @throws EmptyUpNeederException 
 	 */
-	public void actualizar (final int X, final int Y) throws PosicionIncorrectaException
+	public void actualizar (final int X, final int Y) throws EmptyUpNeederException
 	{
 		if ((X < 0) || (Y < 0))
 			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
@@ -277,6 +278,9 @@ public class SpriteManager implements ImageObserver
 							public void work() throws Exception
 							{
 								actualizacion();
+								
+								if ((! upNeeder.isEmpty()) && (upNeeder.hayWorkerPrioridad(1)) && (upNeeder.prioridadNextWorker() == 1))
+									upNeeder.getNextWorker().work();
 							}
 						});
 		}

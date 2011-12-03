@@ -92,7 +92,7 @@ public abstract class Actor implements Posicionable
 		if (c == null)
 			throw new NullPointerException ("Actor.moverseAcelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
-				
+		
 		this.producirColisiones(c);
 		this.actualizarCelda(c);		
 	}

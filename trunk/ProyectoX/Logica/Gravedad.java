@@ -1,7 +1,5 @@
 package ProyectoX.Logica;
 
-import java.util.Iterator;
-
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
 
@@ -17,7 +15,6 @@ public class Gravedad implements Worker
 	
 	//Atributos de Instancia
 	protected ControlCentral controlCentral;
-	private int i; //Manejo de NullPointerException en el método Work.
 	
 	/*CONTRUCTOR*/
 	
@@ -46,7 +43,8 @@ public class Gravedad implements Worker
 	public void work()
 	{
 		for (afectableXgravedad actor: controlCentral.getCaibles())
-			afectar(actor);
+			if (actor != null)
+				afectar(actor);
 	}
 	
 	/**
@@ -59,7 +57,7 @@ public class Gravedad implements Worker
 	{
 		if (a == null)
 			throw new NullPointerException ("Gravedad.afectar()" + "\n" +
-					                        "Imposible afectar al Actor a, a es null. ");
+					                        "Imposible afectar al Actor a, a es null.");
 		
 		if (a.getPG() == -1)
 			a.caer();

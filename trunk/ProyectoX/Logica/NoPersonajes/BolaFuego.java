@@ -57,7 +57,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	{
 		super(nombresSprites);
 		mario = pj;
-		upNeeder = new UpNeeder (5);
+		upNeeder = new UpNeeder (1);
 		Updater.getUpdater().addUpNeeder(upNeeder);
 		spriteManager.cambiarSprite(enMovimiento);
 		spriteManager.rotarGif(cantFramesMovimiento);
@@ -161,7 +161,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
 			if (celdaActual.hayAnterior())
-			{				
+			{
 				celdaAnterior = celdaActual.getAnterior();
 				if (!celdaAnterior.isOcupada())
 				{
@@ -181,11 +181,27 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 					if (celdaAnterior.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la Celda anterior.
 						explotar();
 					else
-						morir();
+					{
+						if (! upNeeder.hayWorkerPrioridad(0))
+							upNeeder.addWorker(0, new Worker ()
+							{
+								public void work() throws Exception
+								{
+									morir();
+								}
+							});
+					}
 				}
 			}
 			else
-				morir();
+				if (! upNeeder.hayWorkerPrioridad(0))
+					upNeeder.addWorker(0, new Worker ()
+					{
+						public void work() throws Exception
+						{
+							morir();
+						}
+					});
 		}
 		catch (NullPointerException e1)
 		{
@@ -217,7 +233,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 				throw new NullPointerException ("La celdaActual del Actor es null.");
 			
 			if (celdaActual.haySiguiente())
-			{	
+			{
 				celdaSiguiente = celdaActual.getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 				{
@@ -237,11 +253,27 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 					if (celdaSiguiente.getActores().hasNext()) //Si hay un Actor que está ocupando totalmente la siguiente Celda.
 						explotar();
 					else
-						morir();
+					{
+						if (! upNeeder.hayWorkerPrioridad(0))
+							upNeeder.addWorker(0, new Worker ()
+							{
+								public void work() throws Exception
+								{
+									morir();
+								}
+							});
+					}
 				}
 			}
 			else
-				morir();
+				if (! upNeeder.hayWorkerPrioridad(0))
+					upNeeder.addWorker(0, new Worker ()
+					{
+						public void work() throws Exception
+						{
+							morir();
+						}
+					});
 		}
 		catch (NullPointerException e1)
 		{

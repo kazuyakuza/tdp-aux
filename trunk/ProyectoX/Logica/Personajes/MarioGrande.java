@@ -197,30 +197,52 @@ public class MarioGrande extends Caracteristica
 	 * @throws AccionActorException Si se produce algún error al saltar.
 	 */
 	public void saltar () throws AccionActorException
-	{		
-		if (condicionSaltar () && !this.agachado())
+	{
+		Celda celdaSuperior = celdaGrande;
+		try
 		{
-			if (mario.miraIzq())
-				mario.getSpriteManager().cambiarSprite(-saltando);
-			else
-				mario.getSpriteManager().cambiarSprite(saltando);
-			if (celdaGrande.haySuperior())
+			if (!this.agachado())
 			{
-				Celda celdaSuperior = celdaGrande.getSuperior();
-				if (!celdaSuperior.isOcupada())
-				{					
-					mario.producirColisiones(celdaSuperior);					
-					mario.setPG(mario.getPG()+1);
-					this.PS++;				
-					this.actualizarCelda(celdaGrande);
+				if (condicionSaltar())
+				{
+					if (celdaGrande == null)
+						throw new NullPointerException ("La celdaGrande del Actor es null.");
+					
+					if (mario.miraIzq())
+						mario.getSpriteManager().cambiarSprite(-saltando);
+					else
+						mario.getSpriteManager().cambiarSprite(saltando);
+					if (celdaGrande.haySuperior())
+					{
+						celdaSuperior = celdaGrande.getSuperior();
+						mario.producirColisiones(celdaSuperior);
+						if (!celdaSuperior.isOcupada())
+						{					
+							mario.setPG(mario.getPG()+1);
+							this.PS++;
+							this.actualizarCelda(celdaGrande);
+						}
+					}
 				}
-				else //Mario colisiona una Estructura desde abajo.
-					mario.producirColisiones(celdaSuperior);
+				else
+					if ((mario.getPG() != -1) && (mario.getCeldaActual().getInferior().isOcupada()))
+						PS = 0;
 			}
 		}
-		else
-			if ((mario.getPG() != -1) && (mario.getCeldaActual().getInferior().isOcupada()))
-				PS = 0;		
+		catch (NullPointerException e1)
+		{
+			throw new AccionActorException ("MarioGrande.saltar()" + "\n" +
+                                            "Imposible realizar la acción caer." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e1.getMessage());
+		}
+		catch (Exception e2)
+		{
+			throw new AccionActorException ("MarioGrande.saltar()" + "\n" +
+                                            "Imposible realizar la acción saltar a/desde Celda de posición (" + celdaSuperior.getPosFila() + "," + celdaSuperior.getPosColumna() + ")." + "\n" +
+					                        "Detalles del error:" + "\n" +
+					                        e2.getMessage());
+		}
 	}
 	
 	/**
@@ -233,17 +255,24 @@ public class MarioGrande extends Caracteristica
 		Celda celdaAnterior = celdaGrande;
 		try 
 		{
-			if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior() && !this.agachado())
-			{				
-				mario.mirarIzq(true);
-				mario.getSpriteManager().cambiarSprite(-caminando);
-				mario.getSpriteManager().setGif(cantSpritesCaminando());
+			if (!this.agachado())
+			{
+				if (celdaGrande == null)
+					throw new NullPointerException ("La celdaGrande del Actor es null.");
+				if (mario.getCeldaActual() == null)
+					throw new NullPointerException ("La celdaActual del Actor es null.");
 				
-				celdaAnterior = mario.getCeldaActual().getAnterior();
-				if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
+				if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior())
 				{
-					mario.producirColisiones (celdaGrande.getAnterior());
-					mario.moverseAcelda (celdaAnterior);					
+					mario.mirarIzq(true);
+					mario.getSpriteManager().cambiarSprite(-caminando);
+					mario.getSpriteManager().setGif(cantSpritesCaminando());				
+					celdaAnterior = mario.getCeldaActual().getAnterior();
+					if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
+					{
+						mario.producirColisiones(celdaGrande.getAnterior());
+						mario.moverseAcelda(celdaAnterior);					
+					}
 				}
 			}
 		}
@@ -270,21 +299,28 @@ public class MarioGrande extends Caracteristica
 	 * @throws AccionActorException Si se produce algún error al moverse a derecha.
 	 */
 	public void moverseAderecha () throws AccionActorException
-	{
+	{		
 		Celda celdaSiguiente = celdaGrande;
 		try 
-		{						
-			if ( celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente() && !this.agachado())
+		{
+			if (!this.agachado())
 			{
-				mario.mirarIzq(false);
-				mario.getSpriteManager().cambiarSprite(caminando);
-				mario.getSpriteManager().setGif(cantSpritesCaminando());
+				if (celdaGrande == null)
+					throw new NullPointerException ("La celdaGrande del Actor es null.");
+				if (mario.getCeldaActual() == null)
+					throw new NullPointerException ("La celdaActual del Actor es null.");
 				
-				celdaSiguiente = mario.getCeldaActual().getSiguiente();
-				if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
+				if (celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente())
 				{
-					mario.producirColisiones(celdaGrande.getSiguiente());
-					mario.moverseAcelda(celdaSiguiente);
+					mario.mirarIzq(false);
+					mario.getSpriteManager().cambiarSprite(caminando);
+					mario.getSpriteManager().setGif(cantSpritesCaminando());				
+					celdaSiguiente = mario.getCeldaActual().getSiguiente();
+					if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
+					{
+						mario.producirColisiones(celdaGrande.getSiguiente());
+						mario.moverseAcelda(celdaSiguiente);					
+					}
 				}
 			}
 		}

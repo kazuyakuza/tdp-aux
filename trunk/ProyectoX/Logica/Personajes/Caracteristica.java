@@ -151,8 +151,8 @@ public abstract class Caracteristica
 					else
 						mario.getSpriteManager().cambiarSprite(spriteQuieto());
 					mario.setPG(0);
-					if (! mario.getUpNeeder().hayWorkerPrioridad(1))
-						mario.getUpNeeder().addWorker(1, new Worker ()
+					if (! mario.getUpNeeder().hayWorkerPrioridad(2))
+						mario.getUpNeeder().addWorker(2, new Worker ()
 			            {
 			            	public void work() throws Exception
 			            	{
@@ -184,9 +184,9 @@ public abstract class Caracteristica
 	 * @throws AccionActorException Si se produce algún error al saltar.
 	 */
 	public void saltar () throws AccionActorException
-	{		
+	{
 		Celda celdaSuperior = mario.getCeldaActual();
-		try 
+		try
 		{
 			if (mario.getCeldaActual() == null)
 				throw new NullPointerException ("La celdaActual del Actor es null.");

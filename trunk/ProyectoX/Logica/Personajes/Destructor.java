@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import ProyectoX.Excepciones.AccionActorException;
+import ProyectoX.Librerias.Threads.UpNeeder;
+import ProyectoX.Librerias.Threads.Updater;
+import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Responsabilidades.Punteable;
 
@@ -24,6 +27,11 @@ public class Destructor extends DecoracionCaracteristica
 	protected Timer timer;
 	protected Timer flash;
 	
+	//Actualizador
+	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
+	
+	//Prioridades en UpNeeder
+	//0 = matar enemigo en modo destructor
 	
 	/*CONSTRUCTORES*/
 	
@@ -40,13 +48,15 @@ public class Destructor extends DecoracionCaracteristica
 		{				
 			public void actionPerformed (ActionEvent e)
 			{
-				System.out.println("Se terminó efecto Destructor.");
 				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);			
 				flash.stop();
 				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
 				mario.getSpriteManager().cambiarSprite(quieto);
 				timer.stop();
+				
+				upNeeder.notUpdate();
+				upNeeder = null;
 			}
 		});
 		flash = new Timer (200, new ActionListener ()
@@ -56,6 +66,9 @@ public class Destructor extends DecoracionCaracteristica
 				mario.getSpriteManager().flashear();
 			}
 		});
+		
+		upNeeder = new UpNeeder (0);
+		Updater.getUpdater().addUpNeeder(upNeeder);
 	}
 	
 	/**
@@ -97,10 +110,16 @@ public class Destructor extends DecoracionCaracteristica
 	 * Realiza la acción de ser colisionado por un enemigo (Actor).
 	 * @param a es el Actor (enemigo) que colisionó con Mario.
 	 */
-	public void serDañado(Actor a)
+	public void serDañado(final Actor a)
 	{
-		mario.getJugador().asignarPuntos( ((Punteable)a).getPuntos(mario) );
-		a.morir();		
+		if (! upNeeder.hayWorkerPrioridad(0))
+			upNeeder.addWorker(0, new Worker ()
+            {
+            	public void work() throws Exception
+            	{
+            		a.morir();
+            	}
+            });		
 	}
 		
 }

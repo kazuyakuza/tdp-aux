@@ -40,8 +40,9 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
 	
 	//Prioridades para el UpNeeder
-	//0 = spriteManager.cambiarSprite(quieto)
-	//1 = PS = 0 en Característica.caer() y efectoGravedad.
+	//0 = morir
+	//1 = spriteManager.cambiarSprite(quieto)
+	//2 = PS = 0 en Característica.caer() y efectoGravedad.
 	//4 = luego de disparar spriteManager.cambiarSprite(quieto)
 	
 	/*CONSTRUCTOR*/
@@ -67,7 +68,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "arriba".
 	 */
-	public synchronized void arriba ()
+	public /*synchronized*/ void arriba ()
 	{
 		miCaracteristica.saltar();
 	}
@@ -75,7 +76,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "abajo".
 	 */
-	public synchronized void abajo ()
+	public /*synchronized*/ void abajo ()
 	{
 		miCaracteristica.agacharse();
 	}
@@ -83,7 +84,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public synchronized void izquierda ()
+	public /*synchronized*/ void izquierda ()
 	{
 		moverseAizquierda();
 	}
@@ -91,7 +92,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public synchronized void derecha ()
+	public /*synchronized*/ void derecha ()
 	{
 		moverseAderecha();
 	}
@@ -99,7 +100,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "A".
 	 */
-	public synchronized void A ()
+	public /*synchronized*/ void A ()
 	{
 		miCaracteristica.accionA();
 	}
@@ -107,7 +108,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "B".
 	 */
-	public synchronized void B ()
+	public /*synchronized*/ void B ()
 	{
 		miCaracteristica.accionB();
 	}
@@ -115,7 +116,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la no acción.
 	 */
-	public synchronized void quieto ()
+	public /*synchronized*/ void quieto ()
 	{
 		cambiarSpriteQuieto();
 	}
@@ -125,7 +126,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public synchronized void caer () throws AccionActorException
+	public /*synchronized*/ void caer () throws AccionActorException
 	{
 		miCaracteristica.caer();
 	}
@@ -196,8 +197,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 
 	public void cambiarSpriteQuieto ()
 	{
-		if ((PG != -1) && (! upNeeder.hayWorkerPrioridad(0)))
-            upNeeder.addWorker(0, new Worker ()
+		if ((PG != -1) && (! upNeeder.hayWorkerPrioridad(1)))
+            upNeeder.addWorker(1, new Worker ()
             {
             	public void work() throws Exception
             	{

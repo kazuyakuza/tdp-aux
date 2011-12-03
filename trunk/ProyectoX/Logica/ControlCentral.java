@@ -263,13 +263,13 @@ public class ControlCentral implements Runnable, ControlThread
 	
 	public void test ()
 	{
-		/*((Mario) jugador.personaje).crecerHongo();
-		((Mario) jugador.personaje).crecerFlor();*/
+		((Mario) jugador.personaje).crecerHongo();
+		((Mario) jugador.personaje).crecerFlor();
 		//int x = 0; int y = 0;
-		int pg = 0, ps = 0;
-		while (true)
+		//int pg = 0, ps = 0;
+		//while (true)
 		/*for (int i=0; i<10; i++)*/
-		{
+		//{
 			/*try {
 				Thread.sleep((int) (getSleepTime()));
 				} catch (InterruptedException e) {				
@@ -303,7 +303,7 @@ public class ControlCentral implements Runnable, ControlThread
 				    }*/
 				
 			/*((Actor) jugador.personaje).spriteManager.flashear();*/
-		}
+		//}
 		//((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
 	}
 	
