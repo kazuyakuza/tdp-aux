@@ -165,7 +165,7 @@ public class Nivel
 			aux++;
 		}*/
 		
-		Goomba goomba = new Goomba ();
+		/*Goomba goomba = new Goomba ();
 		bloqueActual.ABC[10][10].agregarActor(goomba);
 		goomba.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(goomba);
@@ -177,7 +177,7 @@ public class Nivel
 		kt1.setCeldaActual(bloqueActual.ABC[10][15]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
-		caibles.addFirst(kt1);
+		caibles.addFirst(kt1);*/
 		
 		/*
 		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
@@ -190,13 +190,13 @@ public class Nivel
 		
 		//Agregacion de un power up.
 		/*PowerUp hongo = new SuperHongo();
-		bloqueActual.ABC[3][7].agregarActor(hongo);
-		hongo.setCeldaActual(bloqueActual.ABC[3][7]);
+		bloqueActual.ABC[1][1].agregarActor(hongo);
+		hongo.setCeldaActual(bloqueActual.ABC[1][1]);
 		actores.addFirst(hongo);
 		powerUps.addFirst(hongo);
-		caibles.addFirst(hongo);
+		caibles.addFirst(hongo);*/
 		
-		PowerUp flor = new FlorFuego();
+		/*PowerUp flor = new FlorFuego();
 		bloqueActual.ABC[3][8].agregarActor(flor);
 		flor.setCeldaActual(bloqueActual.ABC[3][8]);
 		actores.addFirst(flor);

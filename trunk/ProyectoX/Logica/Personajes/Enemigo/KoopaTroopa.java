@@ -84,6 +84,9 @@ public class KoopaTroopa extends Actor implements Enemigo, Movible, afectableXgr
 	 */
 	public void caer () throws AccionActorException
 	{
+		if (upNeeder.hayWorkerPrioridad(0))//KoopaTroopa se va a morir en la proximá actualización.
+			return;
+		
 		Celda celdaInferior = celdaActual;
 		try 
 		{

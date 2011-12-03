@@ -3,7 +3,6 @@ package ProyectoX.Logica.NoPersonajes.Plataformas;
 import ProyectoX.Excepciones.ColisionException;
 import ProyectoX.Librerias.TDALista.ListaPositionSimple;
 import ProyectoX.Librerias.TDALista.PositionList;
-import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.NoPersonajes.Moneda;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;

@@ -94,6 +94,9 @@ public class Goomba extends Actor implements Enemigo, Movible, afectableXgraveda
 	 */
 	public void caer () throws AccionActorException
 	{
+		if (upNeeder.hayWorkerPrioridad(0))//Goomba se va a morir en la proximá actualización.
+			return;
+		
 		Celda celdaInferior = celdaActual;
 		try 
 		{
