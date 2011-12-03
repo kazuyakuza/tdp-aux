@@ -34,6 +34,10 @@ import ProyectoX.Logica.ControlCentral;
 public class SpriteManager implements ImageObserver
 {
 	
+	//Variables de Clase
+	private final int medidaPixelCelda = 32;//Medida de un lado en pixeles de una celda en el Escenario.
+                                            //Celda = si se dividiera el Escenario usando una matriz, cada celda tendría una medida de lado en pixeles.
+	
 	//Variables de Instancia
 	private BloqueGrafico bloqueGrafico; //BloqueGrafico al que pertenece el SpriteManager actual.
 	private UpNeeder upNeeder; //UpNeeder del SpriteManager para completar operaciones.
@@ -428,16 +432,19 @@ public class SpriteManager implements ImageObserver
 					frameGifActual--;
 				framesGif--;
 				
-				try
+				if (frameGifActual < sprites.length)
 				{
-					cambioSprite(frameGifActual);
-				}
-				catch (SpriteException e)
-				{
-					throw new SpriteException ("SpriteManager.getSpriteActual()" + "\n" +
-							                   "Error al obtener un Sprite." + "\n" +
-							                   "Detalles del error:" + "\n" +
-							                   e.getMessage());
+					try
+					{
+						cambioSprite(frameGifActual);
+					}
+					catch (SpriteException e)
+					{
+						throw new SpriteException ("SpriteManager.getSpriteActual()" + "\n" +
+								                   "Error al obtener un Sprite." + "\n" +
+								                   "Detalles del error:" + "\n" +
+								                   e.getMessage());
+					}
 				}
 			}
 		}
@@ -462,16 +469,16 @@ public class SpriteManager implements ImageObserver
 		double X = posY; //Intercambio entre posY Columnas y posición en eje X
 		double Y = posX; //Intercambio entre posX filas y posición en eje Y
 		
-		//Si el Srite es mayor a 32x32, entonces se lo ubica 32 pixeles mas arriba.
-		if (spriteActual.getWidth() > 32)
+		//Si el Srite es mayor a medidaPixelCelda X medidaPixelCelda, entonces se lo ubica medidaPixelCelda pixeles mas arriba.
+		if (spriteActual.getWidth() > medidaPixelCelda)
 		{
-			X -= ((spriteActual.getWidth()/32.0) - 1);
+			X -= ((spriteActual.getWidth()/(double) medidaPixelCelda) - 1);
 			if ((X % (int) X) <= 0.25)
 				X = (int) X;
 		}
-		if (spriteActual.getHeight() > 32)
+		if (spriteActual.getHeight() > medidaPixelCelda)
 		{
-			Y -= ((spriteActual.getHeight()/32.0) - 1);
+			Y -= ((spriteActual.getHeight()/(double) medidaPixelCelda) - 1);
 			if ((Y % (int) Y) <= 0.25)
 				Y = (int) Y;
 		}
