@@ -30,6 +30,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	//Atributos de Instancia
 	protected Caracteristica miCaracteristica;	//Representa al tipo de Mario, chico, grande o blanco.
 	protected Jugador jugador;
+	protected boolean destructor;
 	protected boolean izq = false;//Inidica si MarioBlanco está mirando hacia la izquierda.	
 	protected int PG;//Potencia de la Gravedad.
 	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.
@@ -60,6 +61,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		miCaracteristica = c;
 		c.setMario(this);
 		spriteManager.cambiarSprite(miCaracteristica.spriteQuieto());
+		destructor = false;
 		PG = 0;		
 	}
 	
@@ -119,6 +121,14 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	public /*synchronized*/ void quieto ()
 	{
 		cambiarSpriteQuieto();
+	}
+	
+	/**
+	 * Realiza la acción de pararse.
+	 */
+	public /*synchronized*/ void pararse ()
+	{
+		miCaracteristica.pararse();
 	}
 	
 	/**
@@ -316,6 +326,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	{		
 		PG = pg;
 	}
+	
+	/**
+	 * Setea el estado de Mario de Destructor a b.
+	 * @param b valor booleano con el que se setea el estado Destructor de Mario.
+	 */
+	public void setDestructor(boolean b)
+	{
+		destructor = b;
+	}
 			
 	/*CONSULTAS*/
 	
@@ -364,6 +383,15 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	public boolean miraIzq()
 	{
 		return izq;
+	}
+	
+	/**
+	 * Verifica si Mario se encuentra bajo los efectos de Destructor.
+	 * @return verdadero si Mario está bajo los efectos de Destructor, falso, en caso contrario.
+	 */
+	public boolean getDestructor()
+	{
+		return destructor;
 	}
 	
 	/**

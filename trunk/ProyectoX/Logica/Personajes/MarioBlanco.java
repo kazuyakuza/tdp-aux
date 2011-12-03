@@ -63,8 +63,23 @@ public class MarioBlanco extends Caracteristica
 		else
 			mario.getSpriteManager().cambiarSprite(agachado);
 		
-		celdaGrande.sacarActor(mario);
-		celdaGrande = null;
+		if (!this.agachado())
+		{
+			celdaGrande.sacarActor(mario);		
+			celdaGrande = null;
+		}
+	}
+	
+	/**
+	 * Realiza la acción de pararse.
+	 */
+	public void pararse ()
+	{
+		if (this.agachado())
+		{
+			celdaGrande = mario.getCeldaActual().getSuperior();		
+			celdaGrande.agregarActor(mario);
+		}
 	}
 	
 	/**
@@ -72,33 +87,36 @@ public class MarioBlanco extends Caracteristica
 	 */
 	public void accionA () throws AccionActorException
 	{
-		if (mario.izq)
+		if (!this.agachado())
 		{
-			mario.getSpriteManager().cambiarSprite(-lanzando);
+			if (mario.izq)
+			{
+				mario.getSpriteManager().cambiarSprite(-lanzando);
 			
-			if (! mario.getUpNeeder().hayWorkerPrioridad(4))
-				mario.getUpNeeder().addWorker(4, new Worker ()
-				{
-					public void work() throws Exception
+				if (! mario.getUpNeeder().hayWorkerPrioridad(4))
+					mario.getUpNeeder().addWorker(4, new Worker ()
 					{
-						mario.getSpriteManager().cambiarSprite(-mario.miCaracteristica.spriteQuieto());
-					}
-				});
-		}
-		else
-		{
-			mario.getSpriteManager().cambiarSprite(lanzando);
+						public void work() throws Exception
+						{
+							mario.getSpriteManager().cambiarSprite(-mario.miCaracteristica.spriteQuieto());
+						}
+					});
+			}
+			else
+			{
+				mario.getSpriteManager().cambiarSprite(lanzando);
 			
-			if (! mario.getUpNeeder().hayWorkerPrioridad(4))
-				mario.getUpNeeder().addWorker(4, new Worker ()
-				{
-					public void work() throws Exception
+				if (! mario.getUpNeeder().hayWorkerPrioridad(4))
+					mario.getUpNeeder().addWorker(4, new Worker ()
 					{
-						mario.getSpriteManager().cambiarSprite(mario.miCaracteristica.spriteQuieto());
-					}
-				});
+						public void work() throws Exception
+						{
+							mario.getSpriteManager().cambiarSprite(mario.miCaracteristica.spriteQuieto());
+						}
+					});
+			}
+			disparar();
 		}
-		disparar();
 	}
 		
 	/**
@@ -248,10 +266,7 @@ public class MarioBlanco extends Caracteristica
 			if (!this.agachado())
 			{
 				if (condicionSaltar())
-				{
-					if (celdaGrande == null)
-						throw new NullPointerException ("La celdaGrande del Actor es null.");
-					
+				{					
 					if (mario.miraIzq())
 						mario.getSpriteManager().cambiarSprite(-saltando);
 					else
@@ -298,25 +313,17 @@ public class MarioBlanco extends Caracteristica
 	{
 		Celda celdaAnterior = celdaGrande;
 		try 
-		{
-			if (!this.agachado())
-			{
-				if (celdaGrande == null)
-					throw new NullPointerException ("La celdaGrande del Actor es null.");
-				if (mario.getCeldaActual() == null)
-					throw new NullPointerException ("La celdaActual del Actor es null.");
-				
-				if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior())
+		{			
+			if (!this.agachado() && celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior())
+			{				
+				mario.mirarIzq(true);
+				mario.getSpriteManager().cambiarSprite(-caminando);
+				mario.getSpriteManager().setGif(cantSpritesCaminando());				
+				celdaAnterior = mario.getCeldaActual().getAnterior();
+				if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
 				{
-					mario.mirarIzq(true);
-					mario.getSpriteManager().cambiarSprite(-caminando);
-					mario.getSpriteManager().setGif(cantSpritesCaminando());				
-					celdaAnterior = mario.getCeldaActual().getAnterior();
-					if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
-					{
-						mario.producirColisiones(celdaGrande.getAnterior());
-						mario.moverseAcelda(celdaAnterior);					
-					}
+					mario.producirColisiones(celdaGrande.getAnterior());
+					mario.moverseAcelda(celdaAnterior);					
 				}
 			}
 		}
@@ -346,25 +353,17 @@ public class MarioBlanco extends Caracteristica
 	{		
 		Celda celdaSiguiente = celdaGrande;
 		try 
-		{
-			if (!this.agachado())
+		{						
+			if ( !this.agachado() && celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente())
 			{
-				if (celdaGrande == null)
-					throw new NullPointerException ("La celdaGrande del Actor es null.");
-				if (mario.getCeldaActual() == null)
-					throw new NullPointerException ("La celdaActual del Actor es null.");
-				
-				if (celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente())
+				mario.mirarIzq(false);
+				mario.getSpriteManager().cambiarSprite(caminando);
+				mario.getSpriteManager().setGif(cantSpritesCaminando());				
+				celdaSiguiente = mario.getCeldaActual().getSiguiente();
+				if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
 				{
-					mario.mirarIzq(false);
-					mario.getSpriteManager().cambiarSprite(caminando);
-					mario.getSpriteManager().setGif(cantSpritesCaminando());				
-					celdaSiguiente = mario.getCeldaActual().getSiguiente();
-					if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
-					{
-						mario.producirColisiones(celdaGrande.getSiguiente());
-						mario.moverseAcelda(celdaSiguiente);					
-					}
+					mario.producirColisiones(celdaGrande.getSiguiente());
+					mario.moverseAcelda(celdaSiguiente);					
 				}
 			}
 		}

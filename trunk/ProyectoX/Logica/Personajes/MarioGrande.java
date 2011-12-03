@@ -61,9 +61,28 @@ public class MarioGrande extends Caracteristica
 			mario.getSpriteManager().cambiarSprite(-agachado);
 		else
 			mario.getSpriteManager().cambiarSprite(agachado);
-		
-		celdaGrande.sacarActor(mario);		
-		celdaGrande = null;
+		try
+		{
+			if (!this.agachado())
+			{
+				celdaGrande.sacarActor(mario);		
+				celdaGrande = null;
+			}
+		}
+		catch (Exception e)
+		{e.printStackTrace();}
+	}
+	
+	/**
+	 * Realiza la acción de pararse.
+	 */
+	public void pararse ()
+	{
+		if (this.agachado())
+		{
+			celdaGrande = mario.getCeldaActual().getSuperior();		
+			celdaGrande.agregarActor(mario);
+		}
 	}
 	
 	/**
@@ -204,10 +223,7 @@ public class MarioGrande extends Caracteristica
 			if (!this.agachado())
 			{
 				if (condicionSaltar())
-				{
-					if (celdaGrande == null)
-						throw new NullPointerException ("La celdaGrande del Actor es null.");
-					
+				{					
 					if (mario.miraIzq())
 						mario.getSpriteManager().cambiarSprite(-saltando);
 					else
@@ -255,24 +271,17 @@ public class MarioGrande extends Caracteristica
 		Celda celdaAnterior = celdaGrande;
 		try 
 		{
-			if (!this.agachado())
-			{
-				if (celdaGrande == null)
-					throw new NullPointerException ("La celdaGrande del Actor es null.");
-				if (mario.getCeldaActual() == null)
-					throw new NullPointerException ("La celdaActual del Actor es null.");
+			if ( !this.agachado() && celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior() )
+			{				
+				mario.mirarIzq(true);
+				mario.getSpriteManager().cambiarSprite(-caminando);
+				mario.getSpriteManager().setGif(cantSpritesCaminando());
 				
-				if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior())
+				celdaAnterior = mario.getCeldaActual().getAnterior();
+				if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
 				{
-					mario.mirarIzq(true);
-					mario.getSpriteManager().cambiarSprite(-caminando);
-					mario.getSpriteManager().setGif(cantSpritesCaminando());				
-					celdaAnterior = mario.getCeldaActual().getAnterior();
-					if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
-					{
-						mario.producirColisiones(celdaGrande.getAnterior());
-						mario.moverseAcelda(celdaAnterior);					
-					}
+					mario.producirColisiones (celdaGrande.getAnterior());
+					mario.moverseAcelda (celdaAnterior);					
 				}
 			}
 		}
@@ -302,25 +311,18 @@ public class MarioGrande extends Caracteristica
 	{		
 		Celda celdaSiguiente = celdaGrande;
 		try 
-		{
-			if (!this.agachado())
+		{						
+			if ( !this.agachado() && celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente() )
 			{
-				if (celdaGrande == null)
-					throw new NullPointerException ("La celdaGrande del Actor es null.");
-				if (mario.getCeldaActual() == null)
-					throw new NullPointerException ("La celdaActual del Actor es null.");
+				mario.mirarIzq(false);
+				mario.getSpriteManager().cambiarSprite(caminando);
+				mario.getSpriteManager().setGif(cantSpritesCaminando());
 				
-				if (celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente())
+				celdaSiguiente = mario.getCeldaActual().getSiguiente();
+				if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
 				{
-					mario.mirarIzq(false);
-					mario.getSpriteManager().cambiarSprite(caminando);
-					mario.getSpriteManager().setGif(cantSpritesCaminando());				
-					celdaSiguiente = mario.getCeldaActual().getSiguiente();
-					if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
-					{
-						mario.producirColisiones(celdaGrande.getSiguiente());
-						mario.moverseAcelda(celdaSiguiente);					
-					}
+					mario.producirColisiones(celdaGrande.getSiguiente());
+					mario.moverseAcelda(celdaSiguiente);
 				}
 			}
 		}
@@ -357,9 +359,7 @@ public class MarioGrande extends Caracteristica
 			celdaGrande.sacarActor(mario);
 			celdaGrande = c.getSuperior();
 			celdaGrande.agregarActor(mario);
-		}
-		//System.out.println("La celdaGrande de Mario es: " + celdaGrande.getPosFila() + " , "+ celdaGrande.getPosColumna() + " )");
-		//System.out.println("La celdaActual de Mario es: " + mario.getCeldaActual().getPosFila() + " , "+ mario.getCeldaActual().getPosColumna() + " )");
+		}		
 	}
 	
 }

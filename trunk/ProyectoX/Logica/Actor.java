@@ -94,7 +94,7 @@ public abstract class Actor implements Posicionable
                                             "Imposible moverse a la Celda c. c es null");
 		
 		this.producirColisiones(c);
-		this.actualizarCelda(c);		
+		this.actualizarCelda(c);
 	}
 	
 	/**

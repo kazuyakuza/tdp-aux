@@ -10,7 +10,6 @@ import ProyectoX.Librerias.Threads.UpNeeder;
 import ProyectoX.Librerias.Threads.Updater;
 import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
-import ProyectoX.Logica.Responsabilidades.Punteable;
 
 
 /**
@@ -44,19 +43,12 @@ public class Destructor extends DecoracionCaracteristica
 	public Destructor (Caracteristica comp, int t)
 	{		
 		super (comp);
+		mario.setDestructor(true);
 		timer = new Timer (t, new ActionListener ()
 		{				
 			public void actionPerformed (ActionEvent e)
 			{
-				mario.producirColisiones(mario.getCeldaActual());
-				mario.setCaracteristica(componente);			
-				flash.stop();
-				mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
-				mario.getSpriteManager().cambiarSprite(quieto);
-				timer.stop();
-				
-				upNeeder.notUpdate();
-				upNeeder = null;
+				terminar();				
 			}
 		});
 		flash = new Timer (200, new ActionListener ()
@@ -78,6 +70,22 @@ public class Destructor extends DecoracionCaracteristica
 	{		
 		timer.start();
 		flash.start();
+	}
+	
+	/**
+	 * Termia el efecto de Destructor, finaliza el tiempo.
+	 */
+	public void terminar ()
+	{		
+		mario.setDestructor(false);
+		mario.producirColisiones(mario.getCeldaActual());
+		mario.setCaracteristica(componente);			
+		flash.stop();
+		mario.getSpriteManager().cargarSprites(componente.getNombresSprites());				
+		mario.getSpriteManager().cambiarSprite(quieto);
+		timer.stop();
+		upNeeder.notUpdate();
+		upNeeder = null;
 	}
 	
 	/**
