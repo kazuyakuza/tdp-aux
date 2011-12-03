@@ -135,6 +135,9 @@ public class Nivel
 		
 		mapa.setBloque(0, 0, bloqueActual);
 		
+		//Agregación Techo
+		bloqueActual.setFilaOcupada(0, true);
+		
 		//Agregación Piso
 		int aux = 0;
 		while (aux < 40)
