@@ -138,6 +138,9 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 */
 	public /*synchronized*/ void caer () throws AccionActorException
 	{
+		if (upNeeder.hayWorkerPrioridad(0))//Mario se va a morir en la proximá actualización.
+			return;
+		
 		miCaracteristica.caer();
 	}
 	

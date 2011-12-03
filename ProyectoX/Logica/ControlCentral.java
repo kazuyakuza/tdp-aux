@@ -15,7 +15,6 @@ import ProyectoX.Logica.Controles.Control;
 import ProyectoX.Logica.Controles.Teclado;
 import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Bloque;
-import ProyectoX.Logica.Mapa.Celda;
 import ProyectoX.Logica.Mapa.Nivel;
 import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialPowerUp;
 import ProyectoX.Logica.NoPersonajes.PowerUps.BombaNuclear;
@@ -23,6 +22,7 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
+import ProyectoX.Logica.Personajes.MarioGrande;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IAControl;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
@@ -263,13 +263,13 @@ public class ControlCentral implements Runnable, ControlThread
 	
 	public void test ()
 	{
-		((Mario) jugador.personaje).crecerHongo();
-		((Mario) jugador.personaje).crecerFlor();
+		//((Mario) jugador.personaje).crecerHongo();
+		//((Mario) jugador.personaje).crecerFlor();
 		//int x = 0; int y = 0;
 		//int pg = 0, ps = 0;
-		//while (true)
+		while (true)
 		/*for (int i=0; i<10; i++)*/
-		//{
+		{
 			/*try {
 				Thread.sleep((int) (getSleepTime()));
 				} catch (InterruptedException e) {				
@@ -301,9 +301,11 @@ public class ControlCentral implements Runnable, ControlThread
 					 x = ((Actor) jugador.personaje()).getCeldaActual().getPosFila();
 				     y = ((Actor) jugador.personaje()).getCeldaActual().getPosColumna();
 				    }*/
+			if (! ((Mario) jugador.personaje()).getCeldaActual().getSuperior().getActores().hasNext())
+			System.out.println("no hay actor");
 				
 			/*((Actor) jugador.personaje).spriteManager.flashear();*/
-		//}
+		}
 		//((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
 	}
 	

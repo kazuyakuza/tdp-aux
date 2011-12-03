@@ -432,7 +432,7 @@ public class SpriteManager implements ImageObserver
 					frameGifActual--;
 				framesGif--;
 				
-				if (frameGifActual < sprites.length)
+				if (Math.abs(frameGifActual) < sprites.length)
 				{
 					try
 					{

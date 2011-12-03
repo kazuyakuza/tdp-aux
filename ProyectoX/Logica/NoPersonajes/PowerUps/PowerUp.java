@@ -109,6 +109,9 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	 */
 	public void caer () throws AccionActorException
 	{
+		if (upNeeder.hayWorkerPrioridad(0))//El PowerUp se va a morir en la proximá actualización.
+			return;
+		
 		Celda celdaInferior = celdaActual;
 		try 
 		{
@@ -262,7 +265,7 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 	 * @throws NullPointerException Si pj es null.
 	 * @throws ColisionException Si se produce algún error en la colisión.
 	 */
-	public void colisionarPj (PjSeleccionable pj) throws ColisionException, NullPointerException
+	public void colisionarPj (final PjSeleccionable pj) throws ColisionException, NullPointerException
 	{
 		if (pj == null)
 			throw new NullPointerException ("PowerUp.colisionarPj()" + "\n" +
@@ -274,8 +277,7 @@ public abstract class PowerUp extends Actor implements Punteable, afectableXgrav
 		try
 		{
 			Mario mario = checkActorJugador (pj);
-			
-			pj.getJugador().asignarPuntos(this.getPuntos(mario));
+			pj.getJugador().asignarPuntos(getPuntos(mario));
 			efecto(mario);
 			
 			if (! upNeeder.hayWorkerPrioridad(0))
