@@ -231,8 +231,9 @@ public class SpriteManager implements ImageObserver
 	public void actualizar (final int X, final int Y) throws EmptyUpNeederException
 	{
 		if ((X < 0) || (Y < 0))
-			throw new PosicionIncorrectaException ("Posición ingresada incorrecta." + "\n"
-					                             + "No existe posición (" + X + "," + Y +").");
+			throw new PosicionIncorrectaException ("SpriteManager.actualizar()" + "\n" +
+                                                   "Posición ingresada incorrecta." + "\n" +
+					                               "No existe posición (" + X + "," + Y +").");
 		
 		if ((posX == -1) && (posY == -1))
 		{//Posición Inicial.
@@ -453,7 +454,8 @@ public class SpriteManager implements ImageObserver
 	public double[] posicion () throws PosicionIncorrectaException
 	{
 		if ((posX == -1) && (posY == -1))
-			throw new PosicionIncorrectaException ("No se ha asignado posición." + "\n" +
+			throw new PosicionIncorrectaException ("SpriteManager.posicion()" + "\n" +
+                                                   "No se ha asignado posición." + "\n" +
 					                               "Detalles del Error:" + "\n" +
 					                               "Error al llamar SpriteManager.posicion(), donde posX y posY del SpriteManager son iguales a -1.");
 		

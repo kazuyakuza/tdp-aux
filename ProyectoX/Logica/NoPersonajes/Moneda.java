@@ -7,6 +7,7 @@ import ProyectoX.Librerias.Threads.Worker;
 import ProyectoX.Logica.Actor;
 import ProyectoX.Logica.Mapa.ActualizadorNivel;
 import ProyectoX.Logica.Mapa.Celda;
+import ProyectoX.Logica.NoPersonajes.Plataformas.EspecialMonedas;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.PjSeleccionable;
 import ProyectoX.Logica.Responsabilidades.Punteable;
@@ -116,11 +117,29 @@ public class Moneda extends Actor implements Punteable
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
-	public void morir()
+	public void morir ()
 	{
 		ActualizadorNivel.act().eliminarActor(this);
 		
 		super.morir();
+	}
+	
+	/**
+	 * Realiza la acción de morir del Actor.
+	 * 
+	 * @param em Atributo para asegurar q es llamado por un EspecialMonedas.
+	 */
+	public void matate (EspecialMonedas em)
+	{
+		upNeeder.addWorker(0, new Worker ()
+		{
+			public void work() throws Exception
+			{
+				spriteManager.setEliminar();
+				
+				spriteManager = null;
+			}
+		});
 	}
 	
 	/**
@@ -131,6 +150,16 @@ public class Moneda extends Actor implements Punteable
 	public int getPuntos (Mario mario)
 	{
 		return 5;
+	}
+	
+	/**
+	 * Devuelve la cantidad de frames de movimiento.
+	 * 
+	 * @return Cantidad de frames de movimiento.
+	 */
+	public int getCantFramesMovimiento ()
+	{
+		return cantFramesMovimiento;
 	}
 
 }
