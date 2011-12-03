@@ -323,12 +323,16 @@ public class Nivel
 		mapa = new Mapa (this, 1, 1);
 		
 		//Creación Bloque 1 del Nivel. Que es el Bloque de inicio del Nivel.
-		bloqueActual = new Bloque(mapa, 0, 0, 14, 80);//Nivel de Piso default.
+		bloqueActual = new Bloque(mapa, 0, 0, 15, 80);//Nivel de Piso default.
+		bloqueActual.setNivelPiso(12);
 		
 		mapa.setBloque(0, 0, bloqueActual);
 		
 		//Agregación Principio Mapa
 		bloqueActual.setColumnaOcupada(2, true);
+		
+		//Agregación SubSuelo
+		bloqueActual.setFilaOcupada(14, true);
 		
 		//Agregación Actores no Personjes.
 		
