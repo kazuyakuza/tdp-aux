@@ -40,6 +40,7 @@ public class Destructor extends DecoracionCaracteristica
 		{				
 			public void actionPerformed (ActionEvent e)
 			{
+				System.out.println("Se terminó efecto Destructor.");
 				mario.producirColisiones(mario.getCeldaActual());
 				mario.setCaracteristica(componente);			
 				flash.stop();

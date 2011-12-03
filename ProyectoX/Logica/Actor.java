@@ -94,13 +94,7 @@ public abstract class Actor implements Posicionable
                                             "Imposible moverse a la Celda c. c es null");
 				
 		this.producirColisiones(c);
-		this.actualizarCelda(c);
-		/*
-		celdaActual.sacarActor(this);
-		celdaActual = c;
-		celdaActual.agregarActor(this);				
-		*/	
-		//spriteManager.actualizar(celdaActual.getPosicion());
+		this.actualizarCelda(c);		
 	}
 	
 	/**

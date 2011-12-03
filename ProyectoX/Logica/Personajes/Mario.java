@@ -67,7 +67,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "arriba".
 	 */
-	public void arriba ()
+	public synchronized void arriba ()
 	{
 		miCaracteristica.saltar();
 	}
@@ -75,7 +75,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "abajo".
 	 */
-	public void abajo ()
+	public synchronized void abajo ()
 	{
 		miCaracteristica.agacharse();
 	}
@@ -83,23 +83,23 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "izquierda".
 	 */
-	public void izquierda ()
+	public synchronized void izquierda ()
 	{
-		miCaracteristica.moverseAizquierda();
+		moverseAizquierda();
 	}
 	
 	/**
 	 * Especifica la acción "derecha".
 	 */
-	public void derecha ()
+	public synchronized void derecha ()
 	{
-		miCaracteristica.moverseAderecha();
+		moverseAderecha();
 	}
 	
 	/**
 	 * Especifica la acción "A".
 	 */
-	public void A ()
+	public synchronized void A ()
 	{
 		miCaracteristica.accionA();
 	}
@@ -107,7 +107,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la acción "B".
 	 */
-	public void B ()
+	public synchronized void B ()
 	{
 		miCaracteristica.accionB();
 	}
@@ -115,7 +115,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	/**
 	 * Especifica la no acción.
 	 */
-	public void quieto ()
+	public synchronized void quieto ()
 	{
 		cambiarSpriteQuieto();
 	}
@@ -125,7 +125,7 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 	 * 
 	 * @throws AccionActorException Si se produce un error al caer.
 	 */
-	public void caer () throws AccionActorException
+	public synchronized void caer () throws AccionActorException
 	{
 		miCaracteristica.caer();
 	}

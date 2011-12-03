@@ -161,20 +161,20 @@ public class Nivel
 			caibles.addFirst(goomba);
 			aux++;
 		}*/
-		/*
-		/*Goomba goomba = new Goomba ();
+		
+		Goomba goomba = new Goomba ();
 		bloqueActual.ABC[10][10].agregarActor(goomba);
 		goomba.setCeldaActual(bloqueActual.ABC[10][10]);
 		actores.addFirst(goomba);
 		enemigos.addFirst(goomba);
 		caibles.addFirst(goomba);
-		*/
-		/*KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
-		bloqueActual.ABC[10][10].agregarActor(kt1);
-		kt1.setCeldaActual(bloqueActual.ABC[10][10]);
+		
+		KoopaTroopa kt1 = new KoopaTroopa (new KTNormal());
+		bloqueActual.ABC[10][15].agregarActor(kt1);
+		kt1.setCeldaActual(bloqueActual.ABC[10][15]);
 		actores.addFirst(kt1);		
 		enemigos.addFirst(kt1);		
-		caibles.addFirst(kt1);*/
+		caibles.addFirst(kt1);
 		/*
 		KoopaTroopa kt2 = new KoopaTroopa (new KTCaparazon());
 		bloqueActual.ABC[4][4].agregarActor(kt2);
@@ -200,13 +200,13 @@ public class Nivel
 		powerUps.addLast(flor);
 		caibles.addLast(flor);
 		
-		/*		
-		PowerUp bomba = new Estrella();
+				
+		PowerUp bomba = new BombaNuclear(cc);
 		bloqueActual.ABC[8][6].agregarActor(bomba);
 		bomba.setCeldaActual(bloqueActual.ABC[8][6]);
 		actores.addLast(bomba);
 		powerUps.addLast(bomba);
-		caibles.addLast(bomba);*/
+		caibles.addLast(bomba);
 		/*
 		Moneda moneda1 = new Moneda();
 		bloqueActual.ABC[8][8].agregarActor(moneda1);
@@ -260,6 +260,7 @@ public class Nivel
 		plataformaM.setCeldaActual(bloqueActual.ABC[7][13]);
 		actores.addFirst(plataformaM);
 		plataformas.addFirst(plataformaM);
+		*/
 		
 		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new Estrella(), cc, false);
 		bloqueActual.ABC[7][14].setOcupada(true);
@@ -268,7 +269,7 @@ public class Nivel
 		actores.addFirst(plataformaPUP2);
 		plataformas.addFirst(plataformaPUP2);
 		especialesPowerUp.addFirst(plataformaPUP2);
-		
+		/*
 		Rompible rompible = new Rompible ();
 		bloqueActual.ABC[7][12].setOcupada(true);
 		bloqueActual.ABC[7][12].agregarEstructura(rompible);
