@@ -86,7 +86,7 @@ public class MarioChico extends Caracteristica
 	{
 		mario.setCaracteristica(new MarioGrande(mario));
 		mario.getJugador().getControlCentral().cambiarPlataformasFlor();
-		//mario = null;		
+		mario = null;		
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class MarioChico extends Caracteristica
 	{
 		mario.setCaracteristica(new MarioGrande(mario));
 		mario.getJugador().getControlCentral().cambiarPlataformasFlor();
-		//mario = null;
+		mario = null;
 	}
 	
 	/**

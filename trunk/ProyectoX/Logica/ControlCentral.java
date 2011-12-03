@@ -201,32 +201,11 @@ public class ControlCentral implements Runnable, ControlThread
 	 */
 	public void explotarBombaNuclear (BombaNuclear bomba) throws NullPointerException
 	{
-		for (Enemigo enemigo: nivel.getEnemigos(this))
-			//if (distancia (bomba.getCeldaActual(),enemigo.getCeldaActual()) <= 10 )
-			
+		for (Enemigo enemigo: nivel.getEnemigos(this))			
 			if (bomba.getCeldaActual().distancia(enemigo.getCeldaActual()) <= 10 )
 				((Actor)enemigo).morir();		
 	}
-	
-	/**
-	 * Calcula la distancia que hay entre las Celdas.
-	 * @param c1 Celda que se desea calcular su distancia a c2.
-	 * @param c2 Celda que se desea calcular su distancia a c1.
-	 * @return entero que es la distancia entre las Celdas c1 y c2.
-	 * @throws NullPointerException si c1 o c2 son null.
-	 */
-	/*
-	protected int distancia (Celda c1, Celda c2) throws NullPointerException
-	{
-		if (c1 == null || c2 == null)
-			throw new NullPointerException ("ControlCentral.distancia()" + "\n" +
-											"Imposible calcular distancia, alguna celda ess nulas.");
-				
-		int x = Math.abs(c1.getPosFila() - c2.getPosFila());
-		int y = Math.abs(c1.getPosColumna() - c2.getPosColumna());		
-		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
-	}*/
-	
+			
 	/*Métodos en Ejecución*/
 	
 	/**

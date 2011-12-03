@@ -62,8 +62,7 @@ public class MarioGrande extends Caracteristica
 		else
 			mario.getSpriteManager().cambiarSprite(agachado);
 		
-		celdaGrande.sacarActor(mario);
-		//celdaGrande = mario.getCeldaActual();
+		celdaGrande.sacarActor(mario);		
 		celdaGrande = null;
 	}
 	
@@ -100,7 +99,7 @@ public class MarioGrande extends Caracteristica
 	public void crecerFlor () throws AccionActorException
 	{
 		mario.setCaracteristica(new MarioBlanco(mario));
-		//mario = null;
+		mario = null;
 	}
 	
 	/**
@@ -113,7 +112,7 @@ public class MarioGrande extends Caracteristica
 		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 5000));
 		((Invulnerable)mario.getCaracteristica()).empezar();
 		mario.getJugador().getControlCentral().cambiarPlataformasSuperHongo();
-		//mario = null;
+		mario = null;
 	}
 	
 	/**
@@ -158,9 +157,7 @@ public class MarioGrande extends Caracteristica
 	 */
 	public int[] vectorDistancia (Posicionable a)
 	{
-		int [] vector = new int[2];
-		//if (distancia (mario.getCeldaActual(), a.getCeldaActual()) <= distancia (celdaGrande, a.getCeldaActual()))
-		
+		int [] vector = new int[2];		
 		if ( mario.getCeldaActual().distancia(a.getCeldaActual()) <= celdaGrande.distancia(a.getCeldaActual()) )
 		{//Si la celda inferior de Mario (celdaActual) es la más cercana al Actor.
 			vector = super.vectorDistancia(a);
@@ -174,30 +171,11 @@ public class MarioGrande extends Caracteristica
 	}
 	
 	/**
-	 * Calcula la distancia que hay entre las Celdas.
-	 * @param c1 Celda que se desea calcular su distancia a c2.
-	 * @param c2 Celda que se desea calcular su distancia a c1.
-	 * @return entero que es la distancia entre las Celdas c1 y c2.
-	 * @throws NullPointerException si c1 o c2 son null.
-	 */
-	/*protected int distancia (Celda c1, Celda c2) throws NullPointerException
-	{
-		if (c1 == null || c2 == null)
-			throw new NullPointerException ("ControlCentral.distancia()" + "\n" +
-											"Imposible calcular distancia, alguna celda ess nulas.");
-				
-		int x = Math.abs(c1.getPosFila() - c2.getPosFila());
-		int y = Math.abs(c1.getPosColumna() - c2.getPosColumna());		
-		return (int) Math.sqrt((Math.pow(x,2) + Math.pow(y,2)));
-	}*/
-	
-	/**
 	 * Verifica si Mario se encuentra agachado.
 	 * @return verdadero si Mario está agachado, falso, en caso contrario.
 	 */
 	protected boolean agachado()
-	{
-		//return celdaGrande == mario.getCeldaActual();
+	{		
 		return celdaGrande == null;
 	}
 	
@@ -210,9 +188,7 @@ public class MarioGrande extends Caracteristica
 	 */
 	public void caer () throws AccionActorException
 	{			
-		super.caer();		
-		//if ( celdaGrande != null && mario.getCeldaActual() != celdaGrande.getInferior() )
-			//moverseAcelda (celdaGrande.getInferior());		
+		super.caer();			
 	}
 	
 	/**
@@ -228,17 +204,14 @@ public class MarioGrande extends Caracteristica
 				mario.getSpriteManager().cambiarSprite(-saltando);
 			else
 				mario.getSpriteManager().cambiarSprite(saltando);
-			if (/*celdaGrande != null &&*/ celdaGrande.haySuperior())
+			if (celdaGrande.haySuperior())
 			{
 				Celda celdaSuperior = celdaGrande.getSuperior();
 				if (!celdaSuperior.isOcupada())
 				{					
-					moverseAcelda (celdaSuperior);
-					//super.saltar();					
-					
+					mario.producirColisiones(celdaSuperior);					
 					mario.setPG(mario.getPG()+1);
-					this.PS++;
-					//mario.moverseAcelda(celdaGrande);
+					this.PS++;				
 					this.actualizarCelda(celdaGrande);
 				}
 				else //Mario colisiona una Estructura desde abajo.
@@ -260,9 +233,6 @@ public class MarioGrande extends Caracteristica
 		Celda celdaAnterior = celdaGrande;
 		try 
 		{
-			//if (celdaGrande == null)
-				//throw new NullPointerException ("La celdaGrande del Actor es null.");
-			
 			if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior() && !this.agachado())
 			{				
 				mario.mirarIzq(true);
@@ -272,11 +242,8 @@ public class MarioGrande extends Caracteristica
 				celdaAnterior = mario.getCeldaActual().getAnterior();
 				if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
 				{
-					moverseAcelda (celdaGrande.getAnterior());
-					mario.moverseAcelda(celdaAnterior);
-					//super.moverseAizquierda();
-					//if (mario.getCeldaActual() != celdaGrande.getInferior())
-						//moverseAcelda (celdaAnterior);
+					mario.producirColisiones (celdaGrande.getAnterior());
+					mario.moverseAcelda (celdaAnterior);					
 				}
 			}
 		}
@@ -316,11 +283,8 @@ public class MarioGrande extends Caracteristica
 				celdaSiguiente = mario.getCeldaActual().getSiguiente();
 				if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
 				{
-					moverseAcelda (celdaGrande.getSiguiente());
-					mario.moverseAcelda(celdaSiguiente);					
-					//super.moverseAderecha();
-					//if (mario.getCeldaActual() != celdaGrande.getInferior())
-						//this.moverseAcelda (celdaSiguiente);
+					mario.producirColisiones(celdaGrande.getSiguiente());
+					mario.moverseAcelda(celdaSiguiente);
 				}
 			}
 		}
@@ -339,30 +303,7 @@ public class MarioGrande extends Caracteristica
 					                        e2.getMessage());
 		}
 	}
-	
-	/**
-	 * Provoca las colisiones con los Actores en la Celda c, actualizando su ubicación.
-	 * Mueve Actor a la Celda c.
-	 * Actualiza el SpriteManager.
-	 * 
-	 * @param c Celda a la que se mueve el Actor.
-	 * @throws NullPointerException Si c es null.
-	 */
-	public void moverseAcelda (Celda c) throws NullPointerException
-	{
-		if (c == null)
-			throw new NullPointerException ("MarioGrande.moverseAcelda()" + "\n" +
-                                            "Imposible moverse a la Celda c. c es null");
 		
-		mario.producirColisiones(c);
-		//this.actualizarCelda(c);
-		/*
-		celdaGrande.sacarActor(mario);
-		celdaGrande = c;
-		celdaGrande.agregarActor(mario);
-		*/
-	}
-	
 	/**
 	 * Modifica la Celda actual del actor por la Celda c.
 	 * @param c es la nueva Celda para el Actor.
@@ -381,8 +322,8 @@ public class MarioGrande extends Caracteristica
 			celdaGrande = c.getSuperior();
 			celdaGrande.agregarActor(mario);
 		}
-		System.out.println("La celdaGrande de Mario es: " + celdaGrande.getPosFila() + " , "+ celdaGrande.getPosColumna() + " )");
-		System.out.println("La celdaActual de Mario es: " + mario.getCeldaActual().getPosFila() + " , "+ mario.getCeldaActual().getPosColumna() + " )");
+		//System.out.println("La celdaGrande de Mario es: " + celdaGrande.getPosFila() + " , "+ celdaGrande.getPosColumna() + " )");
+		//System.out.println("La celdaActual de Mario es: " + mario.getCeldaActual().getPosFila() + " , "+ mario.getCeldaActual().getPosColumna() + " )");
 	}
 	
 }

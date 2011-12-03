@@ -137,7 +137,7 @@ public class MarioBlanco extends Caracteristica
 		mario.setCaracteristica(new MarioGrande(mario));
 		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 4000));
 		((Invulnerable)mario.getCaracteristica()).empezar();		
-		//mario = null; <----- ?
+		mario = null;
 	}
 	
 	/**
@@ -251,15 +251,13 @@ public class MarioBlanco extends Caracteristica
 			if (celdaGrande.haySuperior())
 			{
 				Celda celdaSuperior = celdaGrande.getSuperior();
+				mario.producirColisiones(celdaSuperior);
 				if (!celdaSuperior.isOcupada())
-				{					
-					moverseAcelda (celdaSuperior);
+				{										
 					mario.setPG(mario.getPG()+1);
 					this.PS++;
 					this.actualizarCelda(celdaGrande);
-				}
-				else //Mario colisiona una Estructura desde abajo.
-					mario.producirColisiones(celdaSuperior);
+				}				
 			}
 		}
 		else
@@ -285,7 +283,7 @@ public class MarioBlanco extends Caracteristica
 				celdaAnterior = mario.getCeldaActual().getAnterior();
 				if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
 				{
-					moverseAcelda (celdaGrande.getAnterior());
+					mario.producirColisiones(celdaGrande.getAnterior());
 					mario.moverseAcelda(celdaAnterior);					
 				}
 			}
@@ -325,7 +323,7 @@ public class MarioBlanco extends Caracteristica
 				celdaSiguiente = mario.getCeldaActual().getSiguiente();
 				if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
 				{
-					moverseAcelda (celdaGrande.getSiguiente());
+					mario.producirColisiones(celdaGrande.getSiguiente());
 					mario.moverseAcelda(celdaSiguiente);					
 				}
 			}
@@ -344,23 +342,6 @@ public class MarioBlanco extends Caracteristica
 					                        "Detalles del error:" + "\n" +
 					                        e2.getMessage());
 		}
-	}
-	
-	/**
-	 * Provoca las colisiones con los Actores en la Celda c.
-	 * Mueve Actor a la Celda c.
-	 * Actualiza el SpriteManager.
-	 * 
-	 * @param c Celda a la que se mueve el Actor.
-	 * @throws NullPointerException Si c es null.
-	 */
-	public void moverseAcelda (Celda c) throws NullPointerException
-	{
-		if (c == null)
-			throw new NullPointerException ("MarioBlanco.moverseAcelda()" + "\n" +
-                                            "Imposible moverse a la Celda c. c es null");
-				
-		mario.producirColisiones(c);
 	}
 	
 	/**
