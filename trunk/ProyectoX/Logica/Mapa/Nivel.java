@@ -146,6 +146,9 @@ public class Nivel
 			aux++;
 		}
 		
+		//Agregación SubSuelo
+		bloqueActual.setFilaOcupada(12, true);
+		
 		//Agregación Actores Enemigos.
 		/*aux = 0;
 		while (aux < 1)
