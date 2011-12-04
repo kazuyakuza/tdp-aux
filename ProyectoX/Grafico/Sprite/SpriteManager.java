@@ -39,7 +39,7 @@ public class SpriteManager implements ImageObserver
                                             //Celda = si se dividiera el Escenario usando una matriz, cada celda tendría una medida de lado en pixeles.
 	
 	//Variables de Instancia
-	private BloqueGrafico bloqueGrafico; //BloqueGrafico al que pertenece el SpriteManager actual.
+	protected BloqueGrafico bloqueGrafico; //BloqueGrafico al que pertenece el SpriteManager actual.
 	private UpNeeder upNeeder; //UpNeeder del SpriteManager para completar operaciones.
 	private BufferedImage spriteActual;
 	private BufferedImage[] sprites; //Guarda las imagenes posibles para este sprite, donde:
@@ -506,6 +506,7 @@ public class SpriteManager implements ImageObserver
 	 */
 	public void printNextMe (SpriteManager sp)
 	{
+		sp.bloqueGrafico = bloqueGrafico;
 		bloqueGrafico.agregarSprite(sp);
 	}
 	

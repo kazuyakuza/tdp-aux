@@ -235,7 +235,7 @@ public class Escenario extends Canvas implements Worker
 	 * 
 	 * @return Bloques Graficos.
 	 */
-	public BloqueGrafico[][] agregarBloquesGraficos ()
+	public BloqueGrafico[][] getBloquesGraficos ()
 	{
 		return bloques;
 	}
