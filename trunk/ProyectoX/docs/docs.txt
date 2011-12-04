@@ -1,22 +1,60 @@
+REGLAS DEL JUEGO:
+	
+	Para el desarrollo del juego se decidió modificar o u optar ciertas reglas del juego original. A continuación se nombrarán las consideraciones tomadas para el juego:	
+	
+	*	El Personaje Mario puede crecer o decrecer de un estado por vez, esto es, Mario solo puede crecer por medio de los SuperHongos o Flor de Fuegos a su estado siguiente y 
+	solo puede decrecer (achicarse), al ser dañado por un enemigo, a su estado anterior. Por lo que, de Mario Chico, crece a Mario Grande y de éste a Mario Blanco y lo mismo a 
+	la inversa. Por esta razón, una Flor de Fuego a un Mario chico lo hace crecer a Mario Grande y no a Mario Blanco.
+	*	Mario bajo los efectos de una Flor de Fuego (Mario Blanco) puede lanzar Bolas de Fuego las cuales avanzan hasta colisionar un enemigo o una celda ocupada (por una 
+	estructura) pero las estas bolas no son afectables por la gravedad, por lo que no caen, siempre avanzan en línea recta hasta que explotan.
+	*	Los power ups que contienen las plataformas que producen el crecimiento de Mario varían según el estado de Mario, para que tenga efecto eficiente sobre Mario. Esto es, 
+	si Mario está chico, saldrá un SuperHongo, sino una Flor de Fuego.
+	*	Con respecto a la Bomba Nuclear, este nuevo power up produce la muerte de todos los enemigos de Mario que se encuentren en un radio de 10 celdas.
+	*	Sobre la Estrella, el efecto Destructor que le aplica a Mario no se acumula, o sea, no aumenta el tiempo de duración, sino que se reinicia y Mario puede estar bajo este 
+	efecto de a uno por vez (el nuevo reemplaza al viejo efecto).
+	*	Sobre los enemigos, los KoopaTroopa tienen dos estados, el normal en el que puede moverse, dañar a Mario y al ser colisionado por Mario desde arriba, se convierte a su 
+	estado en caparazón, en el cual no puede moverse ni dañar a Mario y se muere ante cualquier colisión con Mario. En este último estado puede recuperarse, al transcurrir el 
+	tiempo, a su estado normal.
+	*	Sobre el listado de puntos, se modificaron los siguientes valores (para facilitar su implementación): 
+			- El Super Hongo da 10*multiplicadorBonus de Mario.
+			- La Flor de Fuego da 5*multiplicadorBonus de Mario.
+			- La Estrella da siempre 25.
+		El multiplicadorBonus de Mario varía según su estado, para chico es x1, para grande es x5, para blanco es x10.
+		
+	
+DECISIONES PARA LA IMPLEMENTACION DEL JUEGO:	
+
 Una decisión importante tomada para el proyecto es considerar al mapa de cada nivel en una secuencia de bloques continuos y manejar a la estructura teniendo en cuenta 
 un bloque actual, su anterior y su siguiente. Además, se optó por implementar a cada bloque con un arreglo bidimensional de Celdas. 
 
 Las celdas fue otra decisión tomada para representar donde se ubican las entidades del juego en la lógica del mapa del nivel. Se determinó que las celdas pueden contener 
 más de un actor en la misma, por lo que se decidió utilizar la estructura de una lista para manejar los actores que se ubican en una celda. Además, las celdas conocen el bloque
-al que pertenecen y a través del mismo acceden a sus celdas vecinas.
+al que pertenecen y a través del mismo acceden a sus celdas vecinas, brindando consultas sobre las celdas vecinas.
 
 Otra decisión tomada fue que los propios actores son los encargados de ejecutar y/o controlar las acciones de movimientos. En el caso de Mario, éste se encarga de comunicarle 
 al jugador ciertas situaciones, como cuando muere, y el jugador le comunica al control central para que actúe según la situación (ejemplo, reiniciar nivel o finalizar juego).
 
 Se optó por implementar a la gravedad (la crea el control central) y la misma, accediendo al control central, se encarga de hacer caer a los actores constantemente, siempre y 
-cuando los actores sean afectables por la gravedad. Esto se hizo mediante un hilo para la gravedad. Además, se determino que Mario, solo mientras está saltando, no es 
-afectable por la gravedad.
+cuando los actores sean afectables por la gravedad. Esto se hizo mediante un hilo para la gravedad.
 
-Se determinó que los actores mueren cuando caen a la última fila del bloque y que el jugador gana, cuando su personaje llega hasta una celda a la que se le agregó una Llegada 
-(se la considera como una actor). Esta última le comunica al control central dicha situación.
+Se decidió implementar una clase empleando el patrón de diseño Singleton (ActualizadorNivel), para manipular las agregaciones y elimnaciones de Actores al nivel actual. Esta 
+clase actúa como nexo para los Actores con el Nivel.
+
+Se determinó que los actores mueren cuando caen a una Celda que contiene un Vacio (se lo considera como un actor) y que el jugador gana, cuando su personaje llega hasta una celda 
+a la que se le agregó una Llegada (se la considera como una actor). Esta última le comunica al control central dicha situación.
 
 Se decidió que Jugador, a través de un hilo, está pendiente de las acciones que desea realizar el usuario, y cuando escucha (con oyentes) lo que el usuario quiere, le comunica 
 al personaje lo que debe hacer.
 
-REESCRIBIR:
-GoF Singleton -> CargadorSprite, Updater, ActualizadorNivel
+Para los Enemigos, se utiliza una Inteligencia Artificial, que realiza las acciones de movimientos del Enemigo. Cada uno, contiene una IA, que lo hace mover.
+
+Sobre la gráfica se decidio que cada Actor conoce a su sprite (SpriteManager), el cuál se emplea utilizando el patrón de diseño Observer, para actualizarse. Cada vez que se produzcan 
+cambios en la lógica, se le comunica para que se actualice. Además, utilizando Singleton, se empleo una clase para acceder a la ubicación de los recursos de los distintos actores y sus spries.
+
+Para la representación de Mario y sus estados, se optó por medio de Caracteristicas representar a los estados y a través de una relación de 1 a 1 entre Mario y Caracteristica. Una Caracteristica 
+para Mario Chico, otra para Mario Grande y otra para Mario Blanco. De esta manera, se mantiene a Mario siempre con un solo objeto, evitando cambio de referencias y tener que estar actualizando a 
+entidades que lo conozcan (como Jugador, Nivel, etc). De esta manera, lo que cambia es el tipo de Caracteristica que Mario posee, cuando éste cambia de Estado.
+
+Para la implementación de los efectos Destructor (Estrella) e Invulnerable, se decidio aplicar el patrón de diseño Decorator, sobre las Caracteristicas, ya que de esta manera se puede cambiar y/o 
+agrgar las responsabilidades de cada Caracteristica que Mario posee. El tiempo de duración de estos efectos se implementó utilizando la clase Timer provista por Java.
+
