@@ -158,10 +158,8 @@ public class Mario extends Actor implements PjSeleccionable, Movible, afectableX
 		
 		spriteManager.cambiarSprite(miCaracteristica.spriteMuerto());
 		ActualizadorNivel.act().eliminarCaible(this);
-		ActualizadorNivel.act().eliminarPJ(this);
-		
-		super.morir();
-		
+		ActualizadorNivel.act().eliminarPJ(this);		
+		super.morir();		
 		upNeeder.notUpdate();
 		upNeeder = null;
 		

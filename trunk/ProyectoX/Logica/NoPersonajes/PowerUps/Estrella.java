@@ -20,9 +20,7 @@ public class Estrella extends PowerUp
 		                                             dirRecursos + "Starman-3.png",
 		                                             dirRecursos + "Starman-4.png"};
 	
-	//Atributos de Instancia
-	//protected IAPowerUp miIA;
-	
+		
 	/*CONSTRUCTORES*/	
 
 	/**

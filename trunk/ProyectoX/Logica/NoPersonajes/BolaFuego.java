@@ -21,7 +21,7 @@ import ProyectoX.Logica.Responsabilidades.Movible;
  * @author Javier Eduardo Barrocal LU:87158
  * @author Pablo Isaias Chacar LU:67704
  */
-public class BolaFuego extends Actor implements Movible//, afectableXgravedad
+public class BolaFuego extends Actor implements Movible
 {
 	//Variables de Clase
 	private static final String dirRecursos = "Objetos/";
@@ -40,8 +40,7 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 	private static int cantFramesExplotando = 4;
 	
 	//Variables de Instancia
-	protected Mario mario;
-	//protected IA miIA;
+	protected Mario mario;	
 	
 	//Actualizador
 	protected UpNeeder upNeeder; //UpNeeder para terminación acciones.
@@ -111,38 +110,14 @@ public class BolaFuego extends Actor implements Movible//, afectableXgravedad
 		while (actores.hasNext())
 			actores.next().colisionarBola(this);
 	}
-	
-	/**
-	 * Si la Gravedad afecta a este Actor, entonces llamará a este método para afectarlo.
-	 * 
-	 * @param efecto Efecto de la Gravedad sobre este Actor.
-	 */
-	/*public void efectoGravedad (int efecto)
-	{
-		PG = 0;
-	}*/
-	
-	/**
-	 * Realiza la Acción caer, producida por el efecto de la Gravedad.
-	 * No tiene ningún efecto en este Actor.
-	 * 
-	 * @throws AccionActorException Si se produce algún error al caer.
-	 */
-	/*public void caer () throws AccionActorException
-	{*/
-		/*No hace nada, nunca ocurre.*/
-	//}
-	
+			
 	/**
 	 * Realiza la acción de morir del Actor.
 	 */
 	public void morir()
-	{
-		//ActualizadorNivel.act().eliminarCaible(this);
-		ActualizadorNivel.act().eliminarActor(this);
-		
-		super.morir();
-		
+	{		
+		ActualizadorNivel.act().eliminarActor(this);		
+		super.morir();		
 		upNeeder.notUpdate();
 		upNeeder = null;
 	}

@@ -15,10 +15,7 @@ public class HongoVerde extends PowerUp
 	//Atributos de Clase
 	private static final String dirRecursos = "Objetos/";
 	private static final String [] nombresSprites = {dirRecursos + "1-UpMushroom.gif"};
-	
-	//Atributos de Instancia
-	//protected IAPowerUp miIA;
-	
+		
 	/*CONSTRUCTORES*/
 	
 	/**

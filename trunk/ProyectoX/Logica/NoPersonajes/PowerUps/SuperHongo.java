@@ -16,9 +16,6 @@ public class SuperHongo extends PowerUp
 	private static final String dirRecursos = "Objetos/";
 	private static final String [] nombresSprites = {dirRecursos + "SuperMushroom.gif"};
 	
-	//Atributos de Instancia
-	//protected IAPowerUp miIA;
-	
 	/*CONSTRUCTORES*/
 	
 	/**

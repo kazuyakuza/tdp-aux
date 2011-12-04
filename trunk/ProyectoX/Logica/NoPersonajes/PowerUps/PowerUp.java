@@ -26,8 +26,7 @@ import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
  * @author Pablo Isaias Chacar LU:67704
  */
 public abstract class PowerUp extends Actor implements Punteable, afectableXgravedad, Movible
-{
-	
+{	
 	//Atributos de Instancia
 	protected int PG;//Potencia de la Gravedad.
 	                 //Si PG>0, el Actor se esta "elevando". Generalmente realizando la acción arriba.

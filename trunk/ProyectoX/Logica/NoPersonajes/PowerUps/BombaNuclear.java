@@ -18,8 +18,6 @@ public class BombaNuclear extends PowerUp
 	private static final String dirRecursos = "Objetos/";
 	private static final String [] nombresSprites = {dirRecursos + "BombaNuclear.gif"};
 	
-	//Atributos de Instancia
-	//protected IAPowerUp miIA;
 	protected ControlCentral controlCentral; 
 	
 	/*CONSTRUCTORES*/	
