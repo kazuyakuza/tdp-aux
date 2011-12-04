@@ -522,16 +522,24 @@ public class Nivel
 		aux = 36;
 		while (aux <= 38)
 		{
-			EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new HongoVerde(), cc, false);
-			bloqueActual.ABC[3][aux].setOcupada(true);
-			bloqueActual.ABC[3][aux].agregarEstructura(plataformaPUP2);
-			plataformaPUP2.setCeldaActual(bloqueActual.ABC[3][aux]);
+			EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new SuperHongo(), cc, true);
+			bloqueActual.ABC[4][aux].setOcupada(true);
+			bloqueActual.ABC[4][aux].agregarEstructura(plataformaPUP2);
+			plataformaPUP2.setCeldaActual(bloqueActual.ABC[4][aux]);
 			actores.addFirst(plataformaPUP2);
 			plataformas.addFirst(plataformaPUP2);
 			especialesPowerUp.addFirst(plataformaPUP2);
-			aux++;
+			aux += 2;			
 		}
 		
+		EspecialPowerUp plataformaPUP2 = new EspecialPowerUp (new HongoVerde(), cc, false);
+		bloqueActual.ABC[3][37].setOcupada(true);
+		bloqueActual.ABC[3][37].agregarEstructura(plataformaPUP2);
+		plataformaPUP2.setCeldaActual(bloqueActual.ABC[3][37]);
+		actores.addFirst(plataformaPUP2);
+		plataformas.addFirst(plataformaPUP2);
+		especialesPowerUp.addFirst(plataformaPUP2);
+				
 		aux = 46;
 		while (aux <= 56)
 		{
