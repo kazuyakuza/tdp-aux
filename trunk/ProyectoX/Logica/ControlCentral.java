@@ -22,7 +22,6 @@ import ProyectoX.Logica.NoPersonajes.PowerUps.FlorFuego;
 import ProyectoX.Logica.NoPersonajes.PowerUps.SuperHongo;
 import ProyectoX.Logica.Personajes.Mario;
 import ProyectoX.Logica.Personajes.MarioChico;
-import ProyectoX.Logica.Personajes.MarioGrande;
 import ProyectoX.Logica.Personajes.Enemigo.Enemigo;
 import ProyectoX.Logica.Personajes.Enemigo.IA.IAControl;
 import ProyectoX.Logica.Responsabilidades.afectableXgravedad;
@@ -88,7 +87,7 @@ public class ControlCentral implements Runnable, ControlThread
 			jugador = new Jugador (nJ, PJ, c, this);
 			PJ.setJugador(jugador);
 			
-			nivel = new Nivel(0);
+			nivel = new Nivel(1);
 			
 			gravedad = new Gravedad(this);
 			
