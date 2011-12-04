@@ -1,6 +1,6 @@
-Costo por hora por miembro		  $10
-Horas dedicadas por Barrocal, Javier	   60 
-Horas dedicadas por Chacar, Pablo	   60
-Costo por miembros			$1200
-Costo extras				  $75
-Costo total final del proyecto		$1275
+Costo por hora por miembro		  		$15
+Horas dedicadas por Barrocal, Javier	200 
+Horas dedicadas por Chacar, Pablo	    200
+Costo por miembros					  $3000
+Costo extras				   	       $500
+Costo total final del proyecto		  $6500
