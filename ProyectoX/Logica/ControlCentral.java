@@ -40,7 +40,7 @@ public class ControlCentral implements Runnable, ControlThread
 {
 	
 	//Variables de Clase
-	public static final double velocidad = 4.5;
+	private static final double velocidad = 4.5;
 	
 	//Variables de Instancia
 	private VentanaPrincipal ventanaPrincipal;
@@ -251,61 +251,11 @@ public class ControlCentral implements Runnable, ControlThread
 			Tescenario.start();
 			
 			ventanaPrincipal.repaint();
-			
-			//test();
 		}
 		catch (Exception exception)
 		{
 			ventanaPrincipal.mensajeError("Error", exception.getMessage(), true);
 		}
-	}
-	
-	public void test ()
-	{
-		//((Mario) jugador.personaje).crecerHongo();
-		//((Mario) jugador.personaje).crecerFlor();
-		//int x = 0; int y = 0;
-		//int pg = 0, ps = 0;
-		while (true)
-		/*for (int i=0; i<10; i++)*/
-		{
-			/*try {
-				Thread.sleep((int) (getSleepTime()));
-				} catch (InterruptedException e) {				
-					e.printStackTrace();
-				}*/
-			/*if (jugador == null)
-				System.out.println("jugador == null");
-			if (jugador.personaje == null)
-				System.out.println("jugador.personaje == null");*/
-			
-			/*if (pg != ((afectableXgravedad) jugador.personaje()).getPG())
-			{
-				System.out.println("PG:"+((afectableXgravedad) jugador.personaje()).getPG());
-				pg = ((afectableXgravedad) jugador.personaje()).getPG();
-			}
-			if (ps != ((Mario) jugador.personaje()).getCaracteristica().PS)
-			{
-				System.out.println("PS:"+((Mario) jugador.personaje()).getCaracteristica().PS);
-				ps = ((Mario) jugador.personaje()).getCaracteristica().PS;
-			}*/
-			
-			/*if ((x != ((Actor) jugador.personaje()).getCeldaActual().getPosFila())
-				    || (y != ((Actor) jugador.personaje()).getCeldaActual().getPosColumna()))
-				    {
-					System.out.println(((Actor) jugador.personaje()).getCeldaActual().getPosFila() + "," +
-					           ((Actor) jugador.personaje()).getCeldaActual().getPosColumna());
-					System.out.println(((Actor) jugador.personaje()).getSpriteManager().posicion()[0] +","+ 
-					           ((Actor) jugador.personaje()).getSpriteManager().posicion()[1]);
-					 x = ((Actor) jugador.personaje()).getCeldaActual().getPosFila();
-				     y = ((Actor) jugador.personaje()).getCeldaActual().getPosColumna();
-				    }*/
-			if (! ((Mario) jugador.personaje()).getCeldaActual().getSuperior().getActores().hasNext())
-			System.out.println("no hay actor");
-				
-			/*((Actor) jugador.personaje).spriteManager.flashear();*/
-		}
-		//((Actor) jugador.personaje).spriteManager.cargarSprites(((Mario) jugador.personaje).getCaracteristica().getNombresSprites());*/
 	}
 	
 	/**
