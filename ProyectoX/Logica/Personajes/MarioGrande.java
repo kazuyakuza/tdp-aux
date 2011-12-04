@@ -128,7 +128,7 @@ public class MarioGrande extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.setCaracteristica(new MarioChico(mario));
-		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 5000));
+		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 3000));
 		((Invulnerable)mario.getCaracteristica()).empezar();
 		mario.getJugador().getControlCentral().cambiarPlataformasSuperHongo();
 		mario = null;

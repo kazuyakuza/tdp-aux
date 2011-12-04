@@ -108,8 +108,7 @@ public abstract class Actor implements Posicionable
 			throw new NullPointerException ("Actor.ActualizarCelda()" + "\n" +
                                             "Imposible moverse a la Celda c. c es null");
 		
-		celdaActual.sacarActor(this);
-		//celdaActual = c;
+		celdaActual.sacarActor(this);		
 		this.setCeldaActual(c);
 		celdaActual.agregarActor(this);	
 	}
@@ -163,10 +162,8 @@ public abstract class Actor implements Posicionable
 			throw new NullPointerException ("Actor.morir()" + "\n" +
 					                        "Imposible morir. CeldaActual es null.");
 		
-		spriteManager.setEliminar();
-		
-		celdaActual.sacarActor(this);
-		
+		spriteManager.setEliminar();		
+		celdaActual.sacarActor(this);		
 		spriteManager = null;
 		celdaActual = null;
 	}

@@ -153,7 +153,7 @@ public class MarioBlanco extends Caracteristica
 	public void serDañado (Actor a)
 	{
 		mario.setCaracteristica(new MarioGrande(mario));
-		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 4000));
+		mario.setCaracteristica(new Invulnerable (mario.getCaracteristica(), 3000));
 		((Invulnerable)mario.getCaracteristica()).empezar();		
 		mario = null;
 	}
@@ -179,10 +179,8 @@ public class MarioBlanco extends Caracteristica
 		BolaFuego bola = new BolaFuego (mario);
 		mario.getCeldaActual().agregarActor(bola);
 		bola.setCeldaActual(mario.getCeldaActual());
-		mario.getSpriteManager().printNextMe(bola.getSpriteManager());
-		
-		ActualizadorNivel.act().agregarActor(bola);
-		//ActualizadorNivel.act().agregarAfectableXgravedad(bola);
+		mario.getSpriteManager().printNextMe(bola.getSpriteManager());		
+		ActualizadorNivel.act().agregarActor(bola);		
 		
 		if (mario.izq)
 			bola.moverseAizquierda();

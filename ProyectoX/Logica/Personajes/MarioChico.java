@@ -153,7 +153,7 @@ public class MarioChico extends Caracteristica
 	 */
 	public int multiplicadorBonus ()
 	{
-		return 5;
+		return 1;
 	}
 	
 	

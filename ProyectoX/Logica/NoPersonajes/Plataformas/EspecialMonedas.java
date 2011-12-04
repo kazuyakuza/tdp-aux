@@ -82,8 +82,7 @@ public class EspecialMonedas extends Irrompible
 			{//Si la colisión de Mario es desde abajo, sacar moneda, sino, no hacer nada.			
 				if (hayMoneda())
 				{//Si hay monedas, sacar la primera y agregarsela al jugador, sino no hacer nada.
-					moneda = monedas.remove(monedas.first());
-					
+					moneda = monedas.remove(monedas.first());					
 					moneda.getSpriteManager().actualizar(celdaActual.getSuperior().getPosicion());
 					moneda.getSpriteManager().rotarGif(moneda.getCantFramesMovimiento());
 					spriteManager.printNextMe(moneda.getSpriteManager());

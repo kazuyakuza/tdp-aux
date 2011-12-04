@@ -20,8 +20,6 @@ public class FlorFuego extends PowerUp
 		                                             dirRecursos + "FireFlower-3.png",
 		                                             dirRecursos + "FireFlower-4.png",};
 	
-	//Atributos de Instancia
-	//protected IAPowerUp miIA;
 	
 	/*CONSTRUCTORES*/	
 
