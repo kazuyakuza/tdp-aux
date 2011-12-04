@@ -384,6 +384,48 @@ public class ControlCentral implements Runnable, ControlThread
 	public void reiniciarNivel ()
 	{
 		
+		try
+		{
+		pararThreads();
+		
+		Mario PJ = new Mario (new MarioChico());		
+		jugador.setPersonaje(PJ);
+		PJ.setJugador(jugador);
+		jugador.setControl(new Teclado());
+		
+		ventanaPrincipal.mensajeError("Vida perdida", jugador.nombre+ " Perdiste 1 vida" + "\n" +
+                "Puntos: " + jugador.puntos, false);
+		
+		
+		ventanaPrincipal.quitarEscenarioActual();
+		nivel = new Nivel(1);
+		escenario = new Escenario (ventanaPrincipal);
+		ventanaPrincipal.agregarEscenario(escenario);
+		escenario.inicializarGrafica();
+		escenario.agregarControl(jugador.control);
+		ventanaPrincipal.repaint();
+		
+		//Crea y Asigna WorkersSincronizados
+		WorkersSincronizados ws1 = new WorkersSincronizados (iaControl, 1, jugador);
+		WorkersSincronizados ws2 = new WorkersSincronizados (ws1.getWorker2(true), 1,
+				                                             new Worker ()
+		                                                     {
+																public void work() throws Exception
+																{
+																	Thread.sleep((int) (getSleepTime() * 0.5));
+																	Updater.getUpdater().work();
+																}
+		                                                     });
+		
+		Tescenario = new AliveThread (this, 0.5, escenario);
+		Tjugador = new AliveThread (this, 1, ws2.getWorker1());
+		Tgravedad = new AliveThread (this, 1, gravedad);
+		TiaControl = new AliveThread (this, 1, ws1.getWorker1());
+		Tupdater = new AliveThread (this, 0, ws2.getWorker2(false));
+		this.run();
+		}
+		catch (Exception e)
+		{e.printStackTrace();}
 	}
 	
 	/**

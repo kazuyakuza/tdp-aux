@@ -64,6 +64,24 @@ public class Jugador implements Worker
 	/*COMANDOS*/
 	
 	/**
+	 * Setea el personaje del jugador con pj.
+	 * @param pj es el PjSeleccionable con el que se setea al Jugador.
+	 */
+	public void setPersonaje (PjSeleccionable pj)
+	{
+		personaje = pj;
+	}
+	
+	/**
+	 * Setea el Control para el Jugador con c.
+	 * @param c es el Control que utilizará el Jugador.
+	 */
+	public void setControl (Control c)
+	{
+		control = c;
+	}
+	
+	/**
 	 * Agrega una Moneda al Jugador.
 	 * 
 	 * Si la cantidad de Monedas es igual a 100, se suma una vida y la cantidad de monedas pasa a ser 0.
