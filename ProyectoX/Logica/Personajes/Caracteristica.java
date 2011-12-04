@@ -224,7 +224,7 @@ public abstract class Caracteristica
 		catch (NullPointerException e1)
 		{
 			throw new AccionActorException ("Caracteristica.saltar()" + "\n" +
-                                            "Imposible realizar la acción caer." + "\n" +
+                                            "Imposible realizar la acción saltar." + "\n" +
 					                        "Detalles del error:" + "\n" +
 					                        e1.getMessage());
 		}
