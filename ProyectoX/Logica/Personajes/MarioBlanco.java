@@ -320,8 +320,11 @@ public class MarioBlanco extends Caracteristica
 				if (celdaGrande.hayAnterior() && mario.getCeldaActual().hayAnterior())
 				{
 					mario.mirarIzq(true);
-					mario.getSpriteManager().cambiarSprite(-caminando);
-					mario.getSpriteManager().setGif(cantSpritesCaminando());				
+					if (mario.getCeldaActual().getInferior().isOcupada())
+					{
+						mario.getSpriteManager().cambiarSprite(-caminando);
+						mario.getSpriteManager().setGif(cantSpritesCaminando());
+					}
 					celdaAnterior = mario.getCeldaActual().getAnterior();
 					if (!celdaGrande.getAnterior().isOcupada() && !celdaAnterior.isOcupada())
 					{
@@ -366,8 +369,11 @@ public class MarioBlanco extends Caracteristica
 				if (celdaGrande.haySiguiente() && mario.getCeldaActual().haySiguiente())
 				{
 					mario.mirarIzq(false);
-					mario.getSpriteManager().cambiarSprite(caminando);
-					mario.getSpriteManager().setGif(cantSpritesCaminando());				
+					if (mario.getCeldaActual().getInferior().isOcupada())
+					{
+						mario.getSpriteManager().cambiarSprite(caminando);
+						mario.getSpriteManager().setGif(cantSpritesCaminando());
+					}
 					celdaSiguiente = mario.getCeldaActual().getSiguiente();
 					if (!celdaGrande.getSiguiente().isOcupada() && !celdaSiguiente.isOcupada())
 					{

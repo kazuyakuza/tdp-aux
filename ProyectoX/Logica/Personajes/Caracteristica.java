@@ -253,8 +253,11 @@ public abstract class Caracteristica
 			if (mario.getCeldaActual().hayAnterior())
 			{
 				mario.mirarIzq(true);
-				mario.getSpriteManager().cambiarSprite(-caminando);
-				mario.getSpriteManager().setGif(cantSpritesCaminando());
+				if (mario.getCeldaActual().getInferior().isOcupada())
+				{
+					mario.getSpriteManager().cambiarSprite(-caminando);
+					mario.getSpriteManager().setGif(cantSpritesCaminando());
+				}
 				celdaAnterior = mario.getCeldaActual().getAnterior();
 				if (!celdaAnterior.isOcupada())
 					mario.moverseAcelda(celdaAnterior);
@@ -292,8 +295,11 @@ public abstract class Caracteristica
 			if (mario.getCeldaActual().haySiguiente())
 			{
 				mario.mirarIzq(false);
-				mario.getSpriteManager().cambiarSprite(caminando);
-				mario.getSpriteManager().setGif(cantSpritesCaminando());
+				if (mario.getCeldaActual().getInferior().isOcupada())
+				{
+					mario.getSpriteManager().cambiarSprite(caminando);
+					mario.getSpriteManager().setGif(cantSpritesCaminando());
+				}
 				celdaSiguiente = mario.getCeldaActual().getSiguiente();
 				if (!celdaSiguiente.isOcupada())
 					mario.moverseAcelda(celdaSiguiente);								
