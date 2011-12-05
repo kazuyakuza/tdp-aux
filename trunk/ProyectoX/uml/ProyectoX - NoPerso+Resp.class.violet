@@ -1,0 +1,1141 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_29" class="java.beans.XMLDecoder"> 
+ <object class="com.horstmann.violet.ClassDiagramGraph"> 
+  <void method="addNode"> 
+   <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># cant: int;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Mapa (bs: Arreglo de Bloques);
+&lt;&lt;Comandos&gt;&gt;
++ setBloque (i: int, bloque: Bloque)
+- verificarPosicion (i: entero);
+&lt;&lt;Consultas&gt;&gt;
++ getBloque (n: int): Bloque;
++ getBloqueSiguiente (i: int): Bloque;
++ getBloqueAnterior (i: int): Bloque;
++ cantBloques (): int;</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Mapa</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>779.0842156746488</double> 
+     <double>2168.04675347103</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode1" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># nivelPiso: int;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Bloque (CantFilas, CantColumnas: int);
+&lt;&lt;Comandos&gt;&gt;
+- crearCeldas ();
++ setNivelPiso (n: int);
++ setFilaOcupada (f: int, ocu:boolean);
++ setColumnaOcupada (c: int, ocu:boolean);
+- verificarPosicion (f,c: int);
+- verificarCelda (c: Celda);
+&lt;&lt;Consultas&gt;&gt;
++ getFilas (): int;
++ getColumnas (): int;
++ getNivelPiso ():int;
++ esPiso (f,c: int);
++ debajoDelPiso (posicion: int[]): boolean;
++ esLimite (c: Celda): boolean;
++ getAnterior (c: Celda): Celda;
++ getSiguiente (c:Celda): Celda;
++ getInferior (c: Celda): Celda;
++ getSuperior (c: Celda): Celda;
++ getCelda (f, c: int);</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Bloque</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>760.9516260050353</double> 
+     <double>2425.371203276048</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.InterfaceNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>«interface»
+Plataforma</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1348.706652036052</double> 
+     <double>1879.906674373673</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode2" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string># totalmenteOcupada: boolean; 
+# posFila: int;
+# posColumna: int;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;Constructor&gt;&gt;
++ Celda (Ocupada: boolean, x: int, y: int);
+&lt;&lt;Comandos&gt;&gt;
++ setOcupada (O: boolean);
++ agregarActor (A: Actor): boolean;
++ sacarActor (A: Actor): boolean;
++ agregarEstructura (estructura: Estructura);
+&lt;&lt;Consultas&gt;&gt;
++ estaOcupada(): boolean;
++ getActores (): Iterador de Actores;
++ getPosFila(): int;
++ getPosColumna(): int;
++ getBloque (): Bloque;</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Celda</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1323.246042212102</double> 
+     <double>2435.861197870477</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Arreglo Bidimensional de Celdas *4</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1056.3178335429066</double> 
+     <double>2499.5224527640135</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Arreglo de bloques</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1013.6383038173212</double> 
+     <double>2179.0601072485756</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>*4
+Se representa a la zona jugable de un nivel,
+con el ABD. Dejando siempre la última fila,
+como el piso del nivel.</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1040.0</double> 
+     <double>2637.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.NoteNode"> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>Bloque en el que está
+el Jugador.</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>567.0</double> 
+     <double>2468.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="InterfaceNode0" class="com.horstmann.violet.InterfaceNode"> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>«interface» 
+Estructura</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1427.0</double> 
+     <double>2300.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode3" class="com.horstmann.violet.ClassNode"> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;CONSTRUCTOR&gt;&gt;
++ Piso (cargadorSprite: CargadorSprite);
+&lt;&lt;COMANDOS&gt;&gt;	
++ efectoGravedad (efecto: int); ++
++ caer (); +
++ morir (); ++
++ colisionar (a: Actor); +
++ colisionarPj (actorJugador: Actor); +</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Piso
+</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1358.0</double> 
+     <double>2092.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.PackageNode"> 
+    <void method="addChild"> 
+     <object id="InterfaceNode1" class="com.horstmann.violet.InterfaceNode"> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;COMANDOS&gt;&gt;
++ efectoGravedad (efecto: int);	
++ caer ();
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPG (): int;</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>«interface» 
+afectableXgravedad</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="InterfaceNode2" class="com.horstmann.violet.InterfaceNode"> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;COMANDOS&gt;&gt;
++ moverseAderecha ();
++ moverseAizquierda ();</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>«interface»
+Posicionable</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="InterfaceNode3" class="com.horstmann.violet.InterfaceNode"> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;COMANDOS&gt;&gt;
++ setCeldaActual (c: Celda);
+&lt;&lt;CONSULTAS&gt;&gt;
++ getCeldaActual (): Celda;</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>«interface»
+Punteable</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="InterfaceNode4" class="com.horstmann.violet.InterfaceNode"> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos(mario: Mario): int;</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>«interface»
+Movible</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="name"> 
+     <string>Responsabilidades</string> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1440.0</double> 
+     <double>30.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="InterfaceNode1"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1450.0</double> 
+     <double>63.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="InterfaceNode2"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1455.0</double> 
+     <double>221.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="InterfaceNode3"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1455.0</double> 
+     <double>334.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="InterfaceNode4"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>1446.0</double> 
+     <double>468.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="PackageNode0" class="com.horstmann.violet.PackageNode"> 
+    <void method="addChild"> 
+     <object id="ClassNode4" class="com.horstmann.violet.ClassNode"> 
+      <void property="attributes"> 
+       <void property="text"> 
+        <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = 
+{dirRecursos + &quot;Vine2.gif&quot;, dirRecursos + &quot;Goal-Flag.gif&quot;};
+	
+&lt;&lt;Atributos de Instancia&gt;&gt;
+- controlCentral: ControlCentral;</string> 
+       </void> 
+      </void> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;CONTRUCTOR&gt;&gt;
++ Llegada (cc: ControlCentral);	
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +
++ colisionarPj (pj: PjSeleccionable); +
++ colisionarBola (bola: BolaFuego); +
+# producirColisiones (c: Celda); +
++ morir(); ++</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>Llegada</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="ClassNode5" class="com.horstmann.violet.ClassNode"> 
+      <void property="attributes"> 
+       <void property="text"> 
+        <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;Vacio.png&quot;};
+&lt;&lt;Atributos de Instancia&gt;&gt;	
+# upNeeder: UpNeeder;</string> 
+       </void> 
+      </void> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;CONTRUCTOR&gt;&gt;
++ Vacio() 
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +
++ colisionarPj (pj: PjSeleccionable); +	
++ colisionarBola (bola: BolaFuego);	+
+# producirColisiones (c: Celda); +
++ morir(); ++
+&lt;&lt;CONSULTAS&gt;&gt;	
++ getPuntos(mario: Mario): int; +</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>Vacio</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="name"> 
+     <string>Especiales</string> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>10.0</double> 
+     <double>40.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode6" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Estructuras/Plataformas/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;Bricks.gif&quot;};</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ Rompible();
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +	
++ colisionarPj (pj: PjSeleccionable); +	
++ colisionarBola (bola: BolaFuego); +	
+# producirColisiones (c:Celda); +		
++ morir();++
+&lt;&lt;CONSULTAS&gt;&gt;
+# colisionAbajo (mario: Mario): boolean;</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Rompible</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>397.48482808079984</double> 
+     <double>1108.679192191721</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode5"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>22.350365792743332</double> 
+     <double>339.4971204967951</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode7" class="com.horstmann.violet.ClassNode"> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;Coin-1.png&quot;,
+dirRecursos + &quot;Coin-2.png&quot;,
+dirRecursos + &quot;Coin-3.png&quot;,};		
+- cantFramesMovimiento: int = 3;
+&lt;&lt;Atributos de Instancia&gt;&gt;
+# upNeeder: UpNeeder;</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>&lt;&lt;CONSRUCTORES&gt;&gt;	
+# Moneda();	
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +	
++ colisionarPj (pj: PjSeleccionable); +
++ colisionarBola (bola: BolaFuego); +	
+# producirColisiones (c: Celda); +	
++ morir (); ++	
++ matate (em: EspecialMonedas);
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos (mario: Mario): int;	
++ getCantFramesMovimiento (): int</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>Moneda</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>17.21088394515732</double> 
+     <double>1158.9032960051518</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.PackageNode"> 
+    <void method="addChild"> 
+     <object id="ClassNode8" class="com.horstmann.violet.ClassNode"> 
+      <void property="attributes"> 
+       <void property="text"> 
+        <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;FireBall-1.png&quot;, 
+		                       dirRecursos + &quot;FireBall-2.png&quot;,
+		                       dirRecursos + &quot;FireBall-3.png&quot;,
+		                       dirRecursos + &quot;FireBall-4.png&quot;,
+							   dirRecursos + &quot;FireBallHit-1.png&quot;, 
+							   dirRecursos + &quot;FireBallHit-2.png&quot;,
+							   dirRecursos + &quot;FireBallHit-3.png&quot;,
+							   dirRecursos + &quot;FireBallHit-4.png&quot;,};	
+- enMovimiento: int = 0;
+- cantFramesMovimiento: int = 4;
+- explotando: int = 4;
+- cantFramesExplotando:int = 4;	
+&lt;&lt;Atributos de Instancia&gt;&gt;
+# mario: Mario;	
+# upNeeder: UpNeeder;</string> 
+       </void> 
+      </void> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ BolaFuego(pj: Mario);	
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +	
++ colisionarPj (pj: PjSeleccionable); +	
++ colisionarBola (bola: BolaFuego); +	
+# producirColisiones (c: Celda); +	
++ morir(); ++	
++ moverseAizquierda (); +	
++ moverseAderecha (); +
++ explotar ();
+&lt;&lt;CONSULTAS&gt;&gt;
++ getMario (): Mario;</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>BolaFuego</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object idref="ClassNode7"/> 
+    </void> 
+    <void method="addChild"> 
+     <object id="ClassNode9" class="com.horstmann.violet.ClassNode"> 
+      <void property="attributes"> 
+       <void property="text"> 
+        <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Estructuras/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;Piso.png&quot;};
+</string> 
+       </void> 
+      </void> 
+      <void property="methods"> 
+       <void property="text"> 
+        <string>&lt;&lt;CONSRUCTORES&gt;&gt;
++ Piso();		
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +	
++ colisionarPj (pj: PjSeleccionable); +	
++ colisionarBola (bola: BolaFuego); +	
+# producirColisiones (c: Celda); +	
++ morir(); ++</string> 
+       </void> 
+      </void> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>Piso</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object idref="PackageNode0"/> 
+    </void> 
+    <void method="addChild"> 
+     <object id="PackageNode1" class="com.horstmann.violet.PackageNode"> 
+      <void method="addChild"> 
+       <object id="ClassNode10" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Estructuras/Plataformas/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;QuestionBlock-1.png&quot;,
+dirRecursos + &quot;QuestionBlock-2.png&quot;,
+dirRecursos + &quot;QuestionBlock-3.png&quot;,
+dirRecursos + &quot;Empty-Block.gif&quot;};	 	
+- cantFramesMovimiento: int = 3;
+- vacio: int = 3;	
+&lt;&lt;Atributos de Instancia&gt;&gt;
+# monedas: PositionList &lt;Moneda&gt;;</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ EspecialMonedas(monedas: int);
+&lt;&lt;COMANDOS&gt;&gt;	
+- inicializar (cantidad: int);	
++ colisionarPj (pj: PjSeleccionable); ++
+&lt;&lt;CONSULTAS&gt;&gt;
+# colisionAbajo (mario: Mario): boolean;	
+# hayMoneda(): boolean</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>EspecialMonedas</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode11" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Estructuras/Plataformas/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;QuestionBlock-1.png&quot;,
+dirRecursos + &quot;QuestionBlock-2.png&quot;,
+dirRecursos + &quot;QuestionBlock-3.png&quot;,
+dirRecursos + &quot;Empty-Block.gif&quot;};		
+- cantFramesMovimiento: int = 3;
+- vacio: int = 3;	
+&lt;&lt;Atributos de Instancia&gt;&gt;
+# powerUp: PowerUp;
+# controlCentral: ControlCentral;
+# cambiable: boolean;</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ EspecialPowerUp(pwUp: PowerUp,cc: ControlCentral,modificable: boolean);	
+&lt;&lt;CONMANDOS&gt;&gt;
++ colisionarPj (pj: PjSeleccionable); ++	
++ cambiarPowerUp (pwUp: PowerUp);
+&lt;&lt;CONSULTAS&gt;&gt;
++ esCambiable(): boolean;	
+# colisionAbajo (Mario mario): boolean;	
+# hayPowerUp(): boolean;</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>EspecialPowerUp</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode12" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Estructuras/Plataformas/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;Empty-Block.gif&quot;};</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ Irrompible();		
+&lt;&lt;COMANDOS&gt;&gt;	
++ colisionar (a: Actor); +	
++ colisionarPj (pj: PjSeleccionable); +	
++ colisionarBola (bola: BolaFuego); +	
+# producirColisiones (c: Celda); +	
++ morir(); ++
+</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>Irrompible</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object idref="ClassNode6"/> 
+      </void> 
+      <void method="addChild"> 
+       <object id="InterfaceNode5" class="com.horstmann.violet.InterfaceNode"> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>«interface»
+Plataforma</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void property="name"> 
+       <string>Plataformas</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="PackageNode2" class="com.horstmann.violet.PackageNode"> 
+      <void method="addChild"> 
+       <object id="ClassNode13" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;BombaNuclear.gif&quot;};
+&lt;&lt;Atributos de Instancia&gt;&gt;
+# controlCentral: ControlCentral; </string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ BombaNuclear(ControlCentral cc);
+&lt;&lt;COMANDOS&gt;&gt;
++ efecto (Mario mario); +			
++ moverseAizquierda(); +	
++ moverseAderecha(); +
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos(Mario mario): int; +</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>BombaNuclear</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode14" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;Starman-1.png&quot;,
+													 dirRecursos + &quot;Starman-2.png&quot;,
+		                                             dirRecursos + &quot;Starman-3.png&quot;,
+		                                             dirRecursos + &quot;Starman-4.png&quot;};</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ Estrella () ;
+&lt;&lt;COMANDOS&gt;&gt;	
++ efecto (Mario mario); +	
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos(Mario mario): int; +</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>Estrella</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode15" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;FireFlower-1.png&quot;,
+		                                             dirRecursos + &quot;FireFlower-2.png&quot;,
+		                                             dirRecursos + &quot;FireFlower-3.png&quot;,
+		                                             dirRecursos + &quot;FireFlower-4.png&quot;,};</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ FlorFuego();
+&lt;&lt;COMANDOS&gt;&gt;
++ efecto (Mario mario); +	
++ moverseAizquierda(); +	
++ moverseAderecha(); +
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos(Mario mario): int; +</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>FlorFuego</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode16" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;1-UpMushroom.gif&quot;};</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;
++ HongoVerde();
+&lt;&lt;COMANDOS&gt;&gt;
++ efecto (Mario mario); +
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos(Mario mario): int; +</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>HongoVerde</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode17" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Instancia&gt;&gt;
+# PG: int;
+# upNeeder: UpNeeder; </string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTOR&gt;&gt;	
+# PowerUp (String[] nombresSprites);	
+&lt;&lt;COMANDOS&gt;&gt;	
++ efectoGravedad (int efecto); +	
++ efecto (Mario mario); *
++ caer (); +
++ moverseAizquierda (); +	
++ moverseAderecha (); +	
++ colisionar (Actor a); +	
++ colisionarPj (PjSeleccionable pj); +	
++ colisionarBola (BolaFuego bola); +	
+# producirColisiones (Celda c); +
++ morir (); +
+&lt;&lt;CONSULTAS&gt;&gt;	
++ getPG (): int; +	</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>PowerUp</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void method="addChild"> 
+       <object id="ClassNode18" class="com.horstmann.violet.ClassNode"> 
+        <void property="attributes"> 
+         <void property="text"> 
+          <string>&lt;&lt;Atributos de Clase&gt;&gt;
+- dirRecursos: String = &quot;Objetos/&quot;;
+- nombresSprites: String [] = {dirRecursos + &quot;SuperMushroom.gif&quot;};</string> 
+         </void> 
+        </void> 
+        <void property="methods"> 
+         <void property="text"> 
+          <string>&lt;&lt;CONSTRUCTORES&gt;&gt;	
++ SuperHongo();
+&lt;&lt;COMANDOS&gt;&gt;
++ efecto (Mario mario); +
+&lt;&lt;CONSULTAS&gt;&gt;
++ getPuntos(Mario mario): int; +</string> 
+         </void> 
+        </void> 
+        <void property="name"> 
+         <void property="text"> 
+          <string>SuperHongo</string> 
+         </void> 
+        </void> 
+       </object> 
+      </void> 
+      <void property="name"> 
+       <string>PowerUps</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="addChild"> 
+     <object id="InterfaceNode6" class="com.horstmann.violet.InterfaceNode"> 
+      <void property="name"> 
+       <void property="text"> 
+        <string>«interface»
+Estructura
+</string> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="name"> 
+     <string>NoPersonajes</string> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>0.0</double> 
+     <double>10.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode12"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>397.4848280808003</double> 
+     <double>889.6791921917211</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode11"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>393.6200707708167</double> 
+     <double>167.85845048021292</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode10"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>398.48482808079984</double> 
+     <double>546.6791921917211</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode8"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>17.21088394515732</double> 
+     <double>625.9032960051481</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="PackageNode1"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>380.0</double> 
+     <double>60.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode13"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>882.3481348773939</double> 
+     <double>1322.587319751001</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="PackageNode2"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>870.0</double> 
+     <double>60.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode16"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>883.3481348773948</double> 
+     <double>1130.5873197510045</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode15"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>884.3481348773948</double> 
+     <double>666.5873197510009</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode4"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>24.350365792743332</double> 
+     <double>65.4971204967951</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode18"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>881.3481348773939</double> 
+     <double>940.5873197510045</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode14"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>880.3481348773948</double> 
+     <double>432.5873197510009</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode17"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>881.3481348773939</double> 
+     <double>94.5873197510009</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="ClassNode9"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>21.21088394515732</double> 
+     <double>1519.9032960051518</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="InterfaceNode6"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>19.0</double> 
+     <double>1742.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object idref="InterfaceNode5"/> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>392.0</double> 
+     <double>87.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
+    </void> 
+    <void property="endLabel"> 
+     <string>1..*</string> 
+    </void> 
+    <void property="middleLabel"> 
+     <string># bloques</string> 
+    </void> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="BLACK_DIAMOND"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode0"/> 
+   <object idref="ClassNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+    </void> 
+    <void property="endLabel"> 
+     <string># ABC  X*Y</string> 
+    </void> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+    </void> 
+    <void property="startLabel"> 
+     <string>#bloque 1</string> 
+    </void> 
+   </object> 
+   <object idref="ClassNode1"/> 
+   <object idref="ClassNode2"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VHV"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="TRIANGLE"/> 
+    </void> 
+    <void property="lineStyle"> 
+     <object class="com.horstmann.violet.LineStyle" field="DOTTED"/> 
+    </void> 
+   </object> 
+   <object idref="ClassNode3"/> 
+   <object idref="InterfaceNode0"/> 
+  </void> 
+ </object> 
+</java> 
